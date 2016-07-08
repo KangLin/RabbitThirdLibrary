@@ -1,0 +1,91 @@
+environment:
+
+  matrix:
+  #- AUTOBUILD_ARCH: x86
+  #  AUTOBUILD_COMPLER: VS2013
+  #  toolchain_version: 12
+  #  mode: release
+  #  QT_ROOT: C:\Qt\5.5\msvc2013
+    
+  #- AUTOBUILD_ARCH: x86
+  #  AUTOBUILD_COMPLER: VS2015
+  #  toolchain_version: 14
+  #  mode: debug
+  #  QT_ROOT: C:\Qt\5.6\msvc2015
+
+  - AUTOBUILD_ARCH: 32
+    AUTOBUILD_COMPLER: MinGW
+    toolchain_version: 491
+    mode: release
+    QT_ROOT: C:\Qt\5.4\mingw491_32
+    RABBITIM_USE_REPOSITORIES: TRUE
+    
+  #- AUTOBUILD_ARCH: 32
+  #  AUTOBUILD_COMPLER: MinGW
+  #  toolchain_version: 482
+  #  mode: debug
+  #  QT_ROOT: C:\Qt\5.3\mingw482_32
+
+init:
+  - set varch=%AUTOBUILD_ARCH%
+  - if "%AUTOBUILD_ARCH%" == "x64" set varch=amd64
+  - if not %AUTOBUILD_COMPLER%==MinGW call "C:\Program Files (x86)\Microsoft Visual Studio %toolchain_version%.0\VC\vcvarsall.bat" %varch%
+  - echo NUMBER_OF_PROCESSORS=%NUMBER_OF_PROCESSORS%
+  - echo PROCESSOR_IDENTIFIER=%PROCESSOR_IDENTIFIER%
+  - echo QT_ROOT=%QT_ROOT%
+  - del C:\msys64\usr\bin\link.exe
+
+install:
+  - C:\msys64\usr\bin\pacman.exe -Syu --noconfirm 
+  - C:\msys64\autorebase.bat
+  - C:\msys64\usr\bin\pacman.exe -S --noconfirm nasm yasm unzip 
+
+before_build:
+  - if %AUTOBUILD_COMPLER%==MinGW set PATH=C:\msys64\mingw32\bin;C:\msys64;C:\Qt\Tools\mingw%toolchain_version%_32\bin;%PATH%
+  #- if %AUTOBUILD_COMPLER%==MinGW curl -fsS https://ci.appveyor.com/api/projects/kanglin/rabbitim-third-library/artifacts/RabbitIm-windows_msvc-v%APPVEYOR_BUILD_VERSION%.zip?branch=%APPVEYOR_REPO_BRANCH%
+  #- dir 
+
+build_script:
+  - cd %APPVEYOR_BUILD_FOLDER%
+  - C:\msys64\usr\bin\bash.exe %APPVEYOR_BUILD_FOLDER%\build_script\ci\build_windows.sh
+  #- if %AUTOBUILD_COMPLER%==MinGW C:\msys64\usr\bin\bash.exe %APPVEYOR_BUILD_FOLDER%\build_script\ci\build_windows.sh %APPVEYOR_BUILD_FOLDER%
+
+#after_build:
+  #- dir %APPVEYOR_BUILD_FOLDER%
+  #- ps: foreach($artifactName in $artifacts.keys) { echo $artifacts[$artifactName] }
+
+artifacts:
+  - path: windows_msvc
+    name: RabbitIm-windows_msvc-v$(appveyor_build_version)
+    type: zip
+  
+  - path: windows_mingw
+    name: RabbitIm-windows_mingw-v$(appveyor_build_version)
+    type: zip
+
+test: off
+
+deploy:
+  provider: FTP 
+  protocol: sftp 
+  host: frs.sourceforge.net 
+  username: kl222,rabbitim-third-library
+  #密码用这个加密 https://ci.appveyor.com/tools/encrypt
+  password: 
+    secure: 2WEtOQrdty3V3g0aEVvS3Q== 
+  folder: pfs/project/rabbitim-third-library/release
+  draft: false
+  active_mode: false 
+
+#deploy:
+#  provider: GitHub
+#  release: rabbitim-third-library-v$(appveyor_build_version)
+#  description: 'rabbitim-third-library-v$(appveyor_build_version)'
+#  #token 在这个地址产生 https://github.com/settings/tokens 用这个加密 https://ci.appveyor.com/tools/encrypt
+#  auth_token:
+#    secure: ZwS9M6Ide+GfM4kLxJ5b9tRoB1wn/56nZRCAIP6Z7s3+YwcE+cx0Dv0d6X82lidF
+#  draft: false
+#  prerelease: false
+#  on:
+#    branch: master                 # release from master branch only
+#    #appveyor_repo_tag: true        # deploy on tag push only
