@@ -85,14 +85,6 @@ echo "RABBITIM_BUILD_STATIC:$RABBITIM_BUILD_STATIC"
 echo ""
 
 #需要设置 CMAKE_MAKE_PROGRAM 为 make 程序路径。
-case `uname -s` in
-    MINGW*|MSYS*)
-        GENERATORS="MSYS Makefiles"
-        ;;
-    Linux*|Unix*|CYGWIN*|*)
-        GENERATORS="Unix Makefiles" 
-        ;;
-esac
 
 if [ "$RABBITIM_BUILD_STATIC" = "static" ]; then
     CMAKE_PARA="-DBUILD_SHARED_LIBS=OFF"
@@ -104,7 +96,8 @@ case ${RABBITIM_BUILD_TARGERT} in
     android)
         export ANDROID_TOOLCHAIN_NAME=arm-linux-androideabi-${RABBITIM_BUILD_TOOLCHAIN_VERSION}
         export ANDROID_NATIVE_API_LEVEL=android-${RABBITIM_BUILD_PLATFORMS_VERSION}
-        CMAKE_PARA="-DBUILD_SHARED_LIBS=OFF -DCMAKE_TOOLCHAIN_FILE=${RABBITIM_BUILD_SOURCE_CODE}/platforms/android/android.toolchain.cmake"
+        CMAKE_PARA="-DBUILD_SHARED_LIBS=OFF "
+        CMAKE_PARA="${CMAKE_PARA} -DCMAKE_TOOLCHAIN_FILE=$RABBITIM_BUILD_PREFIX/../build_script/cmake/platforms/toolchain-android.cmake"
         CMAKE_PARA="${CMAKE_PARA} -DANDROID_NATIVE_API_LEVEL=android-${RABBITIM_BUILD_PLATFORMS_VERSION}"
         CMAKE_PARA="${CMAKE_PARA} -DANDROID_TOOLCHAIN_NAME=${RABBITIM_BUILD_CROSS_HOST}-${RABBITIM_BUILD_TOOLCHAIN_VERSION}"
         CMAKE_PARA="$CMAKE_PARA -DANDROID_NDK_ABI_NAME=${ANDROID_NDK_ABI_NAME}"
@@ -116,7 +109,7 @@ case ${RABBITIM_BUILD_TARGERT} in
     unix)
         ;;
     windows_msvc)
-        GENERATORS="Visual Studio 12 2013"
+        #GENERATORS="Visual Studio 12 2013"
         MAKE_PARA=""
         ;;
     windows_mingw)

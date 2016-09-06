@@ -5,14 +5,14 @@ set -e
 
 function function_install_yasm()
 {
-	#安装 yasm
-	mkdir -p ${SOURCE_DIR}/ThirdLibrary/Tools/src
+    #安装 yasm
+    mkdir -p ${SOURCE_DIR}/ThirdLibrary/Tools/src
     cd ${SOURCE_DIR}/ThirdLibrary/Tools/src
-	wget -c -nv http://www.tortall.net/projects/yasm/releases/yasm-1.3.0.tar.gz 
-	tar xzf yasm-1.3.0.tar.gz
-	cd yasm-1.3.0/
-	./configure > /dev/null && sudo make install -j2 > /dev/null
-	cd ${SOURCE_DIR}
+    wget -c -nv http://www.tortall.net/projects/yasm/releases/yasm-1.3.0.tar.gz 
+    tar xzf yasm-1.3.0.tar.gz
+    cd yasm-1.3.0/
+    ./configure > /dev/null && sudo make install -j2 > /dev/null
+    cd ${SOURCE_DIR}
 }
 
 function function_common()
@@ -21,9 +21,9 @@ function function_common()
     #下载最新cmake程序
     if [ "cmake" = "${QMAKE}" ]; then
         if [ ! -d "`pwd`/cmake" ]; then
-            wget -nv --no-check-certificate http://www.cmake.org/files/v3.1/cmake-3.1.0-Linux-x86_64.tar.gz
-            tar xzf cmake-3.1.0-Linux-x86_64.tar.gz
-            mv cmake-3.1.0-Linux-x86_64 cmake
+            wget -nv --no-check-certificate http://www.cmake.org/files/v3.6/cmake-3.6.1-Linux-x86_64.tar.gz
+            tar xzf cmake-3.6.1-Linux-x86_64.tar.gz
+            mv cmake-3.6.1-Linux-x86_64 cmake
         fi
     fi
     
@@ -60,11 +60,11 @@ function function_android()
         mv android-sdk-linux android-sdk
         rm android-sdk_r24.4.1-linux.tgz 
         (sleep 5 ; while true ; do sleep 1 ; printf 'y\r\n' ; done ) \
-        | android-sdk/tools/android update sdk -u -t tool,android-18,extra,platform,platform-tool,build-tools-24.0.0
+        | android-sdk/tools/android update sdk -u -t tool,android-18,android-24,extra,platform,platform-tools,build-tools-24.0.2
     fi
 
-	function_common
-	cd ${SOURCE_DIR}/ThirdLibrary
+    function_common
+    cd ${SOURCE_DIR}/ThirdLibrary
 }
 
 function function_unix()

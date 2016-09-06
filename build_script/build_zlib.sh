@@ -3,7 +3,7 @@
 #作者：康林
 #参数:
 #    $1:编译目标(android、windows_msvc、windows_mingw、unix)
-#    $2:源码的位置
+#    $2:源码的位置 
 
 #运行本脚本前,先运行 build_$1_envsetup.sh 进行环境变量设置,需要先设置下面变量:
 #   RABBITIM_BUILD_TARGERT   编译目标（android、windows_msvc、windows_mingw、unix)
@@ -33,39 +33,15 @@ fi
 if [ -n "$2" ]; then
     RABBITIM_BUILD_SOURCE_CODE=$2
 else
-    RABBITIM_BUILD_SOURCE_CODE=${RABBITIM_BUILD_PREFIX}/../src/osgearth
+    RABBITIM_BUILD_SOURCE_CODE=${RABBITIM_BUILD_PREFIX}/../src/zlib
 fi
 
 CUR_DIR=`pwd`
 
 #下载源码:
 if [ ! -d ${RABBITIM_BUILD_SOURCE_CODE} ]; then
-    OSG_VERSION=master
-    if [ "TRUE" = "${RABBITIM_USE_REPOSITORIES}" ]; then
-        echo "git clone -q --branch=${OSG_VERSION} https://github.com/KangLin/osgearth.git ${RABBITIM_BUILD_SOURCE_CODE}"
-        git clone -q https://github.com/KangLin/osgearth.git ${RABBITIM_BUILD_SOURCE_CODE}
-    else
-        echo "wget -q https://github.com/KangLin/osgearth/archive/${OSG_VERSION}.zip"
-        mkdir -p ${RABBITIM_BUILD_SOURCE_CODE}
-        cd ${RABBITIM_BUILD_SOURCE_CODE}
-        wget -nv -c https://github.com/KangLin/osgearth/archive/${OSG_VERSION}.zip
-        echo "unzip -q ${OSG_VERSION}.zip"
-        unzip -q ${OSG_VERSION}.zip
-        mv osgearth-${OSG_VERSION} ..
-        rm -fr *
-        cd ..
-        rm -fr ${RABBITIM_BUILD_SOURCE_CODE}
-        mv -f osgearth-${OSG_VERSION} ${RABBITIM_BUILD_SOURCE_CODE}
-    fi
-fi
-
-RABBITIM_BUILD_SOURCE_CODE=${RABBITIM_BUILD_SOURCE_CODE}
-cd ${RABBITIM_BUILD_SOURCE_CODE}
-
-mkdir -p build_${RABBITIM_BUILD_TARGERT}
-cd build_${RABBITIM_BUILD_TARGERT}
-if [ "$RABBITIM_CLEAN" = "TRUE" ]; then
-    rm -fr *
+    echo "git clone -q https://github.com/KangLin/zlib.git ${RABBITIM_BUILD_SOURCE_CODE}"
+    git clone -q https://github.com/KangLin/zlib.git ${RABBITIM_BUILD_SOURCE_CODE}
 fi
 
 echo ""
@@ -80,35 +56,66 @@ echo "RABBITIM_BUILD_CROSS_SYSROOT:$RABBITIM_BUILD_CROSS_SYSROOT"
 echo "RABBITIM_BUILD_STATIC:$RABBITIM_BUILD_STATIC"
 echo ""
 
-#需要设置 CMAKE_MAKE_PROGRAM 为 make 程序路径。
-
-if [ "$RABBITIM_BUILD_STATIC" = "static" ]; then
-    CMAKE_PARA="-DDYNAMIC_OSGEARTH=OFF" # -DCMAKE_EXE_LINKER_FLAGS=-static -DCMAKE_MODULE_LINKER_FLAGS_RELEASE=-static -DCMAKE_STATIC_LINKER_FLAGS=-static"
-else
-    CMAKE_PARA="-DDYNAMIC_OSGEARTH=ON"
+cd ${RABBITIM_BUILD_SOURCE_CODE}
+mkdir -p build_${RABBITIM_BUILD_TARGERT}
+cd build_${RABBITIM_BUILD_TARGERT}
+if [ "$RABBITIM_CLEAN" = "TRUE" ]; then
+    rm -fr *
 fi
-MAKE_PARA="-- ${RABBITIM_MAKE_JOB_PARA} VERBOSE=1"
 
+MAKE_PARA="-- ${RABBITIM_MAKE_JOB_PARA}"
+if [ "$RABBITIM_BUILD_STATIC" = "static" ]; then
+    CONFIG_PARA="--enable-static --disable-shared"
+else
+    CONFIG_PARA="--disable-static --enable-shared"
+fi
 case ${RABBITIM_BUILD_TARGERT} in
     android)
-        export ANDROID_TOOLCHAIN_NAME=arm-linux-androideabi-${RABBITIM_BUILD_TOOLCHAIN_VERSION}
-        export ANDROID_NATIVE_API_LEVEL=android-${RABBITIM_BUILD_PLATFORMS_VERSION}
-        CMAKE_PARA="${CMAKE_PARA} -DCMAKE_TOOLCHAIN_FILE=$RABBITIM_BUILD_PREFIX/../build_script/cmake/platforms/toolchain-android.cmake"
-        CMAKE_PARA="${CMAKE_PARA} -DANDROID_NATIVE_API_LEVEL=android-${RABBITIM_BUILD_PLATFORMS_VERSION}"
-        CMAKE_PARA="${CMAKE_PARA} -DANDROID_TOOLCHAIN_NAME=${RABBITIM_BUILD_CROSS_HOST}-${RABBITIM_BUILD_TOOLCHAIN_VERSION}"
-        CMAKE_PARA="${CMAKE_PARA} -DANDROID_NDK_ABI_NAME=${ANDROID_NDK_ABI_NAME}"
-
         if [ -n "$RABBITIM_CMAKE_MAKE_PROGRAM" ]; then
             CMAKE_PARA="${CMAKE_PARA} -DCMAKE_MAKE_PROGRAM=$RABBITIM_CMAKE_MAKE_PROGRAM" 
         fi
-        ;;
+        CMAKE_PARA="${CMAKE_PARA} -DCMAKE_TOOLCHAIN_FILE=$RABBITIM_BUILD_PREFIX/../build_script/cmake/platforms/toolchain-android.cmake"
+    ;;
     unix)
+        #CONFIG_PARA="${CONFIG_PARA} --with-gnu-ld --enable-sse "
         ;;
     windows_msvc)
-        #GENERATORS="Visual Studio 12 2013"
+        #cd ${RABBITIM_BUILD_SOURCE_CODE}
+        #nmake -f win32/Makefile.msc clean
+        #nmake -f win32/Makefile.msc LOC="-DASMV -DASMINF" \
+        #    OBJA="inffas32.obj match686.obj"  
+        #if [ ! -d "${RABBITIM_BUILD_PREFIX}/include" ]; then
+        #    mkdir -p "${RABBITIM_BUILD_PREFIX}/include"
+        #fi
+        #if [ ! -d "${RABBITIM_BUILD_PREFIX}/lib" ]; then
+        #    mkdir -p "${RABBITIM_BUILD_PREFIX}/lib"
+        #fi
+        #if [ ! -d "${RABBITIM_BUILD_PREFIX}/bin" ]; then
+        #    mkdir -p "${RABBITIM_BUILD_PREFIX}/bin"
+        #fi
+        #cp zlib.h zconf.h ${RABBITIM_BUILD_PREFIX}/include
+        #cp *.lib ${RABBITIM_BUILD_PREFIX}/lib
+        #cp *.dll ${RABBITIM_BUILD_PREFIX}/bin
+        #cd $CUR_DIR
+        #exit 0
+        
         MAKE_PARA=""
+        #CMAKE_PARA="${CMAKE_PARA}"  -DASM686=ON"
         ;;
     windows_mingw)
+        #cd ${RABBITIM_BUILD_SOURCE_CODE}
+        #make -f win32/Makefile.gcc clean
+        #cp contrib/asm686/match.S ./match.S
+        #make LOC=-DASMV OBJA=match.o -fwin32/Makefile.gcc
+        #make install -fwin32/Makefile.gcc SHARED_MODE=1 DESTDIR=${RABBITIM_BUILD_PREFIX}/ \
+        #     LIBRARY_PATH=lib \
+        #     INCLUDE_PATH=include \
+        #     BINARY_PATH=bin \
+        #     prefix=${RABBITIM_BUILD_PREFIX}
+        #cd $CUR_DIR
+        #exit 0
+        
+        #CMAKE_PARA="${CMAKE_PARA} -DASM686=ON"
         case `uname -s` in
             Linux*|Unix*|CYGWIN*)
                 CMAKE_PARA="${CMAKE_PARA} -DCMAKE_TOOLCHAIN_FILE=$RABBITIM_BUILD_PREFIX/../../cmake/platforms/toolchain-mingw.cmake"
@@ -120,19 +127,17 @@ case ${RABBITIM_BUILD_TARGERT} in
     *)
     echo "${HELP_STRING}"
     cd $CUR_DIR
-    exit 2
+    exit 3
     ;;
 esac
 
-CMAKE_PARA="${CMAKE_PARA} -DQt5_DIR=${QT_ROOT}/lib/cmake/Qt5 -DCMAKE_VERBOSE_MAKEFILE=TRUE -DOSGEARTH_USE_QT=ON"
-CMAKE_PARA="${CMAKE_PARA} -DTHIRD_PARTY_DIR=${RABBITIM_BUILD_PREFIX} -DOSG_DIR=${RABBITIM_BUILD_PREFIX} -DWIN32_USE_MP=ON"
-CMAKE_PARA="${CMAKE_PARA} -DBUILD_OSGEARTH_EXAMPLES=OFF"
 echo "cmake .. -DCMAKE_INSTALL_PREFIX=$RABBITIM_BUILD_PREFIX -DCMAKE_BUILD_TYPE=Release -G\"${GENERATORS}\" ${CMAKE_PARA}"
 cmake .. \
     -DCMAKE_INSTALL_PREFIX="$RABBITIM_BUILD_PREFIX" \
     -DCMAKE_BUILD_TYPE="Release" \
-    -G"${GENERATORS}" ${CMAKE_PARA}
+    -G"${GENERATORS}" ${CMAKE_PARA} -DCMAKE_VERBOSE_MAKEFILE=TRUE
 
 cmake --build . --target install --config Release ${MAKE_PARA}
-
+mkdir -p $RABBITIM_BUILD_PREFIX/lib/pkgconfig
+cp $RABBITIM_BUILD_PREFIX/share/pkgconfig/* $RABBITIM_BUILD_PREFIX/lib/pkgconfig/.
 cd $CUR_DIR

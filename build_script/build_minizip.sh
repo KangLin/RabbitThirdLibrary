@@ -33,34 +33,32 @@ fi
 if [ -n "$2" ]; then
     RABBITIM_BUILD_SOURCE_CODE=$2
 else
-    RABBITIM_BUILD_SOURCE_CODE=${RABBITIM_BUILD_PREFIX}/../src/osg
+    RABBITIM_BUILD_SOURCE_CODE=${RABBITIM_BUILD_PREFIX}/../src/minizip
 fi
 
 CUR_DIR=`pwd`
 
 #下载源码:
 if [ ! -d ${RABBITIM_BUILD_SOURCE_CODE} ]; then
-    OSG_VERSION=OpenSceneGraph-3.5.3
+    VERSION=master
     if [ "TRUE" = "${RABBITIM_USE_REPOSITORIES}" ]; then
-        echo "git clone -q --branch=${OSG_VERSION} https://github.com/openscenegraph/OpenSceneGraph.git ${RABBITIM_BUILD_SOURCE_CODE}"
-        git clone -q --branch=$OSG_VERSION https://github.com/openscenegraph/OpenSceneGraph.git ${RABBITIM_BUILD_SOURCE_CODE}
+        echo "git clone -q https://github.com/nmoinvaz/minizip.git ${RABBITIM_BUILD_SOURCE_CODE}"
+        git clone -q https://github.com/nmoinvaz/minizip.git ${RABBITIM_BUILD_SOURCE_CODE}
     else
-        echo "wget -q https://github.com/openscenegraph/OpenSceneGraph/archive/${OSG_VERSION}.zip"
         mkdir -p ${RABBITIM_BUILD_SOURCE_CODE}
         cd ${RABBITIM_BUILD_SOURCE_CODE}
-        wget -q https://github.com/openscenegraph/OpenSceneGraph/archive/${OSG_VERSION}.zip
-        unzip -q ${OSG_VERSION}.zip
-        mv OpenSceneGraph-${OSG_VERSION} ..
-        rm -fr *
+        echo "wget -nv -c https://github.com/nmoinvaz/minizip/archive/master.zip"
+        wget -nv -c -O minizip.zip https://github.com/nmoinvaz/minizip/archive/master.zip
+        unzip -q minizip.zip
+        mv minizip-${VERSION} ..
+        rm -fr minizip.zip ${RABBITIM_BUILD_SOURCE_CODE}
         cd ..
-        rm -fr ${RABBITIM_BUILD_SOURCE_CODE}
-        mv -f OpenSceneGraph-${OSG_VERSION} ${RABBITIM_BUILD_SOURCE_CODE}
+        mv minizip-${VERSION} ${RABBITIM_BUILD_SOURCE_CODE}
+        
     fi
 fi
 
-RABBITIM_BUILD_SOURCE_CODE=${RABBITIM_BUILD_SOURCE_CODE}
 cd ${RABBITIM_BUILD_SOURCE_CODE}
-
 mkdir -p build_${RABBITIM_BUILD_TARGERT}
 cd build_${RABBITIM_BUILD_TARGERT}
 if [ "$RABBITIM_CLEAN" = "TRUE" ]; then
@@ -79,38 +77,24 @@ echo "RABBITIM_BUILD_CROSS_SYSROOT:$RABBITIM_BUILD_CROSS_SYSROOT"
 echo "RABBITIM_BUILD_STATIC:$RABBITIM_BUILD_STATIC"
 echo ""
 
-#需要设置 CMAKE_MAKE_PROGRAM 为 make 程序路径。
-
+echo "configure ..."
+MAKE_PARA="-- ${RABBITIM_MAKE_JOB_PARA}"
 if [ "$RABBITIM_BUILD_STATIC" = "static" ]; then
-    CMAKE_PARA="-DDYNAMIC_OPENSCENEGRAPH=OFF" 
+    CONFIG_PARA="--enable-static --disable-shared"
 else
-    CMAKE_PARA="-DDYNAMIC_OPENSCENEGRAPH=ON"
+    CONFIG_PARA="--disable-static --enable-shared"
 fi
-MAKE_PARA="-- ${RABBITIM_MAKE_JOB_PARA} VERBOSE=1"
 case ${RABBITIM_BUILD_TARGERT} in
     android)
-        export ANDROID_TOOLCHAIN_NAME=arm-linux-androideabi-${RABBITIM_BUILD_TOOLCHAIN_VERSION}
-        export ANDROID_NATIVE_API_LEVEL=android-${RABBITIM_BUILD_PLATFORMS_VERSION}
-        CMAKE_PARA="-DBUILD_SHARED_LIBS=OFF -DDYNAMIC_OPENTHREADS=OFF"
-        CMAKE_PARA="${CMAKE_PARA} -DDYNAMIC_OPENSCENEGRAPH=OFF"
-        CMAKE_PARA="${CMAKE_PARA} -DCMAKE_TOOLCHAIN_FILE=$RABBITIM_BUILD_PREFIX/../build_script/cmake/platforms/toolchain-android.cmake"
-        CMAKE_PARA="${CMAKE_PARA} -DBUILD_OSG_APPLICATIONS=OFF -DOSG_BUILD_PLATFORM_ANDROID=ON"
-        CMAKE_PARA="${CMAKE_PARA} -DANDROID_NATIVE_API_LEVEL=android-${RABBITIM_BUILD_PLATFORMS_VERSION}"
-        CMAKE_PARA="${CMAKE_PARA} -DANDROID_TOOLCHAIN_NAME=${RABBITIM_BUILD_CROSS_HOST}-${RABBITIM_BUILD_TOOLCHAIN_VERSION}"
-        CMAKE_PARA="${CMAKE_PARA} -DANDROID_NDK_ABI_NAME=${ANDROID_NDK_ABI_NAME}"
-        CMAKE_PARA="${CMAKE_PARA} -DOSG_GL1_AVAILABLE=OFF -DOSG_GL2_AVAILABLE=OFF -DOSG_GL3_AVAILABLE=OFF -DOSG_GLES1_AVAILABLE=OFF"
-        CMAKE_PARA="${CMAKE_PARA} -DOSG_GLES2_AVAILABLE=ON -DOSG_GL_LIBRARY_STATIC=OFF -DOSG_GL_DISPLAYLISTS_AVAILABLE=OFF"
-        CMAKE_PARA="${CMAKE_PARA} -DOSG_GL_MATRICES_AVAILABLE=OFF -DOSG_GL_VERTEX_FUNCS_AVAILABLE=OFF -DOSG_GL_VERTEX_ARRAY_FUNCS_AVAILABLE=OFF -DOSG_GL_FIXED_FUNCTION_AVAILABLE=OFF"
-        CMAKE_PARA="${CMAKE_PARA} -DBUILD_OSG_APPLICATIONS=OFF -DBUILD_OSG_PACKAGES=OFF"
         if [ -n "$RABBITIM_CMAKE_MAKE_PROGRAM" ]; then
             CMAKE_PARA="${CMAKE_PARA} -DCMAKE_MAKE_PROGRAM=$RABBITIM_CMAKE_MAKE_PROGRAM" 
         fi
-        ;;
+        CMAKE_PARA="${CMAKE_PARA} -DCMAKE_TOOLCHAIN_FILE=$RABBITIM_BUILD_PREFIX/../build_script/cmake/platforms/toolchain-android.cmake"
+    ;;
     unix)
+        CONFIG_PARA="${CONFIG_PARA} --with-gnu-ld --enable-sse "
         ;;
     windows_msvc)
-        #GENERATORS="Visual Studio 12 2013"
-        export OSG_3RDPARTY_DIR=$RABBITIM_BUILD_PREFIX
         MAKE_PARA=""
         ;;
     windows_mingw)
@@ -125,18 +109,15 @@ case ${RABBITIM_BUILD_TARGERT} in
     *)
     echo "${HELP_STRING}"
     cd $CUR_DIR
-    exit 2
+    exit 3
     ;;
 esac
-
-CMAKE_PARA="${CMAKE_PARA} -DBUILD_DOCUMENTATION=OFF -DBUILD_OSG_EXAMPLES=OFF" # -DBUILD_OSG_APPLICATIONS=OFF"
-CMAKE_PARA="${CMAKE_PARA} -DQt5_DIR=${QT_ROOT}/lib/cmake/Qt5 -DWIN32_USE_MP=ON"
 
 echo "cmake .. -DCMAKE_INSTALL_PREFIX=$RABBITIM_BUILD_PREFIX -DCMAKE_BUILD_TYPE=Release -G\"${GENERATORS}\" ${CMAKE_PARA}"
 cmake .. \
     -DCMAKE_INSTALL_PREFIX="$RABBITIM_BUILD_PREFIX" \
     -DCMAKE_BUILD_TYPE="Release" \
-    -G"${GENERATORS}" ${CMAKE_PARA}
+    -G"${GENERATORS}" ${CMAKE_PARA} -DZLIB_ROOT="$RABBITIM_BUILD_PREFIX"
 
 cmake --build . --target install --config Release ${MAKE_PARA}
 

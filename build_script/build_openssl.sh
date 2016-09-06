@@ -40,7 +40,7 @@ CUR_DIR=`pwd`
 
 #下载源码:
 if [ ! -d ${RABBITIM_BUILD_SOURCE_CODE} ]; then
-    OPENSLL_BRANCH=OpenSSL_1_0_2f
+    OPENSLL_BRANCH=OpenSSL_1_0_2h
     if [ "TRUE" = "${RABBITIM_USE_REPOSITORIES}" ]; then
         echo "git clone -q --branch=${OPENSLL_BRANCH} https://github.com/openssl/openssl  ${RABBITIM_BUILD_SOURCE_CODE}"
         git clone -q --branch=${OPENSLL_BRANCH} https://github.com/openssl/openssl ${RABBITIM_BUILD_SOURCE_CODE}
@@ -71,14 +71,27 @@ echo "RABBITIM_BUILD_CROSS_HOST:$RABBITIM_BUILD_CROSS_HOST"
 echo "RABBITIM_BUILD_CROSS_PREFIX:$RABBITIM_BUILD_CROSS_PREFIX"
 echo "RABBITIM_BUILD_CROSS_SYSROOT:$RABBITIM_BUILD_CROSS_SYSROOT"
 echo "RABBITIM_BUILD_STATIC:$RABBITIM_BUILD_STATIC"
+echo "PATH:$PATH"
 echo ""
 
-if [ -n "$RABBITIM_CLEAN" ]; then
+if [ "$RABBITIM_CLEAN" = "TRUE" ]; then
     if [ -d ".git" ]; then
         git clean -xdf
     else
-        if [ -f Makefile ]; then
-            ${MAKE} distclean
+        if [ "${RABBITIM_BUILD_TARGERT}" = "windows_msvc" ]; then
+            if [ "$RABBITIM_BUILD_STATIC" = "static" ]; then
+                if [ -f ms/nt.mak ]; then
+                    nmake -f ms/nt.mak clean
+                fi
+            else
+                if [ -f ms/ntdll.mak ]; then
+                    nmake -f ms/ntdll.mak clean
+                fi
+            fi
+        else
+            if [ -f Makefile ]; then
+                ${MAKE} clean
+            fi
         fi
     fi
 fi
@@ -88,8 +101,8 @@ if [ "$RABBITIM_BUILD_STATIC" != "static" ]; then
 else
     MODE="no-shared no-pic"
 fi
-echo "configure ..."
 
+echo "configure ..."
 case ${RABBITIM_BUILD_TARGERT} in
     android)
         #export ANDROID_DEV="${RABBITIM_BUILD_CROSS_SYSROOT}/usr"
@@ -124,15 +137,21 @@ case ${RABBITIM_BUILD_TARGERT} in
     windows_mingw)
         case `uname -s` in
             MINGW*|MSYS*)
-                perl Configure  --prefix=${RABBITIM_BUILD_PREFIX} \
+                perl Configure --prefix=${RABBITIM_BUILD_PREFIX} \
                     --openssldir=${RABBITIM_BUILD_PREFIX} \
-                    $MODE mingw
+                    $MODE \
+                    zlib --with-zlib-lib=${RABBITIM_BUILD_PREFIX}/lib \
+                    --with-zlib-include=${RABBITIM_BUILD_PREFIX}/include \
+                    mingw 
                 ;;
             Linux*|Unix*|CYGWIN*|*)
-                perl Configure  --prefix=${RABBITIM_BUILD_PREFIX} \
+                perl Configure --prefix=${RABBITIM_BUILD_PREFIX} \
                     --openssldir=${RABBITIM_BUILD_PREFIX} \
                     --cross-compile-prefix=${RABBITIM_BUILD_CROSS_PREFIX} \
-                    $MODE mingw
+                    $MODE \
+                    zlib --with-zlib-lib=${RABBITIM_BUILD_PREFIX}/lib \
+                    --with-zlib-include=${RABBITIM_BUILD_PREFIX}/include \
+                    mingw
                 ;;
         esac
         ;;
@@ -143,8 +162,10 @@ case ${RABBITIM_BUILD_TARGERT} in
         ;;
 esac
 
+echo "${MAKE} depend"
+${MAKE} depend
 echo "make install"
-#make ${RABBITIM_MAKE_JOB_PARA} && make install
-${MAKE} && ${MAKE} install
+${MAKE} 
+${MAKE} install
 
 cd $CUR_DIR

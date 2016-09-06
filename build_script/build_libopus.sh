@@ -40,9 +40,9 @@ CUR_DIR=`pwd`
 
 #下载源码:
 if [ ! -d ${RABBITIM_BUILD_SOURCE_CODE} ]; then
-    LIBOPUS_VERSION=v1.1.1-rc
+    LIBOPUS_VERSION=1.1.3
     if [ "TRUE" = "${RABBITIM_USE_REPOSITORIES}" ]; then
-        echo "git clone -q  -b v${LIBOPUS_VERSION} git://git.opus-codec.org/opus.git ${RABBITIM_BUILD_SOURCE_CODE}"
+        echo "git clone -q -b v${LIBOPUS_VERSION} git://git.opus-codec.org/opus.git ${RABBITIM_BUILD_SOURCE_CODE}"
         git clone  -q -b v${LIBOPUS_VERSION} git://git.opus-codec.org/opus.git ${RABBITIM_BUILD_SOURCE_CODE}
     else
         echo "wget -q  http://downloads.xiph.org/releases/opus/opus-${LIBOPUS_VERSION}.tar.gz"
@@ -67,7 +67,7 @@ fi
 
 mkdir -p build_${RABBITIM_BUILD_TARGERT}
 cd build_${RABBITIM_BUILD_TARGERT}
-if [ -n "$RABBITIM_CLEAN" ]; then
+if [ "$RABBITIM_CLEAN" = "TRUE" ]; then
     rm -fr *
 fi
 
@@ -108,9 +108,9 @@ case ${RABBITIM_BUILD_TARGERT} in
     unix)
         ;;
     windows_msvc)
-        echo "build_speex.sh don't support windows_msvc. please manually use msvc ide complie"
+        echo "build_libopus.sh don't support windows_msvc. please manually use msvc ide complie"
         cd $CUR_DIR
-        exit 2
+        exit 0
         ;;
     windows_mingw)
         case `uname -s` in
@@ -143,6 +143,7 @@ echo "../configure ${CONFIG_PARA} CFLAGS=\"${CFLAGS=}\" CPPFLAGS=\"${CPPFLAGS}\"
 ../configure ${CONFIG_PARA} CFLAGS="${CFLAGS}" CPPFLAGS="${CPPFLAGS}" LDFLAGS="${LDFLAGS}"
 
 echo "make install"
-make ${RABBITIM_MAKE_JOB_PARA} VERBOSE=1 && make install
+make ${RABBITIM_MAKE_JOB_PARA} VERBOSE=1 
+make install
 
 cd $CUR_DIR

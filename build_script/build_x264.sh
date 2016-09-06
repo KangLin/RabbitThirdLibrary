@@ -59,7 +59,7 @@ echo "RABBITIM_BUILD_CROSS_SYSROOT:$RABBITIM_BUILD_CROSS_SYSROOT"
 echo "RABBITIM_BUILD_STATIC:$RABBITIM_BUILD_STATIC"
 echo ""
 
-if [ -n "$RABBITIM_CLEAN" ]; then
+if [ "$RABBITIM_CLEAN" = "TRUE" ]; then
     if [ -d ".git" ]; then
         git clean -xdf
     else
@@ -102,7 +102,7 @@ case ${RABBITIM_BUILD_TARGERT} in
             Linux*|Unix*|CYGWIN*)
                 CONFIG_PARA="${CONFIG_PARA} --cross-prefix=${RABBITIM_BUILD_CROSS_PREFIX} --host=$RABBITIM_BUILD_CROSS_HOST"
                 ;;
-            MSYS*)
+            MSYS*|MINGW*)
                 CONFIG_PARA="${CONFIG_PARA} --host=$RABBITIM_BUILD_CROSS_HOST"
                 ;;
         *)
@@ -126,6 +126,7 @@ else
 fi
 
 echo "make install"
-make ${RABBITIM_MAKE_JOB_PARA} && make install
+make ${RABBITIM_MAKE_JOB_PARA} 
+make install
 
 cd $CUR_DIR

@@ -39,8 +39,8 @@ fi
 #下载源码:
 if [ ! -d ${RABBITIM_BUILD_SOURCE_CODE} ]; then
     echo "git clone https://chromium.googlesource.com/webm/libvpx ${RABBITIM_BUILD_SOURCE_CODE}"
-    #git clone -q --branch=9b99eb2 https://chromium.googlesource.com/webm/libvpx ${RABBITIM_BUILD_SOURCE_CODE}
-    git clone -q https://chromium.googlesource.com/webm/libvpx ${RABBITIM_BUILD_SOURCE_CODE}
+    git clone -q --branch=v1.5.0 https://chromium.googlesource.com/webm/libvpx ${RABBITIM_BUILD_SOURCE_CODE}
+    #git clone -q https://chromium.googlesource.com/webm/libvpx ${RABBITIM_BUILD_SOURCE_CODE}
 fi
 
 CUR_DIR=`pwd`
@@ -48,7 +48,7 @@ cd ${RABBITIM_BUILD_SOURCE_CODE}
 
 mkdir -p build_${RABBITIM_BUILD_TARGERT}
 cd build_${RABBITIM_BUILD_TARGERT}
-if [ -n "$RABBITIM_CLEAN" ]; then
+if [ "$RABBITIM_CLEAN" = "TRUE" ]; then
     rm -fr *
 fi
 
@@ -90,7 +90,7 @@ case ${RABBITIM_BUILD_TARGERT} in
         fi
         ;;
     windows_msvc)
-        CONFIG_PARA="--target=x86-win32-vs12 --enable-static-msvcrt"
+        CONFIG_PARA="--target=x86-win32-vs${VC_TOOLCHAIN} --enable-static-msvcrt"
         ;;
     windows_mingw)
         case `uname -s` in
@@ -124,7 +124,8 @@ echo "../configure ${CONFIG_PARA} --extra-cflags=\"${CFLAGS=}\""
 ../configure ${CONFIG_PARA} --extra-cflags="${CFLAGS}"
 
 echo "make install"
-make ${RABBITIM_MAKE_JOB_PARA} && make install
+make ${RABBITIM_MAKE_JOB_PARA} 
+make install
 
 if [ "${RABBITIM_BUILD_TARGERT}" = "windows_msvc" ]; then
     cp ${RABBITIM_BUILD_PREFIX}/lib/Win32/vpxmt.lib ${RABBITIM_BUILD_PREFIX}/lib/vpx.lib

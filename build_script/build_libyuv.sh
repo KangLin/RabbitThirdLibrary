@@ -48,7 +48,7 @@ cd ${RABBITIM_BUILD_SOURCE_CODE}
 
 mkdir -p build_${RABBITIM_BUILD_TARGERT}
 cd build_${RABBITIM_BUILD_TARGERT}
-if [ -n "$RABBITIM_CLEAN" ]; then
+if [ "$RABBITIM_CLEAN" = "TRUE" ]; then
     rm -fr *
 fi
 
@@ -66,14 +66,6 @@ echo "RABBITIM_CMAKE_MAKE_PROGRAM:$RABBITIM_CMAKE_MAKE_PROGRAM"
 echo ""
 
 #需要设置 CMAKE_MAKE_PROGRAM 为 make 程序路径。
-case `uname -s` in
-    MINGW*|MSYS*)
-        GENERATORS="MSYS Makefiles"
-        ;;
-    Linux*|Unix*|CYGWIN*|*)
-        GENERATORS="Unix Makefiles" 
-        ;;
-esac
 
 MAKE_PARA="-- ${RABBITIM_MAKE_JOB_PARA}"
 case ${RABBITIM_BUILD_TARGERT} in
@@ -81,12 +73,12 @@ case ${RABBITIM_BUILD_TARGERT} in
         if [ -n "$RABBITIM_CMAKE_MAKE_PROGRAM" ]; then
             CMAKE_PARA="${CMAKE_PARA} -DCMAKE_MAKE_PROGRAM=$RABBITIM_CMAKE_MAKE_PROGRAM" 
         fi
-        CMAKE_PARA="${CMAKE_PARA} -DCMAKE_TOOLCHAIN_FILE=$RABBITIM_BUILD_PREFIX/../../cmake/platforms/toolchain-android.cmake"
+        CMAKE_PARA="${CMAKE_PARA} -DCMAKE_TOOLCHAIN_FILE=$RABBITIM_BUILD_PREFIX/../build_script/cmake/platforms/toolchain-android.cmake"
     ;;
     unix)
     ;;
     windows_msvc)
-        GENERATORS="Visual Studio 12 2013"
+        #GENERATORS="Visual Studio 12 2013"
         MAKE_PARA=""
         ;;
     windows_mingw)
