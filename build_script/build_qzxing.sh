@@ -121,4 +121,10 @@ echo "$QMAKE ${RELEASE_PARA}"
 $QMAKE ${RELEASE_PARA}
 ${MAKE} -f Makefile install ${MAKE_PARA}
 
+if [ -z "$CI" ]; then
+    DEBUG_PARA="${PARA} CONFIG*=debug CONFIG-=release"
+    echo "$QMAKE ${DEBUG_PARA}"
+    ${QMAKE} ${DEBUG_PARA}
+    ${MAKE} -f Makefile install ${MAKE_PARA}
+fi
 cd $CUR_DIR

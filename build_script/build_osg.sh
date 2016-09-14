@@ -58,7 +58,6 @@ if [ ! -d ${RABBITIM_BUILD_SOURCE_CODE} ]; then
     fi
 fi
 
-RABBITIM_BUILD_SOURCE_CODE=${RABBITIM_BUILD_SOURCE_CODE}
 cd ${RABBITIM_BUILD_SOURCE_CODE}
 
 mkdir -p build_${RABBITIM_BUILD_TARGERT}
@@ -129,7 +128,7 @@ case ${RABBITIM_BUILD_TARGERT} in
     ;;
 esac
 
-CMAKE_PARA="${CMAKE_PARA} -DBUILD_DOCUMENTATION=OFF -DBUILD_OSG_EXAMPLES=OFF" # -DBUILD_OSG_APPLICATIONS=OFF"
+CMAKE_PARA="${CMAKE_PARA} -DBUILD_DOCUMENTATION=OFF -DBUILD_OSG_EXAMPLES=OFF -DBUILD_OSG_APPLICATIONS=OFF"
 CMAKE_PARA="${CMAKE_PARA} -DQt5_DIR=${QT_ROOT}/lib/cmake/Qt5 -DWIN32_USE_MP=ON"
 
 echo "cmake .. -DCMAKE_INSTALL_PREFIX=$RABBITIM_BUILD_PREFIX -DCMAKE_BUILD_TYPE=Release -G\"${GENERATORS}\" ${CMAKE_PARA}"
@@ -138,6 +137,10 @@ cmake .. \
     -DCMAKE_BUILD_TYPE="Release" \
     -G"${GENERATORS}" ${CMAKE_PARA}
 
-cmake --build . --target install --config Release ${MAKE_PARA}
+if [ -z "$CI" ]; then
+    cmake --build . --target install --config Debug ${MAKE_PARA}
+else
+    cmake --build . --target install --config Release ${MAKE_PARA}
+fi
 
 cd $CUR_DIR
