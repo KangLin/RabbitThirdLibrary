@@ -1,5 +1,12 @@
-cd ${SOURCE_DIR}/ThirdLibrary/Tools
-export PATH=`pwd`/Tools/cmake/bin:$PATH
+SOURCE_DIR="`pwd`"
+echo $SOURCE_DIR
+TOOLS_DIR=${SOURCE_DIR}/Tools
+if [ -d "${SOURCE_DIR}/ThirdLibrary" ]; then
+    TOOLS_DIR=${SOURCE_DIR}/ThirdLibrary/Tools
+fi
+cd ${TOOLS_DIR}
+
+export PATH=${TOOLS_DIR}/cmake/bin:$PATH
 
 if [ "${BUILD_TARGERT}" = "unix" ]; then
     QT_DIR=`pwd`/Qt/${QT_VERSION}

@@ -3,11 +3,27 @@
 
 set -e
 
+SOURCE_DIR="`pwd`"
+echo $SOURCE_DIR
+TOOLS_DIR=${SOURCE_DIR}/Tools
+if [ -d "${SOURCE_DIR}/ThirdLibrary" ]; then
+    TOOLS_DIR=${SOURCE_DIR}/ThirdLibrary/Tools
+fi
+echo ${TOOLS_DIR}
+SCRIPT_DIR=${SOURCE_DIR}/build_script
+if [ -d ${SOURCE_DIR}/ThirdLibrary/build_script ]; then
+    SCRIPT_DIR=${SOURCE_DIR}/ThirdLibrary/build_script
+fi
+
+if [ ! -f "${TOOLS_DIR}" ]; then
+    mkdir -p ${TOOLS_DIR}
+fi
+
 function function_install_yasm()
 {
     #安装 yasm
-    mkdir -p ${SOURCE_DIR}/ThirdLibrary/Tools/src
-    cd ${SOURCE_DIR}/ThirdLibrary/Tools/src
+    mkdir -p ${TOOLS_DIR}/src
+    cd ${TOOLS_DIR}/src
     wget -c -nv http://www.tortall.net/projects/yasm/releases/yasm-1.3.0.tar.gz 
     tar xzf yasm-1.3.0.tar.gz
     cd yasm-1.3.0/
@@ -17,7 +33,7 @@ function function_install_yasm()
 
 function function_common()
 {
-    cd ${SOURCE_DIR}/ThirdLibrary/Tools
+    cd ${TOOLS_DIR}
     #下载最新cmake程序
     if [ "cmake" = "${QMAKE}" ]; then
         if [ ! -d "`pwd`/cmake" ]; then
@@ -32,7 +48,7 @@ function function_common()
         QT_DIR=`pwd`/Qt/${QT_VERSION}
         if [ ! -d "${QT_DIR}" ]; then
             wget -c --no-check-certificate -nv http://download.qt.io/official_releases/qt/${QT_VERSION_DIR}/${QT_VERSION}/qt-opensource-linux-x64-android-${QT_VERSION}.run
-            bash ${SOURCE_DIR}/ThirdLibrary/build_script/ci/qt-installer.sh qt-opensource-linux-x64-android-${QT_VERSION}.run ${QT_DIR}
+            bash ${SCRIPT_DIR}/ci/qt-installer.sh qt-opensource-linux-x64-android-${QT_VERSION}.run ${QT_DIR}
             rm qt-opensource-linux-x64-android-${QT_VERSION}.run
         fi
     fi
@@ -40,7 +56,7 @@ function function_common()
 
 function function_android()
 {
-    cd ${SOURCE_DIR}/ThirdLibrary/Tools
+    cd ${TOOLS_DIR}
 
     #下载android ndk  
     if [ ! -d "`pwd`/android-ndk" ]; then
@@ -51,7 +67,7 @@ function function_android()
         rm android-ndk-r10e-linux-x86_64.bin
     fi
 
-    cd ${SOURCE_DIR}/ThirdLibrary/Tools
+    cd ${TOOLS_DIR}
     
     #Download android sdk  
     if [ ! -d "`pwd`/android-sdk" ]; then
@@ -64,7 +80,7 @@ function function_android()
     fi
 
     function_common
-    cd ${SOURCE_DIR}/ThirdLibrary
+    cd ${SOURCE_DIR}
 }
 
 function function_unix()
@@ -74,7 +90,7 @@ function function_unix()
 
     function_common
 
-    cd ${SOURCE_DIR}/ThirdLibrary
+    cd ${SOURCE_DIR}
 }
 
 function function_mingw()
@@ -82,17 +98,13 @@ function function_mingw()
     #汇编工具yasm
     #function_install_yasm
 
-    cd ${SOURCE_DIR}/ThirdLibrary
     if [ "true" == "$RABBITIM_BUILD_THIRDLIBRARY" ]; then
         export RABBITIM_BUILD_CROSS_HOST=i686-w64-mingw32 #i586-mingw32msvc
     fi
 
     function_common
-    cd ${SOURCE_DIR}/ThirdLibrary
+    cd ${SOURCE_DIR}
 }
-
-SOURCE_DIR="`pwd`"
-echo $SOURCE_DIR
 
 case ${BUILD_TARGERT} in
     android)
