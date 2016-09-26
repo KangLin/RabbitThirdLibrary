@@ -15,6 +15,7 @@ SCRIPT_DIR=${SOURCE_DIR}/build_script
 if [ -d ${SOURCE_DIR}/ThirdLibrary/build_script ]; then
     SCRIPT_DIR=${SOURCE_DIR}/ThirdLibrary/build_script
 fi
+echo ${SCRIPT_DIR}
 cd ${SCRIPT_DIR}
 SOURCE_DIR=${SCRIPT_DIR}/../src
 
@@ -39,8 +40,8 @@ echo "RABBITIM_BUILD_THIRDLIBRARY:$RABBITIM_BUILD_THIRDLIBRARY"
 for v in $RABBITIM_BUILD_THIRDLIBRARY
 do
     if [ "$v" = "rabbitim" ]; then
-        ./build_$v.sh ${BUILD_TARGERT}
+        bash build_$v.sh ${BUILD_TARGERT}
     else
-        ./build_$v.sh ${BUILD_TARGERT} ${SOURCE_DIR}/$v #> /dev/null
+        bash build_$v.sh ${BUILD_TARGERT} ${SOURCE_DIR}/$v > /dev/null
     fi
 done
