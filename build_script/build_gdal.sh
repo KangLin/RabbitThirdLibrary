@@ -99,6 +99,7 @@ else
 fi
 case ${RABBITIM_BUILD_TARGERT} in
     android)
+        #https://github.com/nutiteq/gdal/wiki/AndroidHowto
         export CC=${RABBITIM_BUILD_CROSS_PREFIX}gcc 
         export CXX=${RABBITIM_BUILD_CROSS_PREFIX}g++
         export AR=${RABBITIM_BUILD_CROSS_PREFIX}ar
@@ -108,9 +109,10 @@ case ${RABBITIM_BUILD_TARGERT} in
         export NM=${RABBITIM_BUILD_CROSS_PREFIX}nm
         LIBS="-lstdc++"
         CONFIG_PARA="CXX=${RABBITIM_BUILD_CROSS_PREFIX}g++ LD=${RABBITIM_BUILD_CROSS_PREFIX}ld"
-        CONFIG_PARA="${CONFIG_PARA} --disable-shared -enable-static --host=$RABBITIM_BUILD_CROSS_HOST"
+        #CONFIG_PARA="${CONFIG_PARA} --disable-shared -enable-static"
+        CONFIG_PARA="${CONFIG_PARA} --host=$RABBITIM_BUILD_CROSS_HOST"
         CONFIG_PARA="${CONFIG_PARA} --with-sysroot=${RABBITIM_BUILD_CROSS_SYSROOT}"
-        CONFIG_PARA="$CONFIG_PARA --with-curl=$RABBITIM_BUILD_PREFIX/bin"
+        #CONFIG_PARA="$CONFIG_PARA --with-curl=$RABBITIM_BUILD_PREFIX/bin"
         CFLAGS="-march=armv7-a -mfpu=neon --sysroot=${RABBITIM_BUILD_CROSS_SYSROOT} "
         CXXFLAGS="-march=armv7-a -mfpu=neon -std=c++0x --sysroot=${RABBITIM_BUILD_CROSS_SYSROOT} ${RABBITIM_BUILD_CROSS_STL_INCLUDE_FLAGS}"
         CPPFLAGS=${CXXFLAGS}
