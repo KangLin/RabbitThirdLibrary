@@ -28,8 +28,8 @@ env:
     - RABBITIM_BUILD_THIRDLIBRARY="TRUE" 
 
   matrix:
-     - BUILD_TARGERT="unix" RABBITIM_BUILD_THIRDLIBRARY="change_prefix zlib minizip expat libgpx openssl libsodium libcurl libpng jpeg libgif libtiff libvpx libyuv libopus x264 ffmpeg opencv"
-     - BUILD_TARGERT="android" RABBITIM_BUILD_THIRDLIBRARY="change_prefix zlib minizip expat libgpx openssl libsodium libcurl libpng jpeg libgif libtiff libvpx libyuv libopus x264 ffmpeg opencv"
+     - BUILD_TARGERT="unix" RABBITIM_BUILD_THIRDLIBRARY="change_prefix zlib minizip expat libgpx openssl libsodium libcurl libpng jpeg libgif libtiff freetype libvpx libyuv libopus x264 ffmpeg opencv"
+     - BUILD_TARGERT="android" RABBITIM_BUILD_THIRDLIBRARY="change_prefix zlib minizip expat libgpx openssl libsodium libcurl libpng jpeg libgif libtiff freetype libvpx libyuv libopus x264 ffmpeg opencv"
      
      #- BUILD_TARGERT="unix" QT_VERSION_DIR=5.7 QT_VERSION=5.7.0 RABBITIM_BUILD_THIRDLIBRARY="qxmpp qzxing" DOWNLOAD_FILE: https://sourceforge.net/projects/rabbitim-third-library/files/release/RabbitIm_linux_x86__v$(appveyor_build_version).zip/download
      #- BUILD_TARGERT="unix" QT_VERSION_DIR=5.6 QT_VERSION=5.6.0 RABBITIM_BUILD_THIRDLIBRARY="qxmpp qzxing"

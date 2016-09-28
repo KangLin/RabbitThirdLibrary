@@ -8,40 +8,40 @@ environment:
     GENERATORS: "Visual Studio 14 2015"
     toolchain_version: 14
     AUTOBUILD_ARCH: x86
-    RABBITIM_BUILD_THIRDLIBRARY: change_prefix zlib minizip expat libgpx openssl libsodium libcurl libpng jpeg libgif libtiff libvpx libyuv libopus x264 ffmpeg opencv
+    RABBITIM_BUILD_THIRDLIBRARY: change_prefix zlib minizip expat libgpx openssl libsodium libcurl libpng jpeg libgif libtiff freetype libvpx libyuv libopus x264 ffmpeg opencv
 
   - BUILD_TARGERT: windows_msvc
     GENERATORS: "Visual Studio 12 2013"
     toolchain_version: 12
     AUTOBUILD_ARCH: x86
-    RABBITIM_BUILD_THIRDLIBRARY: change_prefix zlib minizip expat libgpx openssl libsodium libcurl libpng jpeg libgif libtiff libvpx libyuv libopus x264 ffmpeg opencv 
+    RABBITIM_BUILD_THIRDLIBRARY: change_prefix zlib minizip expat libgpx openssl libsodium libcurl libpng jpeg libgif libtiff freetype libvpx libyuv libopus x264 ffmpeg opencv 
     RABBITIM_USE_REPOSITORIES: "FALSE"
       
   - BUILD_TARGERT: android
-    RABBITIM_BUILD_THIRDLIBRARY: change_prefix zlib minizip expat libgpx openssl libsodium libcurl libpng jpeg libgif libtiff libvpx libyuv libopus x264 ffmpeg opencv 
+    RABBITIM_BUILD_THIRDLIBRARY: change_prefix zlib minizip expat libgpx openssl libsodium libcurl libpng jpeg libgif libtiff freetype libvpx libyuv libopus x264 ffmpeg opencv 
     RABBITIM_USE_REPOSITORIES: "FALSE"
       
   - BUILD_TARGERT: windows_mingw
     toolchain_version: 530
     AUTOBUILD_ARCH: x86
-    RABBITIM_BUILD_THIRDLIBRARY: change_prefix zlib minizip expat libgpx openssl libsodium libcurl libpng jpeg libgif libtiff libvpx libyuv libopus x264 ffmpeg qrencode opencv 
+    RABBITIM_BUILD_THIRDLIBRARY: change_prefix zlib minizip expat libgpx openssl libsodium libcurl libpng jpeg libgif libtiff freetype libvpx libyuv libopus x264 ffmpeg qrencode opencv 
     
   - BUILD_TARGERT: windows_mingw
     toolchain_version: 492
     AUTOBUILD_ARCH: x86
-    RABBITIM_BUILD_THIRDLIBRARY: change_prefix zlib minizip expat libgpx openssl libsodium libcurl libpng jpeg libgif libtiff libvpx libyuv libopus x264 ffmpeg qrencode opencv 
+    RABBITIM_BUILD_THIRDLIBRARY: change_prefix zlib minizip expat libgpx openssl libsodium libcurl libpng jpeg libgif libtiff freetype libvpx libyuv libopus x264 ffmpeg qrencode opencv 
     RABBITIM_USE_REPOSITORIES: "FALSE"
     
   - BUILD_TARGERT: windows_mingw
     toolchain_version: 491
     AUTOBUILD_ARCH: x86
-    RABBITIM_BUILD_THIRDLIBRARY: change_prefix zlib minizip expat libgpx openssl libsodium libcurl libpng jpeg libgif libtiff libvpx libyuv libopus x264 ffmpeg qrencode opencv 
+    RABBITIM_BUILD_THIRDLIBRARY: change_prefix zlib minizip expat libgpx openssl libsodium libcurl libpng jpeg libgif libtiff freetype libvpx libyuv libopus x264 ffmpeg qrencode opencv 
     RABBITIM_USE_REPOSITORIES: "FALSE"
   
   - BUILD_TARGERT: windows_mingw
     toolchain_version: 482
     AUTOBUILD_ARCH: x86
-    RABBITIM_BUILD_THIRDLIBRARY: change_prefix zlib minizip expat libgpx openssl libsodium libcurl libpng jpeg libgif libtiff libvpx libyuv libopus x264 ffmpeg qrencode opencv 
+    RABBITIM_BUILD_THIRDLIBRARY: change_prefix zlib minizip expat libgpx openssl libsodium libcurl libpng jpeg libgif libtiff freetype libvpx libyuv libopus x264 ffmpeg qrencode opencv 
     RABBITIM_USE_REPOSITORIES: "FALSE"
 
   ##### QT相关编译 #####
