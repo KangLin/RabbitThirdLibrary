@@ -20,7 +20,9 @@ environment:
     RABBITIM_USE_REPOSITORIES: "FALSE"
       
   - BUILD_TARGERT: android
+    toolchain_version: 4.8
     QT_VERSION: NO
+    AUTOBUILD_ARCH: arm
     RABBITIM_BUILD_THIRDLIBRARY: change_prefix zlib minizip expat libgpx openssl libsodium libcurl libpng jpeg libgif libtiff freetype libvpx libyuv libopus x264 ffmpeg opencv 
     RABBITIM_USE_REPOSITORIES: "FALSE"
       
@@ -259,61 +261,79 @@ environment:
   - BUILD_TARGERT: android
     QT_VERSION_DIR: 5.7
     QT_VERSION: 5.7.0
+    toolchain_version: 4.8
+    AUTOBUILD_ARCH: arm
     RABBITIM_BUILD_THIRDLIBRARY: osg
-    DOWNLOAD_FILE: https://sourceforge.net/projects/rabbitim-third-library/files/release/RabbitIm_android_NO__v$(appveyor_build_version).zip/download
+    DOWNLOAD_FILE: https://sourceforge.net/projects/rabbitim-third-library/files/release/RabbitIm_android4.8_arm_NO_v$(appveyor_build_version).zip/download
 
   - BUILD_TARGERT: android
     QT_VERSION_DIR: 5.6
     QT_VERSION: 5.6.1
+    toolchain_version: 4.8
+    AUTOBUILD_ARCH: arm
     RABBITIM_BUILD_THIRDLIBRARY: osg
-    DOWNLOAD_FILE: https://sourceforge.net/projects/rabbitim-third-library/files/release/RabbitIm_android_NO__v$(appveyor_build_version).zip/download
+    DOWNLOAD_FILE: https://sourceforge.net/projects/rabbitim-third-library/files/release/RabbitIm_android4.8_arm_NO_v$(appveyor_build_version).zip/download
     RABBITIM_USE_REPOSITORIES: "FALSE"
 
   - BUILD_TARGERT: android
     QT_VERSION_DIR: 5.5
     QT_VERSION: 5.5.1
+    toolchain_version: 4.8
+    AUTOBUILD_ARCH: arm
     RABBITIM_BUILD_THIRDLIBRARY: osg
-    DOWNLOAD_FILE: https://sourceforge.net/projects/rabbitim-third-library/files/release/RabbitIm_android_NO__v$(appveyor_build_version).zip/download
+    DOWNLOAD_FILE: https://sourceforge.net/projects/rabbitim-third-library/files/release/RabbitIm_android4.8_arm_NO_v$(appveyor_build_version).zip/download
     RABBITIM_USE_REPOSITORIES: "FALSE"
 
   - BUILD_TARGERT: android
     QT_VERSION_DIR: 5.7
     QT_VERSION: 5.7.0
+    toolchain_version: 4.8
+    AUTOBUILD_ARCH: arm
     RABBITIM_BUILD_THIRDLIBRARY: gdal osgearth
-    DOWNLOAD_FILE: https://sourceforge.net/projects/rabbitim-third-library/files/release/RabbitIm_android_NO_5.7.0_v$(appveyor_build_version).zip/download
+    DOWNLOAD_FILE: https://sourceforge.net/projects/rabbitim-third-library/files/release/RabbitIm_android4.8_arm_NO_5.7.0_v$(appveyor_build_version).zip/download
 
   - BUILD_TARGERT: android
     QT_VERSION_DIR: 5.6
     QT_VERSION: 5.6.1
+    toolchain_version: 4.8
+    AUTOBUILD_ARCH: arm
     RABBITIM_BUILD_THIRDLIBRARY: gdal osgearth
-    DOWNLOAD_FILE: https://sourceforge.net/projects/rabbitim-third-library/files/release/RabbitIm_android_NO_5.6.1_v$(appveyor_build_version).zip/download
+    DOWNLOAD_FILE: https://sourceforge.net/projects/rabbitim-third-library/files/release/RabbitIm_android4.8_arm_NO_5.6.1_v$(appveyor_build_version).zip/download
     RABBITIM_USE_REPOSITORIES: "FALSE"
 
   - BUILD_TARGERT: android
     QT_VERSION_DIR: 5.5
     QT_VERSION: 5.5.1
+    toolchain_version: 4.8
+    AUTOBUILD_ARCH: arm
     RABBITIM_BUILD_THIRDLIBRARY: gdal osgearth
-    DOWNLOAD_FILE: https://sourceforge.net/projects/rabbitim-third-library/files/release/RabbitIm_android_NO_5.5.1_v$(appveyor_build_version).zip/download
+    DOWNLOAD_FILE: https://sourceforge.net/projects/rabbitim-third-library/files/release/RabbitIm_android4.8_arm_NO_5.5.1_v$(appveyor_build_version).zip/download
     RABBITIM_USE_REPOSITORIES: "FALSE"
 
   - BUILD_TARGERT: android
     QT_VERSION_DIR: 5.7
     QT_VERSION: 5.7.0
+    toolchain_version: 4.8
+    AUTOBUILD_ARCH: arm
     RABBITIM_BUILD_THIRDLIBRARY: qxmpp qzxing
-    DOWNLOAD_FILE: https://sourceforge.net/projects/rabbitim-third-library/files/release/RabbitIm_android_NO_5.7.0_v$(appveyor_build_version).zip/download
+    DOWNLOAD_FILE: https://sourceforge.net/projects/rabbitim-third-library/files/release/RabbitIm_android4.8_arm_NO_5.7.0_v$(appveyor_build_version).zip/download
 
   - BUILD_TARGERT: android
     QT_VERSION_DIR: 5.6
     QT_VERSION: 5.6.1
+    toolchain_version: 4.8
+    AUTOBUILD_ARCH: arm
     RABBITIM_BUILD_THIRDLIBRARY: qxmpp qzxing 
-    DOWNLOAD_FILE: https://sourceforge.net/projects/rabbitim-third-library/files/release/RabbitIm_android_NO_5.6.1_v$(appveyor_build_version).zip/download
+    DOWNLOAD_FILE: https://sourceforge.net/projects/rabbitim-third-library/files/release/RabbitIm_android4.8_arm_NO_5.6.1_v$(appveyor_build_version).zip/download
     RABBITIM_USE_REPOSITORIES: "FALSE"
 
   - BUILD_TARGERT: android
     QT_VERSION_DIR: 5.5
     QT_VERSION: 5.5.1
+    toolchain_version: 4.8
+    AUTOBUILD_ARCH: arm
     RABBITIM_BUILD_THIRDLIBRARY: qxmpp qzxing
-    DOWNLOAD_FILE: https://sourceforge.net/projects/rabbitim-third-library/files/release/RabbitIm_android_NO_5.5.1_v$(appveyor_build_version).zip/download
+    DOWNLOAD_FILE: https://sourceforge.net/projects/rabbitim-third-library/files/release/RabbitIm_android4.8_arm_NO_5.5.1_v$(appveyor_build_version).zip/download
     RABBITIM_USE_REPOSITORIES: "FALSE"
     
   - BUILD_TARGERT: windows_mingw
@@ -399,7 +419,7 @@ test: off
 
 deploy:
   provider: FTP 
-  protocol: sftp 
+  protocol: sftp #https://sourceforge.net/p/forge/documentation/SFTP/
   host: frs.sourceforge.net 
   username: kl222,rabbitim-third-library
   #密码用这个加密 https://ci.appveyor.com/tools/encrypt

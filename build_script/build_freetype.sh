@@ -98,7 +98,7 @@ case ${RABBITIM_BUILD_TARGERT} in
     unix)
     ;;
     windows_msvc)
-        #GENERATORS="Visual Studio 12 2013"
+        CMAKE_PARA="${CMAKE_PARA} -DWITH_PNG=OFF"
         MAKE_PARA=""
         ;;
     windows_mingw)
@@ -121,7 +121,7 @@ echo "cmake .. -DCMAKE_INSTALL_PREFIX=$RABBITIM_BUILD_PREFIX -DCMAKE_BUILD_TYPE=
 cmake .. \
     -DCMAKE_INSTALL_PREFIX="$RABBITIM_BUILD_PREFIX" \
     -DCMAKE_BUILD_TYPE="Release" \
-    -G"${GENERATORS}" ${CMAKE_PARA} 
+    -G"${GENERATORS}" ${CMAKE_PARA}  
 
 cmake --build . --target install --config Release #{MAKE_PARA}
 

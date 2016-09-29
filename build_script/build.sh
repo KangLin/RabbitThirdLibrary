@@ -55,6 +55,7 @@ if [ -n "$2" ]; then
     ./build_jpeg.sh ${RABBITIM_BUILD_TARGERT} $2/libjpeg
     ./build_libgif.sh ${RABBITIM_BUILD_TARGERT} $2/libgif
     ./build_libtiff.sh ${RABBITIM_BUILD_TARGERT} $2/libtiff
+    ./build_freetype.sh ${RABBITIM_BUILD_TARGERT} $2/freetype
     ./build_osg.sh ${RABBITIM_BUILD_TARGERT} $2/osg
     ./build_geos.sh ${RABBITIM_BUILD_TARGERT} $2/geos
     ./build_gdal.sh ${RABBITIM_BUILD_TARGERT} $2/gdal
@@ -76,6 +77,7 @@ else
     ./build_jpeg.sh ${RABBITIM_BUILD_TARGERT} 
     ./build_libgif.sh ${RABBITIM_BUILD_TARGERT}
     ./build_libtiff.sh ${RABBITIM_BUILD_TARGERT}
+    ./build_freetype.sh ${RABBITIM_BUILD_TARGERT}
     ./build_osg.sh ${RABBITIM_BUILD_TARGERT}
     ./build_geos.sh ${RABBITIM_BUILD_TARGERT} 
     ./build_gdal.sh ${RABBITIM_BUILD_TARGERT} 

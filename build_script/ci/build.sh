@@ -24,7 +24,7 @@ if [ -n "$DOWNLOAD_FILE" ]; then
    echo "wget -q -c -O ${SCRIPT_DIR}/../${BUILD_TARGERT}.zip ${DOWNLOAD_FILE}"
    wget -q -c -O ${SCRIPT_DIR}/../${BUILD_TARGERT}.zip ${DOWNLOAD_FILE}
    unzip -q ${SCRIPT_DIR}/../${BUILD_TARGERT}.zip -d ${SCRIPT_DIR}/../${BUILD_TARGERT}
-   if [ "$APPVEYOR_PROJECT_NAME" != "rabbitim-third-library" and  "$BUILD_TARGERT" != "windows_msvc" ]; then
+   if [ "$APPVEYOR_PROJECT_NAME" != "rabbitim-third-library" and "$BUILD_TARGERT" != "windows_msvc" ]; then
        bash ${SCRIPT_DIR}/../${BUILD_TARGERT}/change_prefix.sh
    fi
 fi
@@ -45,3 +45,9 @@ do
         bash build_$v.sh ${BUILD_TARGERT} ${SOURCE_DIR}/$v > /dev/null
     fi
 done
+
+cd ..
+tar czf RabbitIm_${BUILD_TARGERT}${toolchain_version}_${AUTOBUILD_ARCH}_${QT_VERSION}_v${appveyor_build_version}.tar.gz ${BUILD_TARGERT}
+if [ -f RabbitIm_${BUILD_TARGERT}${toolchain_version}_${AUTOBUILD_ARCH}_${QT_VERSION}_v${appveyor_build_version}.tar.gz ]; then
+   scp RabbitIm_${BUILD_TARGERT}${toolchain_version}_${AUTOBUILD_ARCH}_${QT_VERSION}_v${appveyor_build_version}.tar.gz kl222,rabbitim-third-library@frs.sourceforge.net:pfs/release
+fi
