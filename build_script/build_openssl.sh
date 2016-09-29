@@ -40,9 +40,9 @@ CUR_DIR=`pwd`
 
 #下载源码:
 if [ ! -d ${RABBITIM_BUILD_SOURCE_CODE} ]; then
-    OPENSLL_BRANCH=OpenSSL_1_0_2h
+    OPENSLL_BRANCH=OpenSSL_1_0_2j
     if [ "TRUE" = "${RABBITIM_USE_REPOSITORIES}" ]; then
-        echo "git clone -q --branch=${OPENSLL_BRANCH} https://github.com/openssl/openssl  ${RABBITIM_BUILD_SOURCE_CODE}"
+        echo "git clone -q --branch=${OPENSLL_BRANCH} https://github.com/openssl/openssl ${RABBITIM_BUILD_SOURCE_CODE}"
         git clone -q --branch=${OPENSLL_BRANCH} https://github.com/openssl/openssl ${RABBITIM_BUILD_SOURCE_CODE}
         #git clone -q https://github.com/openssl/openssl ${RABBITIM_BUILD_SOURCE_CODE}
     else
@@ -142,7 +142,7 @@ case ${RABBITIM_BUILD_TARGERT} in
                     $MODE \
                     zlib --with-zlib-lib=${RABBITIM_BUILD_PREFIX}/lib \
                     --with-zlib-include=${RABBITIM_BUILD_PREFIX}/include \
-                    mingw 
+                    mingw
                 ;;
             Linux*|Unix*|CYGWIN*|*)
                 perl Configure --prefix=${RABBITIM_BUILD_PREFIX} \

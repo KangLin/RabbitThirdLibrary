@@ -49,5 +49,5 @@ done
 cd ..
 tar czf RabbitIm_${BUILD_TARGERT}${toolchain_version}_${AUTOBUILD_ARCH}_${QT_VERSION}_v${appveyor_build_version}.tar.gz ${BUILD_TARGERT}
 if [ -f RabbitIm_${BUILD_TARGERT}${toolchain_version}_${AUTOBUILD_ARCH}_${QT_VERSION}_v${appveyor_build_version}.tar.gz ]; then
-   scp RabbitIm_${BUILD_TARGERT}${toolchain_version}_${AUTOBUILD_ARCH}_${QT_VERSION}_v${appveyor_build_version}.tar.gz kl222,rabbitim-third-library@frs.sourceforge.net:pfs/release
+   scp -p RabbitIm_${BUILD_TARGERT}${toolchain_version}_${AUTOBUILD_ARCH}_${QT_VERSION}_v${appveyor_build_version}.tar.gz kl222,rabbitim-third-library@frs.sourceforge.net:pfs/release
 fi
