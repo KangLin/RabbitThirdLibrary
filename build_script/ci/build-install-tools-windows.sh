@@ -30,7 +30,7 @@ fi
 cd ${TOOLS_DIR}
 
 # Qt qt安装参见：https://github.com/benlau/qtci  
-if [ -n "${QT_VERSION}" ]; then
+if [ "NO" != "${QT_VERSION}" ]; then
     QT_DIR=C:/projects/rabbitim-third-library/Tools/Qt/${QT_VERSION}
     if [ -d "C:/projects/rabbitim/ThirdLibrary/Tools" ]; then
         QT_DIR=C:/projects/rabbitim/ThirdLibrary/Tools/Qt/${QT_VERSION}
