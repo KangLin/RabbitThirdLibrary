@@ -98,8 +98,8 @@ case ${RABBITIM_BUILD_TARGERT} in
     unix)
     ;;
     windows_msvc)
-        CMAKE_PARA="${CMAKE_PARA} -DWITH_PNG=OFF"
         MAKE_PARA=""
+        CMAKE_PARA="${CMAKE_PARA} -DWITH_PNG=OFF"       
         ;;
     windows_mingw)
         case `uname -s` in

@@ -17,8 +17,7 @@ os:
   - unix
 
 addons:
-  ssh_known_hosts:
-    - github.com
+  ssh_known_hosts: frs.sourceforge.net
   
 env:
   global:
@@ -54,9 +53,11 @@ install:
 before_script:
   - source ${SOURCE_DIR}/build_script/ci/build_env.sh
   - cd ${SOURCE_DIR}/build_script
-  
+
 script: 
   - bash ${SOURCE_DIR}/build_script/ci/build.sh ${SOURCE_DIR}
+
+after_script:
 
 notifications:
   email: kl222@126.com
