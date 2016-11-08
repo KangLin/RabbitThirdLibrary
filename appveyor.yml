@@ -385,8 +385,9 @@ environment:
 init:
   - set varch=%AUTOBUILD_ARCH%
   - if "%AUTOBUILD_ARCH%" == "x64" set varch=amd64
-  - if "%BUILD_TARGERT%"=="windows_msvc" call "C:\Program Files (x86)\Microsoft Visual Studio %toolchain_version%.0\VC\vcvarsall.bat" %varch%
-  #- if "%BUILD_TARGERT%"=="windows_mingw" set PATH=C:\Qt\Tools\mingw%toolchain_version%_32\bin;%PATH%
+  - if "%BUILD_TARGERT%" == "windows_msvc" call "C:\Program Files (x86)\Microsoft Visual Studio %toolchain_version%.0\VC\vcvarsall.bat" %varch%
+  #- if "%BUILD_TARGERT%" == "windows_mingw" echo "PATH=/C/Qt/Tools/mingw%toolchain_version%_32/bin:${PATH}" >> C:\msys64\etc\profile
+  - if "%BUILD_TARGERT%" == "windows_mingw" set MSYSTEM=MINGW32  #设置编译系统为MINGW32
   - echo NUMBER_OF_PROCESSORS=%NUMBER_OF_PROCESSORS%
   - echo PROCESSOR_IDENTIFIER=%PROCESSOR_IDENTIFIER%
   - echo QT_ROOT=%QT_ROOT%
@@ -418,13 +419,13 @@ artifacts:
 test: off
 
 deploy:
-  provider: FTP 
+  provider: FTP  #http://www.appveyor.com/docs/deployment/ftp
   protocol: sftp #https://sourceforge.net/p/forge/documentation/SFTP/
   host: frs.sourceforge.net 
   username: kl222,rabbitim-third-library
   #密码用这个加密 https://ci.appveyor.com/tools/encrypt
   password: 
-    secure: 2WEtOQrdty3V3g0aEVvS3Q== 
+    secure: 2WEtOQrdty3V3g0aEVvS3Q==
   folder: pfs/release  #link pfs to  /home/frs/project/r/ra/rabbitim-third-library
   draft: false
   active_mode: false 
