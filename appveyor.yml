@@ -427,7 +427,6 @@ deploy:
   password: 
     secure: 2WEtOQrdty3V3g0aEVvS3Q==
   folder: pfs/release  #link pfs to  /home/frs/project/r/ra/rabbitim-third-library
-  draft: false
   active_mode: false 
 
 #deploy:
