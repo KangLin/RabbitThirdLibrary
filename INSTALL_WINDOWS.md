@@ -28,14 +28,20 @@ windows原生编译
 - 设置国内镜像：
 打开 ${MSYS2_ROOT}/etc/pacman.d/mirrorlist.msys
 
+    Server = https://mirrors.tuna.tsinghua.edu.cn/msys2/msys/$arch
+    Server = http://mirror.bit.edu.cn/msys2/REPOS/MSYS2/$arch
     Server = http://mirrors.ustc.edu.cn/msys2/REPOS/MSYS2/$arch #中国科学技术
-     
+
 打开 ${MSYS2_ROOT}/etc/pacman.d/mirrorlist.mingw32
 
+    Server = https://mirrors.tuna.tsinghua.edu.cn/msys2/mingw/i686
+    Server = http://mirror.bit.edu.cn/msys2/REPOS/MINGW/i686/
     Server = http://mirrors.ustc.edu.cn/msys2/REPOS/MINGW/i686/ #中国科学技术
-    
-打开 ${MSYS2_ROOT}/etc/pacman.d/mirrorlist.mingw64
 
+打开 ${MSYS2_ROOT}/etc/pacman.d/mirrorlist.mingw64
+    
+    Server = https://mirrors.tuna.tsinghua.edu.cn/msys2/mingw/x86_64
+    Server = http://mirror.bit.edu.cn/msys2/REPOS/MINGW/x86_64
     Server = http://mirrors.ustc.edu.cn/msys2/REPOS/MINGW/x86_64/ #中国科学技术
 
 + 启动msys2
@@ -231,14 +237,20 @@ windows下用mingw交叉编译
 - 设置国内镜像：
 打开 ${MSYS2_ROOT}/etc/pacman.d/mirrorlist.msys
 
+    Server = https://mirrors.tuna.tsinghua.edu.cn/msys2/msys/$arch
+    Server = http://mirror.bit.edu.cn/msys2/REPOS/MSYS2/$arch
     Server = http://mirrors.ustc.edu.cn/msys2/REPOS/MSYS2/$arch #中国科学技术
 
 打开 ${MSYS2_ROOT}/etc/pacman.d/mirrorlist.mingw32
 
+    Server = https://mirrors.tuna.tsinghua.edu.cn/msys2/mingw/i686
+    Server = http://mirror.bit.edu.cn/msys2/REPOS/MINGW/i686/
     Server = http://mirrors.ustc.edu.cn/msys2/REPOS/MINGW/i686/ #中国科学技术
 
 打开 ${MSYS2_ROOT}/etc/pacman.d/mirrorlist.mingw64
-
+    
+    Server = https://mirrors.tuna.tsinghua.edu.cn/msys2/mingw/x86_64
+    Server = http://mirror.bit.edu.cn/msys2/REPOS/MINGW/x86_64
     Server = http://mirrors.ustc.edu.cn/msys2/REPOS/MINGW/x86_64/ #中国科学技术
 
 + 启动msys2
