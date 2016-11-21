@@ -21,28 +21,37 @@ addons:
   
 env:
   global:
-    - SOURCE_DIR=$TRAVIS_BUILD_DIR
-    - RABBITIM_USE_REPOSITORIES="TRUE"
+    - PROJECT_NAME="RabbitThirdLIbrary"
+    - BUILD_VERSION=$TRAVIS_BUILD_NUMBER
+    - RABBIT_USE_REPOSITORIES="TRUE"
     - QMAKE=qmake
-    - RABBITIM_BUILD_THIRDLIBRARY="TRUE" 
+    - RABBIT_BUILD_THIRDLIBRARY="TRUE" 
+    - secure: cMXl/vgEQwyV4KravjvwYFqp+Pqxp52Jhku7GwWE4LZrbAOIrEvNWHVcAki4ygxhiq4eRktrBezMm29oviLC4ogt8ypg0ulmvk+O/x9hCGTfRl4LHxK+H68hD2WMN8CfjTB1FYfi6BGViiSJ2qKUZ7UU2BBcxegZkoL+Q/mKhKeIEtOsMJIbsnxcFfE1FtBg0YFBvbqdKHjHYwjnZNMEn5vh2fSERT7FPxitZmH8ARwM+4V4nbK89KI/UGXuPL4RfmonJpmMT6C7srWHMKkyVOgbtQuNLwjjMm/ibAmZE8553HqxoBBs8rbGQC7zXkH+8OvWMFhI6rFkE9awmAB6YYAnTcArrK35iZDtMdGqlNg/KkBuZqiTxJNHe1Ty1cvZGOdvDiB03ny4ZWmuXZnaKUpQq76iwRC5Kxwcz/M1hFebn2bONFDCqmqdsuNGbZ7puiNiPPCKITFrj1DJtgUWMDM4qi37bO7YhNGp6LF+ihEdS25H4IcT2k0dZky9EWq7m4GbCxFpFzBUeNe+MCffbdnPYKJAwO/850inxaCrhY8QNNPpsVhD7aGHDv2RmnV9q6ew/ab8wAcobXEju/jaFANDHFTPXOJLFtvFLmxTTzMbZeU3BwBrxxa/sVDGZst+G6WbDYkJNzAG8UpDxagPLvPNmflHJfGElg79vhmuKQY=
 
   matrix:
-     - BUILD_TARGERT="unix" RABBITIM_BUILD_THIRDLIBRARY="change_prefix zlib minizip expat libgpx openssl libsodium libcurl libpng jpeg libgif libtiff freetype libvpx libyuv libopus x264 ffmpeg opencv"
-     - BUILD_TARGERT="android" RABBITIM_BUILD_THIRDLIBRARY="change_prefix zlib minizip expat libgpx openssl libsodium libcurl libpng jpeg libgif libtiff freetype libvpx libyuv libopus x264 ffmpeg opencv"
-     
-     #- BUILD_TARGERT="unix" QT_VERSION_DIR=5.7 QT_VERSION=5.7.0 RABBITIM_BUILD_THIRDLIBRARY="qxmpp qzxing" DOWNLOAD_FILE: https://sourceforge.net/projects/rabbitim-third-library/files/release/RabbitIm_linux_x86__v$(appveyor_build_version).zip/download
-     #- BUILD_TARGERT="unix" QT_VERSION_DIR=5.6 QT_VERSION=5.6.0 RABBITIM_BUILD_THIRDLIBRARY="qxmpp qzxing"
-     #- BUILD_TARGERT="unix" QT_VERSION_DIR=5.5 QT_VERSION=5.5.1 RABBITIM_BUILD_THIRDLIBRARY="qxmpp qzxing"
-     #- BUILD_TARGERT="unix" QT_VERSION_DIR=5.4 QT_VERSION=5.4.2 RABBITIM_BUILD_THIRDLIBRARY="qxmpp qzxing"
-     #- BUILD_TARGERT="unix" QT_VERSION_DIR=5.3 QT_VERSION=5.3.2 RABBITIM_BUILD_THIRDLIBRARY="qxmpp qzxing"
-     #- BUILD_TARGERT="unix" QT_VERSION_DIR=5.2 QT_VERSION=5.2.1 RABBITIM_BUILD_THIRDLIBRARY="qxmpp qzxing"
+    - BUILD_TARGERT="unix" AUTOBUILD_ARCH=amd64 RABBIT_BUILD_THIRDLIBRARY="change_prefix zlib minizip expat libgpx openssl libsodium libcurl libpng jpeg libgif libtiff freetype libvpx libyuv libopus x264 ffmpeg opencv"
+    - BUILD_TARGERT="android" AUTOBUILD_ARCH=arm RABBIT_BUILD_THIRDLIBRARY="change_prefix zlib minizip expat libgpx openssl libsodium libcurl libpng jpeg libgif libtiff freetype libvpx libyuv libopus x264 ffmpeg opencv"
 
-     #- BUILD_TARGERT="android" QT_VERSION_DIR=5.7 QT_VERSION=5.7.0 RABBITIM_BUILD_THIRDLIBRARY="qxmpp qzxing"
-     #- BUILD_TARGERT="android" QT_VERSION_DIR=5.6 QT_VERSION=5.6.0 RABBITIM_BUILD_THIRDLIBRARY="qxmpp qzxing"
-     #- BUILD_TARGERT="android" QT_VERSION_DIR=5.5 QT_VERSION=5.5.1 RABBITIM_BUILD_THIRDLIBRARY="qxmpp qzxing"
+    - BUILD_TARGERT="unix" AUTOBUILD_ARCH=amd64 QT_VERSION_DIR=5.7 QT_VERSION=5.7.0 RABBIT_BUILD_THIRDLIBRARY="osg" DOWNLOAD_FILE=https://sourceforge.net/projects/rabbitthirdlibrary/files/Release/rabbit_unix_amd64__v$(TRAVIS_BUILD_NUMBER).zip/download
+    - BUILD_TARGERT="android" AUTOBUILD_ARCH=arm QT_VERSION_DIR=5.7 QT_VERSION=5.7.0 RABBIT_BUILD_THIRDLIBRARY="osg" DOWNLOAD_FILE=https://sourceforge.net/projects/rabbitthirdlibrary/files/Release/rabbit_unix_amd64__v$(TRAVIS_BUILD_NUMBER).zip/download
+     
+    - BUILD_TARGERT="unix" AUTOBUILD_ARCH=amd64 QT_VERSION_DIR=5.7 QT_VERSION=5.7.0 RABBIT_BUILD_THIRDLIBRARY="gdal osgearth" DOWNLOAD_FILE=https://sourceforge.net/projects/rabbitthirdlibrary/files/Release/rabbit_unix_amd64_qt5.7.0_v$(TRAVIS_BUILD_NUMBER).zip/download
+    - BUILD_TARGERT="android" AUTOBUILD_ARCH=arm QT_VERSION_DIR=5.7 QT_VERSION=5.7.0 RABBIT_BUILD_THIRDLIBRARY="gdal osgearth" DOWNLOAD_FILE=https://sourceforge.net/projects/rabbitthirdlibrary/files/Release/rabbit_unix_amd64_qt5.7.0_v$(TRAVIS_BUILD_NUMBER).zip/download
+
+    - BUILD_TARGERT="unix" QT_VERSION_DIR=5.7 QT_VERSION=5.7.0 RABBIT_BUILD_THIRDLIBRARY="qxmpp qzxing" DOWNLOAD_FILE=https://sourceforge.net/projects/rabbitthirdlibrary/files/Release/rabbit_unix_amd64__v$(TRAVIS_BUILD_NUMBER).zip/download
+    - BUILD_TARGERT="unix" QT_VERSION_DIR=5.6 QT_VERSION=5.6.0 RABBIT_BUILD_THIRDLIBRARY="qxmpp qzxing" DOWNLOAD_FILE=https://sourceforge.net/projects/rabbitthirdlibrary/files/Release/rabbit_unix_amd64__v$(TRAVIS_BUILD_NUMBER).zip/download
+    - BUILD_TARGERT="unix" QT_VERSION_DIR=5.5 QT_VERSION=5.5.1 RABBIT_BUILD_THIRDLIBRARY="qxmpp qzxing" DOWNLOAD_FILE=https://sourceforge.net/projects/rabbitthirdlibrary/files/Release/rabbit_unix_amd64__v$(TRAVIS_BUILD_NUMBER).zip/download
+    - BUILD_TARGERT="unix" QT_VERSION_DIR=5.4 QT_VERSION=5.4.2 RABBIT_BUILD_THIRDLIBRARY="qxmpp qzxing" DOWNLOAD_FILE=https://sourceforge.net/projects/rabbitthirdlibrary/files/Release/rabbit_unix_amd64__v$(TRAVIS_BUILD_NUMBER).zip/download
+    - BUILD_TARGERT="unix" QT_VERSION_DIR=5.3 QT_VERSION=5.3.2 RABBIT_BUILD_THIRDLIBRARY="qxmpp qzxing" DOWNLOAD_FILE=https://sourceforge.net/projects/rabbitthirdlibrary/files/Release/rabbit_unix_amd64__v$(TRAVIS_BUILD_NUMBER).zip/download
+    - BUILD_TARGERT="unix" QT_VERSION_DIR=5.2 QT_VERSION=5.2.1 RABBIT_BUILD_THIRDLIBRARY="qxmpp qzxing" DOWNLOAD_FILE=https://sourceforge.net/projects/rabbitthirdlibrary/files/Release/rabbit_unix_amd64__v$(TRAVIS_BUILD_NUMBER).zip/download
+
+    - BUILD_TARGERT="android" QT_VERSION_DIR=5.7 QT_VERSION=5.7.0 RABBIT_BUILD_THIRDLIBRARY="qxmpp qzxing" DOWNLOAD_FILE=https://sourceforge.net/projects/rabbitthirdlibrary/files/Release/rabbit_android_arm__v$(TRAVIS_BUILD_NUMBER).zip/download
+    - BUILD_TARGERT="android" QT_VERSION_DIR=5.6 QT_VERSION=5.6.0 RABBIT_BUILD_THIRDLIBRARY="qxmpp qzxing" DOWNLOAD_FILE=https://sourceforge.net/projects/rabbitthirdlibrary/files/Release/rabbit_android_arm__v$(TRAVIS_BUILD_NUMBER).zip/download
+    - BUILD_TARGERT="android" QT_VERSION_DIR=5.5 QT_VERSION=5.5.1 RABBIT_BUILD_THIRDLIBRARY="qxmpp qzxing" DOWNLOAD_FILE=https://sourceforge.net/projects/rabbitthirdlibrary/files/Release/rabbit_android_arm__v$(TRAVIS_BUILD_NUMBER).zip/download
 
 before_install:
   - echo "TRAVIS_OS_NAME=${TRAVIS_OS_NAME}"
+  - echo "JAVA_HOME=${JAVA_HOME}"
   - export DISPLAY=:99.0
   - sh -e /etc/init.d/xvfb start
 
@@ -51,13 +60,16 @@ install:
   - bash build_script/ci/build-install-tools.sh > /dev/null
 
 before_script:
-  - source ${SOURCE_DIR}/build_script/ci/build_env.sh
-  - cd ${SOURCE_DIR}/build_script
+  - source ${TRAVIS_BUILD_DIR}/build_script/ci/build_env.sh
+  - cd ${TRAVIS_BUILD_DIR}/build_script
 
 script: 
-  - bash ${SOURCE_DIR}/build_script/ci/build.sh ${SOURCE_DIR}
-
+  - bash ${TRAVIS_BUILD_DIR}/build_script/ci/build.sh ${TRAVIS_BUILD_DIR}
+  
 after_script:
+  - source ${TRAVIS_BUILD_DIR}/build_script/ci/build_env.sh
+  - cd ${TRAVIS_BUILD_DIR}/build_script
+  - bash ${TRAVIS_BUILD_DIR}/build_script/ci/Deploy_linux.sh ${TRAVIS_BUILD_DIR}
 
 notifications:
   email: kl222@126.com
@@ -72,5 +84,5 @@ deploy:
   skip_cleanup: true
   on:
     condition: $TRAVIS_OS_NAME = android
-    repo: KangLin/rabbitim
+    repo: KangLin/RabbitThirdLibrary
     tags: true

@@ -27,16 +27,16 @@
 6. export ANT_ROOT=                      #ant工具的目录
 7. ANT=/usr/bin/ant                      #ant 程序
 8. QT_ROOT=                              #qt的安装位置,默认为:${RabbitThirdLibraryRoot}/android/qt
-9. RABBITIM_MAKE_JOB_PARA="-j`cat /proc/cpuinfo |grep 'cpu cores' |wc -l`" #make 同时工作进程参数,建议设置为你机器CUP个数
-10. RABBITIM_BUILD_STATIC="static"       #设置编译静态库，注释掉，则为编译动态库
+9. RABBIT_MAKE_JOB_PARA="-j`cat /proc/cpuinfo |grep 'cpu cores' |wc -l`" #make 同时工作进程参数,建议设置为你机器CUP个数
+10. RABBIT_BUILD_STATIC="static"       #设置编译静态库，注释掉，则为编译动态库
 11. JOM=make                             #设置 QT make 工具 JOM
-12. RABBITIM_USE_REPOSITORIES="FALSE"    #下载指定的压缩包。省略，则下载开发库。
-13. RABBITIM_CLEAN=TRUE                  #编译前清理
-14. RABBITIM_BUILD_TOOLCHAIN_VERSION=4.9   #工具链版本号，默认为4.8
-15. RABBITIM_BUILD_PLATFORMS_VERSION=15    #android ndk api (平台)版本号，默认为9
+12. RABBIT_USE_REPOSITORIES="FALSE"    #下载指定的压缩包。省略，则下载开发库。
+13. RABBIT_CLEAN=TRUE                  #编译前清理
+14. RABBIT_BUILD_TOOLCHAIN_VERSION=4.9   #工具链版本号，默认为4.8
+15. RABBIT_BUILD_PLATFORMS_VERSION=15    #android ndk api (平台)版本号，默认为9
 
 所需要的环境变量可以保存到系统配置文件 ~/.profile 文件中。作为全局环境变量。但这可能会与其它工程需要的环境变量冲突。
-为了避免这个问题。你也可以把环境变量保到 build_envsetup_${RABBITIM_BUILD_TARGERT}.sh 文件中。  
+为了避免这个问题。你也可以把环境变量保到 build_envsetup_${RABBIT_BUILD_TARGERT}.sh 文件中。  
 再运行:
 
     cd ${RabbitThirdLibraryRoot}/build_script
@@ -151,7 +151,7 @@ ubuntu下交叉编译
 
     ```sh
     cd ${RabbitThirdLibraryRoot}/build_script
-    ./build_rabbitim.sh android [source_code_directory] [qmake]
+    ./build_RABBIT.sh android [source_code_directory] [qmake]
     ```
     
 第四个参数如果是qmake，则用qmake编译。默认为cmake编译
@@ -185,19 +185,19 @@ windows下交叉编译
 
     Server = https://mirrors.tuna.tsinghua.edu.cn/msys2/msys/$arch
     Server = http://mirror.bit.edu.cn/msys2/REPOS/MSYS2/$arch
-    Server = http://mirrors.ustc.edu.cn/msys2/REPOS/MSYS2/$arch #中国科学技术
+    Server = http://mirrors.ustc.edu.cn/msys2/REPOS/MSYS2/$arch
 
 打开 ${MSYS2_ROOT}/etc/pacman.d/mirrorlist.mingw32
 
     Server = https://mirrors.tuna.tsinghua.edu.cn/msys2/mingw/i686
     Server = http://mirror.bit.edu.cn/msys2/REPOS/MINGW/i686/
-    Server = http://mirrors.ustc.edu.cn/msys2/REPOS/MINGW/i686/ #中国科学技术
+    Server = http://mirrors.ustc.edu.cn/msys2/REPOS/MINGW/i686/
 
 打开 ${MSYS2_ROOT}/etc/pacman.d/mirrorlist.mingw64
     
     Server = https://mirrors.tuna.tsinghua.edu.cn/msys2/mingw/x86_64
     Server = http://mirror.bit.edu.cn/msys2/REPOS/MINGW/x86_64
-    Server = http://mirrors.ustc.edu.cn/msys2/REPOS/MINGW/x86_64/ #中国科学技术
+    Server = http://mirrors.ustc.edu.cn/msys2/REPOS/MINGW/x86_64/
 
 + 启动msys2
   - 启动命令
@@ -291,12 +291,12 @@ make: fork: Resource temporarily unavailable
     wget https://dl.google.com/android/android-sdk_r24.4.1-windows.zip
     unzip android-sdk_r24.4.1-windows.zip
     mv android-sdk-windows android-sdk
-    rm android-sdk_r24.4.1-linux.tgz 
+    rm android-sdk_r24.4.1-linux.tgz
 
 * 设置环境变量
 
     vim ~/.bashrc
-    export ANDROID_SDK=/D/software/android-sdk-windows  
+    export ANDROID_SDK=/D/software/android-sdk-windows
     export ANDROID_SDK_ROOT=$ANDROID_SDK
 
 注意：
@@ -386,7 +386,7 @@ https://github.com/ruby/ruby
 
     ```sh
     cd ${RabbitThirdLibraryRoot}/build_script
-    ./build_rabbitim.sh android [source_code_directory] [qmake]
+    ./build_RABBIT.sh android [source_code_directory] [qmake]
     ```
     
 第四个参数如果是qmake，则用qmake编译。默认为cmake编译

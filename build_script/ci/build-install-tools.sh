@@ -98,8 +98,8 @@ function function_mingw()
     #汇编工具yasm
     #function_install_yasm
 
-    if [ "true" == "$RABBITIM_BUILD_THIRDLIBRARY" ]; then
-        export RABBITIM_BUILD_CROSS_HOST=i686-w64-mingw32 #i586-mingw32msvc
+    if [ "true" == "$RABBIT_BUILD_THIRDLIBRARY" ]; then
+        export RABBIT_BUILD_CROSS_HOST=i686-w64-mingw32 #i586-mingw32msvc
     fi
 
     function_common

@@ -1,21 +1,20 @@
 #!/bin/bash
 set -ev
 
-if [  "$BUILD_TARGERT" = "windows_mingw" ]; then
-    export PATH=/C/Qt/Tools/mingw${toolchain_version}_32/bin:$PATH
-    export LIBRARY_PATH=/C/Qt/Tools/mingw${toolchain_version}_32/i686-w64-mingw32/lib:$LIBRARY_PATH
-    export LDLIBRARY_PATH=/C/Qt/Tools/mingw${toolchain_version}_32/i686-w64-mingw32/lib:$LIBRARY_PATH
+if [ "$BUILD_TARGERT" = "windows_mingw" \
+    -a -z "$APPVEYOR" ]; then
+    export PATH=/C/Qt/Tools/mingw${TOOLCHAIN_VERSION}_32/bin:$PATH
 fi
 
 SOURCE_DIR=`pwd`
 if [ -n "$1" ]; then
     SOURCE_DIR=$1
 fi
+
 SCRIPT_DIR=${SOURCE_DIR}/build_script
 if [ -d ${SOURCE_DIR}/ThirdLibrary/build_script ]; then
     SCRIPT_DIR=${SOURCE_DIR}/ThirdLibrary/build_script
 fi
-echo ${SCRIPT_DIR}
 cd ${SCRIPT_DIR}
 SOURCE_DIR=${SCRIPT_DIR}/../src
 
@@ -24,30 +23,38 @@ if [ -n "$DOWNLOAD_FILE" ]; then
    echo "wget -q -c -O ${SCRIPT_DIR}/../${BUILD_TARGERT}.zip ${DOWNLOAD_FILE}"
    wget -q -c -O ${SCRIPT_DIR}/../${BUILD_TARGERT}.zip ${DOWNLOAD_FILE}
    unzip -q ${SCRIPT_DIR}/../${BUILD_TARGERT}.zip -d ${SCRIPT_DIR}/../${BUILD_TARGERT}
-   if [ "$APPVEYOR_PROJECT_NAME" != "rabbitim-third-library" and "$BUILD_TARGERT" != "windows_msvc" ]; then
+   if [ "$PROJECT_NAME" != "RabbitThirdLIbrary" \
+        -a "$BUILD_TARGERT" != "windows_msvc" \
+        -a -f "${SCRIPT_DIR}/../${BUILD_TARGERT}/change_prefix.sh" ]; then
        bash ${SCRIPT_DIR}/../${BUILD_TARGERT}/change_prefix.sh
    fi
 fi
 
-if [ "$BUILD_TARGERT" = "windows_mingw" ]; then
-    RABBITIM_MAKE_JOB_PARA="-j`cat /proc/cpuinfo |grep 'cpu cores' |wc -l`"  #make 同时工作进程参数
-    if [ "$RABBITIM_MAKE_JOB_PARA" = "-j1" ];then
-            RABBITIM_MAKE_JOB_PARA="-j2"
+if [ "$BUILD_TARGERT" = "android" ]; then
+    export ANDROID_SDK_ROOT=${SCRIPT_DIR}/../Tools/android-sdk
+    export ANDROID_NDK_ROOT=${SCRIPT_DIR}/../Tools/android-ndk
+    if [ -z "$APPVEYOR" ]; then
+        export JAVA_HOME="/C/Program Files (x86)/Java/jdk1.8.0"
     fi
-    export RABBITIM_MAKE_JOB_PARA
+    export QT_ROOT=${SCRIPT_DIR}/../Tools/Qt/${QT_VERSION}/${QT_VERSION_DIR}/android_armv7
+    if [ "${QT_VERSION}" = "5.2.1" ]; then
+        export QT_ROOT=${SCRIPT_DIR}/../Tools/Qt/${QT_VERSION}/android_armv7
+    fi
+    export PATH=${SCRIPT_DIR}/../Tools/apache-ant/bin:$JAVA_HOME:$PATH
 fi
-echo "RABBITIM_BUILD_THIRDLIBRARY:$RABBITIM_BUILD_THIRDLIBRARY"
-for v in $RABBITIM_BUILD_THIRDLIBRARY
+if [ "$BUILD_TARGERT" != "windows_msvc" ]; then
+    RABBIT_MAKE_JOB_PARA="-j`cat /proc/cpuinfo |grep 'cpu cores' |wc -l`"  #make 同时工作进程参数
+    if [ "$RABBIT_MAKE_JOB_PARA" = "-j1" ];then
+            RABBIT_MAKE_JOB_PARA="-j2"
+    fi
+    export RABBIT_MAKE_JOB_PARA
+fi
+echo "RABBIT_BUILD_THIRDLIBRARY:$RABBIT_BUILD_THIRDLIBRARY"
+for v in $RABBIT_BUILD_THIRDLIBRARY
 do
     if [ "$v" = "rabbitim" ]; then
-        bash build_$v.sh ${BUILD_TARGERT}
+        bash ./build_$v.sh ${BUILD_TARGERT}
     else
-        bash build_$v.sh ${BUILD_TARGERT} ${SOURCE_DIR}/$v > /dev/null
+        bash ./build_$v.sh ${BUILD_TARGERT} ${SOURCE_DIR}/$v #> /dev/null
     fi
 done
-
-cd ..
-tar czf RabbitIm_${BUILD_TARGERT}${toolchain_version}_${AUTOBUILD_ARCH}_${QT_VERSION}_v${appveyor_build_version}.tar.gz ${BUILD_TARGERT}
-if [ -f RabbitIm_${BUILD_TARGERT}${toolchain_version}_${AUTOBUILD_ARCH}_${QT_VERSION}_v${appveyor_build_version}.tar.gz ]; then
-   scp -p RabbitIm_${BUILD_TARGERT}${toolchain_version}_${AUTOBUILD_ARCH}_${QT_VERSION}_v${appveyor_build_version}.tar.gz kl222,rabbitim-third-library@frs.sourceforge.net:pfs/release
-fi

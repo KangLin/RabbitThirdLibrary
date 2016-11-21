@@ -18,28 +18,28 @@
 #    $2:源码的位置 
 
 #运行本脚本前,先运行 build_unix_envsetup.sh 进行环境变量设置,需要先设置下面变量:
-#   RABBITIM_BUILD_TARGERT   编译目标（android、windows_msvc、windows_mingw、unix）
-#   RABBITIM_BUILD_PREFIX=`pwd`/../${RABBITIM_BUILD_TARGERT}  #修改这里为安装前缀
-#   RABBITIM_BUILD_SOURCE_CODE    #源码目录
-#   RABBITIM_BUILD_CROSS_PREFIX     #交叉编译前缀
-#   RABBITIM_BUILD_CROSS_SYSROOT  #交叉编译平台的 sysroot
+#   RABBIT_BUILD_TARGERT   编译目标（android、windows_msvc、windows_mingw、unix）
+#   RABBIT_BUILD_PREFIX=`pwd`/../${RABBIT_BUILD_TARGERT}  #修改这里为安装前缀
+#   RABBIT_BUILD_SOURCE_CODE    #源码目录
+#   RABBIT_BUILD_CROSS_PREFIX     #交叉编译前缀
+#   RABBIT_BUILD_CROSS_SYSROOT  #交叉编译平台的 sysroot
 
 set -e
 HELP_STRING="Usage $0 PLATFORM (android|windows_msvc|windows_mingw|unix) [SOURCE_CODE_ROOT_DIRECTORY]"
 
 case $1 in
     android|windows_msvc|windows_mingw|unix)
-    RABBITIM_BUILD_TARGERT=$1
+    RABBIT_BUILD_TARGERT=$1
     ;;
     *)
     echo "${HELP_STRING}"
-    return 1
+    exit 1
     ;;
 esac
 
-if [ -z "${RABBITIM_BUILD_PREFIX}" ]; then
-    echo ". `pwd`/build_envsetup_${RABBITIM_BUILD_TARGERT}.sh"
-    . `pwd`/build_envsetup_${RABBITIM_BUILD_TARGERT}.sh
+if [ -z "${RABBIT_BUILD_PREFIX}" ]; then
+    echo ". `pwd`/build_envsetup_${RABBIT_BUILD_TARGERT}.sh"
+    . `pwd`/build_envsetup_${RABBIT_BUILD_TARGERT}.sh
 fi
 
 #产生修改前缀脚本
@@ -47,49 +47,49 @@ fi
 
 if [ -n "$2" ]; then
     #echo "Source dir:$2"
-    ./build_zlib.sh ${RABBITIM_BUILD_TARGERT} $2/zlib 
-    ./build_minizip.sh ${RABBITIM_BUILD_TARGERT} $2/minizip
-    ./build_openssl.sh ${RABBITIM_BUILD_TARGERT} $2/openssl 
-    ./build_libcurl.sh ${RABBITIM_BUILD_TARGERT} $2/curl 
-    ./build_libpng.sh ${RABBITIM_BUILD_TARGERT} $2/libpng
-    ./build_jpeg.sh ${RABBITIM_BUILD_TARGERT} $2/libjpeg
-    ./build_libgif.sh ${RABBITIM_BUILD_TARGERT} $2/libgif
-    ./build_libtiff.sh ${RABBITIM_BUILD_TARGERT} $2/libtiff
-    ./build_freetype.sh ${RABBITIM_BUILD_TARGERT} $2/freetype
-    ./build_osg.sh ${RABBITIM_BUILD_TARGERT} $2/osg
-    ./build_geos.sh ${RABBITIM_BUILD_TARGERT} $2/geos
-    ./build_gdal.sh ${RABBITIM_BUILD_TARGERT} $2/gdal
-    ./build_osgearth.sh ${RABBITIM_BUILD_TARGERT} $2/osgearth
-    ./build_qrencode.sh ${RABBITIM_BUILD_TARGERT} $2/libqrencode
-    ./build_x264.sh ${RABBITIM_BUILD_TARGERT} $2/x264 
-    ./build_libvpx.sh ${RABBITIM_BUILD_TARGERT} $2/libvpx 
-    ./build_libyuv.sh ${RABBITIM_BUILD_TARGERT} $2/libyuv 
-    ./build_ffmpeg.sh ${RABBITIM_BUILD_TARGERT} $2/ffmpeg 
-    ./build_qt.sh ${RABBITIM_BUILD_TARGERT} $2/qt5 
-    ./build_qxmpp.sh ${RABBITIM_BUILD_TARGERT} $2/qxmpp 
-    ./build_qzxing.sh ${RABBITIM_BUILD_TARGERT} $2/qzxing
+    ./build_zlib.sh ${RABBIT_BUILD_TARGERT} $2/zlib 
+    ./build_minizip.sh ${RABBIT_BUILD_TARGERT} $2/minizip
+    ./build_openssl.sh ${RABBIT_BUILD_TARGERT} $2/openssl 
+    ./build_libcurl.sh ${RABBIT_BUILD_TARGERT} $2/curl 
+    ./build_libpng.sh ${RABBIT_BUILD_TARGERT} $2/libpng
+    ./build_jpeg.sh ${RABBIT_BUILD_TARGERT} $2/libjpeg
+    ./build_libgif.sh ${RABBIT_BUILD_TARGERT} $2/libgif
+    ./build_libtiff.sh ${RABBIT_BUILD_TARGERT} $2/libtiff
+    ./build_freetype.sh ${RABBIT_BUILD_TARGERT} $2/freetype
+    ./build_osg.sh ${RABBIT_BUILD_TARGERT} $2/osg
+    #./build_geos.sh ${RABBIT_BUILD_TARGERT} $2/geos
+    ./build_gdal.sh ${RABBIT_BUILD_TARGERT} $2/gdal
+    ./build_osgearth.sh ${RABBIT_BUILD_TARGERT} $2/osgearth
+    ./build_qrencode.sh ${RABBIT_BUILD_TARGERT} $2/libqrencode
+    ./build_x264.sh ${RABBIT_BUILD_TARGERT} $2/x264 
+    ./build_libvpx.sh ${RABBIT_BUILD_TARGERT} $2/libvpx 
+    ./build_libyuv.sh ${RABBIT_BUILD_TARGERT} $2/libyuv 
+    ./build_ffmpeg.sh ${RABBIT_BUILD_TARGERT} $2/ffmpeg 
+    #./build_qt.sh ${RABBIT_BUILD_TARGERT} $2/qt5 
+    ./build_qxmpp.sh ${RABBIT_BUILD_TARGERT} $2/qxmpp 
+    ./build_qzxing.sh ${RABBIT_BUILD_TARGERT} $2/qzxing
 else
-    ./build_zlib.sh ${RABBITIM_BUILD_TARGERT} 
-    ./build_minizip.sh ${RABBITIM_BUILD_TARGERT}
-    ./build_openssl.sh ${RABBITIM_BUILD_TARGERT} 
-    ./build_libcurl.sh ${RABBITIM_BUILD_TARGERT} 
-    ./build_libpng.sh ${RABBITIM_BUILD_TARGERT} 
-    ./build_jpeg.sh ${RABBITIM_BUILD_TARGERT} 
-    ./build_libgif.sh ${RABBITIM_BUILD_TARGERT}
-    ./build_libtiff.sh ${RABBITIM_BUILD_TARGERT}
-    ./build_freetype.sh ${RABBITIM_BUILD_TARGERT}
-    ./build_osg.sh ${RABBITIM_BUILD_TARGERT}
-    ./build_geos.sh ${RABBITIM_BUILD_TARGERT} 
-    ./build_gdal.sh ${RABBITIM_BUILD_TARGERT} 
-    ./build_osgearth.sh ${RABBITIM_BUILD_TARGERT}
-    ./build_qrencode.sh ${RABBITIM_BUILD_TARGERT} 
-    ./build_x264.sh ${RABBITIM_BUILD_TARGERT} 
-    ./build_libvpx.sh ${RABBITIM_BUILD_TARGERT} 
-    ./build_libyuv.sh ${RABBITIM_BUILD_TARGERT} 
-    ./build_ffmpeg.sh ${RABBITIM_BUILD_TARGERT} 
-    ./build_qt.sh ${RABBITIM_BUILD_TARGERT}
-    ./build_qxmpp.sh ${RABBITIM_BUILD_TARGERT}
-    ./build_qzxing.sh ${RABBITIM_BUILD_TARGERT} 
+    ./build_zlib.sh ${RABBIT_BUILD_TARGERT} 
+    ./build_minizip.sh ${RABBIT_BUILD_TARGERT}
+    ./build_openssl.sh ${RABBIT_BUILD_TARGERT} 
+    ./build_libcurl.sh ${RABBIT_BUILD_TARGERT} 
+    ./build_libpng.sh ${RABBIT_BUILD_TARGERT} 
+    ./build_jpeg.sh ${RABBIT_BUILD_TARGERT} 
+    ./build_libgif.sh ${RABBIT_BUILD_TARGERT}
+    ./build_libtiff.sh ${RABBIT_BUILD_TARGERT}
+    ./build_freetype.sh ${RABBIT_BUILD_TARGERT}
+    ./build_osg.sh ${RABBIT_BUILD_TARGERT}
+    #./build_geos.sh ${RABBIT_BUILD_TARGERT} 
+    ./build_gdal.sh ${RABBIT_BUILD_TARGERT} 
+    ./build_osgearth.sh ${RABBIT_BUILD_TARGERT}
+    ./build_qrencode.sh ${RABBIT_BUILD_TARGERT} 
+    ./build_x264.sh ${RABBIT_BUILD_TARGERT} 
+    ./build_libvpx.sh ${RABBIT_BUILD_TARGERT} 
+    ./build_libyuv.sh ${RABBIT_BUILD_TARGERT} 
+    ./build_ffmpeg.sh ${RABBIT_BUILD_TARGERT} 
+    #./build_qt.sh ${RABBIT_BUILD_TARGERT}
+    ./build_qxmpp.sh ${RABBIT_BUILD_TARGERT}
+    ./build_qzxing.sh ${RABBIT_BUILD_TARGERT} 
 fi
 
 
@@ -98,33 +98,33 @@ exit 0
 
 if [ -n "$2" ]; then
     echo "Source dir:$2"
-    if [ "${RABBITIM_BUILD_TARGERT}" != "windows_msvc" ]; then
+    if [ "${RABBIT_BUILD_TARGERT}" != "windows_msvc" ]; then
         echo "building ......"
-        ./build_libopus.sh ${RABBITIM_BUILD_TARGERT} $2/libopus && \
-        ./build_speexdsp.sh ${RABBITIM_BUILD_TARGERT} $2/speexdsp && \
-        ./build_speex.sh ${RABBITIM_BUILD_TARGERT} $2/speex && \
-        ./build_libsodium.sh ${RABBITIM_BUILD_TARGERT} $2/libsodium && \
-        ./build_filter_audio.sh ${RABBITIM_BUILD_TARGERT} $2/filter_audio && \
-        ./build_toxcore.sh ${RABBITIM_BUILD_TARGERT} $2/toxcore
+        ./build_libopus.sh ${RABBIT_BUILD_TARGERT} $2/libopus && \
+        ./build_speexdsp.sh ${RABBIT_BUILD_TARGERT} $2/speexdsp && \
+        ./build_speex.sh ${RABBIT_BUILD_TARGERT} $2/speex && \
+        ./build_libsodium.sh ${RABBIT_BUILD_TARGERT} $2/libsodium && \
+        ./build_filter_audio.sh ${RABBIT_BUILD_TARGERT} $2/filter_audio && \
+        ./build_toxcore.sh ${RABBIT_BUILD_TARGERT} $2/toxcore
     fi
-    ./build_opencv.sh ${RABBITIM_BUILD_TARGERT} $2/opencv && \
-    # ./build_pjsip.sh ${RABBITIM_BUILD_TARGERT} $2/pjsip && \
-    # ./build_icu.sh ${RABBITIM_BUILD_TARGERT} $2/icu && \
-    ./build_gdal.sh ${RABBITIM_BUILD_TARGERT} $2/gdal && \
-    ./build_osg.sh ${RABBITIM_BUILD_TARGERT} $2/osg && \
-    ./build_osgearth.sh ${RABBITIM_BUILD_TARGERT} $2/osgearth
+    ./build_opencv.sh ${RABBIT_BUILD_TARGERT} $2/opencv && \
+    # ./build_pjsip.sh ${RABBIT_BUILD_TARGERT} $2/pjsip && \
+    # ./build_icu.sh ${RABBIT_BUILD_TARGERT} $2/icu && \
+    ./build_gdal.sh ${RABBIT_BUILD_TARGERT} $2/gdal && \
+    ./build_osg.sh ${RABBIT_BUILD_TARGERT} $2/osg && \
+    ./build_osgearth.sh ${RABBIT_BUILD_TARGERT} $2/osgearth
 else
-    if [ "${RABBITIM_BUILD_TARGERT}" != "windows_msvc" ]; then
-        ./build_speexdsp.sh ${RABBITIM_BUILD_TARGERT} && \
-        ./build_speex.sh ${RABBITIM_BUILD_TARGERT} && \
-        ./build_libopus.sh ${RABBITIM_BUILD_TARGERT} && \
-        ./build_libsodium.sh ${RABBITIM_BUILD_TARGERT} && \
-        ./build_toxcore.sh ${RABBITIM_BUILD_TARGERT}
+    if [ "${RABBIT_BUILD_TARGERT}" != "windows_msvc" ]; then
+        ./build_speexdsp.sh ${RABBIT_BUILD_TARGERT} && \
+        ./build_speex.sh ${RABBIT_BUILD_TARGERT} && \
+        ./build_libopus.sh ${RABBIT_BUILD_TARGERT} && \
+        ./build_libsodium.sh ${RABBIT_BUILD_TARGERT} && \
+        ./build_toxcore.sh ${RABBIT_BUILD_TARGERT}
     fi
-    ./build_opencv.sh ${RABBITIM_BUILD_TARGERT} && \
-    # ./build_pjsip.sh ${RABBITIM_BUILD_TARGERT} && \
-    # ./build_icu.sh ${RABBITIM_BUILD_TARGERT} && \
-    ./build_gdal.sh ${RABBITIM_BUILD_TARGERT} && \
-    ./build_osg.sh ${RABBITIM_BUILD_TARGERT} && \
-    ./build_osgearth.sh ${RABBITIM_BUILD_TARGERT}
+    ./build_opencv.sh ${RABBIT_BUILD_TARGERT} && \
+    # ./build_pjsip.sh ${RABBIT_BUILD_TARGERT} && \
+    # ./build_icu.sh ${RABBIT_BUILD_TARGERT} && \
+    ./build_gdal.sh ${RABBIT_BUILD_TARGERT} && \
+    ./build_osg.sh ${RABBIT_BUILD_TARGERT} && \
+    ./build_osgearth.sh ${RABBIT_BUILD_TARGERT}
 fi

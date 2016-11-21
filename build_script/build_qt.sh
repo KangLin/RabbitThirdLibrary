@@ -6,18 +6,18 @@
 #    $2:源码的位置 
 
 #运行本脚本前,先运行 build_$1_envsetup.sh 进行环境变量设置,需要先设置下面变量:
-#   RABBITIM_BUILD_TARGERT   编译目标（android、windows_msvc、windows_mingw、unix)
-#   RABBITIM_BUILD_PREFIX=`pwd`/../${RABBITIM_BUILD_TARGERT}  #修改这里为安装前缀
-#   RABBITIM_BUILD_SOURCE_CODE    #源码目录
-#   RABBITIM_BUILD_CROSS_PREFIX   #交叉编译前缀
-#   RABBITIM_BUILD_CROSS_SYSROOT  #交叉编译平台的 sysroot
+#   RABBIT_BUILD_TARGERT   编译目标（android、windows_msvc、windows_mingw、unix)
+#   RABBIT_BUILD_PREFIX=`pwd`/../${RABBIT_BUILD_TARGERT}  #修改这里为安装前缀
+#   RABBIT_BUILD_SOURCE_CODE    #源码目录
+#   RABBIT_BUILD_CROSS_PREFIX   #交叉编译前缀
+#   RABBIT_BUILD_CROSS_SYSROOT  #交叉编译平台的 sysroot
 
 set -e
 HELP_STRING="Usage $0 PLATFORM(android|windows_msvc|windows_mingw|unix) [SOURCE_CODE_ROOT_DIRECTORY]"
 
 case $1 in
     android|windows_msvc|windows_mingw|unix)
-    RABBITIM_BUILD_TARGERT=$1
+    RABBIT_BUILD_TARGERT=$1
     ;;
     *)
     echo "${HELP_STRING}"
@@ -25,28 +25,28 @@ case $1 in
     ;;
 esac
 
-if [ -z "${RABBITIM_BUILD_PREFIX}" ]; then
-    echo ". `pwd`/build_envsetup_${RABBITIM_BUILD_TARGERT}.sh"
-    . `pwd`/build_envsetup_${RABBITIM_BUILD_TARGERT}.sh
+if [ -z "${RABBIT_BUILD_PREFIX}" ]; then
+    echo ". `pwd`/build_envsetup_${RABBIT_BUILD_TARGERT}.sh"
+    . `pwd`/build_envsetup_${RABBIT_BUILD_TARGERT}.sh
 fi
 
 if [ -n "$2" ]; then
-    RABBITIM_BUILD_SOURCE_CODE=$2
+    RABBIT_BUILD_SOURCE_CODE=$2
 else
-    RABBITIM_BUILD_SOURCE_CODE=${RABBITIM_BUILD_PREFIX}/../src/qt5
+    RABBIT_BUILD_SOURCE_CODE=${RABBIT_BUILD_PREFIX}/../src/qt5
 fi
 
 CUR_DIR=`pwd`
 
 #下载源码:
-if [ ! -d ${RABBITIM_BUILD_SOURCE_CODE} ]; then
+if [ ! -d ${RABBIT_BUILD_SOURCE_CODE} ]; then
     QT_VERSION_DIR=5.6
     QT_VERSION=5.6.0
-    mkdir -p ${RABBITIM_BUILD_SOURCE_CODE}
-    cd ${RABBITIM_BUILD_SOURCE_CODE}
-    if [ "TRUE" = "${RABBITIM_USE_REPOSITORIES}" ]; then
-        echo "git clone -q http://code.qt.io/qt/qt5.git ${RABBITIM_BUILD_SOURCE_CODE}"
-        git clone -q  http://code.qt.io/qt/qt5.git ${RABBITIM_BUILD_SOURCE_CODE}
+    mkdir -p ${RABBIT_BUILD_SOURCE_CODE}
+    cd ${RABBIT_BUILD_SOURCE_CODE}
+    if [ "TRUE" = "${RABBIT_USE_REPOSITORIES}" ]; then
+        echo "git clone -q http://code.qt.io/qt/qt5.git ${RABBIT_BUILD_SOURCE_CODE}"
+        git clone -q  http://code.qt.io/qt/qt5.git ${RABBIT_BUILD_SOURCE_CODE}
         git checkout ${QT_VERSION}
         perl init-repository -f --branch
     else
@@ -56,15 +56,15 @@ if [ ! -d ${RABBITIM_BUILD_SOURCE_CODE} ]; then
         mv qt-everywhere-opensource-src-${QT_VERSION} ..
         rm -fr *
         cd ..
-        rm -fr ${RABBITIM_BUILD_SOURCE_CODE}
-        mv -f qt-everywhere-opensource-src-${QT_VERSION} ${RABBITIM_BUILD_SOURCE_CODE}
+        rm -fr ${RABBIT_BUILD_SOURCE_CODE}
+        mv -f qt-everywhere-opensource-src-${QT_VERSION} ${RABBIT_BUILD_SOURCE_CODE}
     fi
 fi
 
-cd ${RABBITIM_BUILD_SOURCE_CODE}
+cd ${RABBIT_BUILD_SOURCE_CODE}
 
 #清理
-if [ "$RABBITIM_CLEAN" = "TRUE" ]; then
+if [ "$RABBIT_CLEAN" = "TRUE" ]; then
     if [ -d ".git" ]; then
         echo "clean ..."
         qtrepotools/bin/qt5_tool -c
@@ -86,27 +86,27 @@ if [ "$RABBITIM_CLEAN" = "TRUE" ]; then
             rm -f Makefile
         fi
     fi
-    rm -fr ${RABBITIM_BUILD_PREFIX}/qt
+    rm -fr ${RABBIT_BUILD_PREFIX}/qt
 fi
 
-echo "RABBITIM_BUILD_SOURCE_CODE:$RABBITIM_BUILD_SOURCE_CODE"
+echo "RABBIT_BUILD_SOURCE_CODE:$RABBIT_BUILD_SOURCE_CODE"
 echo "CUR_DIR:`pwd`"
-echo "RABBITIM_BUILD_PREFIX:$RABBITIM_BUILD_PREFIX"
-echo "RABBITIM_BUILD_HOST:$RABBITIM_BUILD_HOST"
-echo "RABBITIM_BUILD_CROSS_HOST:$RABBITIM_BUILD_CROSS_HOST"
-echo "RABBITIM_BUILD_CROSS_PREFIX:$RABBITIM_BUILD_CROSS_PREFIX"
-echo "RABBITIM_BUILD_CROSS_SYSROOT:$RABBITIM_BUILD_CROSS_SYSROOT"
-echo "RABBITIM_BUILD_STATIC:$RABBITIM_BUILD_STATIC"
+echo "RABBIT_BUILD_PREFIX:$RABBIT_BUILD_PREFIX"
+echo "RABBIT_BUILD_HOST:$RABBIT_BUILD_HOST"
+echo "RABBIT_BUILD_CROSS_HOST:$RABBIT_BUILD_CROSS_HOST"
+echo "RABBIT_BUILD_CROSS_PREFIX:$RABBIT_BUILD_CROSS_PREFIX"
+echo "RABBIT_BUILD_CROSS_SYSROOT:$RABBIT_BUILD_CROSS_SYSROOT"
+echo "RABBIT_BUILD_STATIC:$RABBIT_BUILD_STATIC"
 echo ""
 
 echo "configure ..."
 CONFIG_PARA="-opensource -confirm-license -nomake examples -nomake tests -no-compile-examples"
 CONFIG_PARA="${CONFIG_PARA} -no-sql-sqlite -no-sql-odbc -qt-xcb"
 CONFIG_PARA="${CONFIG_PARA} -skip qtdoc -no-warnings-are-errors"
-CONFIG_PARA="${CONFIG_PARA} -prefix ${RABBITIM_BUILD_PREFIX}/qt"
-CONFIG_PARA="${CONFIG_PARA} -I ${RABBITIM_BUILD_PREFIX}/include -L ${RABBITIM_BUILD_PREFIX}/lib"
+CONFIG_PARA="${CONFIG_PARA} -prefix ${RABBIT_BUILD_PREFIX}/qt"
+CONFIG_PARA="${CONFIG_PARA} -I ${RABBIT_BUILD_PREFIX}/include -L ${RABBIT_BUILD_PREFIX}/lib"
 #CONFIG_PARA="${CONFIG_PARA} -developer-build  -debug-and-release"
-if [ "$RABBITIM_BUILD_STATIC" = "static" ]; then
+if [ "$RABBIT_BUILD_STATIC" = "static" ]; then
     CONFIG_PARA="${CONFIG_PARA} -static"
     #需要加入到qtbase\mkspecs\win32-g++\qmake.conf中
     QMAKE_LFLAGS="${QMAKE_LFLAGS} -static -static-libgcc"
@@ -152,13 +152,13 @@ fi
 #fi
 
 CONFIGURE="./configure"
-MAKE_PARA="${RABBITIM_MAKE_JOB_PARA}"
+MAKE_PARA="${RABBIT_MAKE_JOB_PARA}"
 MAKE="make"
 MODULE_PARA="qtwebkit"
-case ${RABBITIM_BUILD_TARGERT} in
+case ${RABBIT_BUILD_TARGERT} in
     android)
-        #export PKG_CONFIG_SYSROOT_DIR=${RABBITIM_BUILD_CROSS_SYSROOT} #qt编译时需要
-        #export PKG_CONFIG_LIBDIR=${RABBITIM_BUILD_PREFIX}/lib/pkgconfig
+        #export PKG_CONFIG_SYSROOT_DIR=${RABBIT_BUILD_CROSS_SYSROOT} #qt编译时需要
+        #export PKG_CONFIG_LIBDIR=${RABBIT_BUILD_PREFIX}/lib/pkgconfig
         #platform:本机工具链(configure工具会自动检测)；xplatform：目标机工具链
         #qt工具和库分为本机工具和目标机工具、库两部分
         #qmake、uic、rcc、lrelease、lupdate 均为本机工具，需要用本机工具链编译
@@ -166,12 +166,12 @@ case ${RABBITIM_BUILD_TARGERT} in
         TARGET_OS=`uname -s`
         case $TARGET_OS in
             MINGW* | CYGWIN* | MSYS*)
-                #export PATH=${RABBITIM_BUILD_SOURCE_CODE}/gnuwin32/bin:${PATH}
+                #export PATH=${RABBIT_BUILD_SOURCE_CODE}/gnuwin32/bin:${PATH}
                 CONFIG_PARA="${CONFIG_PARA} -platform win32-g++"
-                if [ "$RABBITIM_BUILD_STATIC" = "static" ]; then
-                    sed -i "s/^QMAKE_LFLAGS *=.*/QMAKE_LFLAGS = -static/g" $RABBITIM_BUILD_SOURCE_CODE/qtbase/mkspecs/win32-g++/qmake.conf
+                if [ "$RABBIT_BUILD_STATIC" = "static" ]; then
+                    sed -i "s/^QMAKE_LFLAGS *=.*/QMAKE_LFLAGS = -static/g" $RABBIT_BUILD_SOURCE_CODE/qtbase/mkspecs/win32-g++/qmake.conf
                 else
-                    sed -i "s/^QMAKE_LFLAGS *=.*/QMAKE_LFLAGS =/g" $RABBITIM_BUILD_SOURCE_CODE/qtbase/mkspecs/win32-g++/qmake.conf
+                    sed -i "s/^QMAKE_LFLAGS *=.*/QMAKE_LFLAGS =/g" $RABBIT_BUILD_SOURCE_CODE/qtbase/mkspecs/win32-g++/qmake.conf
                 fi
                 ;;
             Linux* | Unix*)
@@ -184,16 +184,16 @@ case ${RABBITIM_BUILD_TARGERT} in
         esac
         CONFIG_PARA="${CONFIG_PARA} -xplatform android-g++" #交叉平台编译工具
         CONFIG_PARA="${CONFIG_PARA} -android-sdk ${ANDROID_SDK_ROOT} -android-ndk ${ANDROID_NDK_ROOT}"
-        CONFIG_PARA="${CONFIG_PARA} -android-ndk-host ${RABBITIM_BUILD_HOST}"
-        CONFIG_PARA="${CONFIG_PARA} -android-toolchain-version ${RABBITIM_BUILD_TOOLCHAIN_VERSION}"
-        CONFIG_PARA="${CONFIG_PARA} -android-ndk-platform android-${RABBITIM_BUILD_PLATFORMS_VERSION}"
+        CONFIG_PARA="${CONFIG_PARA} -android-ndk-host ${RABBIT_BUILD_HOST}"
+        CONFIG_PARA="${CONFIG_PARA} -android-toolchain-version ${RABBIT_BUILD_TOOLCHAIN_VERSION}"
+        CONFIG_PARA="${CONFIG_PARA} -android-ndk-platform android-${RABBIT_BUILD_PLATFORMS_VERSION}"
         MODULE_PARA="${MODULE_PARA} module-qtandroidextras"
         ;;
     unix)
         CONFIG_PARA="${CONFIG_PARA} -skip qtandroidextras -skip qtandroidextras -skip qtmacextras -skip qtwinextras"
         ;;
     windows_msvc)
-        #export PATH=${RABBITIM_BUILD_SOURCE_CODE}/gnuwin32/bin:${PATH}
+        #export PATH=${RABBIT_BUILD_SOURCE_CODE}/gnuwin32/bin:${PATH}
         CONFIGURE="./configure.bat"
         CONFIG_PARA="${CONFIG_PARA} -platform win32-msvc2013" #  -icu -opengl desktop"
         CONFIG_PARA="${CONFIG_PARA} -skip qtandroidextras -skip qtx11extras -skip qtmacextras"
@@ -201,15 +201,15 @@ case ${RABBITIM_BUILD_TARGERT} in
         MAKE="nmake"
         ;;
     windows_mingw)
-        #export PATH=${RABBITIM_BUILD_SOURCE_CODE}/gnuwin32/bin:${PATH}
+        #export PATH=${RABBIT_BUILD_SOURCE_CODE}/gnuwin32/bin:${PATH}
         #platform:本机工具链(configure工具会自动检测)；xplatform：目标机工具链
         #qt工具和库分为本机工具和目标机工具、库两部分
         #qmake、uic、rcc、lrelease、lupdate 均为本机工具，需要用本机工具链编译
         #库都是目标机的库，所以需要目标机的工具链
-        if [ "$RABBITIM_BUILD_STATIC" = "static" ]; then
-            sed -i "s/^QMAKE_LFLAGS *=.*/QMAKE_LFLAGS = -static/g" $RABBITIM_BUILD_SOURCE_CODE/qtbase/mkspecs/win32-g++/qmake.conf
+        if [ "$RABBIT_BUILD_STATIC" = "static" ]; then
+            sed -i "s/^QMAKE_LFLAGS *=.*/QMAKE_LFLAGS = -static/g" $RABBIT_BUILD_SOURCE_CODE/qtbase/mkspecs/win32-g++/qmake.conf
         else
-            sed -i "s/^QMAKE_LFLAGS *=.*/QMAKE_LFLAGS =/g" $RABBITIM_BUILD_SOURCE_CODE/qtbase/mkspecs/win32-g++/qmake.conf
+            sed -i "s/^QMAKE_LFLAGS *=.*/QMAKE_LFLAGS =/g" $RABBIT_BUILD_SOURCE_CODE/qtbase/mkspecs/win32-g++/qmake.conf
         fi
         case `uname -s` in
             MINGW*|MSYS*)
@@ -218,13 +218,13 @@ case ${RABBITIM_BUILD_TARGERT} in
                 ;;
             CYGWIN*)
                 CONFIG_PARA="${CONFIG_PARA} -platform  win32-g++"
-                CONFIG_PARA="${CONFIG_PARA} -xplatform win32-g++ -device-option CROSS_COMPILE=${RABBITIM_BUILD_CROSS_PREFIX}"
+                CONFIG_PARA="${CONFIG_PARA} -xplatform win32-g++ -device-option CROSS_COMPILE=${RABBIT_BUILD_CROSS_PREFIX}"
                 ;;
             Linux*|Unix*|*)
-                #export PKG_CONFIG_SYSROOT_DIR=${RABBITIM_BUILD_PREFIX} #qt编译时需要
-                #export PKG_CONFIG_LIBDIR=${RABBITIM_BUILD_PREFIX}/lib/pkgconfig
+                #export PKG_CONFIG_SYSROOT_DIR=${RABBIT_BUILD_PREFIX} #qt编译时需要
+                #export PKG_CONFIG_LIBDIR=${RABBIT_BUILD_PREFIX}/lib/pkgconfig
                 CONFIG_PARA="${CONFIG_PARA} -xplatform win32-g++"
-                CONFIG_PARA="${CONFIG_PARA} -device-option CROSS_COMPILE=${RABBITIM_BUILD_CROSS_PREFIX}"
+                CONFIG_PARA="${CONFIG_PARA} -device-option CROSS_COMPILE=${RABBIT_BUILD_CROSS_PREFIX}"
                 CONFIG_PARA="${CONFIG_PARA} -skip qtwebkit"
                 ;;
         esac
@@ -238,12 +238,12 @@ case ${RABBITIM_BUILD_TARGERT} in
 esac
 
 #显示编译详细信息
-#if [ "${RABBITIM_BUILD_TARGERT}" != "windows_msvc" ]; then
+#if [ "${RABBIT_BUILD_TARGERT}" != "windows_msvc" ]; then
 #    CONFIG_PARA="${CONFIG_PARA} -verbose"
 #fi
 
-#export INCLUDE="$INCLUDE:${RABBITIM_BUILD_PREFIX}/include"
-#export LIB="$LIB:${RABBITIM_BUILD_PREFIX}/lib"
+#export INCLUDE="$INCLUDE:${RABBIT_BUILD_PREFIX}/include"
+#export LIB="$LIB:${RABBIT_BUILD_PREFIX}/lib"
 
 echo "$CONFIGURE ${CONFIG_PARA}"
 $CONFIGURE ${CONFIG_PARA}
@@ -254,7 +254,7 @@ do
 done
 
 echo "$MAKE ${MAKE_PARA} install"
-#if [ "${RABBITIM_BUILD_TARGERT}" = "android" ]; then
+#if [ "${RABBIT_BUILD_TARGERT}" = "android" ]; then
 #    $MAKE ${MAKE_PARA} 
 #    $MAKE install 
         
@@ -263,7 +263,7 @@ echo "$MAKE ${MAKE_PARA} install"
     $MAKE install 
 #fi
 
-cat > ${RABBITIM_BUILD_PREFIX}/qt/bin/qt.conf << EOF
+cat > ${RABBIT_BUILD_PREFIX}/qt/bin/qt.conf << EOF
 [Paths]
 Prefix=..
 EOF

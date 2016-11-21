@@ -6,18 +6,18 @@
 #    $2:源码的位置 
 
 #运行本脚本前,先运行 build_$1_envsetup.sh 进行环境变量设置,需要先设置下面变量:
-#   RABBITIM_BUILD_TARGERT   编译目标（android、windows_msvc、windows_mingw、unix）
-#   RABBITIM_BUILD_PREFIX=`pwd`/../${RABBITIM_BUILD_TARGERT}  #修改这里为安装前缀
-#   RABBITIM_BUILD_SOURCE_CODE    #源码目录
-#   RABBITIM_BUILD_CROSS_PREFIX   #交叉编译前缀
-#   RABBITIM_BUILD_CROSS_SYSROOT  #交叉编译平台的 sysroot
+#   RABBIT_BUILD_TARGERT   编译目标（android、windows_msvc、windows_mingw、unix）
+#   RABBIT_BUILD_PREFIX=`pwd`/../${RABBIT_BUILD_TARGERT}  #修改这里为安装前缀
+#   RABBIT_BUILD_SOURCE_CODE    #源码目录
+#   RABBIT_BUILD_CROSS_PREFIX   #交叉编译前缀
+#   RABBIT_BUILD_CROSS_SYSROOT  #交叉编译平台的 sysroot
 
 set -e
 HELP_STRING="Usage $0 PLATFORM(android|windows_msvc|windows_mingw|unix) [SOURCE_CODE_ROOT_DIRECTORY] [qmake]"
 
 case $1 in
     android|windows_msvc|windows_mingw|unix)
-    RABBITIM_BUILD_TARGERT=$1
+    RABBIT_BUILD_TARGERT=$1
     ;;
     *)
     echo "${HELP_STRING}"
@@ -25,46 +25,46 @@ case $1 in
     ;;
 esac
 
-#运行本脚本前,先运行 build_${RABBITIM_BUILD_TARGERT}_envsetup.sh 进行环境变量设置,需要先设置下面变量:
-#   RABBITIM_BUILD_PREFIX= #修改这里为安装前缀
+#运行本脚本前,先运行 build_${RABBIT_BUILD_TARGERT}_envsetup.sh 进行环境变量设置,需要先设置下面变量:
+#   RABBIT_BUILD_PREFIX= #修改这里为安装前缀
 #   QMAKE=  #设置用于相应平台编译的 QMAKE
 #   JOM=    #QT 自带的类似 make 的工具
-if [ -z "${RABBITIM_BUILD_PREFIX}" ]; then
-    echo ". `pwd`/build_envsetup_${RABBITIM_BUILD_TARGERT}.sh"
-    . `pwd`/build_envsetup_${RABBITIM_BUILD_TARGERT}.sh
+if [ -z "${RABBIT_BUILD_PREFIX}" ]; then
+    echo ". `pwd`/build_envsetup_${RABBIT_BUILD_TARGERT}.sh"
+    . `pwd`/build_envsetup_${RABBIT_BUILD_TARGERT}.sh
 fi
 
 if [ -n "$2" ]; then
-    RABBITIM_BUILD_SOURCE_CODE=$2
+    RABBIT_BUILD_SOURCE_CODE=$2
 else
-    RABBITIM_BUILD_SOURCE_CODE=${RABBITIM_BUILD_PREFIX}/../..
+    RABBIT_BUILD_SOURCE_CODE=${RABBIT_BUILD_PREFIX}/../..
 fi
 
 #下载源码:
-if [ ! -d ${RABBITIM_BUILD_SOURCE_CODE} ]; then
-    echo "git clone https://github.com/KangLin/RabbitIm.git"
-    git clone -q https://github.com/KangLin/RabbitIm.git ${RABBITIM_BUILD_SOURCE_CODE}
+if [ ! -d ${RABBIT_BUILD_SOURCE_CODE} ]; then
+    echo "git clone https://github.com/KangLin/RABBIT.git"
+    git clone -q https://github.com/KangLin/RABBIT.git ${RABBIT_BUILD_SOURCE_CODE}
 fi
 
 CUR_DIR=`pwd`
-cd ${RABBITIM_BUILD_SOURCE_CODE}
+cd ${RABBIT_BUILD_SOURCE_CODE}
 
 echo ""
-echo "RABBITIM_BUILD_TARGERT:${RABBITIM_BUILD_TARGERT}"
-echo "RABBITIM_BUILD_SOURCE_CODE:$RABBITIM_BUILD_SOURCE_CODE"
-echo "RABBITIM_BUILD_PREFIX:$RABBITIM_BUILD_PREFIX"
-echo "RABBITIM_BUILD_CROSS_PREFIX:$RABBITIM_BUILD_CROSS_PREFIX"
-echo "RABBITIM_BUILD_CROSS_SYSROOT:$RABBITIM_BUILD_CROSS_SYSROOT"
-echo "RABBITIM_BUILD_CROSS_HOST:$RABBITIM_BUILD_CROSS_HOST"
-echo "RABBITIM_BUILD_HOST:$RABBITIM_BUILD_HOST"
+echo "RABBIT_BUILD_TARGERT:${RABBIT_BUILD_TARGERT}"
+echo "RABBIT_BUILD_SOURCE_CODE:$RABBIT_BUILD_SOURCE_CODE"
+echo "RABBIT_BUILD_PREFIX:$RABBIT_BUILD_PREFIX"
+echo "RABBIT_BUILD_CROSS_PREFIX:$RABBIT_BUILD_CROSS_PREFIX"
+echo "RABBIT_BUILD_CROSS_SYSROOT:$RABBIT_BUILD_CROSS_SYSROOT"
+echo "RABBIT_BUILD_CROSS_HOST:$RABBIT_BUILD_CROSS_HOST"
+echo "RABBIT_BUILD_HOST:$RABBIT_BUILD_HOST"
 echo "PKG_CONFIG:$PKG_CONFIG"
 echo "PKG_CONFIG_PATH:$PKG_CONFIG_PATH"
-echo "RABBITIM_BUILD_STATIC:$RABBITIM_BUILD_STATIC"
+echo "RABBIT_BUILD_STATIC:$RABBIT_BUILD_STATIC"
 echo "PATH:$PATH"
 
-mkdir -p build_${RABBITIM_BUILD_TARGERT}
-cd build_${RABBITIM_BUILD_TARGERT}
-if [ "$RABBITIM_CLEAN" = "TRUE" ]; then
+mkdir -p build_${RABBIT_BUILD_TARGERT}
+cd build_${RABBIT_BUILD_TARGERT}
+if [ "$RABBIT_CLEAN" = "TRUE" ]; then
     rm -fr *
 fi
 
@@ -75,39 +75,39 @@ if [ "$3" = "cmake" ]; then
 
     CMAKE_PARA="--target package"
     PARA="-DCMAKE_BUILD_TYPE=Release -DQt5_DIR=${QT_ROOT}/lib/cmake/Qt5 -DCMAKE_VERBOSE_MAKEFILE=TRUE"
-  #  if [ "${RABBITIM_BUILD_STATIC}" = "static" ]; then
-  #      PARA="${PARA} -DOPTION_RABBITIM_USE_STATIC=ON"
+  #  if [ "${RABBIT_BUILD_STATIC}" = "static" ]; then
+  #      PARA="${PARA} -DOPTION_RABBIT_USE_STATIC=ON"
   #  fi
-    MAKE_PARA="-- ${RABBITIM_MAKE_JOB_PARA} VERBOSE=1"
+    MAKE_PARA="-- ${RABBIT_MAKE_JOB_PARA} VERBOSE=1"
     case $1 in
         android)
-            #export ANDROID_NATIVE_API_LEVEL=android-${RABBITIM_BUILD_PLATFORMS_VERSION}
-            #export ANDROID_TOOLCHAIN_NAME=${RABBITIM_BUILD_CROSS_HOST}-${RABBITIM_BUILD_TOOLCHAIN_VERSION}
+            #export ANDROID_NATIVE_API_LEVEL=android-${RABBIT_BUILD_PLATFORMS_VERSION}
+            #export ANDROID_TOOLCHAIN_NAME=${RABBIT_BUILD_CROSS_HOST}-${RABBIT_BUILD_TOOLCHAIN_VERSION}
             #export ANDROID_NDK_ABI_NAME="armeabi-v7a with NEON"
-            CMAKE_PARA="${CMAKE_PARA} -DCMAKE_TOOLCHAIN_FILE=$RABBITIM_BUILD_PREFIX/../build_script/cmake/platforms/toolchain-android.cmake"
-            PARA="${PARA} -DANDROID_NATIVE_API_LEVEL=android-${RABBITIM_BUILD_PLATFORMS_VERSION}"
-            PARA="${PARA} -DANDROID_TOOLCHAIN_NAME=${RABBITIM_BUILD_CROSS_HOST}-${RABBITIM_BUILD_TOOLCHAIN_VERSION}"
+            CMAKE_PARA="${CMAKE_PARA} -DCMAKE_TOOLCHAIN_FILE=$RABBIT_BUILD_PREFIX/../build_script/cmake/platforms/toolchain-android.cmake"
+            PARA="${PARA} -DANDROID_NATIVE_API_LEVEL=android-${RABBIT_BUILD_PLATFORMS_VERSION}"
+            PARA="${PARA} -DANDROID_TOOLCHAIN_NAME=${RABBIT_BUILD_CROSS_HOST}-${RABBIT_BUILD_TOOLCHAIN_VERSION}"
             PARA="${PARA} -DANDROID_NDK_ABI_NAME=${ANDROID_NDK_ABI_NAME}"
             PARA="${PARA} -DLIBRARY_OUTPUT_PATH:PATH=`pwd`"
-            PARA="${PARA} -DOPTION_RABBITIM_USE_OPENCV=OFF"
-            #PARA="${PARA} -DOPTION_RABBITIM_USE_LIBCURL=OFF -DOPTION_RABBITIM_USE_OPENSSL=OFF"
+            PARA="${PARA} -DOPTION_RABBIT_USE_OPENCV=OFF"
+            #PARA="${PARA} -DOPTION_RABBIT_USE_LIBCURL=OFF -DOPTION_RABBIT_USE_OPENSSL=OFF"
             PARA="${PARA} -DANT=${ANT}"
             CMAKE_PARA=""
             ;;
         unix)
-            PARA="${PARA} -DCMAKE_INSTALL_PREFIX=/usr/local/RabbitIm"  #设置打包的安装路径
+            PARA="${PARA} -DCMAKE_INSTALL_PREFIX=/usr/local/RABBIT"  #设置打包的安装路径
             ;;
         windows_msvc)
             #因为用Visual Studio 2013生成的目标路径与配置有关，这影响到安装文件的生成，所以用nmake生成
             GENERATORS="NMake Makefiles" #GENERATORS="Visual Studio 12 2013"
-            #PARA="${PARA} -DOPTION_RABBITIM_USE_LIBCURL=OFF -DOPTION_RABBITIM_USE_OPENSSL=OFF"
-            PARA="${PARA} -DOPTION_RABBITIM_USE_OPENCV=OFF"
+            #PARA="${PARA} -DOPTION_RABBIT_USE_LIBCURL=OFF -DOPTION_RABBIT_USE_OPENSSL=OFF"
+            PARA="${PARA} -DOPTION_RABBIT_USE_OPENCV=OFF"
             MAKE_PARA=""
             ;;
         windows_mingw)
             case `uname -s` in
                 Linux*|Unix*|CYGWIN*)
-                    PARA="${PARA} -DCMAKE_TOOLCHAIN_FILE=${RABBITIM_BUILD_SOURCE_CODE}/cmake/platforms/toolchain-mingw.cmake"
+                    PARA="${PARA} -DCMAKE_TOOLCHAIN_FILE=${RABBIT_BUILD_SOURCE_CODE}/cmake/platforms/toolchain-mingw.cmake"
                     CMAKE_PARA=""
                     ;;
                 *)
@@ -129,13 +129,13 @@ if [ "$3" = "cmake" ]; then
 
 else #qmake编译
 
-    MAKE="make ${RABBITIM_MAKE_JOB_PARA}"
+    MAKE="make ${RABBIT_MAKE_JOB_PARA}"
     case $1 in
         android)
             export ANDROID_NDK_PLATFORM=$ANDROID_API_VERSION
-            PARA="-r -spec android-g++ " #RABBITIM_USE_OPENCV=1
-            if [ -n "$RABBITIM_CMAKE_MAKE_PROGRAM" ]; then
-                MAKE="$RABBITIM_CMAKE_MAKE_PROGRAM"
+            PARA="-r -spec android-g++ " #RABBIT_USE_OPENCV=1
+            if [ -n "$RABBIT_CMAKE_MAKE_PROGRAM" ]; then
+                MAKE="$RABBIT_CMAKE_MAKE_PROGRAM"
             fi
             ;;
         unix)
@@ -152,21 +152,21 @@ else #qmake编译
             exit 1
             ;;
     esac
-   # if [ "${RABBITIM_BUILD_STATIC}" = "static" ]; then
+   # if [ "${RABBIT_BUILD_STATIC}" = "static" ]; then
    #     PARA="$PARA CONFIG+=static"
    # fi
     echo "qmake ...."
-    $QMAKE ../RabbitIm.pro  $PARA "CONFIG+=release"  \
-           INCLUDEPATH+=${RABBITIM_BUILD_PREFIX}/include \
-           LIBS+=-L${RABBITIM_BUILD_PREFIX}/lib \
+    $QMAKE ../RABBIT.pro  $PARA "CONFIG+=release"  \
+           INCLUDEPATH+=${RABBIT_BUILD_PREFIX}/include \
+           LIBS+=-L${RABBIT_BUILD_PREFIX}/lib \
            QXMPP_USE_VPX=1 \
-           RABBITIM_USE_FFMPEG=1 \
-           RABBITIM_USE_LIBCURL=1 \
-           RABBITIM_USE_OPENSSL=1
+           RABBIT_USE_FFMPEG=1 \
+           RABBIT_USE_LIBCURL=1 \
+           RABBIT_USE_OPENSSL=1
     echo "$MAKE ...."
     if [ "$1" == "android" ]; then
         $MAKE -f Makefile install INSTALL_ROOT="`pwd`/android-build"
-        ${QT_BIN}/androiddeployqt --input "`pwd`/android-libRabbitImApp.so-deployment-settings.json" --output "`pwd`/android-build" --verbose
+        ${QT_BIN}/androiddeployqt --input "`pwd`/android-libRABBITApp.so-deployment-settings.json" --output "`pwd`/android-build" --verbose
     else
         $MAKE -f Makefile
         echo "$MAKE install ...."

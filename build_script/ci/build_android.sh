@@ -77,12 +77,12 @@ if [ "${QT_VERSION}" = "5.2.1" ]; then
     export QT_ROOT=${QT_DIR}/${QT_VERSION}/android_armv7
 fi
 
-RABBITIM_MAKE_JOB_PARA="-j`cat /proc/cpuinfo |grep 'cpu cores' |wc -l`"  #make 同时工作进程参数
-if [ "$RABBITIM_MAKE_JOB_PARA" = "-j1" ];then
-        RABBITIM_MAKE_JOB_PARA="-j2"
+RABBIT_MAKE_JOB_PARA="-j`cat /proc/cpuinfo |grep 'cpu cores' |wc -l`"  #make 同时工作进程参数
+if [ "$RABBIT_MAKE_JOB_PARA" = "-j1" ];then
+        RABBIT_MAKE_JOB_PARA="-j2"
 fi
-export RABBITIM_MAKE_JOB_PARA
-export RABBITIM_USE_REPOSITORIES="FALSE"
+export RABBIT_MAKE_JOB_PARA
+export RABBIT_USE_REPOSITORIES="FALSE"
 
 cd ${SOURCE_DIR}/ThirdLibrary/build_script
 ./build_webrtc.sh android
@@ -93,4 +93,4 @@ cd ${SOURCE_DIR}/ThirdLibrary/build_script
 ./build_libvpx.sh android
 ./build_libyuv.sh android
 ./build_ffmpeg.sh android
-./build_rabbitim.sh android ${SOURCE_DIR} qmake
+./build_RABBIT.sh android ${SOURCE_DIR} qmake

@@ -14,10 +14,10 @@ fi
 
 cd ${SOURCE_DIR}/ThirdLibrary/build_script
 mkdir -p ${SOURCE_DIR}/ThirdLibrary/src
-echo "RABBITIM_BUILD_THIRDLIBRARY:$RABBITIM_BUILD_THIRDLIBRARY"
-for v in $RABBITIM_BUILD_THIRDLIBRARY
+echo "RABBIT_BUILD_THIRDLIBRARY:$RABBIT_BUILD_THIRDLIBRARY"
+for v in $RABBIT_BUILD_THIRDLIBRARY
 do
-    if [ "$v" = "rabbitim" ]; then
+    if [ "$v" = "RABBIT" ]; then
         bash build_$v.sh ${BUILD_TARGERT}
     else
         echo "bash build_$v.sh ${BUILD_TARGERT} ${SOURCE_DIR}/$v"
@@ -27,7 +27,7 @@ done
 exit 0
 
 #./build_webrtc.sh unix > /dev/null
-if [ "$RABBITIM_BUILD_THIRDLIBRARY" = "TRUE" ]; then
+if [ "$RABBIT_BUILD_THIRDLIBRARY" = "TRUE" ]; then
     bash build_zlib.sh ${BUILD_TARGERT} 
     bash build_minizip.sh ${BUILD_TARGERT} 
     bash build_libpng.sh ${BUILD_TARGERT} 
@@ -48,4 +48,4 @@ fi
 
 bash build_qxmpp.sh ${BUILD_TARGERT}  > /dev/null
 bash build_qzxing.sh ${BUILD_TARGERT} > /dev/null
-bash build_rabbitim.sh ${BUILD_TARGERT} ${SOURCE_DIR} ${QMAKE} #> /dev/null
+bash build_RABBIT.sh ${BUILD_TARGERT} ${SOURCE_DIR} ${QMAKE} #> /dev/null

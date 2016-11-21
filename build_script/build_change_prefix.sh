@@ -18,7 +18,7 @@
 #    $2:源码的位置 
 case $1 in
     android|windows_msvc|windows_mingw|unix)
-    RABBITIM_BUILD_TARGERT=$1
+    RABBIT_BUILD_TARGERT=$1
     ;;
     *)
     echo "${HELP_STRING}"
@@ -26,14 +26,14 @@ case $1 in
     ;;
 esac
 
-if [ -z "${RABBITIM_BUILD_PREFIX}" ]; then
-    echo ". `pwd`/build_envsetup_${RABBITIM_BUILD_TARGERT}.sh"
-    . `pwd`/build_envsetup_${RABBITIM_BUILD_TARGERT}.sh
+if [ -z "${RABBIT_BUILD_PREFIX}" ]; then
+    echo ". `pwd`/build_envsetup_${RABBIT_BUILD_TARGERT}.sh"
+    . `pwd`/build_envsetup_${RABBIT_BUILD_TARGERT}.sh
 fi
 
 #产生修改前缀脚本
-if [ ! -f ${RABBITIM_BUILD_PREFIX}/change_prefix.sh ]; then
-    cp change_prefix.sh ${RABBITIM_BUILD_PREFIX}/change_prefix.sh
-    sed -i.orig -e "s,@@CONTRIB_PREFIX@@,${RABBITIM_BUILD_PREFIX},g" ${RABBITIM_BUILD_PREFIX}/change_prefix.sh
-    rm -f ${RABBITIM_BUILD_PREFIX}/change_prefix.sh.orig
+if [ ! -f ${RABBIT_BUILD_PREFIX}/change_prefix.sh ]; then
+    cp change_prefix.sh ${RABBIT_BUILD_PREFIX}/change_prefix.sh
+    sed -i.orig -e "s,@@CONTRIB_PREFIX@@,${RABBIT_BUILD_PREFIX},g" ${RABBIT_BUILD_PREFIX}/change_prefix.sh
+    rm -f ${RABBIT_BUILD_PREFIX}/change_prefix.sh.orig
 fi

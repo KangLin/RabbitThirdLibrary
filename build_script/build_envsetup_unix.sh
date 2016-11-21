@@ -13,42 +13,42 @@
 #   注意这种用法，script.sh开头一行必须包含 #!/bin/sh  
 
 #需要设置下面变量：
-#QT_ROOT=/home/l/Qt5.6.0/5.6/gcc_64  #QT 安装根目录,默认为:${RabbitImRoot}/ThirdLibrary/unix/qt
+#QT_ROOT=/home/l/Qt5.6.0/5.6/gcc_64  #QT 安装根目录,默认为:${RABBITRoot}/ThirdLibrary/unix/qt
 JOM=${MAKE} #设置 QT make 工具 JOM
-if [ -z "$RABBITIM_CLEAN" ]; then
-    RABBITIM_CLEAN=TRUE #编译前清理
+if [ -z "$RABBIT_CLEAN" ]; then
+    RABBIT_CLEAN=TRUE #编译前清理
 fi
-#RABBITIM_BUILD_STATIC="static" #设置编译静态库，注释掉，则为编译动态库
-#RABBITIM_USE_REPOSITORIES="FALSE" #下载指定的压缩包。省略，则下载开发库。
-if [ -z "${RABBITIM_MAKE_JOB_PARA}" ]; then
-    RABBITIM_MAKE_JOB_PARA="-j`cat /proc/cpuinfo |grep 'cpu cores' |wc -l`"  #make 同时工作进程参数
-    if [ "$RABBITIM_MAKE_JOB_PARA" = "-j1" ];then
-        RABBITIM_MAKE_JOB_PARA=
+#RABBIT_BUILD_STATIC="static" #设置编译静态库，注释掉，则为编译动态库
+#RABBIT_USE_REPOSITORIES="FALSE" #下载指定的压缩包。省略，则下载开发库。
+if [ -z "${RABBIT_MAKE_JOB_PARA}" ]; then
+    RABBIT_MAKE_JOB_PARA="-j`cat /proc/cpuinfo |grep 'cpu cores' |wc -l`"  #make 同时工作进程参数
+    if [ "$RABBIT_MAKE_JOB_PARA" = "-j1" ];then
+        RABBIT_MAKE_JOB_PARA=
     fi
 fi
-MAKE="make ${RABBITIM_MAKE_JOB_PARA}"
-#   RABBITIM_BUILD_PREFIX=`pwd`/../${RABBITIM_BUILD_TARGERT}  #修改这里为安装前缀
-#   RABBITIM_BUILD_CROSS_PREFIX     #交叉编译前缀
-#   RABBITIM_BUILD_CROSS_SYSROOT  #交叉编译平台的 sysroot
+MAKE="make ${RABBIT_MAKE_JOB_PARA}"
+#   RABBIT_BUILD_PREFIX=`pwd`/../${RABBIT_BUILD_TARGERT}  #修改这里为安装前缀
+#   RABBIT_BUILD_CROSS_PREFIX     #交叉编译前缀
+#   RABBIT_BUILD_CROSS_SYSROOT  #交叉编译平台的 sysroot
 
-if [ -n "${RabbitImRoot}" ]; then
-    RABBITIM_BUILD_PREFIX=${RabbitImRoot}/ThirdLibrary/unix
+if [ -n "${RABBITRoot}" ]; then
+    RABBIT_BUILD_PREFIX=${RABBITRoot}/ThirdLibrary/unix
 else
-    RABBITIM_BUILD_PREFIX=`pwd`/../unix    #修改这里为安装前缀 
+    RABBIT_BUILD_PREFIX=`pwd`/../unix    #修改这里为安装前缀 
 fi
-if [ "$RABBITIM_BUILD_STATIC" = "static" ]; then
-    RABBITIM_BUILD_PREFIX=${RABBITIM_BUILD_PREFIX}_static
+if [ "$RABBIT_BUILD_STATIC" = "static" ]; then
+    RABBIT_BUILD_PREFIX=${RABBIT_BUILD_PREFIX}_static
 fi
-if [ ! -d ${RABBITIM_BUILD_PREFIX} ]; then
-    mkdir -p ${RABBITIM_BUILD_PREFIX}
-fi
-
-if [ -z "$RABBITIM_USE_REPOSITORIES" ]; then
-    RABBITIM_USE_REPOSITORIES="TRUE" #下载开发库。省略，则下载指定的压缩包
+if [ ! -d ${RABBIT_BUILD_PREFIX} ]; then
+    mkdir -p ${RABBIT_BUILD_PREFIX}
 fi
 
-if [ -z "$QT_ROOT" -a -d "${RABBITIM_BUILD_PREFIX}/qt" ]; then
-    QT_ROOT=${RABBITIM_BUILD_PREFIX}/qt
+if [ -z "$RABBIT_USE_REPOSITORIES" ]; then
+    RABBIT_USE_REPOSITORIES="TRUE" #下载开发库。省略，则下载指定的压缩包
+fi
+
+if [ -z "$QT_ROOT" -a -d "${RABBIT_BUILD_PREFIX}/qt" ]; then
+    QT_ROOT=${RABBIT_BUILD_PREFIX}/qt
 fi
 QMAKE=qmake
 if [ -n "$QT_ROOT" ]; then
@@ -67,21 +67,21 @@ case $TARGET_OS in
         GENERATORS="Unix Makefiles" 
         ;;
     *)
-    echo "Please set RABBITIM_BUILD_HOST. see build_envsetup_windows_mingw.sh"
+    echo "Please set RABBIT_BUILD_HOST. see build_envsetup_windows_mingw.sh"
     return 2
     ;;
 esac
 
 #pkg-config帮助文档：http://linux.die.net/man/1/pkg-config
 export PKG_CONFIG=pkg-config 
-if [ "${RABBITIM_BUILD_THIRDLIBRARY}" = "TRUE" ]; then
+if [ "${RABBIT_BUILD_THIRDLIBRARY}" = "TRUE" ]; then
     #不用系统的第三方库,用下面
-    export PKG_CONFIG_PATH=${RABBITIM_BUILD_PREFIX}/lib/pkgconfig 
+    export PKG_CONFIG_PATH=${RABBIT_BUILD_PREFIX}/lib/pkgconfig 
     export PKG_CONFIG_LIBDIR=${PKG_CONFIG_PATH}
-    export PKG_CONFIG_SYSROOT_DIR=${RABBITIM_BUILD_PREFIX}
+    export PKG_CONFIG_SYSROOT_DIR=${RABBIT_BUILD_PREFIX}
 else
     #如果用系统的库,就用下面  
-    export PKG_CONFIG_PATH=${RABBITIM_BUILD_PREFIX}/lib/pkgconfig:${PKG_CONFIG_PATH}
+    export PKG_CONFIG_PATH=${RABBIT_BUILD_PREFIX}/lib/pkgconfig:${PKG_CONFIG_PATH}
 fi
 export PATH=${QT_BIN}:$PATH
 

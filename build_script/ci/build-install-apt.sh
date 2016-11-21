@@ -13,7 +13,7 @@ function function_common()
          checkinstall \
          check \
          m4 
-    sudo apt-get install -y -qq subversion git wget ant
+    sudo apt-get install -y -qq subversion git wget ant expect
     #文档产生工具
     sudo apt-get install -y -qq doxygen 
     #编译qt webkit 需要
@@ -36,7 +36,7 @@ function function_unix()
     sudo apt-get install -y -qq doxygen 
     
     # 依赖库  
-    if [ "$RABBITIM_BUILD_THIRDLIBRARY" = "TRUE" ]; then
+    if [ "$RABBIT_BUILD_THIRDLIBRARY" = "TRUE" ]; then
         sudo apt-get install -y -qq libvpx-dev \
             libavcodec-dev libavformat-dev libavutil-dev libswscale-dev \
             libqrencode-dev \

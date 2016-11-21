@@ -95,7 +95,11 @@ make: fork: Resource temporarily unavailable
 
 #### 2.1. 编译工具: msvc
 主页：http://msdn.microsoft.com/zh-cn/vstudio  
-当前使用版本：vs 2015 update 3 或 vs 2013 update 4
+
+|当前使用版本|vc编译器版本号|
+|:--:|:--:|
+|vs 2015 update 3|14|
+|vs 2013 update 4|12|
 
 #### 2.3. windows sdk(The Microsoft® Windows® Software Development Kit (SDK) for Windows 8.1):
 https://msdn.microsoft.com/zh-cn/windows/desktop/bg162891
@@ -208,16 +212,11 @@ x64 平台：
 环境变量说明：
 
 1. QT_ROOT=                          #qt的安装位置,默认为:${RabbitThirdLibraryRoot}/windows_msvc/qt
-2. RABBITIM_MAKE_JOB_PARA="-j`cat /proc/cpuinfo |grep 'cpu cores' |wc -l`"  #make 同时工作进程参数,建议设置为你机器CUP个数
-3. RABBITIM_BUILD_STATIC="static"    #设置编译静态库，注释掉，则为编译动态库
+2. RABBIT_MAKE_JOB_PARA="-j`cat /proc/cpuinfo |grep 'cpu cores' |wc -l`"  #make 同时工作进程参数,建议设置为你机器CUP个数
+3. RABBIT_BUILD_STATIC="static"    #设置编译静态库，注释掉，则为编译动态库
 4. JOM=make                          #设置 QT make 工具 JOM
-5. RABBITIM_USE_REPOSITORIES="FALSE" #下载指定的压缩包。省略，则下载开发库。
-6. RABBITIM_CLEAN=TRUE               #编译前清理
-
-### 5. 编译本项目:
-
-    cd ${RabbitThirdLibraryRoot}/build_script
-    ./build_rabbitim.sh windows_msvc [source_code_directory] [qmake]
+5. RABBIT_USE_REPOSITORIES="FALSE" #下载指定的压缩包。省略，则下载开发库。
+6. RABBIT_CLEAN=TRUE               #编译前清理
 
 windows下用mingw交叉编译
 ----------------------
@@ -480,11 +479,11 @@ qt5.5.1
 环境变量说明： 
 
 1. QT_ROOT=                          #qt的安装位置,默认为:${RabbitThirdLibraryRoot}/windows_mingw/qt
-2. RABBITIM_MAKE_JOB_PARA="-j`cat /proc/cpuinfo |grep 'cpu cores' |wc -l`"  #make 同时工作进程参数,建议设置为你机器CUP个数
-3. RABBITIM_BUILD_STATIC="static"    #设置编译静态库，注释掉，则为编译动态库
+2. RABBIT_MAKE_JOB_PARA="-j`cat /proc/cpuinfo |grep 'cpu cores' |wc -l`"  #make 同时工作进程参数,建议设置为你机器CUP个数
+3. RABBIT_BUILD_STATIC="static"    #设置编译静态库，注释掉，则为编译动态库
 4. JOM=make                          #设置 QT make 工具 JOM
-5. RABBITIM_USE_REPOSITORIES="FALSE" #下载指定的压缩包。省略，则下载开发库。
-6. RABBITIM_CLEAN=TRUE               #编译前清理
+5. RABBIT_USE_REPOSITORIES="FALSE" #下载指定的压缩包。省略，则下载开发库。
+6. RABBIT_CLEAN=TRUE               #编译前清理
 
 编译所有依赖的第三方库：
 
@@ -495,45 +494,6 @@ qt5.5.1
 
     cd ${RabbitThirdLibraryRoot}/build_script
     ./build_libvpx.sh windows_mingw [source_code_directory]
-
-#### 3.3. 编译本项目:
-1. 命令行编译：
-    
-    ```sh
-    cd ${RabbitThirdLibraryRoot}/build_script
-    ./build_rabbitim.sh windows_mingw [source_code_directory] [qmake]
-    ```
-
-2. 用 QtCreator  
-设置 pkg-config
-    
-    ```sh
-    export PKG_CONFIG=${MSYS32_ROOT}/mingw32/bin/pkg-config
-    ```
-
-QtCreator中设置环境变量：项目->构建->构建环境中设置。
-
-* 如果第三方库是用 MSYS32 预编译的或者G++用的MSYS32自带的。则需要把 ${MSYS32_ROOT}/mingw32/bin 放到环境变量 PATH 中：
-
-    ```sh
-    export PATH=${MSYS32_ROOT}/mingw32/bin:$PATH
-    ```
-
-* 如果qt是自己编译的，需要做下列：
-+ 把第三方库的依赖动态库复制到${RabbitThirdLibraryRoot}/windows_mingw/bin下.
-并把此目录放到环境变量PATH中。
-
-    ```sh
-    export PATH=${RabbitThirdLibraryRoot}/windows_mingw/bin:$PATH
-    ```
-    
-+ 把qmake、uic等程序所依赖的G++编译工具链的动态库复制到 ${QT_ROOT}/bin 下.
-或者把G++编译工具链的目录${MSYS32_ROOT}/mingw32/bin放到环境变量PATH中。
-
-    export PATH=${MSYS32_ROOT}/mingw32/bin:$PATH
-
-+ 如果是在windows下，还需要把 ${RabbitThirdLibraryRoot}/windows_mingw/qt/plugins/platforms 复制到程序目录下
-  （这步工程中已自动做了）
 
 ubuntu下用mingw交叉编译
 ------------------------
@@ -601,12 +561,12 @@ ubuntu下用mingw交叉编译
 环境变量说明： 
 
 1. QT_ROOT=                          #qt的安装位置,默认为:${RabbitThirdLibraryRoot}/windows_mingw/qt
-2. RABBITIM_MAKE_JOB_PARA="-j`cat /proc/cpuinfo |grep 'cpu cores' |wc -l`"  #make 同时工作进程参数,建议设置为你机器CUP个数
-3. RABBITIM_BUILD_STATIC="static"    #设置编译静态库，注释掉，则为编译动态库
+2. RABBIT_MAKE_JOB_PARA="-j`cat /proc/cpuinfo |grep 'cpu cores' |wc -l`"  #make 同时工作进程参数,建议设置为你机器CUP个数
+3. RABBIT_BUILD_STATIC="static"    #设置编译静态库，注释掉，则为编译动态库
 4. JOM=make                          #设置 QT make 工具 JOM
-5. RABBITIM_USE_REPOSITORIES="FALSE" #下载指定的压缩包。省略，则下载开发库。
-6. RABBITIM_CLEAN=TRUE               #编译前清理
-7. RABBITIM_BUILD_CROSS_HOST=        #编译工具链前缀,用于交叉编译，默认为：i686-w64-mingw32
+5. RABBIT_USE_REPOSITORIES="FALSE" #下载指定的压缩包。省略，则下载开发库。
+6. RABBIT_CLEAN=TRUE               #编译前清理
+7. RABBIT_BUILD_CROSS_HOST=        #编译工具链前缀,用于交叉编译，默认为：i686-w64-mingw32
 
 编译所有依赖的第三方库：
 
@@ -617,16 +577,3 @@ ubuntu下用mingw交叉编译
 
     cd ${RabbitThirdLibraryRoot}/build_script
     ./build_libvpx.sh windows_mingw [source_code_directory]
-
-### 4. 编译本项目:
-1. 命令行编译：
-
-    cd ${RabbitThirdLibraryRoot}/build_script
-    ./build_rabbitim.sh windows_mingw [source_code_directory] [qmake]
-
-2. 用 QtCreator  
-设置 pkg-config
-        
-    ```sh
-    export PKG_CONFIG=pkg-config
-    ```
