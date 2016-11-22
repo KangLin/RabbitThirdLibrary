@@ -483,7 +483,7 @@ init:
 install:
   #- C:\msys64\usr\bin\pacman.exe -Syu --noconfirm 
   #- C:\msys64\autorebase.bat
-  - C:\msys64\usr\bin\pacman.exe -S --noconfirm nasm yasm unzip curl expect
+  - C:\msys64\usr\bin\pacman.exe -S --noconfirm nasm yasm unzip curl expect zip
   - C:\msys64\autorebase.bat
 
 before_build:
@@ -493,10 +493,10 @@ before_build:
 build_script:
   - cd %APPVEYOR_BUILD_FOLDER%
   - C:\msys64\usr\bin\bash.exe %APPVEYOR_BUILD_FOLDER%\build_script\ci\build.sh
+  - C:\msys64\usr\bin\bash.exe %APPVEYOR_BUILD_FOLDER%\build_script\ci\Deploy.sh
 
 after_build:
   - cd %APPVEYOR_BUILD_FOLDER%
-  - C:\msys64\usr\bin\bash.exe %APPVEYOR_BUILD_FOLDER%\build_script\ci\Deploy.sh
 
 #artifacts:
  # - path: ThirdLibrary/src

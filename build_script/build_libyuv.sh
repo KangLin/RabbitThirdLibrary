@@ -84,7 +84,7 @@ case ${RABBIT_BUILD_TARGERT} in
     windows_mingw)
         case `uname -s` in
             Linux*|Unix*|CYGWIN*)
-                CMAKE_PARA="${CMAKE_PARA} -DCMAKE_TOOLCHAIN_FILE=$RABBIT_BUILD_PREFIX/../../cmake/platforms/toolchain-mingw.cmake"
+                CMAKE_PARA="${CMAKE_PARA} -DCMAKE_TOOLCHAIN_FILE=$RABBIT_BUILD_PREFIX/../build_script/cmake/platforms/toolchain-mingw.cmake"
                 ;;
             *)
             ;;

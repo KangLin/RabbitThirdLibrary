@@ -2,7 +2,7 @@
 set -ev
 
 if [ "$BUILD_TARGERT" = "windows_mingw" \
-    -a -z "$APPVEYOR" ]; then
+    -a -n "$APPVEYOR" ]; then
     export PATH=/C/Qt/Tools/mingw${TOOLCHAIN_VERSION}_32/bin:$PATH
 fi
 
@@ -22,7 +22,7 @@ SOURCE_DIR=${SCRIPT_DIR}/../src
 if [ -n "$DOWNLOAD_FILE" ]; then
    echo "wget -q -c -O ${SCRIPT_DIR}/../${BUILD_TARGERT}.zip ${DOWNLOAD_FILE}"
    wget -q -c -O ${SCRIPT_DIR}/../${BUILD_TARGERT}.zip ${DOWNLOAD_FILE}
-   unzip -q ${SCRIPT_DIR}/../${BUILD_TARGERT}.zip -d ${SCRIPT_DIR}/../${BUILD_TARGERT}
+   unzip -q ${SCRIPT_DIR}/../${BUILD_TARGERT}.zip -d ${SCRIPT_DIR}/..
    if [ "$PROJECT_NAME" != "RabbitThirdLIbrary" \
         -a "$BUILD_TARGERT" != "windows_msvc" \
         -a -f "${SCRIPT_DIR}/../${BUILD_TARGERT}/change_prefix.sh" ]; then
@@ -53,7 +53,7 @@ echo "RABBIT_BUILD_THIRDLIBRARY:$RABBIT_BUILD_THIRDLIBRARY"
 for v in $RABBIT_BUILD_THIRDLIBRARY
 do
     if [ "$v" = "rabbitim" ]; then
-        bash ./build_$v.sh ${BUILD_TARGERT}
+        bash ./build_$v.sh ${BUILD_TARGERT} # > /dev/null
     else
         bash ./build_$v.sh ${BUILD_TARGERT} ${SOURCE_DIR}/$v #> /dev/null
     fi
