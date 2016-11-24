@@ -20,9 +20,10 @@ SOURCE_DIR=${SCRIPT_DIR}/../src
 
 #下载预编译库
 if [ -n "$DOWNLOAD_FILE" ]; then
-   echo "wget -q -c -O ${SCRIPT_DIR}/../${BUILD_TARGERT}.zip ${DOWNLOAD_FILE}"
-   wget -q -c -O ${SCRIPT_DIR}/../${BUILD_TARGERT}.zip ${DOWNLOAD_FILE}
-   unzip -q ${SCRIPT_DIR}/../${BUILD_TARGERT}.zip -d ${SCRIPT_DIR}/..
+   echo "wget -q -c -O ${SCRIPT_DIR}/../${BUILD_TARGERT}.tar.gz ${DOWNLOAD_FILE}"
+   wget -q -c -O ${SCRIPT_DIR}/../${BUILD_TARGERT}.tar.gz ${DOWNLOAD_FILE}
+   #unzip -q ${SCRIPT_DIR}/../${BUILD_TARGERT}.zip -d ${SCRIPT_DIR}/..
+   tar xzf ${SCRIPT_DIR}/../${BUILD_TARGERT}.tar.gz -C ${SCRIPT_DIR}/..
    if [ "$PROJECT_NAME" != "RabbitThirdLIbrary" \
         -a "$BUILD_TARGERT" != "windows_msvc" \
         -a -f "${SCRIPT_DIR}/../${BUILD_TARGERT}/change_prefix.sh" ]; then
