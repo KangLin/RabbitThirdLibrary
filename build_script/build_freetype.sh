@@ -99,7 +99,7 @@ case ${RABBIT_BUILD_TARGERT} in
     ;;
     windows_msvc)
         MAKE_PARA=""
-        CMAKE_PARA="${CMAKE_PARA} -DWITH_PNG=OFF"       
+        CMAKE_PARA="${CMAKE_PARA} -DWITH_PNG=OFF"
         ;;
     windows_mingw)
         case `uname -s` in
@@ -109,6 +109,7 @@ case ${RABBIT_BUILD_TARGERT} in
             *)
             ;;
         esac
+        CMAKE_PARA="${CMAKE_PARA} -DWITH_PNG=OFF"
         ;;
     *)
     echo "${HELP_STRING}"

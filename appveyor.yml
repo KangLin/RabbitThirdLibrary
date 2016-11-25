@@ -586,7 +586,7 @@ environment:
   ##### qxmpp qzxing #####
 
   ##### QT相关编译 #####
-  
+
 init:
   - set varch=%AUTOBUILD_ARCH%
   - set PROJECT_NAME=%APPVEYOR_PROJECT_NAME%
@@ -604,7 +604,7 @@ init:
 install:
   #- C:\msys64\usr\bin\pacman.exe -Syu --noconfirm 
   #- C:\msys64\autorebase.bat
-  - C:\msys64\usr\bin\pacman.exe -S --noconfirm nasm yasm unzip curl expect zip
+  - C:\msys64\usr\bin\pacman.exe -S --noconfirm nasm yasm unzip expect #zip curl
   - C:\msys64\autorebase.bat
 
 before_build:
@@ -620,6 +620,7 @@ after_build:
   - cd %APPVEYOR_BUILD_FOLDER%
 
 #artifacts:
+#  - path rabbit_${BUILD_TARGERT}${TOOLCHAIN_VERSION}_${AUTOBUILD_ARCH}_${QT_VERSION}_v${BUILD_VERSION}.tar.gz
  # - path: ThirdLibrary/src
  #   name: RABBITThirdLibrarySource
 

@@ -23,6 +23,7 @@ if [ -n "$DOWNLOAD_FILE" ]; then
    echo "wget -q -c -O ${SCRIPT_DIR}/../${BUILD_TARGERT}.tar.gz ${DOWNLOAD_FILE}"
    wget -q -c -O ${SCRIPT_DIR}/../${BUILD_TARGERT}.tar.gz ${DOWNLOAD_FILE}
    #unzip -q ${SCRIPT_DIR}/../${BUILD_TARGERT}.zip -d ${SCRIPT_DIR}/..
+   md5sum ${SCRIPT_DIR}/../${BUILD_TARGERT}.tar.gz
    tar xzf ${SCRIPT_DIR}/../${BUILD_TARGERT}.tar.gz -C ${SCRIPT_DIR}/..
    if [ "$PROJECT_NAME" != "RabbitThirdLIbrary" \
         -a "$BUILD_TARGERT" != "windows_msvc" \
