@@ -13,6 +13,7 @@ environment:
     QT_VERSION: NO
     AUTOBUILD_ARCH: x86
     RABBIT_BUILD_THIRDLIBRARY: change_prefix zlib minizip expat libgpx openssl libsodium libcurl libpng jpeg libgif libtiff freetype libvpx libyuv libopus x264 ffmpeg opencv
+    RABBIT_USE_REPOSITORIES: "FALSE"
     PASSWORD:
       secure: 2WEtOQrdty3V3g0aEVvS3Q==
 
@@ -22,7 +23,6 @@ environment:
     QT_VERSION: NO
     AUTOBUILD_ARCH: x86
     RABBIT_BUILD_THIRDLIBRARY: change_prefix zlib minizip expat libgpx openssl libsodium libcurl libpng jpeg libgif libtiff freetype libvpx libyuv libopus x264 ffmpeg opencv 
-    RABBIT_USE_REPOSITORIES: "FALSE"
     PASSWORD:
       secure: 2WEtOQrdty3V3g0aEVvS3Q==
 
@@ -81,6 +81,7 @@ environment:
     AUTOBUILD_ARCH: x86
     RABBIT_BUILD_THIRDLIBRARY: osg 
     DOWNLOAD_FILE: https://sourceforge.net/projects/rabbitthirdlibrary/files/Release/rabbit_windows_msvc14_x86_NO_v$(appveyor_build_version).tar.gz/download
+    RABBIT_USE_REPOSITORIES: "FALSE"
     PASSWORD:
       secure: 2WEtOQrdty3V3g0aEVvS3Q==
 
@@ -92,7 +93,6 @@ environment:
     AUTOBUILD_ARCH: x86
     RABBIT_BUILD_THIRDLIBRARY: osg 
     DOWNLOAD_FILE: https://sourceforge.net/projects/rabbitthirdlibrary/files/Release/rabbit_windows_msvc14_x86_NO_v$(appveyor_build_version).tar.gz/download
-    RABBIT_USE_REPOSITORIES: "FALSE"
     PASSWORD:
       secure: 2WEtOQrdty3V3g0aEVvS3Q==
 
@@ -423,6 +423,7 @@ environment:
     AUTOBUILD_ARCH: x86
     RABBIT_BUILD_THIRDLIBRARY: qxmpp qzxing
     DOWNLOAD_FILE: https://sourceforge.net/projects/rabbitthirdlibrary/files/Release/rabbit_windows_msvc14_x86_qt5.7_v$(appveyor_build_version).tar.gz/download
+    BUILD_END: "True"
     PASSWORD:
       secure: 2WEtOQrdty3V3g0aEVvS3Q==
 
@@ -435,6 +436,7 @@ environment:
     RABBIT_BUILD_THIRDLIBRARY: qxmpp qzxing
     DOWNLOAD_FILE: https://sourceforge.net/projects/rabbitthirdlibrary/files/Release/rabbit_windows_msvc14_x86_qt5.6.1_v$(appveyor_build_version).tar.gz/download
     RABBIT_USE_REPOSITORIES: "FALSE"
+    BUILD_END: "True"
     PASSWORD:
       secure: 2WEtOQrdty3V3g0aEVvS3Q==
 
@@ -446,6 +448,7 @@ environment:
     AUTOBUILD_ARCH: x86
     RABBIT_BUILD_THIRDLIBRARY: qxmpp qzxing 
     DOWNLOAD_FILE: https://sourceforge.net/projects/rabbitthirdlibrary/files/Release/rabbit_windows_msvc12_x86_qt5.7_v$(appveyor_build_version).tar.gz/download
+    BUILD_END: "True"
     PASSWORD:
       secure: 2WEtOQrdty3V3g0aEVvS3Q==
 
@@ -458,6 +461,7 @@ environment:
     RABBIT_BUILD_THIRDLIBRARY: qxmpp qzxing 
     DOWNLOAD_FILE: https://sourceforge.net/projects/rabbitthirdlibrary/files/Release/rabbit_windows_msvc12_x86_qt5.6.1_v$(appveyor_build_version).tar.gz/download
     RABBIT_USE_REPOSITORIES: "FALSE"
+    BUILD_END: "True"
     PASSWORD:
       secure: 2WEtOQrdty3V3g0aEVvS3Q==
 
@@ -470,6 +474,7 @@ environment:
     RABBIT_BUILD_THIRDLIBRARY: qxmpp qzxing
     DOWNLOAD_FILE: https://sourceforge.net/projects/rabbitthirdlibrary/files/Release/rabbit_windows_msvc12_x86_qt5.5_v$(appveyor_build_version).tar.gz/download
     RABBIT_USE_REPOSITORIES: "FALSE"
+    BUILD_END: "True"
     PASSWORD:
       secure: 2WEtOQrdty3V3g0aEVvS3Q==
 
@@ -482,6 +487,7 @@ environment:
     RABBIT_BUILD_THIRDLIBRARY: qxmpp qzxing
     DOWNLOAD_FILE: https://sourceforge.net/projects/rabbitthirdlibrary/files/Release/rabbit_windows_msvc12_x86_qt5.4_v$(appveyor_build_version).tar.gz/download
     RABBIT_USE_REPOSITORIES: "FALSE"
+    BUILD_END: "True"
     PASSWORD:
       secure: 2WEtOQrdty3V3g0aEVvS3Q==
 
@@ -494,6 +500,7 @@ environment:
     RABBIT_BUILD_THIRDLIBRARY: qxmpp qzxing
     DOWNLOAD_FILE: https://sourceforge.net/projects/rabbitthirdlibrary/files/Release/rabbit_windows_msvc12_x86_qt5.3_v$(appveyor_build_version).tar.gz/download
     RABBIT_USE_REPOSITORIES: "FALSE"
+    BUILD_END: "True"
     PASSWORD:
       secure: 2WEtOQrdty3V3g0aEVvS3Q==
 
@@ -504,6 +511,7 @@ environment:
     AUTOBUILD_ARCH: arm
     RABBIT_BUILD_THIRDLIBRARY: qxmpp qzxing
     DOWNLOAD_FILE: https://sourceforge.net/projects/rabbitthirdlibrary/files/Release/rabbit_android4.8_arm_5.7.0_v$(appveyor_build_version).tar.gz/download
+    BUILD_END: "True"
     PASSWORD:
       secure: 2WEtOQrdty3V3g0aEVvS3Q==
 
@@ -515,6 +523,7 @@ environment:
     RABBIT_BUILD_THIRDLIBRARY: qxmpp qzxing 
     DOWNLOAD_FILE: https://sourceforge.net/projects/rabbitthirdlibrary/files/Release/rabbit_android4.8_arm_5.6.1_v$(appveyor_build_version).tar.gz/download
     RABBIT_USE_REPOSITORIES: "FALSE"
+    BUILD_END: "True"
     PASSWORD:
       secure: 2WEtOQrdty3V3g0aEVvS3Q==
 
@@ -526,6 +535,7 @@ environment:
     RABBIT_BUILD_THIRDLIBRARY: qxmpp qzxing
     DOWNLOAD_FILE: https://sourceforge.net/projects/rabbitthirdlibrary/files/Release/rabbit_android4.8_arm_5.5.1_v$(appveyor_build_version).tar.gz/download
     RABBIT_USE_REPOSITORIES: "FALSE"
+    BUILD_END: "True"
     PASSWORD:
       secure: 2WEtOQrdty3V3g0aEVvS3Q==
 
@@ -537,6 +547,7 @@ environment:
     RABBIT_BUILD_THIRDLIBRARY: qxmpp qzxing 
     DOWNLOAD_FILE: https://sourceforge.net/projects/rabbitthirdlibrary/files/Release/rabbit_windows_mingw530_x86_NO_v$(appveyor_build_version).tar.gz/download
     RABBIT_USE_REPOSITORIES: "FALSE"
+    BUILD_END: "True"
     PASSWORD:
       secure: 2WEtOQrdty3V3g0aEVvS3Q==
 
@@ -548,6 +559,7 @@ environment:
     RABBIT_BUILD_THIRDLIBRARY: qxmpp qzxing
     DOWNLOAD_FILE: https://sourceforge.net/projects/rabbitthirdlibrary/files/Release/rabbit_windows_mingw492_x86_NO_v$(appveyor_build_version).tar.gz/download
     RABBIT_USE_REPOSITORIES: "FALSE"
+    BUILD_END: "True"
     PASSWORD:
       secure: 2WEtOQrdty3V3g0aEVvS3Q==
 
@@ -559,6 +571,7 @@ environment:
     RABBIT_BUILD_THIRDLIBRARY: qxmpp qzxing
     DOWNLOAD_FILE: https://sourceforge.net/projects/rabbitthirdlibrary/files/Release/rabbit_windows_mingw492_x86_NO_v$(appveyor_build_version).tar.gz/download
     RABBIT_USE_REPOSITORIES: "FALSE"
+    BUILD_END: "True"
     PASSWORD:
       secure: 2WEtOQrdty3V3g0aEVvS3Q==
 
@@ -570,6 +583,7 @@ environment:
     RABBIT_BUILD_THIRDLIBRARY: qxmpp qzxing
     DOWNLOAD_FILE: https://sourceforge.net/projects/rabbitthirdlibrary/files/Release/rabbit_windows_mingw491_x86_NO_v$(appveyor_build_version).tar.gz/download
     RABBIT_USE_REPOSITORIES: "FALSE"
+    BUILD_END: "True"
     PASSWORD:
       secure: 2WEtOQrdty3V3g0aEVvS3Q==
 
@@ -581,6 +595,7 @@ environment:
     RABBIT_BUILD_THIRDLIBRARY: qxmpp qzxing
     DOWNLOAD_FILE: https://sourceforge.net/projects/rabbitthirdlibrary/files/Release/rabbit_windows_mingw482_x86_NO_v$(appveyor_build_version).tar.gz/download
     RABBIT_USE_REPOSITORIES: "FALSE"
+    BUILD_END: "True"
     PASSWORD:
       secure: 2WEtOQrdty3V3g0aEVvS3Q==
   ##### qxmpp qzxing #####
