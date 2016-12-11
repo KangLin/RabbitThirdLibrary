@@ -9,11 +9,11 @@ SET(CMAKE_SYSTEM_NAME Windows)
 
 # for 32 or 64 bits mingw-w64
 # see http://mingw-w64.sourceforge.net/
-if(RABBIT_BUILD_CROSS_HOST)
-    set(COMPILER_PREFIX "${RABBIT_BUILD_CROSS_HOST}")
-else(RABBIT_BUILD_CROSS_HOST)
+if("$ENV{RABBIT_BUILD_CROSS_HOST}")
+    set(COMPILER_PREFIX "$ENV{RABBIT_BUILD_CROSS_HOST}")
+else("$ENV{RABBIT_BUILD_CROSS_HOST}")
     set(COMPILER_PREFIX "i686-w64-mingw32")
-endif(RABBIT_BUILD_CROSS_HOST)
+endif("$ENV{RABBIT_BUILD_CROSS_HOST}")
 #set(COMPILER_PREFIX "x86_64-w64-mingw32"
 
 # which compilers to use for C and C++
@@ -23,14 +23,18 @@ find_program(CMAKE_C_COMPILER NAMES ${COMPILER_PREFIX}-gcc)
 #SET(CMAKE_C_COMPILER ${COMPILER_PREFIX}-gcc)
 find_program(CMAKE_CXX_COMPILER NAMES ${COMPILER_PREFIX}-g++)
 #SET(CMAKE_CXX_COMPILER ${COMPILER_PREFIX}-g++)
+find_program(CMAKE_ASM_COMPILER NAMES ${COMPILER_PREFIX}-gcc)
+find_program(CMAKE_AR NAMES ${COMPILER_PREFIX}-gcc-ar)
+find_program(CMAKE_NM NAMES ${COMPILER_PREFIX}-nm)
+find_program(CMAKE_RANLIB NAMES ${COMPILER_PREFIX}-ranlib)
 
 # here is the target environment located
 #SET(USER_ROOT_PATH /home/erk/erk-win32-dev)
-SET(CMAKE_FIND_ROOT_PATH  /usr/${COMPILER_PREFIX} ${USER_ROOT_PATH})
+SET(CMAKE_FIND_ROOT_PATH $ENV{USER_ROOT_PATH}) # /usr/${COMPILER_PREFIX} $ENV{RABBIT_BUILD_PREFIX})
 
 # adjust the default behaviour of the FIND_XXX() commands:
 # search headers and libraries in the target environment, search 
-# programs in the host environment
-set(CMAKE_FIND_ROOT_PATH_MODE_PROGRAM NEVER)
+# programs in the host and target environment
+set(CMAKE_FIND_ROOT_PATH_MODE_PROGRAM ONLY)
 set(CMAKE_FIND_ROOT_PATH_MODE_LIBRARY ONLY)
 set(CMAKE_FIND_ROOT_PATH_MODE_INCLUDE ONLY)

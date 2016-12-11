@@ -156,7 +156,7 @@ else #qmake编译
    #     PARA="$PARA CONFIG+=static"
    # fi
     echo "qmake ...."
-    $QMAKE ../RABBIT.pro  $PARA "CONFIG+=release"  \
+    $QMAKE ../RabbitIm.pro  $PARA "CONFIG+=release"  \
            INCLUDEPATH+=${RABBIT_BUILD_PREFIX}/include \
            LIBS+=-L${RABBIT_BUILD_PREFIX}/lib \
            QXMPP_USE_VPX=1 \

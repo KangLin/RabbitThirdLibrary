@@ -1,5 +1,5 @@
 TARGET = RabbitThirdLIbrary
-TEMPLATE = app 
+TEMPLATE = subdirs 
 
 OTHER_FILES += *.md \
     *.yml \

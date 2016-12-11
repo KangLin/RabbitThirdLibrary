@@ -4,6 +4,7 @@ set -ev
 if [ "$BUILD_TARGERT" = "windows_mingw" \
     -a -n "$APPVEYOR" ]; then
     export PATH=/C/Qt/Tools/mingw${TOOLCHAIN_VERSION}_32/bin:$PATH
+    export USER_ROOT_PATH=/C/Qt/Tools/mingw${TOOLCHAIN_VERSION}_32
 fi
 
 SOURCE_DIR=`pwd`
