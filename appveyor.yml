@@ -368,14 +368,14 @@ build_script:
 after_build:
   - cd %APPVEYOR_BUILD_FOLDER%
 
-#artifacts:
+artifacts:
 #  - path rabbit_${BUILD_TARGERT}${TOOLCHAIN_VERSION}_${AUTOBUILD_ARCH}_${QT_VERSION}_v${BUILD_VERSION}.tar.gz
  # - path: ThirdLibrary/src
  #   name: RABBITThirdLibrarySource
 
-#  - path: $(BUILD_TARGERT)
-#    name: RABBIT_$(BUILD_TARGERT)$(TOOLCHAIN_VERSION)_$(AUTOBUILD_ARCH)_$(QT_VERSION)_v$(appveyor_build_version)
-#    type: zip
+  - path: $(BUILD_TARGERT)
+    name: RABBIT_$(BUILD_TARGERT)$(TOOLCHAIN_VERSION)_$(AUTOBUILD_ARCH)_$(QT_VERSION)_v$(appveyor_build_version)
+    type: zip
 
 test: off
 
