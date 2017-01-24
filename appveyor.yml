@@ -139,7 +139,7 @@ environment:
     QT_ROOT: /C/Qt/5.6/mingw49_32
     AUTOBUILD_ARCH: x86
     DOWNLOAD_FILE: https://sourceforge.net/projects/rabbitthirdlibrary/files/Release/rabbit_windows_mingw492_x86_NO_v$(appveyor_build_version).tar.gz/download
-    RABBIT_USE_REPOSITORIES: "FALSE"
+    #RABBIT_USE_REPOSITORIES: "FALSE"
     PASSWORD:
       secure: 2WEtOQrdty3V3g0aEVvS3Q==
   ##### osg #####
