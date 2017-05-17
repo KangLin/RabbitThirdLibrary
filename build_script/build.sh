@@ -60,7 +60,6 @@ if [ -n "$2" ]; then
     #./build_geos.sh ${RABBIT_BUILD_TARGERT} $2/geos
     ./build_gdal.sh ${RABBIT_BUILD_TARGERT} $2/gdal
     ./build_osgearth.sh ${RABBIT_BUILD_TARGERT} $2/osgearth
-    ./build_qrencode.sh ${RABBIT_BUILD_TARGERT} $2/libqrencode
     ./build_x264.sh ${RABBIT_BUILD_TARGERT} $2/x264 
     ./build_libvpx.sh ${RABBIT_BUILD_TARGERT} $2/libvpx 
     ./build_libyuv.sh ${RABBIT_BUILD_TARGERT} $2/libyuv 
@@ -82,7 +81,6 @@ else
     #./build_geos.sh ${RABBIT_BUILD_TARGERT} 
     ./build_gdal.sh ${RABBIT_BUILD_TARGERT} 
     ./build_osgearth.sh ${RABBIT_BUILD_TARGERT}
-    ./build_qrencode.sh ${RABBIT_BUILD_TARGERT} 
     ./build_x264.sh ${RABBIT_BUILD_TARGERT} 
     ./build_libvpx.sh ${RABBIT_BUILD_TARGERT} 
     ./build_libyuv.sh ${RABBIT_BUILD_TARGERT} 
@@ -100,6 +98,7 @@ if [ -n "$2" ]; then
     echo "Source dir:$2"
     if [ "${RABBIT_BUILD_TARGERT}" != "windows_msvc" ]; then
         echo "building ......"
+        ./build_qrencode.sh ${RABBIT_BUILD_TARGERT} $2/libqrencode && \
         ./build_libopus.sh ${RABBIT_BUILD_TARGERT} $2/libopus && \
         ./build_speexdsp.sh ${RABBIT_BUILD_TARGERT} $2/speexdsp && \
         ./build_speex.sh ${RABBIT_BUILD_TARGERT} $2/speex && \
@@ -115,6 +114,7 @@ if [ -n "$2" ]; then
     ./build_osgearth.sh ${RABBIT_BUILD_TARGERT} $2/osgearth
 else
     if [ "${RABBIT_BUILD_TARGERT}" != "windows_msvc" ]; then
+        ./build_qrencode.sh ${RABBIT_BUILD_TARGERT} && \
         ./build_speexdsp.sh ${RABBIT_BUILD_TARGERT} && \
         ./build_speex.sh ${RABBIT_BUILD_TARGERT} && \
         ./build_libopus.sh ${RABBIT_BUILD_TARGERT} && \
