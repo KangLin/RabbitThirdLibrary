@@ -40,7 +40,7 @@ CUR_DIR=`pwd`
 
 #下载源码:
 if [ ! -d ${RABBIT_BUILD_SOURCE_CODE} ]; then
-    OPENSLL_BRANCH=OpenSSL_1_0_2j
+    OPENSLL_BRANCH=OpenSSL_1_1_0f
     if [ "TRUE" = "${RABBIT_USE_REPOSITORIES}" ]; then
         echo "git clone -q --branch=${OPENSLL_BRANCH} https://github.com/openssl/openssl ${RABBIT_BUILD_SOURCE_CODE}"
         git clone -q --branch=${OPENSLL_BRANCH} https://github.com/openssl/openssl ${RABBIT_BUILD_SOURCE_CODE}
@@ -165,7 +165,7 @@ esac
 echo "${MAKE} depend"
 ${MAKE} depend
 echo "make install"
-${MAKE} 
+${MAKE} ${RABBIT_MAKE_JOB_PARA}
 ${MAKE} install
 
 cd $CUR_DIR
