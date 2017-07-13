@@ -342,7 +342,6 @@ init:
   - set BUILD_VERSION=%APPVEYOR_BUILD_VERSION%
   - if "%AUTOBUILD_ARCH%" == "x64" set varch=amd64
   - if "%BUILD_TARGERT%" == "windows_msvc" call "C:\Program Files (x86)\Microsoft Visual Studio %TOOLCHAIN_VERSION%.0\VC\vcvarsall.bat" %varch%
-  #- if "%BUILD_TARGERT%" == "windows_mingw" echo "PATH=/C/Qt/Tools/mingw%TOOLCHAIN_VERSION%_32/bin:${PATH}" >> C:\msys64\etc\profile
   - if "%BUILD_TARGERT%" == "windows_mingw" set MSYSTEM=MINGW32  #设置编译系统为MINGW32
   - echo NUMBER_OF_PROCESSORS=%NUMBER_OF_PROCESSORS%
   - echo PROCESSOR_IDENTIFIER=%PROCESSOR_IDENTIFIER%
@@ -355,7 +354,7 @@ install:
   #- C:\msys64\autorebase.bat
   - C:\msys64\usr\bin\pacman.exe -S --noconfirm nasm yasm unzip expect #zip curl
   - C:\msys64\autorebase.bat
-
+    
 before_build:
   - cd %APPVEYOR_BUILD_FOLDER%
   - if "%BUILD_TARGERT%" == "android" C:\msys64\usr\bin\bash.exe %APPVEYOR_BUILD_FOLDER%\build_script\ci\build-install-tools-windows.sh

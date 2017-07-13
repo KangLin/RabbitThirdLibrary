@@ -6,6 +6,9 @@ if [ "$BUILD_TARGERT" = "windows_mingw" \
     export PATH=/C/Qt/Tools/mingw${TOOLCHAIN_VERSION}_32/bin:$PATH
     export USER_ROOT_PATH=/C/Qt/Tools/mingw${TOOLCHAIN_VERSION}_32
 fi
+if [ "$BUILD_TARGERT" = "windows_msvc" ]; then
+    export PATH=/C/Perl/bin:$PATH
+fi
 
 SOURCE_DIR=`pwd`
 if [ -n "$1" ]; then
