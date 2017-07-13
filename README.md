@@ -11,17 +11,38 @@
 * 预编译库存放位置：
   https://sourceforge.net/projects/rabbitthirdlibrary/files/Release/
   
-  文件格式： rabbit_$(平台)$(版本号)_$(架构)_$(QT 版本).zip
+  文件格式： rabbit_$(平台)$(版本号)_$(架构)_$(QT 版本).zip
   
-  |编译器|版本号|平台|架构|
-  |:--:|:--:|:--:|:--:|
-  |VS2015|14|windows_msvc|x86|
-  |VS2013|12|windows_msvc|x86|
-  |gcc 5.3.0|530|windows_mingw|x86|
-  |gcc 4.9.2|492|windows_mingw|x86|
-  |gcc 4.8|4.8|android|arm|
+  |平台|编译器|版本号|架构|Qt 版本|
+  |:--:|:--:|:--:|:--:|:--:|
+  |windows_msvc|VS2015|14|x86|qt5.8.0|
+  |windows_msvc|VS2015|14|x86|qt5.7.1|
+  |windows_msvc|VS2015|14|x86|qt5.6.2|
+  |windows_msvc|VS2015|14|x86_64|qt5.8.0|
+  |windows_msvc|VS2015|14|x86_64|qt5.7.1|
+  |windows_msvc|VS2015|14|x86_64|qt5.6.2|
+  |windows_msvc|VS2013|12|x86|qt5.8.0|
+  |windows_msvc|VS2013|12|x86|qt5.7.1|
+  |windows_msvc|VS2013|12|x86|qt5.6.2|
+  |windows_msvc|VS2013|12|x86_64|qt5.8.0|
+  |windows_msvc|VS2013|12|x86_64|qt5.7.1|
+  |windows_msvc|VS2013|12|x86_64|qt5.6.2|
+  |windows_mingw|gcc 5.3.0|530|x86|qt5.8.0|
+  |windows_mingw|gcc 5.3.0|530|x86|qt5.7.1|
+  |windows_mingw|gcc 4.9.2|492|x86|qt5.6.2|
+  |windows_mingw|gcc 4.9.2|492|x86|qt5.8.0|
+  |windows_mingw|gcc 4.9.2|492|x86|qt5.7.1|
+  |windows_mingw|gcc 4.9.2|492|x86|qt5.6.2|
+  |unix|gcc 5.3.0|530|x86|qt5.8.0|
+  |unix|gcc 5.3.0|530|x86|qt5.7.1|
+  |unix|gcc 5.3.0|530|x86|qt5.6.2|
+  |unix|gcc 5.3.0|530|x86_64|qt5.8.0|
+  |unix|gcc 5.3.0|530|x86_64|qt5.7.1|
+  |unix|gcc 5.3.0|530|x86_64|qt5.6.2|
+  |android|gcc 4.8|4.8|arm|qt5.8.0|
+  |android|gcc 4.8|4.8|arm|qt5.7.1|
+  |android|gcc 4.8|4.8|arm|qt5.6.2|
+  |android|gcc 4.8|4.8|x86|qt5.8.0|
+  |android|gcc 4.8|4.8|x86|qt5.7.1|
+  |android|gcc 4.8|4.8|x86|qt5.6.2|
 
-  |Qt 版本|
-  |:--:|
-  |5.7.0|
-  |5.6.2|
