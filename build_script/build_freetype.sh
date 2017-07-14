@@ -124,6 +124,6 @@ cmake .. \
     -DCMAKE_BUILD_TYPE="Release" \
     -G"${GENERATORS}" ${CMAKE_PARA}  
 
-cmake --build . --target install --config Release #{MAKE_PARA}
+cmake --build . --target install --config Release ${MAKE_PARA}
 
 cd $CUR_DIR

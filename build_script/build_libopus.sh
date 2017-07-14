@@ -40,15 +40,15 @@ CUR_DIR=`pwd`
 
 #下载源码:
 if [ ! -d ${RABBIT_BUILD_SOURCE_CODE} ]; then
-    LIBOPUS_VERSION=1.1.3
+    LIBOPUS_VERSION=1.2.1
     if [ "TRUE" = "${RABBIT_USE_REPOSITORIES}" ]; then
         echo "git clone -q -b v${LIBOPUS_VERSION} git://git.opus-codec.org/opus.git ${RABBIT_BUILD_SOURCE_CODE}"
         git clone  -q -b v${LIBOPUS_VERSION} git://git.opus-codec.org/opus.git ${RABBIT_BUILD_SOURCE_CODE}
     else
-        echo "wget -q  http://downloads.xiph.org/releases/opus/opus-${LIBOPUS_VERSION}.tar.gz"
+        echo "wget -q  https://archive.mozilla.org/pub/opus/opus-${LIBOPUS_VERSION}.tar.gz"
         mkdir -p ${RABBIT_BUILD_SOURCE_CODE}
         cd ${RABBIT_BUILD_SOURCE_CODE}
-        wget -q -c http://downloads.xiph.org/releases/opus/opus-${LIBOPUS_VERSION}.tar.gz
+        wget -q -c https://archive.mozilla.org/pub/opus/opus-${LIBOPUS_VERSION}.tar.gz
         tar xzf opus-${LIBOPUS_VERSION}.tar.gz
         mv opus-${LIBOPUS_VERSION} ..
         rm -fr *
@@ -60,15 +60,17 @@ fi
 
 cd ${RABBIT_BUILD_SOURCE_CODE}
 
-if [ ! -f configure ]; then
-    echo "sh autogen.sh"
-    sh autogen.sh
-fi
-
-mkdir -p build_${RABBIT_BUILD_TARGERT}
-cd build_${RABBIT_BUILD_TARGERT}
-if [ "$RABBIT_CLEAN" = "TRUE" ]; then
-    rm -fr *
+if [ "${RABBIT_BUILD_TARGERT}" != "windows_msvc" ]; then
+    if [ ! -f configure ]; then
+        echo "sh autogen.sh"
+        sh autogen.sh
+    fi
+    
+    mkdir -p build_${RABBIT_BUILD_TARGERT}
+    cd build_${RABBIT_BUILD_TARGERT}
+    if [ "$RABBIT_CLEAN" = "TRUE" ]; then
+        rm -fr *
+    fi
 fi
 
 echo ""
@@ -108,7 +110,9 @@ case ${RABBIT_BUILD_TARGERT} in
     unix)
         ;;
     windows_msvc)
-        echo "build_libopus.sh don't support windows_msvc. please manually use msvc ide complie"
+        msbuild.exe -m -v:n -p:Configuration=Release -p:Platform=Win32 win32/VS2015/opus.sln
+        cp win32/VS2015/Win32/Release/opus.lib $RABBIT_BUILD_PREFIX/lib
+        cp include/* $RABBIT_BUILD_PREFIX/include
         cd $CUR_DIR
         exit 0
         ;;

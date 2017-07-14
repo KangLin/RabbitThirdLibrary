@@ -50,6 +50,7 @@ if [ -n "$2" ]; then
     ./build_zlib.sh ${RABBIT_BUILD_TARGERT} $2/zlib 
     ./build_minizip.sh ${RABBIT_BUILD_TARGERT} $2/minizip
     ./build_openssl.sh ${RABBIT_BUILD_TARGERT} $2/openssl 
+    ./build_libsodium.sh ${RABBIT_BUILD_TARGERT} $2/libsodium
     ./build_libcurl.sh ${RABBIT_BUILD_TARGERT} $2/curl 
     ./build_libpng.sh ${RABBIT_BUILD_TARGERT} $2/libpng
     ./build_jpeg.sh ${RABBIT_BUILD_TARGERT} $2/libjpeg
@@ -61,9 +62,10 @@ if [ -n "$2" ]; then
     ./build_gdal.sh ${RABBIT_BUILD_TARGERT} $2/gdal
     ./build_osgearth.sh ${RABBIT_BUILD_TARGERT} $2/osgearth
     ./build_x264.sh ${RABBIT_BUILD_TARGERT} $2/x264 
-    ./build_libvpx.sh ${RABBIT_BUILD_TARGERT} $2/libvpx 
     ./build_libyuv.sh ${RABBIT_BUILD_TARGERT} $2/libyuv 
+    ./build_libvpx.sh ${RABBIT_BUILD_TARGERT} $2/libvpx 
     ./build_ffmpeg.sh ${RABBIT_BUILD_TARGERT} $2/ffmpeg 
+    ./build_libopus.sh ${RABBIT_BUILD_TARGERT} $2/libopus 
     #./build_qt.sh ${RABBIT_BUILD_TARGERT} $2/qt5 
     ./build_qxmpp.sh ${RABBIT_BUILD_TARGERT} $2/qxmpp 
     ./build_qzxing.sh ${RABBIT_BUILD_TARGERT} $2/qzxing
@@ -71,6 +73,7 @@ else
     ./build_zlib.sh ${RABBIT_BUILD_TARGERT} 
     ./build_minizip.sh ${RABBIT_BUILD_TARGERT}
     ./build_openssl.sh ${RABBIT_BUILD_TARGERT} 
+    ./build_libsodium.sh ${RABBIT_BUILD_TARGERT} 
     ./build_libcurl.sh ${RABBIT_BUILD_TARGERT} 
     ./build_libpng.sh ${RABBIT_BUILD_TARGERT} 
     ./build_jpeg.sh ${RABBIT_BUILD_TARGERT} 
@@ -82,9 +85,10 @@ else
     ./build_gdal.sh ${RABBIT_BUILD_TARGERT} 
     ./build_osgearth.sh ${RABBIT_BUILD_TARGERT}
     ./build_x264.sh ${RABBIT_BUILD_TARGERT} 
-    ./build_libvpx.sh ${RABBIT_BUILD_TARGERT} 
     ./build_libyuv.sh ${RABBIT_BUILD_TARGERT} 
+    ./build_libvpx.sh ${RABBIT_BUILD_TARGERT} 
     ./build_ffmpeg.sh ${RABBIT_BUILD_TARGERT} 
+    ./build_libopus.sh ${RABBIT_BUILD_TARGERT} 
     #./build_qt.sh ${RABBIT_BUILD_TARGERT}
     ./build_qxmpp.sh ${RABBIT_BUILD_TARGERT}
     ./build_qzxing.sh ${RABBIT_BUILD_TARGERT} 

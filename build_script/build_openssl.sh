@@ -122,17 +122,6 @@ case ${RABBIT_BUILD_TARGERT} in
             --prefix=${RABBIT_BUILD_PREFIX} \
             --openssldir=${RABBIT_BUILD_PREFIX} \
             VC-WIN32
-        ms/do_nasm.bat
-        echo "make install"
-        if [ "$RABBIT_BUILD_STATIC" = "static" ]; then
-            #静态库  
-            nmake -f ms/nt.mak install
-        else
-            #动态库  
-            nmake -f ms/ntdll.mak install
-        fi
-        cd $CUR_DIR
-        exit 0
         ;;
     windows_mingw)
         case `uname -s` in
@@ -162,10 +151,12 @@ case ${RABBIT_BUILD_TARGERT} in
         ;;
 esac
 
-echo "${MAKE} depend"
-${MAKE} depend
 echo "make install"
-${MAKE} ${RABBIT_MAKE_JOB_PARA}
+if [ "${RABBIT_BUILD_TARGERT}" = "windows_msvc" ]; then
+    ${MAKE}
+else
+    ${MAKE} ${RABBIT_MAKE_JOB_PARA}
+fi
 ${MAKE} install
 
 cd $CUR_DIR

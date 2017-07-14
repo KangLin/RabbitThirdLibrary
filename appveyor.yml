@@ -1,6 +1,8 @@
 #TODO:版本变更时，修改成相应的版本
 version: '0.1.1.{build}'
 
+os: Visual Studio 2015
+
 environment:
   matrix:
   ##############  test ######################
@@ -11,7 +13,7 @@ environment:
     TOOLCHAIN_VERSION: 14
     QT_VERSION: NO
     AUTOBUILD_ARCH: x86
-    RABBIT_BUILD_THIRDLIBRARY: change_prefix zlib minizip expat libgpx openssl libsodium libcurl libpng jpeg libgif libtiff freetype libvpx libyuv libopus x264 ffmpeg #opencv
+    RABBIT_BUILD_THIRDLIBRARY: change_prefix zlib minizip expat libgpx openssl libsodium libcurl libpng jpeg libgif libtiff freetype libyuv libvpx libopus x264 ffmpeg #opencv
     RABBIT_USE_REPOSITORIES: "FALSE"
     PASSWORD:
       secure: 2WEtOQrdty3V3g0aEVvS3Q==
@@ -21,7 +23,7 @@ environment:
     TOOLCHAIN_VERSION: 12
     QT_VERSION: NO
     AUTOBUILD_ARCH: x86
-    RABBIT_BUILD_THIRDLIBRARY: change_prefix zlib minizip expat libgpx openssl libsodium libcurl libpng jpeg libgif libtiff freetype libvpx libyuv libopus x264 ffmpeg #opencv 
+    RABBIT_BUILD_THIRDLIBRARY: change_prefix zlib minizip expat libgpx openssl libsodium libcurl libpng jpeg libgif libtiff freetype libyuv libvpx libopus x264 ffmpeg #opencv 
     PASSWORD:
       secure: 2WEtOQrdty3V3g0aEVvS3Q==
 
@@ -29,7 +31,7 @@ environment:
     TOOLCHAIN_VERSION: 4.8
     QT_VERSION: NO
     AUTOBUILD_ARCH: arm
-    RABBIT_BUILD_THIRDLIBRARY: change_prefix zlib minizip expat libgpx openssl libsodium libcurl libpng jpeg libgif libtiff freetype libvpx libyuv libopus x264 ffmpeg #opencv 
+    RABBIT_BUILD_THIRDLIBRARY: change_prefix zlib minizip expat libgpx openssl libsodium libcurl libpng jpeg libgif libtiff freetype libyuv libvpx libopus x264 ffmpeg #opencv 
     RABBIT_USE_REPOSITORIES: "FALSE"
     PASSWORD:
       secure: 2WEtOQrdty3V3g0aEVvS3Q==
@@ -38,7 +40,7 @@ environment:
     TOOLCHAIN_VERSION: 530
     QT_VERSION: NO
     AUTOBUILD_ARCH: x86
-    RABBIT_BUILD_THIRDLIBRARY: change_prefix zlib minizip expat libgpx openssl libsodium libcurl libpng jpeg libgif libtiff freetype libvpx libyuv libopus x264 ffmpeg qrencode #opencv 
+    RABBIT_BUILD_THIRDLIBRARY: change_prefix zlib minizip expat libgpx openssl libsodium libcurl libpng jpeg libgif libtiff freetype libyuv libvpx libopus x264 ffmpeg qrencode #opencv 
     PASSWORD:
       secure: 2WEtOQrdty3V3g0aEVvS3Q==
 
@@ -46,7 +48,7 @@ environment:
     TOOLCHAIN_VERSION: 492
     QT_VERSION: NO
     AUTOBUILD_ARCH: x86
-    RABBIT_BUILD_THIRDLIBRARY: change_prefix zlib minizip expat libgpx openssl libsodium libcurl libpng jpeg libgif libtiff freetype libvpx libyuv libopus x264 ffmpeg qrencode #opencv 
+    RABBIT_BUILD_THIRDLIBRARY: change_prefix zlib minizip expat libgpx openssl libsodium libcurl libpng jpeg libgif libtiff freetype libyuv libvpx libopus x264 ffmpeg qrencode #opencv 
     RABBIT_USE_REPOSITORIES: "FALSE"
     PASSWORD:
       secure: 2WEtOQrdty3V3g0aEVvS3Q==

@@ -40,7 +40,7 @@ CUR_DIR=`pwd`
 
 #下载源码:
 if [ ! -d ${RABBIT_BUILD_SOURCE_CODE} ]; then
-    LIBSODIUM_VERSION=1.0.11
+    LIBSODIUM_VERSION=1.0.12
     if [ "TRUE" = "${RABBIT_USE_REPOSITORIES}" ]; then
         echo "git clone -q  -b ${LIBSODIUM_VERSION} https://github.com/jedisct1/libsodium.git ${RABBIT_BUILD_SOURCE_CODE}"
         git clone -q  -b ${LIBSODIUM_VERSION} https://github.com/jedisct1/libsodium.git ${RABBIT_BUILD_SOURCE_CODE}
@@ -60,17 +60,18 @@ fi
 
 cd ${RABBIT_BUILD_SOURCE_CODE}
 
-if [ ! -f configure ]; then
-    echo "sh autogen.sh"
-    sh autogen.sh
+if [ "${RABBIT_BUILD_TARGERT}" != "windows_msvc" ]; then
+    if [ ! -f configure ]; then
+        echo "sh autogen.sh"
+        sh autogen.sh
+    fi
+    
+    mkdir -p build_${RABBIT_BUILD_TARGERT}
+    cd build_${RABBIT_BUILD_TARGERT}
+    if [ "$RABBIT_CLEAN" = "TRUE" ]; then
+        rm -fr *
+    fi
 fi
-
-mkdir -p build_${RABBIT_BUILD_TARGERT}
-cd build_${RABBIT_BUILD_TARGERT}
-if [ "$RABBIT_CLEAN" = "TRUE" ]; then
-    rm -fr *
-fi
-
 echo ""
 echo "RABBIT_BUILD_TARGERT:${RABBIT_BUILD_TARGERT}"
 echo "RABBIT_BUILD_SOURCE_CODE:$RABBIT_BUILD_SOURCE_CODE"
@@ -107,9 +108,19 @@ case ${RABBIT_BUILD_TARGERT} in
     unix)
         ;;
     windows_msvc)
-        echo "build_libsodium.sh don't support windows_msvc. please manually use msvc ide complie"
+        if [ "$GENERATORS" = "Visual Studio 12 2013" ]; then
+           msbuild.exe -m -v:n -p:Configuration=DynRelease -p:Platform=Win32 builds/msvc/vs2013/libsodium.sln
+           cp bin/Win32/Release/v120/dynamic/*.dll $RABBIT_BUILD_PREFIX/bin
+           cp bin/Win32/Release/v120/dynamic/*.lib $RABBIT_BUILD_PREFIX/lib
+        fi
+        if [ "$GENERATORS" = "Visual Studio 14 2015" ]; then
+           msbuild.exe -m -v:n -p:Configuration=DynRelease -p:Platform=Win32 builds/msvc/vs2015/libsodium.sln
+           cp bin/Win32/Release/v140/dynamic/*.dll $RABBIT_BUILD_PREFIX/bin
+           cp bin/Win32/Release/v140/dynamic/*.lib $RABBIT_BUILD_PREFIX/lib
+        fi
+        echo "cp -fr src/libsodium/include/* $RABBIT_BUILD_PREFIX"
+        cp -fr src/libsodium/include/* $RABBIT_BUILD_PREFIX/include
         cd $CUR_DIR
-        #msbuild "libsodium.vcxproj" /m /verbosity:minimal 
         exit 0
         ;;
     windows_mingw)

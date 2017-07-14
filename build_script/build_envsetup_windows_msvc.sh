@@ -26,7 +26,9 @@
 #   注意这种用法，script.sh开头一行必须包含 #!/bin/sh  
 
 #需要设置下面变量：
-#QT_ROOT=/c/Qt/Qt5.7.0-msvc/5.7/msvc2015 #QT 安装根目录,默认为:${RABBITRoot}/ThirdLibrary/windows_msvc/qt
+if [ -z "$QT_ROOT" ]; then
+    QT_ROOT=/c/Qt/Qt5.7.0/5.7/msvc2015 #QT 安装根目录,默认为:${RABBITRoot}/ThirdLibrary/windows_msvc/qt
+fi
 JOM=make #设置 QT make 工具 JOM
 MAKE="nmake"
 if [ -z "$RABBIT_CLEAN" ]; then
@@ -79,6 +81,10 @@ fi
 if [ "$GENERATORS" = "Visual Studio 14 2015" ]; then
    VC_TOOLCHAIN=14
    MSVC_VER=1900
+fi
+if [ "$GENERATORS" = "Visual Studio 15 2017" ]; then
+   VC_TOOLCHAIN=15
+   MSVC_VER=2000
 fi
 
 export PATH=${RABBIT_BUILD_PREFIX}/bin:${RABBIT_BUILD_PREFIX}/lib:${QT_BIN}:$PATH

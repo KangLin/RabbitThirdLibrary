@@ -40,18 +40,18 @@ CUR_DIR=`pwd`
 
 #下载源码:
 if [ ! -d ${RABBIT_BUILD_SOURCE_CODE} ]; then
-    VERSION=v1.6.30
+    VERSION=1.6.30
     if [ "TRUE" = "${RABBIT_USE_REPOSITORIES}" ]; then
-        echo "git clone -q --branch=${VERSION} https://github.com/glennrp/libpng.git ${RABBIT_BUILD_SOURCE_CODE}"
-        git clone -q --branch=$VERSION https://github.com/glennrp/libpng.git ${RABBIT_BUILD_SOURCE_CODE}
+        echo "git clone -q --branch=v${VERSION} https://github.com/glennrp/libpng.git ${RABBIT_BUILD_SOURCE_CODE}"
+        git clone -q --branch=v$VERSION https://github.com/glennrp/libpng.git ${RABBIT_BUILD_SOURCE_CODE}
     else
         mkdir -p ${RABBIT_BUILD_SOURCE_CODE}
         cd ${RABBIT_BUILD_SOURCE_CODE}
-        echo "wget -nv -c https://github.com/glennrp/libpng/archive/${VERSION}.zip"
-        wget -nv -c https://github.com/glennrp/libpng/archive/${VERSION}.zip
-        unzip -q ${VERSION}.zip
+        echo "wget -nv -c https://github.com/glennrp/libpng/archive/v${VERSION}.zip"
+        wget -nv -c https://github.com/glennrp/libpng/archive/v${VERSION}.zip
+        unzip -q v${VERSION}.zip
         mv libpng-${VERSION} ..
-        rm -fr ${VERSION}.zip ${RABBIT_BUILD_SOURCE_CODE}
+        rm -fr v${VERSION}.zip ${RABBIT_BUILD_SOURCE_CODE}
         cd ..
         mv libpng-${VERSION} ${RABBIT_BUILD_SOURCE_CODE}
         

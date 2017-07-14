@@ -40,19 +40,19 @@ CUR_DIR=`pwd`
 
 #下载源码:
 if [ ! -d ${RABBIT_BUILD_SOURCE_CODE} ]; then
-    OSG_VERSION=master
+    OSG_VERSION=osgearth-2.8
     if [ "TRUE" = "${RABBIT_USE_REPOSITORIES}" ]; then
-        #echo "git clone -q --branch=${OSG_VERSION} https://github.com/gwaldron/osgearth.git ${RABBIT_BUILD_SOURCE_CODE}"
-        #git clone -q https://github.com/gwaldron/osgearth.git ${RABBIT_BUILD_SOURCE_CODE}
-        echo "git clone -q --branch=${OSG_VERSION} https://github.com/KangLin/osgearth.git ${RABBIT_BUILD_SOURCE_CODE}"
-        git clone -q https://github.com/KangLin/osgearth.git ${RABBIT_BUILD_SOURCE_CODE}
+        echo "git clone -q --branch=${OSG_VERSION} https://github.com/gwaldron/osgearth.git ${RABBIT_BUILD_SOURCE_CODE}"
+        git clone -q https://github.com/gwaldron/osgearth.git ${RABBIT_BUILD_SOURCE_CODE}
+        #echo "git clone -q --branch=${OSG_VERSION} https://github.com/KangLin/osgearth.git ${RABBIT_BUILD_SOURCE_CODE}"
+        #git clone -q https://github.com/KangLin/osgearth.git ${RABBIT_BUILD_SOURCE_CODE}
     else
         mkdir -p ${RABBIT_BUILD_SOURCE_CODE}
         cd ${RABBIT_BUILD_SOURCE_CODE}
-        #echo "wget -q https://github.com/gwaldron/osgearth/archive/${OSG_VERSION}.zip"
-        #wget -nv -c https://github.com/gwaldron/osgearth/archive/${OSG_VERSION}.zip
-        echo "wget -q https://github.com/KangLin/osgearth/archive/${OSG_VERSION}.zip"
-        wget -nv -c https://github.com/KangLin/osgearth/archive/${OSG_VERSION}.zip
+        echo "wget -q https://github.com/gwaldron/osgearth/archive/${OSG_VERSION}.zip"
+        wget -nv -c https://github.com/gwaldron/osgearth/archive/${OSG_VERSION}.zip
+        #echo "wget -q https://github.com/KangLin/osgearth/archive/${OSG_VERSION}.zip"
+        #wget -nv -c https://github.com/KangLin/osgearth/archive/${OSG_VERSION}.zip
         echo "unzip -q ${OSG_VERSION}.zip"
         unzip -q ${OSG_VERSION}.zip
         mv osgearth-${OSG_VERSION} ..
