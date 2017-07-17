@@ -13,7 +13,9 @@
 #   注意这种用法，script.sh开头一行必须包含 #!/bin/sh  
 
 #需要设置下面变量：
-#QT_ROOT=/home/l/Qt5.6.0/5.6/gcc_64  #QT 安装根目录,默认为:${RABBITRoot}/ThirdLibrary/unix/qt
+if [ -z "$QT_ROOT" ]; then
+    QT_ROOT=/home/l/Qt5.6.0/5.6/gcc_64  #QT 安装根目录,默认为:${RABBITRoot}/ThirdLibrary/unix/qt
+fi
 JOM=${MAKE} #设置 QT make 工具 JOM
 if [ -z "$RABBIT_CLEAN" ]; then
     RABBIT_CLEAN=TRUE #编译前清理

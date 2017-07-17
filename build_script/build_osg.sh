@@ -40,7 +40,7 @@ CUR_DIR=`pwd`
 
 #下载源码:
 if [ ! -d ${RABBIT_BUILD_SOURCE_CODE} ]; then
-    OSG_VERSION=OpenSceneGraph-3.4.0
+    OSG_VERSION=OpenSceneGraph-3.5.3
     if [ "TRUE" = "${RABBIT_USE_REPOSITORIES}" ]; then
         echo "git clone -q --branch=${OSG_VERSION} https://github.com/openscenegraph/OpenSceneGraph.git ${RABBIT_BUILD_SOURCE_CODE}"
         git clone -q --branch=$OSG_VERSION https://github.com/openscenegraph/OpenSceneGraph.git ${RABBIT_BUILD_SOURCE_CODE}
@@ -111,6 +111,7 @@ case ${RABBIT_BUILD_TARGERT} in
         #GENERATORS="Visual Studio 12 2013"
         export OSG_3RDPARTY_DIR=$RABBIT_BUILD_PREFIX
         MAKE_PARA=""
+        CMAKE_PARA="${CMAKE_PARA} -DWIN32_USE_MP=ON"
         ;;
     windows_mingw)
         CMAKE_PARA="${CMAKE_PARA} -DOPENTHREADS_ATOMIC_USE_MUTEX=ON -DCMAKE_TOOLCHAIN_FILE=$RABBIT_BUILD_PREFIX/../build_script/cmake/platforms/toolchain-mingw.cmake"
@@ -123,7 +124,7 @@ case ${RABBIT_BUILD_TARGERT} in
 esac
 
 CMAKE_PARA="${CMAKE_PARA} -DBUILD_DOCUMENTATION=OFF -DBUILD_OSG_EXAMPLES=OFF -DBUILD_OSG_APPLICATIONS=OFF"
-CMAKE_PARA="${CMAKE_PARA} -DQt5_DIR=${QT_ROOT}/lib/cmake/Qt5 -DWIN32_USE_MP=ON"
+CMAKE_PARA="${CMAKE_PARA} -DQt5_DIR=${QT_ROOT}/lib/cmake/Qt5"
 CMAKE_PARA="${CMAKE_PARA} -DCMAKE_VERBOSE_MAKEFILE=ON"
 CMAKE_PARA="${CMAKE_PARA} -DCMAKE_MODULE_PATH=$RABBIT_BUILD_PREFIX/lib/cmake"
 

@@ -55,7 +55,17 @@ if [ "$BUILD_TARGERT" != "windows_msvc" ]; then
     fi
     export RABBIT_MAKE_JOB_PARA
 fi
+
+echo "---------------------------------------------------------------------------"
+echo "RABBIT_BUILD_PREFIX:$RABBIT_BUILD_PREFIX"
+echo "QT_BIN:$QT_BIN"
+echo "QT_ROOT:$QT_ROOT"
+echo "PKG_CONFIG_PATH:$PKG_CONFIG_PATH"
+echo "PKG_CONFIG_SYSROOT_DIR:$PKG_CONFIG_SYSROOT_DIR"
+echo "PATH=$PATH"
 echo "RABBIT_BUILD_THIRDLIBRARY:$RABBIT_BUILD_THIRDLIBRARY"
+echo "---------------------------------------------------------------------------"
+
 for v in $RABBIT_BUILD_THIRDLIBRARY
 do
     if [ "$v" = "rabbitim" ]; then
