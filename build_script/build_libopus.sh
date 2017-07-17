@@ -110,8 +110,12 @@ case ${RABBIT_BUILD_TARGERT} in
     unix)
         ;;
     windows_msvc)
-        msbuild.exe -m -v:n -p:Configuration=Release -p:Platform=Win32 win32/VS2015/opus.sln
-        cp win32/VS2015/Win32/Release/opus.lib $RABBIT_BUILD_PREFIX/lib
+        if [ "$GENERATORS" = "Visual Studio 14 2015" ]; then
+            msbuild.exe -m -v:n -p:Configuration=Release -p:Platform=Win32 win32/VS2015/opus.sln
+            cp win32/VS2015/Win32/Release/opus.lib $RABBIT_BUILD_PREFIX/lib
+        else
+            echo "Don't support $GENERATORS"
+        fi
         cp include/* $RABBIT_BUILD_PREFIX/include
         cd $CUR_DIR
         exit 0
