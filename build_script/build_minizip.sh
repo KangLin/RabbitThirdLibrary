@@ -40,21 +40,20 @@ CUR_DIR=`pwd`
 
 #下载源码:
 if [ ! -d ${RABBIT_BUILD_SOURCE_CODE} ]; then
-    VERSION=master
+    VERSION=1.1
     if [ "TRUE" = "${RABBIT_USE_REPOSITORIES}" ]; then
-        echo "git clone -q https://github.com/nmoinvaz/minizip.git ${RABBIT_BUILD_SOURCE_CODE}"
-        git clone -q https://github.com/nmoinvaz/minizip.git ${RABBIT_BUILD_SOURCE_CODE}
+        echo "git clone -q --branch=$VERSION https://github.com/nmoinvaz/minizip.git ${RABBIT_BUILD_SOURCE_CODE}"
+        git clone -q --branch=$VERSION https://github.com/nmoinvaz/minizip.git ${RABBIT_BUILD_SOURCE_CODE}
     else
         mkdir -p ${RABBIT_BUILD_SOURCE_CODE}
         cd ${RABBIT_BUILD_SOURCE_CODE}
-        echo "wget -nv -c https://github.com/nmoinvaz/minizip/archive/master.zip"
-        wget -nv -c -O minizip.zip https://github.com/nmoinvaz/minizip/archive/master.zip
+        echo "wget -nv -c https://github.com/nmoinvaz/minizip/archive/${VERSION}.zip"
+        wget -nv -c -O minizip.zip https://github.com/nmoinvaz/minizip/archive/${VERSION}.zip
         unzip -q minizip.zip
         mv minizip-${VERSION} ..
         rm -fr minizip.zip ${RABBIT_BUILD_SOURCE_CODE}
         cd ..
         mv minizip-${VERSION} ${RABBIT_BUILD_SOURCE_CODE}
-        
     fi
 fi
 

@@ -81,11 +81,11 @@ if [ "$RABBIT_CLEAN" = "TRUE" ]; then
         if [ "${RABBIT_BUILD_TARGERT}" = "windows_msvc" ]; then
             if [ "$RABBIT_BUILD_STATIC" = "static" ]; then
                 if [ -f ms/nt.mak ]; then
-                    nmake -f ms/nt.mak clean
+                    nmake clean
                 fi
             else
                 if [ -f ms/ntdll.mak ]; then
-                    nmake -f ms/ntdll.mak clean
+                    nmake clean
                 fi
             fi
         else
@@ -112,7 +112,7 @@ case ${RABBIT_BUILD_TARGERT} in
                 --prefix=${RABBIT_BUILD_PREFIX} \
                 --openssldir=${RABBIT_BUILD_PREFIX} \
                 $MODE \
-                android-armv7  --sysroot="${RABBIT_BUILD_CROSS_SYSROOT}" -march=armv7-a -mfpu=neon
+                android-armeabi --sysroot="${RABBIT_BUILD_CROSS_SYSROOT}" -march=armv7-a -mfpu=neon
         ;;
     unix)
         ./config --prefix=${RABBIT_BUILD_PREFIX} --openssldir=${RABBIT_BUILD_PREFIX} $MODE
