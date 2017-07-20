@@ -6,6 +6,15 @@ os: Visual Studio 2015
 environment:
   matrix:
   ##############  test ######################
+  - BUILD_TARGERT: android
+    RABBIT_BUILD_THIRDLIBRARY: gdal osgearth
+    QT_VERSION_DIR: 5.7
+    QT_VERSION: 5.7.0
+    TOOLCHAIN_VERSION: 4.8
+    AUTOBUILD_ARCH: arm
+    DOWNLOAD_FILE: https://sourceforge.net/projects/rabbitthirdlibrary/files/Release/rabbit_android4.8_arm_5.7.0_v0.1.1.135.tar.gz/download
+    PASSWORD:
+      secure: 2WEtOQrdty3V3g0aEVvS3Q==
   ##############  test ######################
 
   - BUILD_TARGERT: windows_msvc
