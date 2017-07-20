@@ -40,15 +40,15 @@ CUR_DIR=`pwd`
 
 #下载源码:
 if [ ! -d ${RABBIT_BUILD_SOURCE_CODE} ]; then
-    GDAL_VERSION=trunk
+    GDAL_VERSION=2.2.0
     if [ "TRUE" = "${RABBIT_USE_REPOSITORIES}" ]; then
-        echo "git clone -q --branch=tags/${GDAL_VERSION} https://github.com/KangLin/gdal.git ${RABBIT_BUILD_SOURCE_CODE}"
-        git clone -q --branch=tags/$GDAL_VERSION https://github.com/KangLin/gdal.git ${RABBIT_BUILD_SOURCE_CODE}
+        echo "git clone -q --branch=tags/${GDAL_VERSION} https://github.com/OSGeo/gdal.git ${RABBIT_BUILD_SOURCE_CODE}"
+        git clone -q --branch=tags/$GDAL_VERSION https://github.com/OSGeo/gdal.git ${RABBIT_BUILD_SOURCE_CODE}
     else
         mkdir -p ${RABBIT_BUILD_SOURCE_CODE}
-        echo "wget -q https://github.com/OSGeo/gdal/archive/${GDAL_VERSION}.zip"
+        echo "wget -q https://github.com/OSGeo/gdal/archive/tags/${GDAL_VERSION}.zip"
         cd ${RABBIT_BUILD_SOURCE_CODE}
-        wget -q -c https://github.com/OSGeo/gdal/archive/${GDAL_VERSION}.zip
+        wget -q -c https://github.com/OSGeo/gdal/archive/tags/${GDAL_VERSION}.zip
         unzip -q ${GDAL_VERSION}.zip
         mv gdal-tags-${GDAL_VERSION} ..
         rm -fr *

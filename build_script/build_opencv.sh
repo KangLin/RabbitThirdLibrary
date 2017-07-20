@@ -40,16 +40,15 @@ CUR_DIR=`pwd`
 
 #下载源码:
 if [ ! -d ${RABBIT_BUILD_SOURCE_CODE} ]; then
-    OPENCV_VERSION=2.4.13.1
+    OPENCV_VERSION=3.3.0-rc
     if [ "TRUE" = "${RABBIT_USE_REPOSITORIES}" ]; then
-        echo "git clone -q  git://github.com/Itseez/opencv.git  ${RABBIT_BUILD_SOURCE_CODE}"
-        #git clone -q --branch=${OPENCV_VERSION} git://github.com/Itseez/opencv.git ${RABBIT_BUILD_SOURCE_CODE}
-        git clone -q --branch=${OPENCV_VERSION} git://github.com/Itseez/opencv.git ${RABBIT_BUILD_SOURCE_CODE}
+        echo "git clone -q  https://github.com/opencv/opencv.git ${RABBIT_BUILD_SOURCE_CODE}"
+        git clone -q --branch=${OPENCV_VERSION} https://github.com/opencv/opencv.git ${RABBIT_BUILD_SOURCE_CODE}
     else
-        echo "wget -q https://github.com/Itseez/opencv/archive/${OPENCV_VERSION}.zip"
+        echo "wget -q -c https://github.com/opencv/opencv/archive/${OPENCV_VERSION}.zip"
         mkdir -p ${RABBIT_BUILD_SOURCE_CODE}
         cd ${RABBIT_BUILD_SOURCE_CODE}
-        wget -q -c https://github.com/Itseez/opencv/archive/${OPENCV_VERSION}.zip
+        wget -q -c https://github.com/opencv/opencv/archive/${OPENCV_VERSION}.zip
         unzip -q ${OPENCV_VERSION}.zip
         mv opencv-${OPENCV_VERSION} ..
         rm -fr *
