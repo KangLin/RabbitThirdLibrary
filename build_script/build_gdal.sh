@@ -187,7 +187,7 @@ echo "./configure ${CONFIG_PARA} CFLAGS=\"${CFLAGS=}\"
     LDFLAGS="$LDFLAGS" LIBS="$LIBS" --with-curl=${RABBIT_BUILD_PREFIX}/bin/curl-config #\
     #--with-geos=${RABBIT_BUILD_PREFIX}/bin/geos-config
 
-${MAKE} #${RABBIT_MAKE_JOB_PARA}
+${MAKE} ${RABBIT_MAKE_JOB_PARA}
 ${MAKE} install
 
 cd $CUR_DIR
