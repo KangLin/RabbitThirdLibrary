@@ -98,9 +98,6 @@ fi
 if [ -z "${RABBIT_BUILD_PLATFORMS_VERSION}" ]; then
     RABBIT_BUILD_PLATFORMS_VERSION=18    #android ndk api (平台)版本号  
 fi
-if [ -z "${RABBIT_BUILD_CROSS_HOST}" ]; then
-    RABBIT_BUILD_CROSS_HOST=arm-linux-androideabi
-fi
 
 if [ "${RABBIT_ARCH}" = "x86" ]; then
     RABBIT_BUILD_CROSS_ROOT=$ANDROID_NDK_ROOT/toolchains/x86-${RABBIT_BUILD_TOOLCHAIN_VERSION}/prebuilt/${RABBIT_BUILD_HOST}
@@ -109,6 +106,9 @@ if [ "${RABBIT_ARCH}" = "x86" ]; then
     #交叉编译平台的 sysroot 
     RABBIT_BUILD_CROSS_SYSROOT=$ANDROID_NDK_ROOT/platforms/android-${RABBIT_BUILD_PLATFORMS_VERSION}/arch-${RABBIT_ARCH}
     ANDROID_NDK_ABI_NAME=x86
+    if [ -z "${RABBIT_BUILD_CROSS_HOST}" ]; then
+        RABBIT_BUILD_CROSS_HOST=i686-linux-android
+    fi
 elif [ "${RABBIT_ARCH}" = "arm" ]; then
     RABBIT_BUILD_CROSS_ROOT=$ANDROID_NDK_ROOT/toolchains/arm-linux-androideabi-${RABBIT_BUILD_TOOLCHAIN_VERSION}/prebuilt/${RABBIT_BUILD_HOST}
     #交叉编译前缀 
@@ -116,6 +116,9 @@ elif [ "${RABBIT_ARCH}" = "arm" ]; then
     #交叉编译平台的 sysroot 
     RABBIT_BUILD_CROSS_SYSROOT=$ANDROID_NDK_ROOT/platforms/android-${RABBIT_BUILD_PLATFORMS_VERSION}/arch-${RABBIT_ARCH}
     ANDROID_NDK_ABI_NAME=armeabi
+    if [ -z "${RABBIT_BUILD_CROSS_HOST}" ]; then
+        RABBIT_BUILD_CROSS_HOST=arm-linux-androideabi
+    fi
 fi
 
 RABBIT_BUILD_CROSS_STL=${ANDROID_NDK_ROOT}/sources/cxx-stl/gnu-libstdc++/${RABBIT_BUILD_TOOLCHAIN_VERSION}

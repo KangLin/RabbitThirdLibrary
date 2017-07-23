@@ -13,7 +13,7 @@ environment:
     TOOLCHAIN_VERSION: 14
     QT_VERSION: NO
     RABBIT_ARCH: x86
-    RABBIT_BUILD_THIRDLIBRARY: change_prefix zlib minizip expat libgpx openssl libsodium libcurl libpng jpeg libgif libtiff freetype libyuv libvpx libopus x264 ffmpeg opencv toxcore
+    RABBIT_BUILD_THIRDLIBRARY: change_prefix zlib minizip expat libgpx openssl libsodium libcurl libpng jpeg libgif libtiff freetype libyuv libvpx libopus x264 ffmpeg opencv #toxcore
     RABBIT_USE_REPOSITORIES: "FALSE"
     PASSWORD:
       secure: 2WEtOQrdty3V3g0aEVvS3Q==
@@ -31,7 +31,7 @@ environment:
     TOOLCHAIN_VERSION: 4.8
     QT_VERSION: NO
     RABBIT_ARCH: arm
-    RABBIT_BUILD_THIRDLIBRARY: change_prefix zlib minizip expat libgpx openssl libsodium libcurl libpng jpeg libgif libtiff freetype libyuv libvpx libopus x264 ffmpeg opencv toxcore
+    RABBIT_BUILD_THIRDLIBRARY: change_prefix zlib minizip expat libgpx openssl libsodium libcurl libpng jpeg libgif libtiff freetype libyuv libvpx libopus x264 ffmpeg opencv #toxcore
     RABBIT_USE_REPOSITORIES: "FALSE"
     PASSWORD:
       secure: 2WEtOQrdty3V3g0aEVvS3Q==
@@ -40,11 +40,11 @@ environment:
     TOOLCHAIN_VERSION: 4.8
     QT_VERSION: NO
     RABBIT_ARCH: x86
-    RABBIT_BUILD_THIRDLIBRARY: change_prefix zlib minizip expat libgpx openssl libsodium libcurl libpng jpeg libgif libtiff freetype libyuv libvpx libopus x264 ffmpeg opencv toxcore
+    RABBIT_BUILD_THIRDLIBRARY: change_prefix zlib minizip expat libgpx openssl libsodium libcurl libpng jpeg libgif libtiff freetype libyuv libvpx libopus x264 ffmpeg opencv #toxcore
     RABBIT_USE_REPOSITORIES: "FALSE"
     PASSWORD:
       secure: 2WEtOQrdty3V3g0aEVvS3Q==
- 
+      
   - BUILD_TARGERT: windows_mingw
     TOOLCHAIN_VERSION: 530
     QT_VERSION: NO
@@ -52,137 +52,53 @@ environment:
     RABBIT_BUILD_THIRDLIBRARY: change_prefix zlib minizip expat libgpx openssl libsodium libcurl libpng jpeg libgif libtiff freetype libyuv libvpx libopus x264 ffmpeg qrencode #opencv 
     PASSWORD:
       secure: 2WEtOQrdty3V3g0aEVvS3Q==
-      
+
   ##### gdal #####
   - BUILD_TARGERT: windows_msvc
     TOOLCHAIN_VERSION: 14
-    QT_VERSION: qt5.8
+    QT_VERSION: NO
     RABBIT_BUILD_THIRDLIBRARY: gdal
-    QT_ROOT: /C/Qt/5.8/msvc2015
     GENERATORS: "Visual Studio 14 2015"
     RABBIT_ARCH: x86
-    DOWNLOAD_FILE: https://sourceforge.net/projects/rabbitthirdlibrary/files/Release/rabbit_windows_msvc14_x86_qt5.7_v$(appveyor_build_version).tar.gz/download
+    DOWNLOAD_FILE: https://sourceforge.net/projects/rabbitthirdlibrary/files/Release/rabbit_windows_msvc14_x86_NO_v$(appveyor_build_version).tar.gz/download
     PASSWORD:
       secure: 2WEtOQrdty3V3g0aEVvS3Q==
 
-  - BUILD_TARGERT: windows_msvc
-    TOOLCHAIN_VERSION: 14
-    QT_VERSION: qt5.7
-    RABBIT_BUILD_THIRDLIBRARY: gdal
-    QT_ROOT: /C/Qt/5.7/msvc2015
-    GENERATORS: "Visual Studio 14 2015"
-    RABBIT_ARCH: x86
-    DOWNLOAD_FILE: https://sourceforge.net/projects/rabbitthirdlibrary/files/Release/rabbit_windows_msvc14_x86_qt5.7_v$(appveyor_build_version).tar.gz/download
-    PASSWORD:
-      secure: 2WEtOQrdty3V3g0aEVvS3Q==
-
-  - BUILD_TARGERT: windows_msvc
-    TOOLCHAIN_VERSION: 14
-    QT_VERSION: qt5.6.1
-    RABBIT_BUILD_THIRDLIBRARY: gdal
-    QT_ROOT: /C/Qt/5.6/msvc2015
-    GENERATORS: "Visual Studio 14 2015"
-    RABBIT_ARCH: x86
-    DOWNLOAD_FILE: https://sourceforge.net/projects/rabbitthirdlibrary/files/Release/rabbit_windows_msvc14_x86_qt5.6.1_v$(appveyor_build_version).tar.gz/download
-    RABBIT_USE_REPOSITORIES: "FALSE"
-    PASSWORD:
-      secure: 2WEtOQrdty3V3g0aEVvS3Q==
-  
   - BUILD_TARGERT: windows_msvc
     TOOLCHAIN_VERSION: 12
-    QT_VERSION: qt5.8
+    QT_VERSION: NO
     RABBIT_BUILD_THIRDLIBRARY: gdal 
-    QT_ROOT: /C/Qt/5.8/msvc2013
     GENERATORS: "Visual Studio 12 2013"
     RABBIT_ARCH: x86
-    DOWNLOAD_FILE: https://sourceforge.net/projects/rabbitthirdlibrary/files/Release/rabbit_windows_msvc12_x86_qt5.7_v$(appveyor_build_version).tar.gz/download
-    PASSWORD:
-      secure: 2WEtOQrdty3V3g0aEVvS3Q==
-
-  - BUILD_TARGERT: windows_msvc
-    TOOLCHAIN_VERSION: 12
-    QT_VERSION: qt5.7
-    RABBIT_BUILD_THIRDLIBRARY: gdal 
-    QT_ROOT: /C/Qt/5.7/msvc2013
-    GENERATORS: "Visual Studio 12 2013"
-    RABBIT_ARCH: x86
-    DOWNLOAD_FILE: https://sourceforge.net/projects/rabbitthirdlibrary/files/Release/rabbit_windows_msvc12_x86_qt5.7_v$(appveyor_build_version).tar.gz/download
-    PASSWORD:
-      secure: 2WEtOQrdty3V3g0aEVvS3Q==
-
-  - BUILD_TARGERT: windows_msvc
-    TOOLCHAIN_VERSION: 12
-    QT_VERSION: qt5.6.1
-    RABBIT_BUILD_THIRDLIBRARY: gdal
-    QT_ROOT: /C/Qt/5.6/msvc2013
-    GENERATORS: "Visual Studio 12 2013"
-    RABBIT_ARCH: x86
-    DOWNLOAD_FILE: https://sourceforge.net/projects/rabbitthirdlibrary/files/Release/rabbit_windows_msvc12_x86_qt5.6.1_v$(appveyor_build_version).tar.gz/download
-    RABBIT_USE_REPOSITORIES: "FALSE"
+    DOWNLOAD_FILE: https://sourceforge.net/projects/rabbitthirdlibrary/files/Release/rabbit_windows_msvc12_x86_NO_v$(appveyor_build_version).tar.gz/download
     PASSWORD:
       secure: 2WEtOQrdty3V3g0aEVvS3Q==
 
   - BUILD_TARGERT: android
     RABBIT_BUILD_THIRDLIBRARY: gdal
-    QT_VERSION_DIR: 5.7
-    QT_VERSION: 5.7.0
+    QT_VERSION: NO
     TOOLCHAIN_VERSION: 4.8
     RABBIT_ARCH: arm
-    DOWNLOAD_FILE: https://sourceforge.net/projects/rabbitthirdlibrary/files/Release/rabbit_android4.8_arm_5.7.0_v$(appveyor_build_version).tar.gz/download
+    DOWNLOAD_FILE: https://sourceforge.net/projects/rabbitthirdlibrary/files/Release/rabbit_android4.8_arm_NO_v$(appveyor_build_version).tar.gz/download
     PASSWORD:
       secure: 2WEtOQrdty3V3g0aEVvS3Q==
 
   - BUILD_TARGERT: android
     RABBIT_BUILD_THIRDLIBRARY: gdal
-    QT_VERSION_DIR: 5.7
-    QT_VERSION: 5.7.0
+    QT_VERSION: NO
     TOOLCHAIN_VERSION: 4.8
     RABBIT_ARCH: x86
-    DOWNLOAD_FILE: https://sourceforge.net/projects/rabbitthirdlibrary/files/Release/rabbit_android4.8_arm_5.7.0_v$(appveyor_build_version).tar.gz/download
-    PASSWORD:
-      secure: 2WEtOQrdty3V3g0aEVvS3Q==
-
-  - BUILD_TARGERT: android
-    RABBIT_BUILD_THIRDLIBRARY: gdal
-    QT_VERSION_DIR: 5.6
-    QT_VERSION: 5.6.1
-    TOOLCHAIN_VERSION: 4.8
-    RABBIT_ARCH: arm
-    DOWNLOAD_FILE: https://sourceforge.net/projects/rabbitthirdlibrary/files/Release/rabbit_android4.8_arm_5.6.1_v$(appveyor_build_version).tar.gz/download
-    RABBIT_USE_REPOSITORIES: "FALSE"
-    PASSWORD:
-      secure: 2WEtOQrdty3V3g0aEVvS3Q==
-
-  - BUILD_TARGERT: android
-    RABBIT_BUILD_THIRDLIBRARY: gdal
-    QT_VERSION_DIR: 5.6
-    QT_VERSION: 5.6.1
-    TOOLCHAIN_VERSION: 4.8
-    RABBIT_ARCH: x86
-    DOWNLOAD_FILE: https://sourceforge.net/projects/rabbitthirdlibrary/files/Release/rabbit_android4.8_arm_5.6.1_v$(appveyor_build_version).tar.gz/download
-    RABBIT_USE_REPOSITORIES: "FALSE"
+    DOWNLOAD_FILE: https://sourceforge.net/projects/rabbitthirdlibrary/files/Release/rabbit_android4.8_x86_NO_v$(appveyor_build_version).tar.gz/download
     PASSWORD:
       secure: 2WEtOQrdty3V3g0aEVvS3Q==
       
   - BUILD_TARGERT: windows_mingw
     RABBIT_BUILD_THIRDLIBRARY: gdal
     TOOLCHAIN_VERSION: 530
-    QT_VERSION: qt5.8
-    QT_ROOT: /C/Qt/5.8/mingw53_32
+    QT_VERSION: NO
     RABBIT_ARCH: x86
-    DOWNLOAD_FILE: https://sourceforge.net/projects/rabbitthirdlibrary/files/Release/rabbit_windows_mingw530_x86_qt5.7_v$(appveyor_build_version).tar.gz/download
+    DOWNLOAD_FILE: https://sourceforge.net/projects/rabbitthirdlibrary/files/Release/rabbit_windows_mingw530_x86_NO_v$(appveyor_build_version).tar.gz/download
     RABBIT_USE_REPOSITORIES: "FALSE"
-    
-  - BUILD_TARGERT: windows_mingw
-    RABBIT_BUILD_THIRDLIBRARY: gdal
-    TOOLCHAIN_VERSION: 530
-    QT_VERSION: qt5.7
-    QT_ROOT: /C/Qt/5.7/mingw53_32
-    RABBIT_ARCH: x86
-    DOWNLOAD_FILE: https://sourceforge.net/projects/rabbitthirdlibrary/files/Release/rabbit_windows_mingw530_x86_qt5.7_v$(appveyor_build_version).tar.gz/download
-    RABBIT_USE_REPOSITORIES: "FALSE"
-    PASSWORD:
-      secure: 2WEtOQrdty3V3g0aEVvS3Q==
   
   ##### gdal #####
   
@@ -286,7 +202,7 @@ environment:
     QT_VERSION: 5.7.0
     TOOLCHAIN_VERSION: 4.8
     RABBIT_ARCH: x86
-    DOWNLOAD_FILE: https://sourceforge.net/projects/rabbitthirdlibrary/files/Release/rabbit_android4.8_arm_NO_v$(appveyor_build_version).tar.gz/download
+    DOWNLOAD_FILE: https://sourceforge.net/projects/rabbitthirdlibrary/files/Release/rabbit_android4.8_x86_NO_v$(appveyor_build_version).tar.gz/download
     PASSWORD:
       secure: 2WEtOQrdty3V3g0aEVvS3Q==
       
@@ -307,7 +223,7 @@ environment:
     QT_VERSION: 5.6.1
     TOOLCHAIN_VERSION: 4.8
     RABBIT_ARCH: x86
-    DOWNLOAD_FILE: https://sourceforge.net/projects/rabbitthirdlibrary/files/Release/rabbit_android4.8_arm_NO_v$(appveyor_build_version).tar.gz/download
+    DOWNLOAD_FILE: https://sourceforge.net/projects/rabbitthirdlibrary/files/Release/rabbit_android4.8_x86_NO_v$(appveyor_build_version).tar.gz/download
     RABBIT_USE_REPOSITORIES: "FALSE"
     PASSWORD:
       secure: 2WEtOQrdty3V3g0aEVvS3Q==
@@ -421,7 +337,7 @@ environment:
     QT_VERSION: 5.7.0
     TOOLCHAIN_VERSION: 4.8
     RABBIT_ARCH: x86
-    DOWNLOAD_FILE: https://sourceforge.net/projects/rabbitthirdlibrary/files/Release/rabbit_android4.8_arm_5.7.0_v$(appveyor_build_version).tar.gz/download
+    DOWNLOAD_FILE: https://sourceforge.net/projects/rabbitthirdlibrary/files/Release/rabbit_android4.8_x86_5.7.0_v$(appveyor_build_version).tar.gz/download
     PASSWORD:
       secure: 2WEtOQrdty3V3g0aEVvS3Q==
       
@@ -442,7 +358,7 @@ environment:
     QT_VERSION: 5.6.1
     TOOLCHAIN_VERSION: 4.8
     RABBIT_ARCH: x86
-    DOWNLOAD_FILE: https://sourceforge.net/projects/rabbitthirdlibrary/files/Release/rabbit_android4.8_arm_5.6.1_v$(appveyor_build_version).tar.gz/download
+    DOWNLOAD_FILE: https://sourceforge.net/projects/rabbitthirdlibrary/files/Release/rabbit_android4.8_x86_5.6.1_v$(appveyor_build_version).tar.gz/download
     RABBIT_USE_REPOSITORIES: "FALSE"
     PASSWORD:
       secure: 2WEtOQrdty3V3g0aEVvS3Q==
@@ -561,7 +477,7 @@ environment:
     QT_VERSION: 5.7.0
     TOOLCHAIN_VERSION: 4.8
     RABBIT_ARCH: x86
-    DOWNLOAD_FILE: https://sourceforge.net/projects/rabbitthirdlibrary/files/Release/rabbit_android4.8_arm_5.7.0_v$(appveyor_build_version).tar.gz/download
+    DOWNLOAD_FILE: https://sourceforge.net/projects/rabbitthirdlibrary/files/Release/rabbit_android4.8_x86_5.7.0_v$(appveyor_build_version).tar.gz/download
     BUILD_END: "True"
     PASSWORD:
       secure: 2WEtOQrdty3V3g0aEVvS3Q==
@@ -584,7 +500,7 @@ environment:
     QT_VERSION: 5.6.1
     TOOLCHAIN_VERSION: 4.8
     RABBIT_ARCH: x86
-    DOWNLOAD_FILE: https://sourceforge.net/projects/rabbitthirdlibrary/files/Release/rabbit_android4.8_arm_5.6.1_v$(appveyor_build_version).tar.gz/download
+    DOWNLOAD_FILE: https://sourceforge.net/projects/rabbitthirdlibrary/files/Release/rabbit_android4.8_x86_5.6.1_v$(appveyor_build_version).tar.gz/download
     RABBIT_USE_REPOSITORIES: "FALSE"
     BUILD_END: "True"
     PASSWORD:
