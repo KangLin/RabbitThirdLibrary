@@ -18,7 +18,7 @@
 #export ANDROID_NDK_ROOT=/D/software/android-ndk-r10e   #指定 android ndk 根目录  
 export ANDROID_NDK=$ANDROID_NDK_ROOT            #指定 android ndk 根目录  
 export ANDROID_SDK=$ANDROID_SDK_ROOT
-export ANDROID_NDK_ABI_NAME=armeabi-v7a 
+#export ANDROID_NDK_ABI_NAME=armeabi-v7a #armeabi,armeabi-v7a,arm64-v8a,mips,mips64,x86,x86_64
 
 #ANT=/usr/bin/ant         #ant 程序  
 if [ -z "$QT_ROOT" ]; then
@@ -89,21 +89,35 @@ case $TARGET_OS in
     ;;
 esac
 
+if [ -z "${RABBIT_ARCH}" ]; then
+    RABBIT_ARCH=arm #arm,arm64,mips,mips64,x86,x86_64
+fi
 if [ -z "${RABBIT_BUILD_TOOLCHAIN_VERSION}" ]; then
     RABBIT_BUILD_TOOLCHAIN_VERSION=4.8  #工具链版本号  
 fi
 if [ -z "${RABBIT_BUILD_PLATFORMS_VERSION}" ]; then
     RABBIT_BUILD_PLATFORMS_VERSION=18    #android ndk api (平台)版本号  
 fi
-
-RABBIT_BUILD_CROSS_ROOT=$ANDROID_NDK_ROOT/toolchains/arm-linux-androideabi-${RABBIT_BUILD_TOOLCHAIN_VERSION}/prebuilt/${RABBIT_BUILD_HOST}
-#交叉编译前缀 
-RABBIT_BUILD_CROSS_PREFIX=${RABBIT_BUILD_CROSS_ROOT}/bin/arm-linux-androideabi-
-#交叉编译平台的 sysroot 
-RABBIT_BUILD_CROSS_SYSROOT=$ANDROID_NDK_ROOT/platforms/android-${RABBIT_BUILD_PLATFORMS_VERSION}/arch-arm
 if [ -z "${RABBIT_BUILD_CROSS_HOST}" ]; then
     RABBIT_BUILD_CROSS_HOST=arm-linux-androideabi
 fi
+
+if [ "${RABBIT_ARCH}" = "x86" ]; then
+    RABBIT_BUILD_CROSS_ROOT=$ANDROID_NDK_ROOT/toolchains/x86-${RABBIT_BUILD_TOOLCHAIN_VERSION}/prebuilt/${RABBIT_BUILD_HOST}
+    #交叉编译前缀 
+    RABBIT_BUILD_CROSS_PREFIX=${RABBIT_BUILD_CROSS_ROOT}/bin/i686-linux-android-
+    #交叉编译平台的 sysroot 
+    RABBIT_BUILD_CROSS_SYSROOT=$ANDROID_NDK_ROOT/platforms/android-${RABBIT_BUILD_PLATFORMS_VERSION}/arch-${RABBIT_ARCH}
+    ANDROID_NDK_ABI_NAME=x86
+elif [ "${RABBIT_ARCH}" = "arm" ]; then
+    RABBIT_BUILD_CROSS_ROOT=$ANDROID_NDK_ROOT/toolchains/arm-linux-androideabi-${RABBIT_BUILD_TOOLCHAIN_VERSION}/prebuilt/${RABBIT_BUILD_HOST}
+    #交叉编译前缀 
+    RABBIT_BUILD_CROSS_PREFIX=${RABBIT_BUILD_CROSS_ROOT}/bin/arm-linux-androideabi-
+    #交叉编译平台的 sysroot 
+    RABBIT_BUILD_CROSS_SYSROOT=$ANDROID_NDK_ROOT/platforms/android-${RABBIT_BUILD_PLATFORMS_VERSION}/arch-${RABBIT_ARCH}
+    ANDROID_NDK_ABI_NAME=armeabi
+fi
+
 RABBIT_BUILD_CROSS_STL=${ANDROID_NDK_ROOT}/sources/cxx-stl/gnu-libstdc++/${RABBIT_BUILD_TOOLCHAIN_VERSION}
 RABBIT_BUILD_CROSS_STL_INCLUDE=${RABBIT_BUILD_CROSS_STL}/include
 RABBIT_BUILD_CROSS_STL_LIBS=${RABBIT_BUILD_CROSS_STL}/libs
