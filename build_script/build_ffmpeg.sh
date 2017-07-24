@@ -111,7 +111,12 @@ case ${RABBIT_BUILD_TARGERT} in
         #CONFIG_PARA="${CONFIG_PARA} --pkg-config="${PKG_CONFIG}"
         CONFIG_PARA="${CONFIG_PARA} --pkgconfigdir=${RABBIT_BUILD_PREFIX}/lib/pkgconfig"
         CONFIG_PARA="${CONFIG_PARA} ${THIRD_LIB}"
-        CFLAGS="-march=armv7-a -mfpu=neon"
+        if [ "${RABBIT_ARCH}" = "arm" ]; then
+            CFLAGS="-march=armv7-a -mfpu=neon"
+            CPPFLAGS="-march=armv7-a -mfpu=neon"
+        fi
+        CFLAGS="${CFLAGS} --sysroot=${RABBIT_BUILD_CROSS_SYSROOT}"
+        CPPFLAGS="${CPPFLAGS} --sysroot=${RABBIT_BUILD_CROSS_SYSROOT}"
         LDFLAGS="-lcpu-features --sysroot=${RABBIT_BUILD_CROSS_SYSROOT}" 
         ;;
     unix)

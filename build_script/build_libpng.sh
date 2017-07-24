@@ -103,8 +103,12 @@ case ${RABBIT_BUILD_TARGERT} in
         CONFIG_PARA="${CONFIG_PARA} --disable-shared -enable-static --host=$RABBIT_BUILD_CROSS_HOST"
         CONFIG_PARA="${CONFIG_PARA} --with-sysroot=${RABBIT_BUILD_CROSS_SYSROOT}"
         #CONFIG_PARA="${CONFIG_PARA} --enable-arm-neon"
-        CFLAGS="-march=armv7-a -mfpu=neon --sysroot=${RABBIT_BUILD_CROSS_SYSROOT}"
-        CPPFLAGS="-march=armv7-a -mfpu=neon --sysroot=${RABBIT_BUILD_CROSS_SYSROOT}"
+        if [ "${RABBIT_ARCH}" = "arm" ]; then
+            CFLAGS="-march=armv7-a -mfpu=neon"
+            CPPFLAGS="-march=armv7-a -mfpu=neon"
+        fi
+        CFLAGS="${CFLAGS} --sysroot=${RABBIT_BUILD_CROSS_SYSROOT}"
+        CPPFLAGS="${CPPFLAGS} --sysroot=${RABBIT_BUILD_CROSS_SYSROOT}"
         ;;   
     unix)
         ;;

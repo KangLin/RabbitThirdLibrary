@@ -73,8 +73,17 @@ case ${RABBIT_BUILD_TARGERT} in
         export AS=yasm
         export STRIP=${RABBIT_BUILD_CROSS_PREFIX}strip
         export NM=${RABBIT_BUILD_CROSS_PREFIX}nm
-        CONFIG_PARA="--target=armv7-android-gcc --sdk-path=${ANDROID_NDK_ROOT} --disable-shared --enable-static"
-        CFLAGS="-march=armv7-a -mfloat-abi=softfp -mfpu=neon --sysroot=${RABBIT_BUILD_CROSS_SYSROOT}"
+        CONFIG_PARA="--sdk-path=${ANDROID_NDK_ROOT} --disable-shared --enable-static"
+        if [ "${RABBIT_ARCH}" = "arm" ]; then
+            CFLAGS="-march=armv7-a -mfpu=neon"
+            CPPFLAGS="-march=armv7-a -mfpu=neon"
+            CONFIG_PARA="--target=armv7-android-gcc"
+        elif [ "${RABBIT_ARCH}" = "x86" ]; then
+            CONFIG_PARA="--target=x86-android-gcc"
+        fi
+        
+        CFLAGS="${CFLAGS} --sysroot=${RABBIT_BUILD_CROSS_SYSROOT}"
+        CPPFLAGS="${CPPFLAGS} --sysroot=${RABBIT_BUILD_CROSS_SYSROOT}"
 
         #编译 cpufeatures
         echo "${RABBIT_BUILD_CROSS_PREFIX}gcc -I${RABBIT_BUILD_CROSS_SYSROOT}/usr/include -c ${ANDROID_NDK_ROOT}/sources/android/cpufeatures/cpu-features.c"
