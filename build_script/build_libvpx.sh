@@ -77,9 +77,9 @@ case ${RABBIT_BUILD_TARGERT} in
         if [ "${RABBIT_ARCH}" = "arm" ]; then
             CFLAGS="-march=armv7-a -mfpu=neon"
             CPPFLAGS="-march=armv7-a -mfpu=neon"
-            CONFIG_PARA="--target=armv7-android-gcc"
+            CONFIG_PARA="${CONFIG_PARA} --target=armv7-android-gcc"
         elif [ "${RABBIT_ARCH}" = "x86" ]; then
-            CONFIG_PARA="--target=x86-android-gcc"
+            CONFIG_PARA="${CONFIG_PARA} --target=x86-android-gcc"
         fi
         
         CFLAGS="${CFLAGS} --sysroot=${RABBIT_BUILD_CROSS_SYSROOT}"
