@@ -40,7 +40,7 @@ CUR_DIR=`pwd`
 
 #下载源码:
 if [ ! -d ${RABBIT_BUILD_SOURCE_CODE} ]; then
-    GDAL_VERSION=2.2.0
+    GDAL_VERSION=2.2.1
     if [ "TRUE" = "${RABBIT_USE_REPOSITORIES}" ]; then
         echo "git clone -q --branch=tags/${GDAL_VERSION} https://github.com/OSGeo/gdal.git ${RABBIT_BUILD_SOURCE_CODE}"
         git clone -q --branch=tags/$GDAL_VERSION https://github.com/OSGeo/gdal.git ${RABBIT_BUILD_SOURCE_CODE}

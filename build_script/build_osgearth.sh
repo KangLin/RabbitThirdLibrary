@@ -40,7 +40,7 @@ CUR_DIR=`pwd`
 
 #下载源码:
 if [ ! -d ${RABBIT_BUILD_SOURCE_CODE} ]; then
-    OSG_VERSION=osgearth-2.8
+    OSG_VERSION=92a590bf366bb3b9f13177da00cc226e4e419e09 #osgearth-2.8
     if [ "TRUE" = "${RABBIT_USE_REPOSITORIES}" ]; then
         echo "git clone -q --branch=${OSG_VERSION} https://github.com/gwaldron/osgearth.git ${RABBIT_BUILD_SOURCE_CODE}"
         git clone -q https://github.com/gwaldron/osgearth.git ${RABBIT_BUILD_SOURCE_CODE}
@@ -112,7 +112,13 @@ case ${RABBIT_BUILD_TARGERT} in
         MAKE_PARA=""
         ;;
     windows_mingw)
-        CMAKE_PARA="${CMAKE_PARA} -DCMAKE_TOOLCHAIN_FILE=$RABBIT_BUILD_PREFIX/../build_script/cmake/platforms/toolchain-mingw.cmake"
+        case `uname -s` in
+            Linux*|Unix*|CYGWIN*)
+                CMAKE_PARA="${CMAKE_PARA} -DCMAKE_TOOLCHAIN_FILE=$RABBIT_BUILD_PREFIX/../build_script/cmake/platforms/toolchain-mingw.cmake"
+                ;;
+            *)
+                ;;
+        esac
         ;;
     *)
     echo "${HELP_STRING}"

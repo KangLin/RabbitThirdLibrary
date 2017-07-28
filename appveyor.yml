@@ -6,15 +6,6 @@ os: Visual Studio 2015
 environment:
   matrix:
   ##############  test ######################
-  - BUILD_TARGERT: windows_mingw
-    RABBIT_BUILD_THIRDLIBRARY: osgearth
-    TOOLCHAIN_VERSION: 530
-    QT_VERSION: qt5.8
-    QT_ROOT: /C/Qt/5.8/mingw53_32
-    RABBIT_ARCH: x86
-    DOWNLOAD_FILE: https://sourceforge.net/projects/rabbitthirdlibrary/files/Release/rabbit_windows_mingw530_x86_qt5.8_v0.1.1.150.tar.gz/download
-    RABBIT_USE_REPOSITORIES: "FALSE"
-    
   ##############  test ######################
 
   - BUILD_TARGERT: windows_msvc
@@ -160,6 +151,7 @@ environment:
     GENERATORS: "Visual Studio 12 2013"
     RABBIT_ARCH: x86
     DOWNLOAD_FILE: https://sourceforge.net/projects/rabbitthirdlibrary/files/Release/rabbit_windows_msvc12_x86_NO_v$(appveyor_build_version).tar.gz/download
+    RABBIT_USE_REPOSITORIES: "FALSE"
     PASSWORD:
       secure: 2WEtOQrdty3V3g0aEVvS3Q==
   
@@ -238,6 +230,7 @@ environment:
     GENERATORS: "Visual Studio 14 2015"
     RABBIT_ARCH: x86
     DOWNLOAD_FILE: https://sourceforge.net/projects/rabbitthirdlibrary/files/Release/rabbit_windows_msvc14_x86_qt5.7_v$(appveyor_build_version).tar.gz/download
+    RABBIT_USE_REPOSITORIES: "FALSE"
     PASSWORD:
       secure: 2WEtOQrdty3V3g0aEVvS3Q==
   
@@ -249,6 +242,7 @@ environment:
     GENERATORS: "Visual Studio 12 2013"
     RABBIT_ARCH: x86
     DOWNLOAD_FILE: https://sourceforge.net/projects/rabbitthirdlibrary/files/Release/rabbit_windows_msvc12_x86_qt5.7_v$(appveyor_build_version).tar.gz/download
+    RABBIT_USE_REPOSITORIES: "FALSE"
     PASSWORD:
       secure: 2WEtOQrdty3V3g0aEVvS3Q==
 
@@ -260,6 +254,7 @@ environment:
     GENERATORS: "Visual Studio 12 2013"
     RABBIT_ARCH: x86
     DOWNLOAD_FILE: https://sourceforge.net/projects/rabbitthirdlibrary/files/Release/rabbit_windows_msvc12_x86_qt5.7_v$(appveyor_build_version).tar.gz/download
+    RABBIT_USE_REPOSITORIES: "FALSE"
     PASSWORD:
       secure: 2WEtOQrdty3V3g0aEVvS3Q==
 
@@ -291,7 +286,9 @@ environment:
     RABBIT_ARCH: x86
     DOWNLOAD_FILE: https://sourceforge.net/projects/rabbitthirdlibrary/files/Release/rabbit_windows_mingw530_x86_qt5.8_v$(appveyor_build_version).tar.gz/download
     RABBIT_USE_REPOSITORIES: "FALSE"
-    
+    PASSWORD:
+      secure: 2WEtOQrdty3V3g0aEVvS3Q==
+      
   - BUILD_TARGERT: windows_mingw
     RABBIT_BUILD_THIRDLIBRARY: osgearth
     TOOLCHAIN_VERSION: 530
@@ -419,7 +416,8 @@ init:
 install:
   #- C:\msys64\usr\bin\pacman.exe -Syu --noconfirm 
   #- C:\msys64\autorebase.bat
-  - C:\msys64\usr\bin\pacman.exe -S --noconfirm nasm yasm unzip expect #zip curl
+  - if not "%BUILD_TARGERT%" == "android" C:\msys64\usr\bin\pacman.exe -S --noconfirm nasm yasm 
+  - C:\msys64\usr\bin\pacman.exe -S --noconfirm unzip expect #zip curl
   - C:\msys64\autorebase.bat
     
 before_build:
