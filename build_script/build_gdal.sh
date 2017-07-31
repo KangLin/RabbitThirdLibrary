@@ -40,7 +40,7 @@ CUR_DIR=`pwd`
 
 #下载源码:
 if [ ! -d ${RABBIT_BUILD_SOURCE_CODE} ]; then
-    GDAL_VERSION=2.2.1
+    GDAL_VERSION=2.2.0
     if [ "TRUE" = "${RABBIT_USE_REPOSITORIES}" ]; then
         echo "git clone -q --branch=tags/${GDAL_VERSION} https://github.com/OSGeo/gdal.git ${RABBIT_BUILD_SOURCE_CODE}"
         git clone -q --branch=tags/$GDAL_VERSION https://github.com/OSGeo/gdal.git ${RABBIT_BUILD_SOURCE_CODE}
@@ -114,7 +114,7 @@ case ${RABBIT_BUILD_TARGERT} in
         CONFIG_PARA="${CONFIG_PARA} --with-sysroot=${RABBIT_BUILD_CROSS_SYSROOT}"
         #CONFIG_PARA="$CONFIG_PARA --with-curl=$RABBIT_BUILD_PREFIX/bin"
         CFLAGS="-march=armv7-a -mfpu=neon --sysroot=${RABBIT_BUILD_CROSS_SYSROOT} "
-        CXXFLAGS="-march=armv7-a -mfpu=neon -std=c++0x --sysroot=${RABBIT_BUILD_CROSS_SYSROOT} ${RABBIT_BUILD_CROSS_STL_INCLUDE_FLAGS}"
+        CXXFLAGS="-march=armv7-a -mfpu=neon --sysroot=${RABBIT_BUILD_CROSS_SYSROOT} ${RABBIT_BUILD_CROSS_STL_INCLUDE_FLAGS}"
         CPPFLAGS=${CXXFLAGS}
         if [ -n "${RABBIT_BUILD_CROSS_STL_LIBS}" ]; then
             LDFLAGS="-L${RABBIT_BUILD_CROSS_STL_LIBS}"
