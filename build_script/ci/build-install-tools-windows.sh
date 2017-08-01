@@ -55,7 +55,7 @@ if [ ! -d "${TOOLS_DIR}/android-sdk" ]; then
     mv android-sdk-windows android-sdk
     rm android-sdk_r24.4.1-windows.zip
     (sleep 5 ; while true ; do sleep 1 ; printf 'y\r\n' ; done ) \
-    | android-sdk/tools/android.bat update sdk -u -t tool,android-18,android-24,extra,platform,platform-tools #,build-tools-24.0.3
+    | android-sdk/tools/android.bat update sdk -u -t tool,android-18,extra,platform,platform-tools #,build-tools-24.0.3
 fi
 
 #下载android ndk  
