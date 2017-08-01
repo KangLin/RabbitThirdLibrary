@@ -105,8 +105,12 @@ case ${RABBIT_BUILD_TARGERT} in
         CONFIG_PARA="CC=${RABBIT_BUILD_CROSS_PREFIX}gcc CXX=${RABBIT_BUILD_CROSS_PREFIX}g++ LD=${RABBIT_BUILD_CROSS_PREFIX}ld"
         CONFIG_PARA="${CONFIG_PARA} --disable-shared -enable-static"
         CONFIG_PARA="${CONFIG_PARA} --with-sysroot=${RABBIT_BUILD_CROSS_SYSROOT} --host=$RABBIT_BUILD_CROSS_HOST"
-        CFLAGS="-march=armv7-a -mfpu=neon --sysroot=${RABBIT_BUILD_CROSS_SYSROOT}"
-        CXXFLAGS="-march=armv7-a -mfpu=neon -std=c++0x --sysroot=${RABBIT_BUILD_CROSS_SYSROOT} ${RABBIT_BUILD_CROSS_STL_INCLUDE_FLAGS}"
+        if [ "${RABBIT_ARCH}" = "arm" ]; then
+            CFLAGS="-march=armv7-a -mfpu=neon"
+            CPPFLAGS="-march=armv7-a -mfpu=neon"
+        fi
+        CFLAGS="${CFLAGS} --sysroot=${RABBIT_BUILD_CROSS_SYSROOT}"
+        CPPFLAGS="${CPPFLAGS} --sysroot=${RABBIT_BUILD_CROSS_SYSROOT}"
         if [ -n "${RABBIT_BUILD_CROSS_STL_LIBS}" ]; then
             LDFLAGS="-L${RABBIT_BUILD_CROSS_STL_LIBS} -lstdc++"
         fi
