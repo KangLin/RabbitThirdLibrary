@@ -146,6 +146,18 @@ environment:
   - BUILD_TARGERT: windows_msvc
     RABBIT_BUILD_THIRDLIBRARY: osg 
     TOOLCHAIN_VERSION: 12
+    QT_VERSION: qt5.9
+    QT_ROOT: /C/Qt/5.9/msvc2013
+    GENERATORS: "Visual Studio 12 2013"
+    RABBIT_ARCH: x86
+    DOWNLOAD_FILE: https://sourceforge.net/projects/rabbitthirdlibrary/files/Release/rabbit_windows_msvc12_x86_NO_v$(appveyor_build_version).tar.gz/download
+    RABBIT_USE_REPOSITORIES: "FALSE"
+    PASSWORD:
+      secure: 2WEtOQrdty3V3g0aEVvS3Q==
+
+  - BUILD_TARGERT: windows_msvc
+    RABBIT_BUILD_THIRDLIBRARY: osg 
+    TOOLCHAIN_VERSION: 12
     QT_VERSION: qt5.8
     QT_ROOT: /C/Qt/5.8/msvc2013
     GENERATORS: "Visual Studio 12 2013"
@@ -213,12 +225,23 @@ environment:
   ##### osgearth #####
   - BUILD_TARGERT: windows_msvc
     TOOLCHAIN_VERSION: 14
+    QT_VERSION: qt5.9
+    RABBIT_BUILD_THIRDLIBRARY: osgearth
+    QT_ROOT: /C/Qt/5.9/msvc2015
+    GENERATORS: "Visual Studio 14 2015"
+    RABBIT_ARCH: x86
+    DOWNLOAD_FILE: https://sourceforge.net/projects/rabbitthirdlibrary/files/Release/rabbit_windows_msvc14_x86_qt5.9_v$(appveyor_build_version).tar.gz/download
+    PASSWORD:
+      secure: 2WEtOQrdty3V3g0aEVvS3Q==
+      
+  - BUILD_TARGERT: windows_msvc
+    TOOLCHAIN_VERSION: 14
     QT_VERSION: qt5.8
     RABBIT_BUILD_THIRDLIBRARY: osgearth
     QT_ROOT: /C/Qt/5.8/msvc2015
     GENERATORS: "Visual Studio 14 2015"
     RABBIT_ARCH: x86
-    DOWNLOAD_FILE: https://sourceforge.net/projects/rabbitthirdlibrary/files/Release/rabbit_windows_msvc14_x86_qt5.7_v$(appveyor_build_version).tar.gz/download
+    DOWNLOAD_FILE: https://sourceforge.net/projects/rabbitthirdlibrary/files/Release/rabbit_windows_msvc14_x86_qt5.8_v$(appveyor_build_version).tar.gz/download
     PASSWORD:
       secure: 2WEtOQrdty3V3g0aEVvS3Q==
 
@@ -236,12 +259,24 @@ environment:
   
   - BUILD_TARGERT: windows_msvc
     TOOLCHAIN_VERSION: 12
+    QT_VERSION: qt5.9
+    RABBIT_BUILD_THIRDLIBRARY: osgearth 
+    QT_ROOT: /C/Qt/5.9/msvc2013
+    GENERATORS: "Visual Studio 12 2013"
+    RABBIT_ARCH: x86
+    DOWNLOAD_FILE: https://sourceforge.net/projects/rabbitthirdlibrary/files/Release/rabbit_windows_msvc12_x86_qt5.9_v$(appveyor_build_version).tar.gz/download
+    RABBIT_USE_REPOSITORIES: "FALSE"
+    PASSWORD:
+      secure: 2WEtOQrdty3V3g0aEVvS3Q==
+      
+  - BUILD_TARGERT: windows_msvc
+    TOOLCHAIN_VERSION: 12
     QT_VERSION: qt5.8
     RABBIT_BUILD_THIRDLIBRARY: osgearth 
     QT_ROOT: /C/Qt/5.8/msvc2013
     GENERATORS: "Visual Studio 12 2013"
     RABBIT_ARCH: x86
-    DOWNLOAD_FILE: https://sourceforge.net/projects/rabbitthirdlibrary/files/Release/rabbit_windows_msvc12_x86_qt5.7_v$(appveyor_build_version).tar.gz/download
+    DOWNLOAD_FILE: https://sourceforge.net/projects/rabbitthirdlibrary/files/Release/rabbit_windows_msvc12_x86_qt5.8_v$(appveyor_build_version).tar.gz/download
     RABBIT_USE_REPOSITORIES: "FALSE"
     PASSWORD:
       secure: 2WEtOQrdty3V3g0aEVvS3Q==
@@ -305,12 +340,24 @@ environment:
   ##### qxmpp qzxing #####
   - BUILD_TARGERT: windows_msvc
     TOOLCHAIN_VERSION: 14
+    QT_VERSION: qt5.9
+    RABBIT_BUILD_THIRDLIBRARY: qxmpp qzxing
+    QT_ROOT: /C/Qt/5.9/msvc2015
+    GENERATORS: "Visual Studio 14 2015"
+    RABBIT_ARCH: x86
+    DOWNLOAD_FILE: https://sourceforge.net/projects/rabbitthirdlibrary/files/Release/rabbit_windows_msvc14_x86_qt5.9_v$(appveyor_build_version).tar.gz/download
+    BUILD_END: "True"
+    PASSWORD:
+      secure: 2WEtOQrdty3V3g0aEVvS3Q==
+      
+  - BUILD_TARGERT: windows_msvc
+    TOOLCHAIN_VERSION: 14
     QT_VERSION: qt5.8
     RABBIT_BUILD_THIRDLIBRARY: qxmpp qzxing
     QT_ROOT: /C/Qt/5.8/msvc2015
     GENERATORS: "Visual Studio 14 2015"
     RABBIT_ARCH: x86
-    DOWNLOAD_FILE: https://sourceforge.net/projects/rabbitthirdlibrary/files/Release/rabbit_windows_msvc14_x86_qt5.7_v$(appveyor_build_version).tar.gz/download
+    DOWNLOAD_FILE: https://sourceforge.net/projects/rabbitthirdlibrary/files/Release/rabbit_windows_msvc14_x86_qt5.8_v$(appveyor_build_version).tar.gz/download
     BUILD_END: "True"
     PASSWORD:
       secure: 2WEtOQrdty3V3g0aEVvS3Q==
@@ -326,7 +373,19 @@ environment:
     BUILD_END: "True"
     PASSWORD:
       secure: 2WEtOQrdty3V3g0aEVvS3Q==
-
+  
+  - BUILD_TARGERT: windows_msvc
+    TOOLCHAIN_VERSION: 12
+    QT_VERSION: qt5.9
+    RABBIT_BUILD_THIRDLIBRARY: qxmpp qzxing 
+    QT_ROOT: /C/Qt/5.9/msvc2013
+    GENERATORS: "Visual Studio 12 2013"
+    RABBIT_ARCH: x86
+    DOWNLOAD_FILE: https://sourceforge.net/projects/rabbitthirdlibrary/files/Release/rabbit_windows_msvc12_x86_qt5.9_v$(appveyor_build_version).tar.gz/download
+    BUILD_END: "True"
+    PASSWORD:
+      secure: 2WEtOQrdty3V3g0aEVvS3Q==
+      
   - BUILD_TARGERT: windows_msvc
     TOOLCHAIN_VERSION: 12
     QT_VERSION: qt5.8
@@ -334,7 +393,7 @@ environment:
     QT_ROOT: /C/Qt/5.8/msvc2013
     GENERATORS: "Visual Studio 12 2013"
     RABBIT_ARCH: x86
-    DOWNLOAD_FILE: https://sourceforge.net/projects/rabbitthirdlibrary/files/Release/rabbit_windows_msvc12_x86_qt5.7_v$(appveyor_build_version).tar.gz/download
+    DOWNLOAD_FILE: https://sourceforge.net/projects/rabbitthirdlibrary/files/Release/rabbit_windows_msvc12_x86_qt5.8_v$(appveyor_build_version).tar.gz/download
     BUILD_END: "True"
     PASSWORD:
       secure: 2WEtOQrdty3V3g0aEVvS3Q==
@@ -379,7 +438,7 @@ environment:
     RABBIT_BUILD_THIRDLIBRARY: qxmpp qzxing 
     QT_ROOT: /C/Qt/5.8/mingw53_32
     RABBIT_ARCH: x86
-    DOWNLOAD_FILE: https://sourceforge.net/projects/rabbitthirdlibrary/files/Release/rabbit_windows_mingw530_x86_qt5.7_v$(appveyor_build_version).tar.gz/download
+    DOWNLOAD_FILE: https://sourceforge.net/projects/rabbitthirdlibrary/files/Release/rabbit_windows_mingw530_x86_qt5.8_v$(appveyor_build_version).tar.gz/download
     RABBIT_USE_REPOSITORIES: "FALSE"
     BUILD_END: "True"
     PASSWORD:
