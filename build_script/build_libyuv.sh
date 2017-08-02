@@ -37,14 +37,16 @@ else
 fi
 
 #下载源码:
+VERSION=2e9f3e5
 if [ ! -d ${RABBIT_BUILD_SOURCE_CODE} ]; then
-    echo "git clone -q  https://chromium.googlesource.com/external/libyuv  ${RABBIT_BUILD_SOURCE_CODE}"
+    echo "git clone -q -b $VERSION https://chromium.googlesource.com/external/libyuv  ${RABBIT_BUILD_SOURCE_CODE}"
     #git clone -q --branch=416c48d https://chromium.googlesource.com/external/libyuv ${RABBIT_BUILD_SOURCE_CODE}
     git clone -q https://chromium.googlesource.com/external/libyuv ${RABBIT_BUILD_SOURCE_CODE}
 fi
 
 CUR_DIR=`pwd`
 cd ${RABBIT_BUILD_SOURCE_CODE}
+git checkout -qf $VERSION
 
 mkdir -p build_${RABBIT_BUILD_TARGERT}
 cd build_${RABBIT_BUILD_TARGERT}
