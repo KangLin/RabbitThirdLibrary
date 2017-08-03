@@ -47,8 +47,8 @@ if [ ! -d ${RABBIT_BUILD_SOURCE_CODE} ]; then
     VERSION=2.3
     #if [ "TRUE" = "${RABBIT_USE_REPOSITORIES}" ]; then
         echo "git clone -q http://git.code.sf.net/u/kl222/qzxing ${RABBIT_BUILD_SOURCE_CODE}"
-        #git clone -q http://git.code.sf.net/u/kl222/qzxing ${RABBIT_BUILD_SOURCE_CODE}
         git clone -q http://git.code.sf.net/u/kl222/qzxing ${RABBIT_BUILD_SOURCE_CODE}
+        #git clone -q https://github.com/ftylitak/qzxing.git ${RABBIT_BUILD_SOURCE_CODE}
     #else
     #    mkdir -p ${RABBIT_BUILD_SOURCE_CODE}
     #    cd ${RABBIT_BUILD_SOURCE_CODE}

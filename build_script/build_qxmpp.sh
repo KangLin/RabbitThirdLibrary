@@ -38,23 +38,24 @@ else
 fi
 
 CUR_DIR=`pwd`
-
+RABBIT_USE_REPOSITORIES="FALSE"
 #下载源码:
 if [ ! -d ${RABBIT_BUILD_SOURCE_CODE} ]; then
+    VERSION=0.9.3
     #if [ "TRUE" = "${RABBIT_USE_REPOSITORIES}" ]; then
         echo "git clone -q https://github.com/qxmpp-project/qxmpp.git ${RABBIT_BUILD_SOURCE_CODE}"
-        #git clone -q https://github.com/qxmpp-project/qxmpp.git ${RABBIT_BUILD_SOURCE_CODE}
-        git clone -q https://github.com/KangLin/qxmpp.git ${RABBIT_BUILD_SOURCE_CODE}
+        git clone -q -b v${VERSION} https://github.com/qxmpp-project/qxmpp.git ${RABBIT_BUILD_SOURCE_CODE}
+        #git clone -q https://github.com/KangLin/qxmpp.git ${RABBIT_BUILD_SOURCE_CODE}
     #else
     #    mkdir -p ${RABBIT_BUILD_SOURCE_CODE}
     #    cd ${RABBIT_BUILD_SOURCE_CODE}
-    #    wget -q -c https://github.com/KangLin/qxmpp/archive/master.zip
-    #    unzip -q master.zip
-    #    mv qxmpp-master ..
-    #    rm -fr *
+    #    #wget -q -c https://github.com/KangLin/qxmpp/archive/master.zip
+    #    wget -q -c https://github.com/qxmpp-project/qxmpp/archive/v${VERSION}.zip
+    #    unzip -q v${VERSION}.zip
+    #    mv qxmpp-${VERSION} ..
     #    cd ..
     #    rm -fr ${RABBIT_BUILD_SOURCE_CODE}
-    #    mv -f qxmpp-master ${RABBIT_BUILD_SOURCE_CODE}
+    #    mv qxmpp-${VERSION} "${RABBIT_BUILD_SOURCE_CODE}"
     #fi
 fi
 
