@@ -43,7 +43,7 @@ if [ ! -d ${RABBIT_BUILD_SOURCE_CODE} ]; then
     VERSION=3.4.3
     #if [ "TRUE" = "${RABBIT_USE_REPOSITORIES}" ]; then
         echo "git clone -q https://github.com/fukuchi/libqrencode.git ${RABBIT_BUILD_SOURCE_CODE}"
-        git clone -q https://github.com/fukuchi/libqrencode.git ${RABBIT_BUILD_SOURCE_CODE}
+        git clone -q https://github.com/KangLin/libqrencode.git ${RABBIT_BUILD_SOURCE_CODE}
     #else
     #    echo "wget -q https://github.com/fukuchi/libqrencode/archive/v${VERSION}.tar.gz"
     #    mkdir -p ${RABBIT_BUILD_SOURCE_CODE}
@@ -121,10 +121,17 @@ case ${RABBIT_BUILD_TARGERT} in
     unix)
         ;;
     windows_msvc)
+        if [ "$RABBIT_BUILD_STATIC" = "static" ]; then
+            CMAKE_PARA="-DBUILD_SHARED_LIBS=YES"
+        else
+            CMAKE_PARA="-DBUILD_SHARED_LIBS=NO"
+        fi
         cmake .. -DCMAKE_INSTALL_PREFIX="$RABBIT_BUILD_PREFIX" \
             -DCMAKE_BUILD_TYPE="Release" \
-            -G"${GENERATORS}" -DWITH_TOOLS=OFF \
-            -DCMAKE_FIND_ROOT_PATH_MODE_INCLUDE=ONLY
+            -G"${GENERATORS}" \
+            -DWITH_TOOLS=NO \
+            -DWITH_TESTS=NO \
+            ${CMAKE_PARA}
         cmake --build . --target install --config Release 
         cd $CUR_DIR
         exit 0

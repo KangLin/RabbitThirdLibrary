@@ -8,6 +8,7 @@ if [ "$BUILD_TARGERT" = "windows_mingw" \
 fi
 if [ "$BUILD_TARGERT" = "windows_msvc" ]; then
     export PATH=/C/Perl/bin:$PATH
+    rm -fr /usr/include
 fi
 
 SOURCE_DIR=`pwd`

@@ -44,7 +44,7 @@ environment:
   #  RABBIT_USE_REPOSITORIES: "FALSE"
   #  PASSWORD:
   #    secure: 2WEtOQrdty3V3g0aEVvS3Q==
-      
+
   - BUILD_TARGERT: windows_mingw
     TOOLCHAIN_VERSION: 530
     QT_VERSION: NO
@@ -105,102 +105,7 @@ environment:
   ##### gdal #####
   
   ##### QT相关编译 #####
-  ##### qxmpp qzxing #####
-  - BUILD_TARGERT: windows_msvc
-    TOOLCHAIN_VERSION: 14
-    QT_VERSION: qt5.8
-    RABBIT_BUILD_THIRDLIBRARY: qxmpp qzxing
-    QT_ROOT: /C/Qt/5.8/msvc2015
-    GENERATORS: "Visual Studio 14 2015"
-    RABBIT_ARCH: x86
-    DOWNLOAD_FILE: https://sourceforge.net/projects/rabbitthirdlibrary/files/Release/rabbit_windows_msvc14_x86_qt5.8_v$(appveyor_build_version).tar.gz/download
-    BUILD_END: "True"
-    PASSWORD:
-      secure: 2WEtOQrdty3V3g0aEVvS3Q==
-      
-  - BUILD_TARGERT: windows_msvc
-    TOOLCHAIN_VERSION: 14
-    QT_VERSION: qt5.7
-    RABBIT_BUILD_THIRDLIBRARY: qxmpp qzxing
-    QT_ROOT: /C/Qt/5.7/msvc2015
-    GENERATORS: "Visual Studio 14 2015"
-    RABBIT_ARCH: x86
-    DOWNLOAD_FILE: https://sourceforge.net/projects/rabbitthirdlibrary/files/Release/rabbit_windows_msvc14_x86_qt5.7_v$(appveyor_build_version).tar.gz/download
-    BUILD_END: "True"
-    PASSWORD:
-      secure: 2WEtOQrdty3V3g0aEVvS3Q==
-      
-  - BUILD_TARGERT: windows_msvc
-    TOOLCHAIN_VERSION: 12
-    QT_VERSION: qt5.8
-    RABBIT_BUILD_THIRDLIBRARY: qxmpp qzxing 
-    QT_ROOT: /C/Qt/5.8/msvc2013
-    GENERATORS: "Visual Studio 12 2013"
-    RABBIT_ARCH: x86
-    DOWNLOAD_FILE: https://sourceforge.net/projects/rabbitthirdlibrary/files/Release/rabbit_windows_msvc12_x86_qt5.8_v$(appveyor_build_version).tar.gz/download
-    BUILD_END: "True"
-    PASSWORD:
-      secure: 2WEtOQrdty3V3g0aEVvS3Q==
-      
-  - BUILD_TARGERT: windows_msvc
-    TOOLCHAIN_VERSION: 12
-    QT_VERSION: qt5.7
-    RABBIT_BUILD_THIRDLIBRARY: qxmpp qzxing 
-    QT_ROOT: /C/Qt/5.7/msvc2013
-    GENERATORS: "Visual Studio 12 2013"
-    RABBIT_ARCH: x86
-    DOWNLOAD_FILE: https://sourceforge.net/projects/rabbitthirdlibrary/files/Release/rabbit_windows_msvc12_x86_qt5.7_v$(appveyor_build_version).tar.gz/download
-    BUILD_END: "True"
-    PASSWORD:
-      secure: 2WEtOQrdty3V3g0aEVvS3Q==
-
-  - BUILD_TARGERT: android
-    RABBIT_BUILD_THIRDLIBRARY: qxmpp qzxing 
-    QT_VERSION_DIR: 5.7
-    QT_VERSION: 5.7.0
-    TOOLCHAIN_VERSION: 4.8
-    RABBIT_ARCH: arm
-    DOWNLOAD_FILE: https://sourceforge.net/projects/rabbitthirdlibrary/files/Release/rabbit_android4.8_arm_5.7.0_v$(appveyor_build_version).tar.gz/download
-    BUILD_END: "True"
-    PASSWORD:
-      secure: 2WEtOQrdty3V3g0aEVvS3Q==
-
-  #- BUILD_TARGERT: android
-  #  RABBIT_BUILD_THIRDLIBRARY: qxmpp qzxing 
-  #  QT_VERSION_DIR: 5.7
-  #  QT_VERSION: 5.7.0
-  #  TOOLCHAIN_VERSION: 4.8
-  #  RABBIT_ARCH: x86
-  #  DOWNLOAD_FILE: https://sourceforge.net/projects/rabbitthirdlibrary/files/Release/rabbit_android4.8_x86_5.7.0_v$(appveyor_build_version).tar.gz/download
-  #  BUILD_END: "True"
-  #  PASSWORD:
-  #    secure: 2WEtOQrdty3V3g0aEVvS3Q==
-      
-  - BUILD_TARGERT: windows_mingw
-    TOOLCHAIN_VERSION: 530
-    QT_VERSION: qt5.8
-    RABBIT_BUILD_THIRDLIBRARY: qxmpp qzxing 
-    QT_ROOT: /C/Qt/5.8/mingw53_32
-    RABBIT_ARCH: x86
-    DOWNLOAD_FILE: https://sourceforge.net/projects/rabbitthirdlibrary/files/Release/rabbit_windows_mingw530_x86_qt5.8_v$(appveyor_build_version).tar.gz/download
-    RABBIT_USE_REPOSITORIES: "FALSE"
-    BUILD_END: "True"
-    PASSWORD:
-      secure: 2WEtOQrdty3V3g0aEVvS3Q==
-
-  - BUILD_TARGERT: windows_mingw
-    TOOLCHAIN_VERSION: 530
-    QT_VERSION: qt5.7
-    RABBIT_BUILD_THIRDLIBRARY: qxmpp qzxing 
-    QT_ROOT: /C/Qt/5.7/mingw53_32
-    RABBIT_ARCH: x86
-    DOWNLOAD_FILE: https://sourceforge.net/projects/rabbitthirdlibrary/files/Release/rabbit_windows_mingw530_x86_qt5.7_v$(appveyor_build_version).tar.gz/download
-    RABBIT_USE_REPOSITORIES: "FALSE"
-    BUILD_END: "True"
-    PASSWORD:
-      secure: 2WEtOQrdty3V3g0aEVvS3Q==
-  ##### qxmpp qzxing #####
-  
+    
   ##### osg #####  
   #- BUILD_TARGERT: windows_msvc
     #RABBIT_BUILD_THIRDLIBRARY: osg 
@@ -384,7 +289,103 @@ environment:
       #secure: 2WEtOQrdty3V3g0aEVvS3Q==
 
   ##### osgearth #####
+  
+  ##### qxmpp qzxing #####
+  - BUILD_TARGERT: windows_msvc
+    TOOLCHAIN_VERSION: 14
+    QT_VERSION: qt5.8
+    RABBIT_BUILD_THIRDLIBRARY: qxmpp qzxing
+    QT_ROOT: /C/Qt/5.8/msvc2015
+    GENERATORS: "Visual Studio 14 2015"
+    RABBIT_ARCH: x86
+    DOWNLOAD_FILE: https://sourceforge.net/projects/rabbitthirdlibrary/files/Release/rabbit_windows_msvc14_x86_NO_v$(appveyor_build_version).tar.gz/download
+    BUILD_END: "True"
+    PASSWORD:
+      secure: 2WEtOQrdty3V3g0aEVvS3Q==
+      
+  - BUILD_TARGERT: windows_msvc
+    TOOLCHAIN_VERSION: 14
+    QT_VERSION: qt5.7
+    RABBIT_BUILD_THIRDLIBRARY: qxmpp qzxing
+    QT_ROOT: /C/Qt/5.7/msvc2015
+    GENERATORS: "Visual Studio 14 2015"
+    RABBIT_ARCH: x86
+    DOWNLOAD_FILE: https://sourceforge.net/projects/rabbitthirdlibrary/files/Release/rabbit_windows_msvc14_x86_NO_v$(appveyor_build_version).tar.gz/download
+    BUILD_END: "True"
+    PASSWORD:
+      secure: 2WEtOQrdty3V3g0aEVvS3Q==
+      
+  - BUILD_TARGERT: windows_msvc
+    TOOLCHAIN_VERSION: 12
+    QT_VERSION: qt5.8
+    RABBIT_BUILD_THIRDLIBRARY: qxmpp qzxing 
+    QT_ROOT: /C/Qt/5.8/msvc2013
+    GENERATORS: "Visual Studio 12 2013"
+    RABBIT_ARCH: x86
+    DOWNLOAD_FILE: https://sourceforge.net/projects/rabbitthirdlibrary/files/Release/rabbit_windows_msvc12_x86_NO_v$(appveyor_build_version).tar.gz/download
+    BUILD_END: "True"
+    PASSWORD:
+      secure: 2WEtOQrdty3V3g0aEVvS3Q==
+      
+  - BUILD_TARGERT: windows_msvc
+    TOOLCHAIN_VERSION: 12
+    QT_VERSION: qt5.7
+    RABBIT_BUILD_THIRDLIBRARY: qxmpp qzxing 
+    QT_ROOT: /C/Qt/5.7/msvc2013
+    GENERATORS: "Visual Studio 12 2013"
+    RABBIT_ARCH: x86
+    DOWNLOAD_FILE: https://sourceforge.net/projects/rabbitthirdlibrary/files/Release/rabbit_windows_msvc12_x86_NO_v$(appveyor_build_version).tar.gz/download
+    BUILD_END: "True"
+    PASSWORD:
+      secure: 2WEtOQrdty3V3g0aEVvS3Q==
 
+  - BUILD_TARGERT: android
+    RABBIT_BUILD_THIRDLIBRARY: qxmpp qzxing 
+    QT_VERSION_DIR: 5.7
+    QT_VERSION: 5.7.0
+    TOOLCHAIN_VERSION: 4.8
+    RABBIT_ARCH: arm
+    DOWNLOAD_FILE: https://sourceforge.net/projects/rabbitthirdlibrary/files/Release/rabbit_android4.8_arm_NO_v$(appveyor_build_version).tar.gz/download
+    BUILD_END: "True"
+    PASSWORD:
+      secure: 2WEtOQrdty3V3g0aEVvS3Q==
+
+  #- BUILD_TARGERT: android
+  #  RABBIT_BUILD_THIRDLIBRARY: qxmpp qzxing 
+  #  QT_VERSION_DIR: 5.7
+  #  QT_VERSION: 5.7.0
+  #  TOOLCHAIN_VERSION: 4.8
+  #  RABBIT_ARCH: x86
+  #  DOWNLOAD_FILE: https://sourceforge.net/projects/rabbitthirdlibrary/files/Release/rabbit_android4.8_x86_NO_v$(appveyor_build_version).tar.gz/download
+  #  BUILD_END: "True"
+  #  PASSWORD:
+  #    secure: 2WEtOQrdty3V3g0aEVvS3Q==
+      
+  - BUILD_TARGERT: windows_mingw
+    TOOLCHAIN_VERSION: 530
+    QT_VERSION: qt5.8
+    RABBIT_BUILD_THIRDLIBRARY: qxmpp qzxing 
+    QT_ROOT: /C/Qt/5.8/mingw53_32
+    RABBIT_ARCH: x86
+    DOWNLOAD_FILE: https://sourceforge.net/projects/rabbitthirdlibrary/files/Release/rabbit_windows_mingw530_x86_NO_v$(appveyor_build_version).tar.gz/download
+    RABBIT_USE_REPOSITORIES: "FALSE"
+    BUILD_END: "True"
+    PASSWORD:
+      secure: 2WEtOQrdty3V3g0aEVvS3Q==
+
+  - BUILD_TARGERT: windows_mingw
+    TOOLCHAIN_VERSION: 530
+    QT_VERSION: qt5.7
+    RABBIT_BUILD_THIRDLIBRARY: qxmpp qzxing 
+    QT_ROOT: /C/Qt/5.7/mingw53_32
+    RABBIT_ARCH: x86
+    DOWNLOAD_FILE: https://sourceforge.net/projects/rabbitthirdlibrary/files/Release/rabbit_windows_mingw530_x86_NO_v$(appveyor_build_version).tar.gz/download
+    RABBIT_USE_REPOSITORIES: "FALSE"
+    BUILD_END: "True"
+    PASSWORD:
+      secure: 2WEtOQrdty3V3g0aEVvS3Q==
+  ##### qxmpp qzxing #####
+  
   ##### QT相关编译 #####
 
 init:
@@ -394,10 +395,6 @@ init:
   - if "%RABBIT_ARCH%" == "x64" set varch=amd64
   - if "%BUILD_TARGERT%" == "windows_msvc" call "C:\Program Files (x86)\Microsoft Visual Studio %TOOLCHAIN_VERSION%.0\VC\vcvarsall.bat" %varch%
   - if "%BUILD_TARGERT%" == "windows_mingw" set MSYSTEM=MINGW32  #设置编译系统为MINGW32
-  - echo NUMBER_OF_PROCESSORS=%NUMBER_OF_PROCESSORS%
-  - echo PROCESSOR_IDENTIFIER=%PROCESSOR_IDENTIFIER%
-  - echo QT_ROOT=%QT_ROOT%
-  - echo QT_VERSION=%QT_VERSION%
   - del C:\msys64\usr\bin\link.exe
 
 install:
@@ -410,7 +407,7 @@ install:
 before_build:
   - cd %APPVEYOR_BUILD_FOLDER%
   - if "%BUILD_TARGERT%" == "android" C:\msys64\usr\bin\bash.exe %APPVEYOR_BUILD_FOLDER%\build_script\ci\build-install-tools-windows.sh
-
+  
 build_script:
   - cd %APPVEYOR_BUILD_FOLDER%
   - C:\msys64\usr\bin\bash.exe %APPVEYOR_BUILD_FOLDER%\build_script\ci\build.sh

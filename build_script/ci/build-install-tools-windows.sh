@@ -18,7 +18,7 @@ if [ "$BUILD_TARGERT" = "android" ]; then
     export ANDROID_SDK_ROOT=${TOOLS_DIR}/android-sdk
     export ANDROID_NDK_ROOT=${TOOLS_DIR}/android-ndk
     export JAVA_HOME="/C/Program Files (x86)/Java/jdk1.8.0"
-    export PATH=${TOOLS_DIR}/apache-ant/bin:$JAVA_HOME:/usr/bin #:$PATH
+    export PATH=${TOOLS_DIR}/apache-ant/bin:$JAVA_HOME:$PATH
 else
     exit 0
 fi
@@ -31,9 +31,9 @@ cd ${TOOLS_DIR}
 
 # Qt qt安装参见：https://github.com/benlau/qtci  
 if [ "NO" != "${QT_VERSION}" ]; then
-    QT_DIR=C:/projects/RABBIT-third-library/Tools/Qt/${QT_VERSION}
-    if [ -d "C:/projects/RABBIT/ThirdLibrary/Tools" ]; then
-        QT_DIR=C:/projects/RABBIT/ThirdLibrary/Tools/Qt/${QT_VERSION}
+    QT_DIR=C:/projects/rabbitthirdlibrary/Tools/Qt/${QT_VERSION}
+    if [ -d "C:/projects/rabbitim/ThirdLibrary/Tools" ]; then
+        QT_DIR=C:/projects/rabbitim/ThirdLibrary/Tools/Qt/${QT_VERSION}
     fi
     if [ ! -d "${QT_DIR}" ]; then
         wget -c --no-check-certificate -nv http://download.qt.io/official_releases/qt/${QT_VERSION_DIR}/${QT_VERSION}/qt-opensource-windows-x86-android-${QT_VERSION}.exe
