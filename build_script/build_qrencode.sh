@@ -121,13 +121,10 @@ case ${RABBIT_BUILD_TARGERT} in
     unix)
         ;;
     windows_msvc)
-        #https://folti.blogs.balabit.com/2009/08/compiling-autoconfmake-projects-under-msvc-part-one/
-        #../configure CXX="cl -nologo" CC="cl -nologo" CFLAGS=-MD \
-        #    LD=link NM="dumpbin -symbols" STRIP=: RANLIB=: \
-        #    --enable-dependency-tracking 
         cmake .. -DCMAKE_INSTALL_PREFIX="$RABBIT_BUILD_PREFIX" \
             -DCMAKE_BUILD_TYPE="Release" \
-            -G"${GENERATORS}" -DWITH_TOOLS=OFF
+            -G"${GENERATORS}" -DWITH_TOOLS=OFF \
+            -DCMAKE_FIND_ROOT_PATH_MODE_INCLUDE=ONLY
         cmake --build . --target install --config Release 
         cd $CUR_DIR
         exit 0
