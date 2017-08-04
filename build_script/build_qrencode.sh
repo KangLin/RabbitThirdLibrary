@@ -42,8 +42,8 @@ CUR_DIR=`pwd`
 if [ ! -d ${RABBIT_BUILD_SOURCE_CODE} ]; then
     VERSION=3.4.3
     #if [ "TRUE" = "${RABBIT_USE_REPOSITORIES}" ]; then
-        echo "git clone -q --branch=v$VERSION https://github.com/fukuchi/libqrencode.git ${RABBIT_BUILD_SOURCE_CODE}"
-        git clone -q  https://github.com/fukuchi/libqrencode.git ${RABBIT_BUILD_SOURCE_CODE}
+        echo "git clone -q https://github.com/fukuchi/libqrencode.git ${RABBIT_BUILD_SOURCE_CODE}"
+        git clone -q https://github.com/fukuchi/libqrencode.git ${RABBIT_BUILD_SOURCE_CODE}
     #else
     #    echo "wget -q https://github.com/fukuchi/libqrencode/archive/v${VERSION}.tar.gz"
     #    mkdir -p ${RABBIT_BUILD_SOURCE_CODE}
@@ -67,7 +67,7 @@ if [ "$RABBIT_CLEAN" = "TRUE" ]; then
     fi
 fi
 
-if [ ! -f configure ]; then
+if [ ! -f configure -a "windows_msvc" != "${RABBIT_BUILD_TARGERT}" ]; then
     mkdir -p m4
     echo "sh autogen.sh"
     sh autogen.sh
@@ -102,6 +102,7 @@ if [ "$RABBIT_BUILD_STATIC" = "static" ]; then
 else
     CONFIG_PARA="--disable-static --enable-shared"
 fi
+MAKE_PARA=" ${RABBIT_MAKE_JOB_PARA} "
 case ${RABBIT_BUILD_TARGERT} in
     android)
         export CC=${RABBIT_BUILD_CROSS_PREFIX}gcc 
@@ -124,8 +125,10 @@ case ${RABBIT_BUILD_TARGERT} in
         #../configure CXX="cl -nologo" CC="cl -nologo" CFLAGS=-MD \
         #    LD=link NM="dumpbin -symbols" STRIP=: RANLIB=: \
         #    --enable-dependency-tracking 
-            
-        echo "Qrencode don't complie in windows_msvc "
+        cmake .. -DCMAKE_INSTALL_PREFIX="$RABBIT_BUILD_PREFIX" \
+            -DCMAKE_BUILD_TYPE="Release" \
+            -G"${GENERATORS}" -DWITH_TOOLS=OFF
+        cmake --build . --target install --config Release 
         cd $CUR_DIR
         exit 0
         ;;
@@ -153,7 +156,7 @@ else
     ../configure ${CONFIG_PARA}
 fi
 
-${MAKE} 
+${MAKE} ${MAKE_PARA}
 ${MAKE} install
 
 if [ "${RABBIT_BUILD_TARGERT}" = "windows_msvc" ]; then
