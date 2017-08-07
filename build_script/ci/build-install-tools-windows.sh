@@ -43,10 +43,11 @@ if [ "NO" != "${QT_VERSION}" ]; then
 fi
 
 #下载ANT
-wget -c -nv http://apache.fayea.com/ant/binaries/apache-ant-1.9.9-bin.tar.gz
-tar xzf apache-ant-1.9.9-bin.tar.gz
-rm -f apache-ant-1.9.9-bin.tar.gz
-mv apache-ant-1.9.9 apache-ant
+#wget -c -nv http://apache.fayea.com/ant/binaries/apache-ant-1.10.1-bin.tar.gz
+wget -c -nv https://www.apache.org/dist/ant/binaries/apache-ant-1.10.1-bin.tar.gz
+tar xzf apache-ant-1.10.1-bin.tar.gz
+rm -f apache-ant-1.10.1-bin.tar.gz
+mv apache-ant-1.10.1 apache-ant
 
 #Download android sdk  
 if [ ! -d "${TOOLS_DIR}/android-sdk" ]; then

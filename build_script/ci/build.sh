@@ -33,7 +33,11 @@ if [ -n "$DOWNLOAD_FILE" ]; then
    if [ "$PROJECT_NAME" != "RabbitThirdLIbrary" \
         -a "$BUILD_TARGERT" != "windows_msvc" \
         -a -f "${SCRIPT_DIR}/../${BUILD_TARGERT}/change_prefix.sh" ]; then
-       bash ${SCRIPT_DIR}/../${BUILD_TARGERT}/change_prefix.sh
+       cd ${SCRIPT_DIR}/../$BUILD_TARGERT
+       echo "bash ${SCRIPT_DIR}/../${BUILD_TARGERT}/change_prefix.sh C:/projects/rabbitthirdlibrary/build_script/../$BUILD_TARGERT `pwd`"
+       bash ${SCRIPT_DIR}/../${BUILD_TARGERT}/change_prefix.sh /c/projects/rabbitthirdlibrary/build_script/../$BUILD_TARGERT `pwd`
+       cat ${SCRIPT_DIR}/../${BUILD_TARGERT}/lib/pkgconfig/libcurl.pc
+       cd ${SCRIPT_DIR}
    fi
 fi
 
