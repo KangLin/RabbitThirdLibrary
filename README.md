@@ -29,10 +29,8 @@
   |windows_msvc|VS2013|12|x86_64|qt5.6.2|
   |windows_mingw|gcc 5.3.0|530|x86|qt5.8.0|
   |windows_mingw|gcc 5.3.0|530|x86|qt5.7.1|
-  |windows_mingw|gcc 4.9.2|492|x86|qt5.6.2|
   |windows_mingw|gcc 5.3.0|530|x86_64|qt5.8.0|
   |windows_mingw|gcc 5.3.0|530|x86_64|qt5.7.1|
-  |windows_mingw|gcc 4.9.2|492|x86_64|qt5.6.2|
   |unix|gcc 5.3.0|530|x86|qt5.8.0|
   |unix|gcc 5.3.0|530|x86|qt5.7.1|
   |unix|gcc 5.3.0|530|x86|qt5.6.2|
