@@ -41,7 +41,7 @@ CUR_DIR=`pwd`
 #下载源码:
 if [ ! -d ${RABBIT_BUILD_SOURCE_CODE} ]; then
     QT_VERSION_DIR=5.8
-    QT_VERSION=5.8
+    QT_VERSION=5.8.0
     mkdir -p ${RABBIT_BUILD_SOURCE_CODE}
     cd ${RABBIT_BUILD_SOURCE_CODE}
     if [ "TRUE" = "${RABBIT_USE_REPOSITORIES}" ]; then

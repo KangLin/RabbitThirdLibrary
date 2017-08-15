@@ -14,7 +14,7 @@
 
 #需要设置下面变量：
 if [ -z "$QT_ROOT" ]; then
-    QT_ROOT=/home/l/Qt5.6.0/5.6/gcc_64  #QT 安装根目录,默认为:${RABBITRoot}/ThirdLibrary/unix/qt
+    QT_ROOT=/home/l/Qt5.8.0/5.8/gcc_64  #QT 安装根目录,默认为:${RABBITRoot}/ThirdLibrary/unix/qt
 fi
 JOM=${MAKE} #设置 QT make 工具 JOM
 if [ -z "$RABBIT_CLEAN" ]; then

@@ -34,8 +34,13 @@ if [ -n "$DOWNLOAD_FILE" ]; then
         -a "$BUILD_TARGERT" != "windows_msvc" \
         -a -f "${SCRIPT_DIR}/../${BUILD_TARGERT}/change_prefix.sh" ]; then
        cd ${SCRIPT_DIR}/../$BUILD_TARGERT
-       echo "bash ${SCRIPT_DIR}/../${BUILD_TARGERT}/change_prefix.sh C:/projects/rabbitthirdlibrary/build_script/../$BUILD_TARGERT `pwd`"
-       bash ${SCRIPT_DIR}/../${BUILD_TARGERT}/change_prefix.sh /c/projects/rabbitthirdlibrary/build_script/../$BUILD_TARGERT `pwd`
+       if [ "$BUILD_TARGERT" = "windows_mingw" ]; then
+           echo "bash ${SCRIPT_DIR}/../${BUILD_TARGERT}/change_prefix.sh /c/projects/rabbitthirdlibrary/$BUILD_TARGERT `pwd`"
+           bash ${SCRIPT_DIR}/../${BUILD_TARGERT}/change_prefix.sh /c/projects/rabbitthirdlibrary/$BUILD_TARGERT `pwd`
+       else
+           echo "bash ${SCRIPT_DIR}/../${BUILD_TARGERT}/change_prefix.sh /c/projects/rabbitthirdlibrary/build_script/../$BUILD_TARGERT `pwd`"
+           bash ${SCRIPT_DIR}/../${BUILD_TARGERT}/change_prefix.sh /c/projects/rabbitthirdlibrary/build_script/../$BUILD_TARGERT `pwd`
+       fi
        cat ${SCRIPT_DIR}/../${BUILD_TARGERT}/lib/pkgconfig/libcurl.pc
        cd ${SCRIPT_DIR}
    fi
