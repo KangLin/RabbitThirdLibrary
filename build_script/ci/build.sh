@@ -11,14 +11,14 @@ if [ "$BUILD_TARGERT" = "windows_msvc" ]; then
     rm -fr /usr/include
 fi
 
-SOURCE_DIR=`pwd`
+PROJECT_DIR=`pwd`
 if [ -n "$1" ]; then
-    SOURCE_DIR=$1
+    PROJECT_DIR=$1
 fi
 
-SCRIPT_DIR=${SOURCE_DIR}/build_script
-if [ -d ${SOURCE_DIR}/ThirdLibrary/build_script ]; then
-    SCRIPT_DIR=${SOURCE_DIR}/ThirdLibrary/build_script
+SCRIPT_DIR=${PROJECT_DIR}/build_script
+if [ -d ${PROJECT_DIR}/ThirdLibrary/build_script ]; then
+    SCRIPT_DIR=${PROJECT_DIR}/ThirdLibrary/build_script
 fi
 cd ${SCRIPT_DIR}
 SOURCE_DIR=${SCRIPT_DIR}/../src
@@ -30,17 +30,12 @@ if [ -n "$DOWNLOAD_FILE" ]; then
    #unzip -q ${SCRIPT_DIR}/../${BUILD_TARGERT}.zip -d ${SCRIPT_DIR}/..
    md5sum ${SCRIPT_DIR}/../${BUILD_TARGERT}.tar.gz
    tar xzf ${SCRIPT_DIR}/../${BUILD_TARGERT}.tar.gz -C ${SCRIPT_DIR}/..
-   if [ "$PROJECT_NAME" != "RabbitThirdLIbrary" \
+   if [ "$PROJECT_NAME" != "RabbitThirdLibrary" \
         -a "$BUILD_TARGERT" != "windows_msvc" \
         -a -f "${SCRIPT_DIR}/../${BUILD_TARGERT}/change_prefix.sh" ]; then
        cd ${SCRIPT_DIR}/../$BUILD_TARGERT
-       if [ "$BUILD_TARGERT" = "windows_mingw" ]; then
-           echo "bash ${SCRIPT_DIR}/../${BUILD_TARGERT}/change_prefix.sh /c/projects/rabbitthirdlibrary/$BUILD_TARGERT `pwd`"
-           bash ${SCRIPT_DIR}/../${BUILD_TARGERT}/change_prefix.sh /c/projects/rabbitthirdlibrary/$BUILD_TARGERT `pwd`
-       else
-           echo "bash ${SCRIPT_DIR}/../${BUILD_TARGERT}/change_prefix.sh /c/projects/rabbitthirdlibrary/build_script/../$BUILD_TARGERT `pwd`"
-           bash ${SCRIPT_DIR}/../${BUILD_TARGERT}/change_prefix.sh /c/projects/rabbitthirdlibrary/build_script/../$BUILD_TARGERT `pwd`
-       fi
+       echo "bash ${SCRIPT_DIR}/../${BUILD_TARGERT}/change_prefix.sh /c/projects/rabbitthirdlibrary/build_script/../$BUILD_TARGERT `pwd`"
+       bash ${SCRIPT_DIR}/../${BUILD_TARGERT}/change_prefix.sh /c/projects/rabbitthirdlibrary/build_script/../$BUILD_TARGERT `pwd`
        cat ${SCRIPT_DIR}/../${BUILD_TARGERT}/lib/pkgconfig/libcurl.pc
        cd ${SCRIPT_DIR}
    fi

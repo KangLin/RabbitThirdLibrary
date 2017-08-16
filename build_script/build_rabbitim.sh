@@ -133,19 +133,20 @@ else #qmake编译
     case $1 in
         android)
             export ANDROID_NDK_PLATFORM=$ANDROID_API_VERSION
-            PARA="-r -spec android-g++ " #RABBIT_USE_OPENCV=1
+            #PARA="-r -spec android-g++ " #RABBIT_USE_OPENCV=1
             if [ -n "$RABBIT_CMAKE_MAKE_PROGRAM" ]; then
                 MAKE="$RABBIT_CMAKE_MAKE_PROGRAM"
             fi
             ;;
         unix)
-            PARA="-r -spec linux-g++ "
+            #PARA="-r -spec linux-g++ "
             ;;
         windows_msvc)
             MAKE=nmake
             ;;
         windows_mingw)
-            PARA="-r -spec win32-g++"
+            #PARA="-r -spec win32-g++"
+	    MAKE="mingw32-make ${RABBIT_MAKE_JOB_PARA}"
             ;;
         *)
             echo "${HELP_STRING}"
