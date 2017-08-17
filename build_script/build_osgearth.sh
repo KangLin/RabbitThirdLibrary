@@ -40,7 +40,7 @@ CUR_DIR=`pwd`
 
 #下载源码:
 if [ ! -d ${RABBIT_BUILD_SOURCE_CODE} ]; then
-    OSG_VERSION=92a590bf366bb3b9f13177da00cc226e4e419e09 #osgearth-2.8
+    OSG_VERSION=fa4798c74cf1f9657525d3a2a0fa4c53b9b4627d #osgearth-2.8
     if [ "TRUE" = "${RABBIT_USE_REPOSITORIES}" ]; then
         echo "git clone -q --branch=${OSG_VERSION} https://github.com/gwaldron/osgearth.git ${RABBIT_BUILD_SOURCE_CODE}"
         git clone -q https://github.com/gwaldron/osgearth.git ${RABBIT_BUILD_SOURCE_CODE}
@@ -135,10 +135,9 @@ cmake .. \
     -DCMAKE_INSTALL_PREFIX="$RABBIT_BUILD_PREFIX" \
     -DCMAKE_BUILD_TYPE="Release" \
     -G"${GENERATORS}" ${CMAKE_PARA}
-
+    
+cmake --build . --target install --config Release ${MAKE_PARA}
 if [ -z "$CI" ]; then
     cmake --build . --target install --config Debug ${MAKE_PARA}
-else
-    cmake --build . --target install --config Release ${MAKE_PARA}
 fi
 cd $CUR_DIR
