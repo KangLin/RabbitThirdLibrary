@@ -137,6 +137,11 @@ else #qmake编译
             if [ -n "$RABBIT_CMAKE_MAKE_PROGRAM" ]; then
                 MAKE="$RABBIT_CMAKE_MAKE_PROGRAM"
             fi
+            
+            if [ "${RABBIT_BUILD_HOST}"="windows" ]; then
+                MAKE="mingw32-make ${RABBIT_MAKE_JOB_PARA}"
+            fi
+            
             ;;
         unix)
             #PARA="-r -spec linux-g++ "

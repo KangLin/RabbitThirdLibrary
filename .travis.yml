@@ -42,18 +42,11 @@ env:
     - BUILD_TARGERT="android" RABBIT_ARCH=arm QT_VERSION_DIR=5.7 QT_VERSION=5.7.0 RABBIT_BUILD_THIRDLIBRARY="gdal osgearth" DOWNLOAD_FILE=https://sourceforge.net/projects/rabbitthirdlibrary/files/Release/rabbit_android_arm_5.7.0_v${TRAVIS_BUILD_NUMBER}.tar.gz/download
 
     - BUILD_TARGERT="unix" RABBIT_ARCH=amd64 QT_VERSION_DIR=5.8 QT_VERSION=5.8.0 RABBIT_BUILD_THIRDLIBRARY="qxmpp qzxing" DOWNLOAD_FILE=https://sourceforge.net/projects/rabbitthirdlibrary/files/Release/rabbit_unix_amd64_5.8.0_v${TRAVIS_BUILD_NUMBER}.tar.gz/download
-    - BUILD_TARGERT="unix" RABBIT_ARCH=amd64 QT_VERSION_DIR=5.7 QT_VERSION=5.7.0 RABBIT_BUILD_THIRDLIBRARY="qxmpp qzxing" DOWNLOAD_FILE=https://sourceforge.net/projects/rabbitthirdlibrary/files/Release/rabbit_unix_amd64_5.7.0_v${TRAVIS_BUILD_NUMBER}.tar.gz/download
-    #- BUILD_TARGERT="unix" RABBIT_ARCH=amd64 QT_VERSION_DIR=5.6 QT_VERSION=5.6.0 RABBIT_BUILD_THIRDLIBRARY="qxmpp qzxing" DOWNLOAD_FILE=https://sourceforge.net/projects/rabbitthirdlibrary/files/Release/rabbit_unix_amd64__v${TRAVIS_BUILD_NUMBER}.tar.gz/download
-    #- BUILD_TARGERT="unix" RABBIT_ARCH=amd64 QT_VERSION_DIR=5.5 QT_VERSION=5.5.1 RABBIT_BUILD_THIRDLIBRARY="qxmpp qzxing" DOWNLOAD_FILE=https://sourceforge.net/projects/rabbitthirdlibrary/files/Release/rabbit_unix_amd64__v${TRAVIS_BUILD_NUMBER}.tar.gz/download
-    #- BUILD_TARGERT="unix" RABBIT_ARCH=amd64 QT_VERSION_DIR=5.4 QT_VERSION=5.4.2 RABBIT_BUILD_THIRDLIBRARY="qxmpp qzxing" DOWNLOAD_FILE=https://sourceforge.net/projects/rabbitthirdlibrary/files/Release/rabbit_unix_amd64__v${TRAVIS_BUILD_NUMBER}.tar.gz/download
-    #- BUILD_TARGERT="unix" RABBIT_ARCH=amd64 QT_VERSION_DIR=5.3 QT_VERSION=5.3.2 RABBIT_BUILD_THIRDLIBRARY="qxmpp qzxing" DOWNLOAD_FILE=https://sourceforge.net/projects/rabbitthirdlibrary/files/Release/rabbit_unix_amd64__v${TRAVIS_BUILD_NUMBER}.tar.gz/download
-    #- BUILD_TARGERT="unix" RABBIT_ARCH=amd64 QT_VERSION_DIR=5.2 QT_VERSION=5.2.1 RABBIT_BUILD_THIRDLIBRARY="qxmpp qzxing" DOWNLOAD_FILE=https://sourceforge.net/projects/rabbitthirdlibrary/files/Release/rabbit_unix_amd64__v${TRAVIS_BUILD_NUMBER}.tar.gz/download
-
     - BUILD_TARGERT="android" RABBIT_ARCH=arm QT_VERSION_DIR=5.8 QT_VERSION=5.8.0 RABBIT_BUILD_THIRDLIBRARY="qxmpp qzxing" DOWNLOAD_FILE=https://sourceforge.net/projects/rabbitthirdlibrary/files/Release/rabbit_android_arm_5.8.0_v${TRAVIS_BUILD_NUMBER}.tar.gz/download
+    
+    - BUILD_TARGERT="unix" RABBIT_ARCH=amd64 QT_VERSION_DIR=5.7 QT_VERSION=5.7.0 RABBIT_BUILD_THIRDLIBRARY="qxmpp qzxing" DOWNLOAD_FILE=https://sourceforge.net/projects/rabbitthirdlibrary/files/Release/rabbit_unix_amd64_5.7.0_v${TRAVIS_BUILD_NUMBER}.tar.gz/download  
     - BUILD_TARGERT="android" RABBIT_ARCH=arm QT_VERSION_DIR=5.7 QT_VERSION=5.7.0 RABBIT_BUILD_THIRDLIBRARY="qxmpp qzxing" DOWNLOAD_FILE=https://sourceforge.net/projects/rabbitthirdlibrary/files/Release/rabbit_android_arm_5.7.0_v${TRAVIS_BUILD_NUMBER}.tar.gz/download
-    #- BUILD_TARGERT="android" RABBIT_ARCH=arm QT_VERSION_DIR=5.6 QT_VERSION=5.6.0 RABBIT_BUILD_THIRDLIBRARY="qxmpp qzxing" DOWNLOAD_FILE=https://sourceforge.net/projects/rabbitthirdlibrary/files/Release/rabbit_android_arm__v${TRAVIS_BUILD_NUMBER}.tar.gz/download
-    #- BUILD_TARGERT="android" RABBIT_ARCH=arm QT_VERSION_DIR=5.5 QT_VERSION=5.5.1 RABBIT_BUILD_THIRDLIBRARY="qxmpp qzxing" DOWNLOAD_FILE=https://sourceforge.net/projects/rabbitthirdlibrary/files/Release/rabbit_android_arm__v${TRAVIS_BUILD_NUMBER}.tar.gz/download
-
+   
 before_install:
   - echo "TRAVIS_OS_NAME=${TRAVIS_OS_NAME}"
   - echo "JAVA_HOME=${JAVA_HOME}"
