@@ -57,6 +57,7 @@ if [ -n "$2" ]; then
     ./build_libgif.sh ${RABBIT_BUILD_TARGERT} $2/libgif
     ./build_libtiff.sh ${RABBIT_BUILD_TARGERT} $2/libtiff
     ./build_freetype.sh ${RABBIT_BUILD_TARGERT} $2/freetype
+    ./build_qrencode.sh ${RABBIT_BUILD_TARGERT}
     ./build_gdal.sh ${RABBIT_BUILD_TARGERT} $2/gdal
     ./build_osg.sh ${RABBIT_BUILD_TARGERT} $2/osg
     #./build_geos.sh ${RABBIT_BUILD_TARGERT} $2/geos
@@ -80,10 +81,12 @@ else
     ./build_libgif.sh ${RABBIT_BUILD_TARGERT}
     ./build_libtiff.sh ${RABBIT_BUILD_TARGERT}
     ./build_freetype.sh ${RABBIT_BUILD_TARGERT}
+    ./build_qrencode.sh ${RABBIT_BUILD_TARGERT}
     ./build_gdal.sh ${RABBIT_BUILD_TARGERT} 
     ./build_osg.sh ${RABBIT_BUILD_TARGERT}
     #./build_geos.sh ${RABBIT_BUILD_TARGERT} 
     ./build_osgearth.sh ${RABBIT_BUILD_TARGERT}
+
     ./build_x264.sh ${RABBIT_BUILD_TARGERT} 
     ./build_libyuv.sh ${RABBIT_BUILD_TARGERT} 
     ./build_libvpx.sh ${RABBIT_BUILD_TARGERT} 
@@ -102,7 +105,6 @@ if [ -n "$2" ]; then
     echo "Source dir:$2"
     if [ "${RABBIT_BUILD_TARGERT}" != "windows_msvc" ]; then
         echo "building ......"
-        ./build_qrencode.sh ${RABBIT_BUILD_TARGERT} $2/libqrencode && \
         ./build_libopus.sh ${RABBIT_BUILD_TARGERT} $2/libopus && \
         ./build_speexdsp.sh ${RABBIT_BUILD_TARGERT} $2/speexdsp && \
         ./build_speex.sh ${RABBIT_BUILD_TARGERT} $2/speex && \

@@ -34,9 +34,17 @@ if [ -n "$DOWNLOAD_FILE" ]; then
         -a "$BUILD_TARGERT" != "windows_msvc" \
         -a -f "${SCRIPT_DIR}/../${BUILD_TARGERT}/change_prefix.sh" ]; then
        cd ${SCRIPT_DIR}/../$BUILD_TARGERT
-       echo "bash ${SCRIPT_DIR}/../${BUILD_TARGERT}/change_prefix.sh /c/projects/rabbitthirdlibrary/build_script/../$BUILD_TARGERT `pwd`"
-       bash ${SCRIPT_DIR}/../${BUILD_TARGERT}/change_prefix.sh /c/projects/rabbitthirdlibrary/build_script/../$BUILD_TARGERT `pwd`
+       
+       if [ -n "$APPVEYOR" ]; then
+           THIRDLIBRARY_DIR_PREFIX=/c/projects/rabbitthirdlibrary/build_script/../$BUILD_TARGERT
+       else
+           THIRDLIBRARY_DIR_PREFIX=/home/travis/build/KangLin/RabbitThirdLibrary/unix
+       fi
+       
+       echo "bash ${SCRIPT_DIR}/../${BUILD_TARGERT}/change_prefix.sh $THIRDLIBRARY_DIR_PREFIX `pwd`"
+       bash ${SCRIPT_DIR}/../${BUILD_TARGERT}/change_prefix.sh $THIRDLIBRARY_DIR_PREFIX `pwd`
        cat ${SCRIPT_DIR}/../${BUILD_TARGERT}/lib/pkgconfig/libcurl.pc
+       
        cd ${SCRIPT_DIR}
    fi
 fi
@@ -76,6 +84,6 @@ do
     if [ "$v" = "rabbitim" ]; then
         bash ./build_$v.sh ${BUILD_TARGERT} # > /dev/null
     else
-        bash ./build_$v.sh ${BUILD_TARGERT} ${SOURCE_DIR}/$v > /dev/null
+        bash ./build_$v.sh ${BUILD_TARGERT} ${SOURCE_DIR}/$v #> /dev/null
     fi
 done
