@@ -123,10 +123,17 @@ case ${RABBIT_BUILD_TARGERT} in
         ./config --prefix=${RABBIT_BUILD_PREFIX} --openssldir=${RABBIT_BUILD_PREFIX} $MODE
         ;;
     windows_msvc)
-        perl Configure \
-            --prefix=${RABBIT_BUILD_PREFIX} \
-            --openssldir=${RABBIT_BUILD_PREFIX} \
-            VC-WIN32
+        if [ "$RABBIT_ARCH" = "x64" ]; then
+            perl Configure \
+                --prefix=${RABBIT_BUILD_PREFIX} \
+                --openssldir=${RABBIT_BUILD_PREFIX} \
+                VC-WIN64A-masm 
+        else
+            perl Configure \
+                --prefix=${RABBIT_BUILD_PREFIX} \
+                --openssldir=${RABBIT_BUILD_PREFIX} \
+                VC-WIN32
+        fi
         ;;
     windows_mingw)
         case `uname -s` in

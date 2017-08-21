@@ -100,7 +100,12 @@ case ${RABBIT_BUILD_TARGERT} in
         fi
         ;;
     windows_msvc)
-        CONFIG_PARA="--target=x86-win32-vs${VC_TOOLCHAIN} --enable-static-msvcrt"
+        if [ "$RABBIT_ARCH" = "x64" ]; then
+            ARCH="x86_64-win64"
+        else
+            ARCH="x86-win32"
+        fi
+        CONFIG_PARA="--target=$ARCH-vs${VC_TOOLCHAIN} --enable-static-msvcrt"
         ;;
     windows_mingw)
         case `uname -s` in

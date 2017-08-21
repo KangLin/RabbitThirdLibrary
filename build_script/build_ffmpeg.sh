@@ -123,7 +123,12 @@ case ${RABBIT_BUILD_TARGERT} in
         CONFIG_PARA="${CONFIG_PARA} ${THIRD_LIB}"
         ;;
     windows_msvc)
-        CONFIG_PARA="${CONFIG_PARA} --target-os=win32 --arch=i686 --cpu=i686"
+        if [ "$RABBIT_ARCH" = "x64" ]; then
+            CONFIG_PARA="${CONFIG_PARA} --target-os=win64 --arch=x86-64 --cpu=i686"
+        else
+            CONFIG_PARA="${CONFIG_PARA} --target-os=win32 --arch=i686 --cpu=i686"
+        fi
+        
         CONFIG_PARA="${CONFIG_PARA} --enable-cross-compile --toolchain=msvc"
         ;;
     windows_mingw)
