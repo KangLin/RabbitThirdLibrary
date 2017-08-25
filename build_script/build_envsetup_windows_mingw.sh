@@ -69,7 +69,9 @@ case $TARGET_OS in
     ;;
 esac
 
-export PKG_CONFIG=pkg-config 
+if [ -z "$PKG_CONFIG" ]; then
+    export PKG_CONFIG=pkg-config 
+fi
 if [ "$RABBIT_BUILD_STATIC" = "static" ]; then
     export PKG_CONFIG="pkg-config --static"
 fi

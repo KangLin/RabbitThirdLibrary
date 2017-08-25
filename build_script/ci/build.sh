@@ -6,6 +6,7 @@ if [ "$BUILD_TARGERT" = "windows_mingw" \
     export PATH=/C/Qt/Tools/mingw${TOOLCHAIN_VERSION}_32/bin:$PATH
     export USER_ROOT_PATH=/C/Qt/Tools/mingw${TOOLCHAIN_VERSION}_32
 fi
+export PKG_CONFIG=/c/msys64/mingw32/bin/pkg-config.exe
 if [ "$BUILD_TARGERT" = "windows_msvc" ]; then
     export PATH=/C/Perl/bin:$PATH
     rm -fr /usr/include
