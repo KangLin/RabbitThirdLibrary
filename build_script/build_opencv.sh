@@ -150,6 +150,10 @@ cmake .. \
     -DCMAKE_BUILD_TYPE="Release" -DCMAKE_VERBOSE=ON \
     -G"${GENERATORS}" ${CMAKE_PARA}
 
-cmake --build . --target install --config Release ${MAKE_PARA}
+if [ -z "$CI" ]; then
+    cmake --build . --target install --config Debug ${MAKE_PARA}
+else
+    cmake --build . --target install --config Release ${MAKE_PARA}
+fi
 
 cd $CUR_DIR
