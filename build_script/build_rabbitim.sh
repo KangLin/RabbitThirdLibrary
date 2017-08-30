@@ -139,7 +139,7 @@ else #qmake编译
             fi
             
             if [ "${RABBIT_BUILD_HOST}"="windows" ]; then
-                MAKE="mingw32-make" # ${RABBIT_MAKE_JOB_PARA}"
+                MAKE="make" # ${RABBIT_MAKE_JOB_PARA}"
             fi
             
             ;;
