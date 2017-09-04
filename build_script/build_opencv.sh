@@ -57,14 +57,28 @@ if [ ! -d ${RABBIT_BUILD_SOURCE_CODE} ]; then
         mv -f opencv-${OPENCV_VERSION} ${RABBIT_BUILD_SOURCE_CODE}
     fi
 fi
-
-cd ${RABBIT_BUILD_SOURCE_CODE}
-if [ "$RABBIT_CLEAN" = "TRUE" ]; then
-    if [ -d ".git" ]; then
-        git clean -xdf
-        git reset --hard HEAD
+#opencv versoin > 3.0
+RABBIT_BUILD_CONTRIB_SOURCE_CODE=${RABBIT_BUILD_SOURCE_CODE}/../opencv_contrib
+if [ ! -d ${RABBIT_BUILD_CONTRIB_SOURCE_CODE} ]; then
+    CONTRIB_VERSION=3.3.0
+    if [ "TRUE" = "${RABBIT_USE_REPOSITORIES}" ]; then
+        echo "git clone -q https://github.com/opencv/opencv_contrib.git ${RABBIT_BUILD_CONTRIB_SOURCE_CODE}"
+        git clone -q --branch=${CONTRIB_VERSION} https://github.com/opencv/opencv_contrib.git ${RABBIT_BUILD_CONTRIB_SOURCE_CODE}
+    else
+        echo "wget -q -c https://github.com/opencv/opencv_contrib/archive/${CONTRIB_VERSION}.zip"
+        mkdir -p ${RABBIT_BUILD_CONTRIB_SOURCE_CODE}
+        cd ${RABBIT_BUILD_CONTRIB_SOURCE_CODE}
+        wget -q -c https://github.com/opencv/opencv_contrib/archive/${CONTRIB_VERSION}.zip
+        unzip -q ${CONTRIB_VERSION}.zip
+        mv opencv_contrib-${CONTRIB_VERSION} ..
+        rm -fr *
+        cd ..
+        rm -fr ${RABBIT_BUILD_CONTRIB_SOURCE_CODE}
+        mv -f opencv_contrib-${OPENCV_VERSION} ${RABBIT_BUILD_CONTRIB_SOURCE_CODE}
     fi
 fi
+
+cd ${RABBIT_BUILD_SOURCE_CODE}
 mkdir -p build_${RABBIT_BUILD_TARGERT}
 cd build_${RABBIT_BUILD_TARGERT}
 if [ "$RABBIT_CLEAN" = "TRUE" ]; then
@@ -96,7 +110,7 @@ case ${RABBIT_BUILD_TARGERT} in
         export ANDROID_TOOLCHAIN_NAME=arm-linux-androideabi-${RABBIT_BUILD_TOOLCHAIN_VERSION}
         export ANDROID_NATIVE_API_LEVEL=android-${RABBIT_BUILD_PLATFORMS_VERSION}
         CMAKE_PARA="-DBUILD_SHARED_LIBS=OFF "
-        CMAKE_PARA="${CMAKE_PARA} -DCMAKE_TOOLCHAIN_FILE=$RABBIT_BUILD_PREFIX/../build_script/cmake/platforms/toolchain-android.cmake"
+        CMAKE_PARA="${CMAKE_PARA} -DCMAKE_BUILD_WITH_INSTALL_RPATH=ON -DCMAKE_TOOLCHAIN_FILE=$RABBIT_BUILD_SOURCE_CODE/platforms/android/android.toolchain.cmake"
         CMAKE_PARA="${CMAKE_PARA} -DANDROID_NATIVE_API_LEVEL=android-${RABBIT_BUILD_PLATFORMS_VERSION}"
         CMAKE_PARA="${CMAKE_PARA} -DANDROID_TOOLCHAIN_NAME=${RABBIT_BUILD_CROSS_HOST}-${RABBIT_BUILD_TOOLCHAIN_VERSION}"
         CMAKE_PARA="$CMAKE_PARA -DANDROID_NDK_ABI_NAME=${ANDROID_NDK_ABI_NAME}"
@@ -117,6 +131,7 @@ case ${RABBIT_BUILD_TARGERT} in
                 CMAKE_PARA="${CMAKE_PARA} -DCMAKE_TOOLCHAIN_FILE=$RABBIT_BUILD_PREFIX/../build_script/cmake/platforms/toolchain-mingw.cmake"
                 ;;
             *)
+            CMAKE_PARA="${CMAKE_PARA} -DWITH_DSHOW=OFF"
             ;;
         esac
         ;;
@@ -136,13 +151,17 @@ CMAKE_PARA="${CMAKE_PARA} -DBUILD_opencv_java=OFF"
 CMAKE_PARA="${CMAKE_PARA} -DWITH_WIN32UI=OFF -DWITH_VTK=OFF -DWITH_GTK=OFF"
 CMAKE_PARA="${CMAKE_PARA} -DWITH_FFMPEG=OFF -DWITH_GSTREAMER=OFF -DWITH_1394=OFF -DWITH_IPP=OFF"
 #CMAKE_PARA="${CMAKE_PARA} -DWITH_GIGEAPI=OFF -DWITH_TIFF=OFF -DWITH_OPENEXR=OFF"
-#CMAKE_PARA="${CMAKE_PARA} -DWITH_PVAPI=OFF -DWITH_JASPER=OFF -DWITH_OPENCLAMDFFT=OFF -DWITH_OPENCLAMDBLAS=OFF"
+CMAKE_PARA="${CMAKE_PARA} -DWITH_PVAPI=OFF -DWITH_JASPER=OFF -DWITH_OPENCLAMDFFT=OFF -DWITH_OPENCLAMDBLAS=OFF"
 #CMAKE_PARA="${CMAKE_PARA} -DBUILD_opencv_video=ON"
 #CMAKE_PARA="${CMAKE_PARA} -DWITH_JPEG=ON -DWITH_PNG=ON -DBUILD_opencv_videostab=ON"
 #CMAKE_PARA="${CMAKE_PARA} -DBUILD_opencv_highgui=ON"
 #CMAKE_PARA="${CMAKE_PARA} -DWITH_EIGEN=OFF"
 #CMAKE_PARA="${CMAKE_PARA} -DBUILD_opencv_videoio=ON -DWITH_WEBP=OFF -DWITH_IPP_A=OFF"
 #CMAKE_PARA="${CMAKE_PARA} -DCMAKE_VERBOSE_MAKEFILE=TRUE" #显示编译详细信息
+CMAKE_PARA="${CMAKE_PARA} -DWITH_CUDA=OFF -DWITH_MATLAB=OFF -DWITH_OPENCL=OFF"
+CMAKE_PARA="${CMAKE_PARA} -DENABLE_PRECOMPILED_HEADERS=OFF"
+CMAKE_PARA="${CMAKE_PARA} -DOPENCV_EXTRA_MODULES_PATH=${RABBIT_BUILD_CONTRIB_SOURCE_CODE}/modules"
+CMAKE_PARA="${CMAKE_PARA} -DBUILD_opencv_xfeatures2d=OFF"
 
 echo "cmake .. -DCMAKE_INSTALL_PREFIX=$RABBIT_BUILD_PREFIX -DCMAKE_BUILD_TYPE=Release -G\"${GENERATORS}\" ${CMAKE_PARA}"
 cmake .. \

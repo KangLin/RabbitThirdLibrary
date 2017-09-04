@@ -129,7 +129,9 @@ RABBIT_BUILD_CROSS_STL_INCLUDE_FLAGS="-I${RABBIT_BUILD_CROSS_STL_INCLUDE} -I${RA
 export ANDROID_API_VERSION=android-${RABBIT_BUILD_PLATFORMS_VERSION}
 export PATH=${QT_BIN}:$PATH
 #pkg-config帮助文档：http://linux.die.net/man/1/pkg-config
-export PKG_CONFIG="pkg-config"
+if [ -z "$PKG_CONFIG" ]; then
+    export PKG_CONFIG=pkg-config 
+fi
 export PKG_CONFIG_PATH=${RABBIT_BUILD_PREFIX}/lib/pkgconfig
 export PKG_CONFIG_LIBDIR=${PKG_CONFIG_PATH}
 export PKG_CONFIG_SYSROOT_DIR=${RABBIT_BUILD_PREFIX}

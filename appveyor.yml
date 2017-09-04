@@ -36,6 +36,14 @@ environment:
     RABBIT_BUILD_THIRDLIBRARY: change_prefix zlib minizip expat libgpx openssl libsodium libcurl libpng jpeg libgif libtiff freetype libyuv libvpx qrencode libopus x264 ffmpeg opencv #toxcore
     PASSWORD:
       secure: 2WEtOQrdty3V3g0aEVvS3Q==
+
+  - BUILD_TARGERT: windows_mingw
+    TOOLCHAIN_VERSION: 530
+    QT_VERSION: NO
+    RABBIT_ARCH: x86
+    RABBIT_BUILD_THIRDLIBRARY: change_prefix zlib minizip expat libgpx openssl libsodium libcurl libpng jpeg libgif libtiff freetype libyuv libvpx qrencode libopus x264 ffmpeg qrencode opencv
+    PASSWORD:
+      secure: 2WEtOQrdty3V3g0aEVvS3Q==
       
   - BUILD_TARGERT: android
     TOOLCHAIN_VERSION: 4.8
@@ -54,14 +62,6 @@ environment:
   #  RABBIT_USE_REPOSITORIES: "FALSE"
   #  PASSWORD:
   #    secure: 2WEtOQrdty3V3g0aEVvS3Q==
-
-  - BUILD_TARGERT: windows_mingw
-    TOOLCHAIN_VERSION: 530
-    QT_VERSION: NO
-    RABBIT_ARCH: x86
-    RABBIT_BUILD_THIRDLIBRARY: change_prefix zlib minizip expat libgpx openssl libsodium libcurl libpng jpeg libgif libtiff freetype libyuv libvpx qrencode libopus x264 ffmpeg qrencode #opencv
-    PASSWORD:
-      secure: 2WEtOQrdty3V3g0aEVvS3Q==
       
   ##### gdal #####
   #- BUILD_TARGERT: windows_msvc
