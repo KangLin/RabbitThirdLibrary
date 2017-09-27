@@ -40,23 +40,22 @@ CUR_DIR=`pwd`
 
 #下载源码:
 if [ ! -d ${RABBIT_BUILD_SOURCE_CODE} ]; then
-    VERSION=2_2_0
-    WGET_VERSION=2.2.0
-    #if [ "TRUE" = "${RABBIT_USE_REPOSITORIES}" ]; then
-    #    echo "git clone -q --branch=R_${VERSION} git://git.code.sf.net/p/expat/code_git ${RABBIT_BUILD_SOURCE_CODE}"
-    #    git clone --branch=R_${VERSION} git://git.code.sf.net/p/expat/code_git ${RABBIT_BUILD_SOURCE_CODE}
-    #else
-        echo "wget -c -nv -O expat.tar.bz2 https://sourceforge.net/projects/expat/files/expat/${WGET_VERSION}/expat-${WGET_VERSION}.tar.bz2/download"
+    VERSION=R_2_2_4
+    if [ "TRUE" = "${RABBIT_USE_REPOSITORIES}" ]; then
+        echo "git clone -q --branch=${VERSION} https://github.com/libexpat/libexpat.git ${RABBIT_BUILD_SOURCE_CODE}"
+        git clone --branch=${VERSION} https://github.com/libexpat/libexpat.git ${RABBIT_BUILD_SOURCE_CODE}
+    else
+        echo "wget -c -nv https://github.com/libexpat/libexpat/archive/${VERSION}.zip"
         mkdir -p ${RABBIT_BUILD_SOURCE_CODE}
         cd ${RABBIT_BUILD_SOURCE_CODE}
-        wget -c -nv -O expat.tar.bz2 https://sourceforge.net/projects/expat/files/expat/${WGET_VERSION}/expat-${WGET_VERSION}.tar.bz2/download
-        tar -xf expat.tar.bz2
-        mv expat-${WGET_VERSION} ..
+        wget -c -nv https://github.com/libexpat/libexpat/archive/${VERSION}.zip
+        unzip -q ${VERSION}.zip
+        mv libexpat-${VERSION} ..
         rm -fr *
         cd ..
         rm -fr ${RABBIT_BUILD_SOURCE_CODE}
-        mv -f expat-${WGET_VERSION} ${RABBIT_BUILD_SOURCE_CODE}
-    #fi
+        mv -f libexpat-${VERSION} ${RABBIT_BUILD_SOURCE_CODE}
+    fi
 fi
 
 cd ${RABBIT_BUILD_SOURCE_CODE}
