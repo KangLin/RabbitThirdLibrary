@@ -44,7 +44,15 @@ environment:
     RABBIT_BUILD_THIRDLIBRARY: change_prefix zlib minizip expat libgpx openssl libsodium libcurl libpng jpeg libgif libtiff freetype libyuv libvpx qrencode libopus x264 ffmpeg qrencode opencv
     PASSWORD:
       secure: 2WEtOQrdty3V3g0aEVvS3Q==
-      
+
+  - BUILD_TARGERT: windows_mingw
+    TOOLCHAIN_VERSION: 492
+    QT_VERSION: NO
+    RABBIT_ARCH: x86
+    RABBIT_BUILD_THIRDLIBRARY: change_prefix zlib minizip expat libgpx openssl libsodium libcurl libpng jpeg libgif libtiff freetype libyuv libvpx qrencode libopus x264 ffmpeg qrencode opencv
+    PASSWORD:
+      secure: 2WEtOQrdty3V3g0aEVvS3Q==
+
   - BUILD_TARGERT: android
     TOOLCHAIN_VERSION: 4.8
     QT_VERSION: NO
@@ -111,7 +119,7 @@ environment:
   #  DOWNLOAD_FILE: https://sourceforge.net/projects/rabbitthirdlibrary/files/Release/rabbit_android4.8_x86_NO_v$(appveyor_build_version).tar.gz/download
   #  PASSWORD:
   #    secure: 2WEtOQrdty3V3g0aEVvS3Q==
-      
+
   - BUILD_TARGERT: windows_mingw
     RABBIT_BUILD_THIRDLIBRARY: gdal
     TOOLCHAIN_VERSION: 530
@@ -122,6 +130,16 @@ environment:
     PASSWORD:
       secure: 2WEtOQrdty3V3g0aEVvS3Q==
       
+  - BUILD_TARGERT: windows_mingw
+    RABBIT_BUILD_THIRDLIBRARY: gdal
+    TOOLCHAIN_VERSION: 492
+    QT_VERSION: NO
+    RABBIT_ARCH: x86
+    DOWNLOAD_FILE: https://sourceforge.net/projects/rabbitthirdlibrary/files/Release/rabbit_windows_mingw492_x86_NO_v$(appveyor_build_version).tar.gz/download
+    RABBIT_USE_REPOSITORIES: "FALSE"
+    PASSWORD:
+      secure: 2WEtOQrdty3V3g0aEVvS3Q==
+
   ##### gdal #####
   
   ##### QT相关编译 #####
@@ -251,6 +269,16 @@ environment:
     PASSWORD:
       secure: 2WEtOQrdty3V3g0aEVvS3Q==
 
+  - BUILD_TARGERT: windows_mingw
+    RABBIT_BUILD_THIRDLIBRARY: osg
+    TOOLCHAIN_VERSION: 492
+    QT_VERSION: qt5.6.2
+    QT_ROOT: /C/Qt/5.6/mingw49_32
+    RABBIT_ARCH: x86
+    DOWNLOAD_FILE: https://sourceforge.net/projects/rabbitthirdlibrary/files/Release/rabbit_windows_mingw492_x86_NO_v$(appveyor_build_version).tar.gz/download
+    RABBIT_USE_REPOSITORIES: "FALSE"
+    PASSWORD:
+      secure: 2WEtOQrdty3V3g0aEVvS3Q==
   ##### osg #####
   
   ##### osgearth #####
@@ -378,6 +406,16 @@ environment:
     PASSWORD:
       secure: 2WEtOQrdty3V3g0aEVvS3Q==
 
+  - BUILD_TARGERT: windows_mingw
+    RABBIT_BUILD_THIRDLIBRARY: osgearth
+    TOOLCHAIN_VERSION: 492
+    QT_VERSION: qt5.6.2
+    QT_ROOT: /C/Qt/5.6/mingw49_32
+    RABBIT_ARCH: x86
+    DOWNLOAD_FILE: https://sourceforge.net/projects/rabbitthirdlibrary/files/Release/rabbit_windows_mingw492_x86_qt5.6.2_v$(appveyor_build_version).tar.gz/download
+    RABBIT_USE_REPOSITORIES: "FALSE"
+    PASSWORD:
+      secure: 2WEtOQrdty3V3g0aEVvS3Q==
   ##### osgearth #####
   
   ##### qxmpp qzxing #####
@@ -517,6 +555,18 @@ environment:
     QT_ROOT: /C/Qt/5.7/mingw53_32
     RABBIT_ARCH: x86
     DOWNLOAD_FILE: https://sourceforge.net/projects/rabbitthirdlibrary/files/Release/rabbit_windows_mingw530_x86_qt5.7.1_v$(appveyor_build_version).tar.gz/download
+    RABBIT_USE_REPOSITORIES: "FALSE"
+    BUILD_END: "True"
+    PASSWORD:
+      secure: 2WEtOQrdty3V3g0aEVvS3Q==
+
+  - BUILD_TARGERT: windows_mingw
+    TOOLCHAIN_VERSION: 492
+    QT_VERSION: qt5.6.2
+    RABBIT_BUILD_THIRDLIBRARY: qxmpp qzxing 
+    QT_ROOT: /C/Qt/5.6/mingw49_32
+    RABBIT_ARCH: x86
+    DOWNLOAD_FILE: https://sourceforge.net/projects/rabbitthirdlibrary/files/Release/rabbit_windows_mingw492_x86_qt5.6.2_v$(appveyor_build_version).tar.gz/download
     RABBIT_USE_REPOSITORIES: "FALSE"
     BUILD_END: "True"
     PASSWORD:
