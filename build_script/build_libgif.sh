@@ -42,8 +42,8 @@ CUR_DIR=`pwd`
 if [ ! -d ${RABBIT_BUILD_SOURCE_CODE} ]; then
     VERSION=master
     #if [ "TRUE" = "${RABBIT_USE_REPOSITORIES}" ]; then
-        echo "git clone -q --branch=${VERSION} http://kl222@git.code.sf.net/u/kl222/giflib ${RABBIT_BUILD_SOURCE_CODE}"
-        git clone -q --branch=$VERSION http://kl222@git.code.sf.net/u/kl222/giflib ${RABBIT_BUILD_SOURCE_CODE}
+        echo "git clone -q --branch=${VERSION} git://git.code.sf.net/u/kl222/giflib ${RABBIT_BUILD_SOURCE_CODE}"
+        git clone -q --branch=$VERSION git://git.code.sf.net/u/kl222/giflib ${RABBIT_BUILD_SOURCE_CODE}
     #else
     #    mkdir -p ${RABBIT_BUILD_SOURCE_CODE}
     #    cd ${RABBIT_BUILD_SOURCE_CODE}
