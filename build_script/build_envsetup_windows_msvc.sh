@@ -43,12 +43,21 @@ if [ -z "${RABBIT_MAKE_JOB_PARA}" ]; then
     fi
 fi
 
+if [ -z "${RABBIT_ARCH}" ]; then
+    if [ "X64" = ${Platform} ]; then
+        RABBIT_ARCH=x64
+    else
+        RABBIT_ARCH=x86
+    fi
+fi
 #安装前缀
 if [ -n "${RABBITRoot}" ]; then
     RABBIT_BUILD_PREFIX=${RABBITRoot}/ThirdLibrary/windows_msvc
 else
     RABBIT_BUILD_PREFIX=`pwd`/../windows_msvc    #修改这里为安装前缀 
 fi
+RABBIT_BUILD_PREFIX=${RABBIT_BUILD_PREFIX}_${RABBIT_ARCH}
+
 if [ "$RABBIT_BUILD_STATIC" = "static" ]; then
     RABBIT_BUILD_PREFIX=${RABBIT_BUILD_PREFIX}_static
 fi
@@ -72,20 +81,28 @@ fi
 
 TARGET_OS=`uname -s`
 if [ -z "${GENERATORS}" ]; then
-    GENERATORS="Visual Studio 14 2015"
+    if [ "${RABBIT_ARCH}" = "x64" ]; then
+        GENERATORS="Visual Studio 14 2015 Win64"
+    else
+        GENERATORS="Visual Studio 14 2015"
+    fi
 fi
-if [ "$GENERATORS" = "Visual Studio 12 2013" ]; then
+if [ "$GENERATORS" = "Visual Studio 12 2013" \
+    -o "$GENERATORS" = "Visual Studio 12 2013 Win64" ]; then
    VC_TOOLCHAIN=12
    MSVC_VER=1800
 fi
-if [ "$GENERATORS" = "Visual Studio 14 2015" ]; then
+if [ "$GENERATORS" = "Visual Studio 14 2015" \
+    -o "$GENERATORS" = "Visual Studio 14 2015 Win64" ]; then
    VC_TOOLCHAIN=14
    MSVC_VER=1900
 fi
-if [ "$GENERATORS" = "Visual Studio 15 2017" ]; then
+if [ "$GENERATORS" = "Visual Studio 15 2017" \ 
+    -o "$GENERATORS" = "Visual Studio 15 2017 Win64" ]; then
    VC_TOOLCHAIN=15
    MSVC_VER=2000
 fi
+echo "VC_TOOLCHAIN:$VC_TOOLCHAIN"
 
 export PATH=${RABBIT_BUILD_PREFIX}/bin:${RABBIT_BUILD_PREFIX}/lib:${QT_BIN}:$PATH
 export PKG_CONFIG=pkg-config

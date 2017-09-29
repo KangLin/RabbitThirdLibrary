@@ -44,12 +44,16 @@ if [ -z "$ANDROID_NDK_ROOT" -o -z "$ANDROID_NDK" -o -z "$ANDROID_SDK" -o -z "$AN
     exit 1
 fi
 
+if [ -z "${RABBIT_ARCH}" ]; then
+    RABBIT_ARCH=arm #arm,arm64,mips,mips64,x86,x86_64
+fi
 #安装前缀  
 if [ -n "${RABBITRoot}" ]; then
     RABBIT_BUILD_PREFIX=${RABBITRoot}/ThirdLibrary/android
 else
     RABBIT_BUILD_PREFIX=`pwd`/../android    #修改这里为安装前缀  
 fi
+RABBIT_BUILD_PREFIX=${RABBIT_BUILD_PREFIX}_${RABBIT_ARCH}
 
 if [ ! -d ${RABBIT_BUILD_PREFIX} ]; then
     mkdir -p ${RABBIT_BUILD_PREFIX}
@@ -89,9 +93,7 @@ case $TARGET_OS in
     ;;
 esac
 
-if [ -z "${RABBIT_ARCH}" ]; then
-    RABBIT_ARCH=arm #arm,arm64,mips,mips64,x86,x86_64
-fi
+
 if [ -z "${RABBIT_BUILD_TOOLCHAIN_VERSION}" ]; then
     RABBIT_BUILD_TOOLCHAIN_VERSION=4.8  #工具链版本号  
 fi

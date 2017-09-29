@@ -148,13 +148,8 @@ case ${RABBIT_BUILD_TARGERT} in
         else
             MODE=dll
         fi
-        if [ "$RABBIT_ARCH" = "x64" ]; then
-            ARCH=x64
-        else
-            ARCH=x86
-        fi
-        nmake -f Makefile.vc mode=$MODE VC=${VC_TOOLCHAIN} WITH_DEVEL=$RABBIT_BUILD_PREFIX MACHINE=$ARCH
-        cp -fr ${RABBIT_BUILD_SOURCE_CODE}/builds/libcurl-vc${VC_TOOLCHAIN}-$ARCH-release-${MODE}-ipv6-sspi-winssl/* ${RABBIT_BUILD_PREFIX}
+        nmake -f Makefile.vc mode=$MODE VC=${VC_TOOLCHAIN} WITH_DEVEL=$RABBIT_BUILD_PREFIX MACHINE=$RABBIT_ARCH
+        cp -fr ${RABBIT_BUILD_SOURCE_CODE}/builds/libcurl-vc${VC_TOOLCHAIN}-$RABBIT_ARCH-release-${MODE}-ipv6-sspi-winssl/* ${RABBIT_BUILD_PREFIX}
         cd $CUR_DIR
         exit 0
         ;;

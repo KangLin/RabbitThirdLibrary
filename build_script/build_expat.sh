@@ -40,7 +40,7 @@ CUR_DIR=`pwd`
 
 #下载源码:
 if [ ! -d ${RABBIT_BUILD_SOURCE_CODE} ]; then
-    VERSION=R_2_2_0
+    VERSION=R_2_2_4
     if [ "TRUE" = "${RABBIT_USE_REPOSITORIES}" ]; then
         echo "git clone -q --branch=${VERSION} https://github.com/libexpat/libexpat.git ${RABBIT_BUILD_SOURCE_CODE}"
         git clone --branch=${VERSION} https://github.com/libexpat/libexpat.git ${RABBIT_BUILD_SOURCE_CODE}
@@ -117,7 +117,7 @@ case ${RABBIT_BUILD_TARGERT} in
     unix)
     ;;
     windows_msvc)
-        sed -i "s/add_custom_command.*//g" ../CMakeLists.txt
+        #sed -i "s/add_custom_command.*//g" ../CMakeLists.txt
         CMAKE_PARA="-DBUILD_tests=OFF -DBUILD_examples=OFF -DBUILD_tools=OFF"
         echo "cmake .. -DCMAKE_INSTALL_PREFIX=$RABBIT_BUILD_PREFIX -DCMAKE_BUILD_TYPE=Release -G\"${GENERATORS}\" ${CMAKE_PARA}"
         cmake .. \
@@ -153,8 +153,8 @@ case ${RABBIT_BUILD_TARGERT} in
 esac
 
 CONFIG_PARA="${CONFIG_PARA} --prefix=$RABBIT_BUILD_PREFIX "
-echo "../configure ${CONFIG_PARA} CFLAGS=\"${CFLAGS=}\" CPPFLAGS=\"${CPPFLAGS}\""
-../configure ${CONFIG_PARA} CFLAGS="${CFLAGS}" CPPFLAGS="${CPPFLAGS}"
+echo "../configure --without-xmlwf ${CONFIG_PARA} CFLAGS=\"${CFLAGS=}\" CPPFLAGS=\"${CPPFLAGS}\""
+../configure ${CONFIG_PARA} --without-xmlwf CFLAGS="${CFLAGS}" CPPFLAGS="${CPPFLAGS}"
 
 echo "make install"
 make ${RABBIT_MAKE_JOB_PARA} 

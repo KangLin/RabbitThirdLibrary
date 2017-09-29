@@ -34,12 +34,25 @@ fi
 #   RABBIT_BUILD_PREFIX=`pwd`/../${RABBIT_BUILD_TARGERT}  #修改这里为安装前缀
 #   RABBIT_BUILD_CROSS_PREFIX     #交叉编译前缀
 #   RABBIT_BUILD_CROSS_SYSROOT  #交叉编译平台的 sysroot
-
+if [ -z "${RABBIT_ARCH}" ]; then
+    case $MSYSTEM in
+        MINGW32)
+            RABBIT_ARCH=x86
+            ;;
+        MINGW64)
+            RABBIT_ARCH=x64
+            ;;
+        *)
+            echo "Error RABBIT_ARCH=$MSYSTEM"
+            ;;
+    esac
+fi
 if [ -n "${RABBITRoot}" ]; then
     RABBIT_BUILD_PREFIX=${RABBITRoot}/ThirdLibrary/windows_mingw
 else
     RABBIT_BUILD_PREFIX=`pwd`/../windows_mingw    #修改这里为安装前缀
 fi
+RABBIT_BUILD_PREFIX=${RABBIT_BUILD_PREFIX}_${RABBIT_ARCH}
 if [ "$RABBIT_BUILD_STATIC" = "static" ]; then
     RABBIT_BUILD_PREFIX=${RABBIT_BUILD_PREFIX}_static
 fi

@@ -143,8 +143,13 @@ make ${RABBIT_MAKE_JOB_PARA}
 make install
 
 if [ "${RABBIT_BUILD_TARGERT}" = "windows_msvc" ]; then
-    cp ${RABBIT_BUILD_PREFIX}/lib/Win32/vpxmt.lib ${RABBIT_BUILD_PREFIX}/lib/vpx.lib
-    rm -fr ${RABBIT_BUILD_PREFIX}/lib/Win32
+    if [ "$RABBIT_ARCH" = "x64" ]; then
+        cp ${RABBIT_BUILD_PREFIX}/lib/x64/vpxmt.lib ${RABBIT_BUILD_PREFIX}/lib/vpx.lib
+        rm -fr ${RABBIT_BUILD_PREFIX}/lib/x64    
+    else
+        cp ${RABBIT_BUILD_PREFIX}/lib/Win32/vpxmt.lib ${RABBIT_BUILD_PREFIX}/lib/vpx.lib
+        rm -fr ${RABBIT_BUILD_PREFIX}/lib/Win32
+    fi
 fi
 
 cd $CUR_DIR

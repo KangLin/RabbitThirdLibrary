@@ -28,23 +28,22 @@ SOURCE_DIR=${SCRIPT_DIR}/../src
 if [ -n "$DOWNLOAD_FILE" ]; then
    echo "wget -q -c -O ${SCRIPT_DIR}/../${BUILD_TARGERT}.tar.gz ${DOWNLOAD_FILE}"
    wget -q -c -O ${SCRIPT_DIR}/../${BUILD_TARGERT}.tar.gz ${DOWNLOAD_FILE}
-   #unzip -q ${SCRIPT_DIR}/../${BUILD_TARGERT}.zip -d ${SCRIPT_DIR}/..
    md5sum ${SCRIPT_DIR}/../${BUILD_TARGERT}.tar.gz
    tar xzf ${SCRIPT_DIR}/../${BUILD_TARGERT}.tar.gz -C ${SCRIPT_DIR}/..
    if [ "$PROJECT_NAME" != "RabbitThirdLibrary" \
-        -a "$BUILD_TARGERT" != "windows_msvc" \
-        -a -f "${SCRIPT_DIR}/../${BUILD_TARGERT}/change_prefix.sh" ]; then
-       cd ${SCRIPT_DIR}/../$BUILD_TARGERT
+        -a "$BUILD_TARGERT_${RABBIT_ARCH}" != "windows_msvc_${RABBIT_ARCH}" \
+        -a -f "${SCRIPT_DIR}/../${BUILD_TARGERT}_${RABBIT_ARCH}/change_prefix.sh" ]; then
+       cd ${SCRIPT_DIR}/../$BUILD_TARGERT_${RABBIT_ARCH}
        
        if [ -n "$APPVEYOR" ]; then
-           THIRDLIBRARY_DIR_PREFIX=/c/projects/rabbitthirdlibrary/build_script/../$BUILD_TARGERT
+           THIRDLIBRARY_DIR_PREFIX=/c/projects/rabbitthirdlibrary/build_script/../${BUILD_TARGERT}_${RABBIT_ARCH}
        else
            THIRDLIBRARY_DIR_PREFIX=/home/travis/build/KangLin/RabbitThirdLibrary/unix
        fi
        
-       echo "bash ${SCRIPT_DIR}/../${BUILD_TARGERT}/change_prefix.sh $THIRDLIBRARY_DIR_PREFIX `pwd`"
-       bash ${SCRIPT_DIR}/../${BUILD_TARGERT}/change_prefix.sh $THIRDLIBRARY_DIR_PREFIX `pwd`
-       cat ${SCRIPT_DIR}/../${BUILD_TARGERT}/lib/pkgconfig/libcurl.pc
+       echo "bash ${SCRIPT_DIR}/../${BUILD_TARGERT}_${RABBIT_ARCH}/change_prefix.sh $THIRDLIBRARY_DIR_PREFIX `pwd`"
+       bash ${SCRIPT_DIR}/../${BUILD_TARGERT}_${RABBIT_ARCH}/change_prefix.sh $THIRDLIBRARY_DIR_PREFIX `pwd`
+       cat ${SCRIPT_DIR}/../${BUILD_TARGERT}_${RABBIT_ARCH}/lib/pkgconfig/libcurl.pc
        
        cd ${SCRIPT_DIR}
    fi

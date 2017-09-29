@@ -112,7 +112,11 @@ unix_static/
 android/
 android_static/
 windows_msvc/
+windows_msvc_X86/
+windows_msvc_X64/
 windows_mingw/
+windows_mingw_X86/
+windows_mingw_X64/
 src/
 windows_mingw_static/
 windows_msvc_static/

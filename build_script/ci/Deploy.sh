@@ -17,7 +17,7 @@ fi
 cd ${SOURCE_DIR}
 #zip -rq rabbit_${BUILD_TARGERT}${TOOLCHAIN_VERSION}_${RABBIT_ARCH}_${QT_VERSION}_v${BUILD_VERSION}.zip ${BUILD_TARGERT}
 #expect ${SCRIPT_DIR}/ci/scp.exp frs.sourceforge.net kl222,rabbitthirdlibrary ${PASSWORD} rabbit_${BUILD_TARGERT}${TOOLCHAIN_VERSION}_${RABBIT_ARCH}_${QT_VERSION}_v${BUILD_VERSION}.zip pfs/Release/.
-tar czf rabbit_${BUILD_TARGERT}${TOOLCHAIN_VERSION}_${RABBIT_ARCH}_${QT_VERSION}_v${BUILD_VERSION}.tar.gz ${BUILD_TARGERT}
+tar czf rabbit_${BUILD_TARGERT}${TOOLCHAIN_VERSION}_${RABBIT_ARCH}_${QT_VERSION}_v${BUILD_VERSION}.tar.gz ${BUILD_TARGERT}_${RABBIT_ARCH}
 md5sum rabbit_${BUILD_TARGERT}${TOOLCHAIN_VERSION}_${RABBIT_ARCH}_${QT_VERSION}_v${BUILD_VERSION}.tar.gz
 expect ${SCRIPT_DIR}/ci/scp.exp frs.sourceforge.net kl222,rabbitthirdlibrary ${PASSWORD} rabbit_${BUILD_TARGERT}${TOOLCHAIN_VERSION}_${RABBIT_ARCH}_${QT_VERSION}_v${BUILD_VERSION}.tar.gz pfs/Release/.
 
