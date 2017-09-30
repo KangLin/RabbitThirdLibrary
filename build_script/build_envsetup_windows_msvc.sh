@@ -97,12 +97,11 @@ if [ "$GENERATORS" = "Visual Studio 14 2015" \
    VC_TOOLCHAIN=14
    MSVC_VER=1900
 fi
-if [ "$GENERATORS" = "Visual Studio 15 2017" \ 
+if [ "$GENERATORS" = "Visual Studio 15 2017" \
     -o "$GENERATORS" = "Visual Studio 15 2017 Win64" ]; then
    VC_TOOLCHAIN=15
    MSVC_VER=2000
 fi
-echo "VC_TOOLCHAIN:$VC_TOOLCHAIN"
 
 export PATH=${RABBIT_BUILD_PREFIX}/bin:${RABBIT_BUILD_PREFIX}/lib:${QT_BIN}:$PATH
 export PKG_CONFIG=pkg-config
