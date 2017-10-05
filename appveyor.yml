@@ -103,7 +103,7 @@ environment:
       secure: 2WEtOQrdty3V3g0aEVvS3Q==
 
   - BUILD_TARGERT: android
-    RABBIT_BUILD_THIRDLIBRARY: opencv gdal
+    RABBIT_BUILD_THIRDLIBRARY: opencv #gdal
     QT_VERSION: NO
     TOOLCHAIN_VERSION: 4.8
     RABBIT_ARCH: arm
