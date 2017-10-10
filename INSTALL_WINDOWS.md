@@ -144,9 +144,7 @@ http://www.microsoft.com/en-us/download/confirmation.aspx?id=42273
 主页：http://www.ruby-lang.org/  http://rubyinstaller.org/  
 https://github.com/ruby/ruby
 
-或者：
-
-    pacman -S python perl ruby
+注意：这几个脚本工具的路径要放在环境变量 PATH 中的 /usr/bin 之前
 
 #### 2.9. 汇编工具（yasm、nasm）
 [yasm](http://yasm.tortall.net/)  
