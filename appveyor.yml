@@ -677,10 +677,6 @@ after_build:
   - cd %APPVEYOR_BUILD_FOLDER%
 
 artifacts:
-#  - path rabbit_${BUILD_TARGERT}${TOOLCHAIN_VERSION}_${RABBIT_ARCH}_${QT_VERSION}_v${BUILD_VERSION}.tar.gz
- # - path: ThirdLibrary/src
- #   name: RABBITThirdLibrarySource
-
   - path: $(BUILD_TARGERT)
     name: RABBIT_$(BUILD_TARGERT)$(TOOLCHAIN_VERSION)_$(RABBIT_ARCH)_$(QT_VERSION)_v$(appveyor_build_version)
     type: zip
