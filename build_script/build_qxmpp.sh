@@ -91,11 +91,11 @@ case $RABBIT_BUILD_TARGERT in
     unix)
         ;;
     windows_msvc)
-        PARA="-r -spec win32-msvc2013"
+        #PARA="-r -spec win32-msvc2013"
         MAKE=nmake
         ;;
     windows_mingw)
-        PARA="-r -spec win32-g++" # CROSS_COMPILE=${RABBIT_BUILD_CROSS_PREFIX}"
+        #PARA="-r -spec win32-g++" # CROSS_COMPILE=${RABBIT_BUILD_CROSS_PREFIX}"
         ;;
     *)
         echo "Usage $0 PLATFORM(android/windows_msvc/windows_mingw/unix) SOURCE_CODE_ROOT"
