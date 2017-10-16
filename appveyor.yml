@@ -474,7 +474,7 @@ environment:
   
   ##### osgearth #####
   - BUILD_TARGERT: windows_msvc
-    RABBIT_BUILD_THIRDLIBRARY: osgearth
+    RABBIT_BUILD_THIRDLIBRARY: OsgQt osgearth
     TOOLCHAIN_VERSION: 14
     QT_VERSION: qt5.9.1
     QT_ROOT: /C/Qt/5.9.1/msvc2015_64
@@ -491,7 +491,7 @@ environment:
     QT_ROOT: /C/Qt/5.8/msvc2015_64
     GENERATORS: "Visual Studio 14 2015 Win64"
     RABBIT_ARCH: x64
-    RABBIT_BUILD_THIRDLIBRARY: osgearth
+    RABBIT_BUILD_THIRDLIBRARY: OsgQt osgearth
     DOWNLOAD_FILE: https://sourceforge.net/projects/rabbitthirdlibrary/files/Release/rabbit_windows_msvc14_x64_qt5.8.0_v$(appveyor_build_version).tar.gz/download
     BUILD_END: "True"
     PASSWORD:
@@ -503,7 +503,7 @@ environment:
     GENERATORS: "Visual Studio 14 2015"
     QT_VERSION: qt5.9.1
     QT_ROOT: /C/Qt/5.9.1/msvc2015   
-    RABBIT_BUILD_THIRDLIBRARY: osgearth
+    RABBIT_BUILD_THIRDLIBRARY: OsgQt osgearth
     DOWNLOAD_FILE: https://sourceforge.net/projects/rabbitthirdlibrary/files/Release/rabbit_windows_msvc14_x86_qt5.9.1_v$(appveyor_build_version).tar.gz/download
     BUILD_END: "True"
     PASSWORD:
@@ -515,7 +515,7 @@ environment:
     GENERATORS: "Visual Studio 14 2015"
     QT_VERSION: qt5.8.0
     QT_ROOT: /C/Qt/5.8/msvc2015   
-    RABBIT_BUILD_THIRDLIBRARY: osgearth
+    RABBIT_BUILD_THIRDLIBRARY: OsgQt osgearth
     DOWNLOAD_FILE: https://sourceforge.net/projects/rabbitthirdlibrary/files/Release/rabbit_windows_msvc14_x86_qt5.8.0_v$(appveyor_build_version).tar.gz/download
     BUILD_END: "True"
     PASSWORD:
@@ -524,7 +524,7 @@ environment:
   - BUILD_TARGERT: windows_msvc
     TOOLCHAIN_VERSION: 14
     QT_VERSION: qt5.7.1
-    RABBIT_BUILD_THIRDLIBRARY: osgearth
+    RABBIT_BUILD_THIRDLIBRARY: OsgQt osgearth
     QT_ROOT: /C/Qt/5.7/msvc2015
     GENERATORS: "Visual Studio 14 2015"
     RABBIT_ARCH: x86
@@ -537,7 +537,7 @@ environment:
   - BUILD_TARGERT: windows_msvc
     TOOLCHAIN_VERSION: 14
     QT_VERSION: qt5.6.2
-    RABBIT_BUILD_THIRDLIBRARY: osgearth
+    RABBIT_BUILD_THIRDLIBRARY: OsgQt osgearth
     QT_ROOT: /C/Qt/5.6/msvc2015
     GENERATORS: "Visual Studio 14 2015"
     RABBIT_ARCH: x86
@@ -550,7 +550,7 @@ environment:
   - BUILD_TARGERT: windows_msvc
     TOOLCHAIN_VERSION: 12
     QT_VERSION: qt5.8.0
-    RABBIT_BUILD_THIRDLIBRARY: osgearth 
+    RABBIT_BUILD_THIRDLIBRARY: OsgQt osgearth 
     QT_ROOT: /C/Qt/5.8/msvc2013
     GENERATORS: "Visual Studio 12 2013"
     RABBIT_ARCH: x86
@@ -563,7 +563,7 @@ environment:
   - BUILD_TARGERT: windows_msvc
     TOOLCHAIN_VERSION: 12
     QT_VERSION: qt5.7.1
-    RABBIT_BUILD_THIRDLIBRARY: osgearth 
+    RABBIT_BUILD_THIRDLIBRARY: OsgQt osgearth 
     QT_ROOT: /C/Qt/5.7/msvc2013
     GENERATORS: "Visual Studio 12 2013"
     RABBIT_ARCH: x86
@@ -576,7 +576,7 @@ environment:
   - BUILD_TARGERT: windows_msvc
     TOOLCHAIN_VERSION: 12
     QT_VERSION: qt5.6.2
-    RABBIT_BUILD_THIRDLIBRARY: osgearth
+    RABBIT_BUILD_THIRDLIBRARY: OsgQt osgearth
     QT_ROOT: /C/Qt/5.6/msvc2013
     GENERATORS: "Visual Studio 12 2013"
     RABBIT_ARCH: x86
@@ -587,7 +587,7 @@ environment:
       secure: 2WEtOQrdty3V3g0aEVvS3Q==
 
   #- BUILD_TARGERT: android
-    #RABBIT_BUILD_THIRDLIBRARY: osgearth
+    #RABBIT_BUILD_THIRDLIBRARY: OsgQt osgearth
     #QT_VERSION_DIR: 5.7
     #QT_VERSION: 5.7.1
     #TOOLCHAIN_VERSION: 4.8
@@ -598,7 +598,7 @@ environment:
       #secure: 2WEtOQrdty3V3g0aEVvS3Q==
 
   #- BUILD_TARGERT: android
-  #  RABBIT_BUILD_THIRDLIBRARY: osgearth
+  #  RABBIT_BUILD_THIRDLIBRARY: OsgQt osgearth
   #  QT_VERSION_DIR: 5.7
   #  QT_VERSION: 5.7.1
   #  TOOLCHAIN_VERSION: 4.8
@@ -609,7 +609,7 @@ environment:
   #    secure: 2WEtOQrdty3V3g0aEVvS3Q==
       
   - BUILD_TARGERT: windows_mingw
-    RABBIT_BUILD_THIRDLIBRARY: osgearth
+    RABBIT_BUILD_THIRDLIBRARY: OsgQt osgearth
     TOOLCHAIN_VERSION: 530
     QT_VERSION: qt5.8.0
     QT_ROOT: /C/Qt/5.8/mingw53_32
@@ -621,7 +621,7 @@ environment:
       secure: 2WEtOQrdty3V3g0aEVvS3Q==
       
   - BUILD_TARGERT: windows_mingw
-    RABBIT_BUILD_THIRDLIBRARY: osgearth
+    RABBIT_BUILD_THIRDLIBRARY: OsgQt osgearth
     TOOLCHAIN_VERSION: 530
     QT_VERSION: qt5.7.1
     QT_ROOT: /C/Qt/5.7/mingw53_32
@@ -633,7 +633,7 @@ environment:
       secure: 2WEtOQrdty3V3g0aEVvS3Q==
 
   #- BUILD_TARGERT: windows_mingw
-  #  RABBIT_BUILD_THIRDLIBRARY: osgearth
+  #  RABBIT_BUILD_THIRDLIBRARY: OsgQt osgearth
   #  TOOLCHAIN_VERSION: 492
   #  QT_VERSION: qt5.6.2
   #  QT_ROOT: /C/Qt/5.6/mingw49_32

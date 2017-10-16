@@ -33,28 +33,28 @@ fi
 if [ -n "$2" ]; then
     RABBIT_BUILD_SOURCE_CODE=$2
 else
-    RABBIT_BUILD_SOURCE_CODE=${RABBIT_BUILD_PREFIX}/../src/osg
+    RABBIT_BUILD_SOURCE_CODE=${RABBIT_BUILD_PREFIX}/../src/osgQt
 fi
 
 CUR_DIR=`pwd`
 
 #下载源码:
 if [ ! -d ${RABBIT_BUILD_SOURCE_CODE} ]; then
-    OSG_VERSION=OpenSceneGraph-3.5.6
+    OSG_VERSION=1319065a089824074357f0594a661a0e86c8055b #3.5.6
     if [ "TRUE" = "${RABBIT_USE_REPOSITORIES}" ]; then
-        echo "git clone -q --branch=${OSG_VERSION} https://github.com/openscenegraph/OpenSceneGraph.git ${RABBIT_BUILD_SOURCE_CODE}"
-        git clone -q --branch=$OSG_VERSION https://github.com/openscenegraph/OpenSceneGraph.git ${RABBIT_BUILD_SOURCE_CODE}
+        echo "git clone -q --branch=${OSG_VERSION} https://github.com/openscenegraph/osgQt.git ${RABBIT_BUILD_SOURCE_CODE}"
+        git clone -q --branch=$OSG_VERSION https://github.com/openscenegraph/osgQt.git ${RABBIT_BUILD_SOURCE_CODE}
     else
-        echo "wget -q https://github.com/openscenegraph/OpenSceneGraph/archive/${OSG_VERSION}.zip"
+        echo "wget -q https://github.com/openscenegraph/osgQt/archive/${OSG_VERSION}.zip"
         mkdir -p ${RABBIT_BUILD_SOURCE_CODE}
         cd ${RABBIT_BUILD_SOURCE_CODE}
-        wget -q https://github.com/openscenegraph/OpenSceneGraph/archive/${OSG_VERSION}.zip
+        wget -q https://github.com/openscenegraph/osgQt/archive/${OSG_VERSION}.zip
         unzip -q ${OSG_VERSION}.zip
-        mv OpenSceneGraph-${OSG_VERSION} ..
+        mv osgQt-${OSG_VERSION} ..
         rm -fr *
         cd ..
         rm -fr ${RABBIT_BUILD_SOURCE_CODE}
-        mv -f OpenSceneGraph-${OSG_VERSION} ${RABBIT_BUILD_SOURCE_CODE}
+        mv -f osgQt-${OSG_VERSION} ${RABBIT_BUILD_SOURCE_CODE}
     fi
 fi
 
@@ -122,9 +122,9 @@ case ${RABBIT_BUILD_TARGERT} in
     ;;
 esac
 
-CMAKE_PARA="${CMAKE_PARA} -DBUILD_DOCUMENTATION=OFF -DBUILD_OSG_EXAMPLES=OFF -DBUILD_OSG_APPLICATIONS=OFF"
-#CMAKE_PARA="${CMAKE_PARA} -DQt5_DIR=${QT_ROOT}/lib/cmake/Qt5"
-CMAKE_PARA="${CMAKE_PARA} -DCMAKE_VERBOSE_MAKEFILE=ON -DUSE_3RDPARTY_BIN=OFF"
+CMAKE_PARA="${CMAKE_PARA} -DBUILD_DOCUMENTATION=OFF -DBUILD_OSG_EXAMPLES=OFF" # -DBUILD_OSG_APPLICATIONS=OFF"
+CMAKE_PARA="${CMAKE_PARA} -DQt5_DIR=${QT_ROOT}/lib/cmake/Qt5"
+CMAKE_PARA="${CMAKE_PARA} -DCMAKE_VERBOSE_MAKEFILE=ON "
 CMAKE_PARA="${CMAKE_PARA} -DCMAKE_MODULE_PATH=$RABBIT_BUILD_PREFIX/lib/cmake"
 
 echo "cmake .. -DCMAKE_INSTALL_PREFIX=$RABBIT_BUILD_PREFIX -DCMAKE_BUILD_TYPE=Release -G\"${GENERATORS}\" ${CMAKE_PARA}"

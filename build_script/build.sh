@@ -61,6 +61,7 @@ if [ -n "$2" ]; then
     ./build_gdal.sh ${RABBIT_BUILD_TARGERT} $2/gdal
     ./build_osg.sh ${RABBIT_BUILD_TARGERT} $2/osg
     #./build_geos.sh ${RABBIT_BUILD_TARGERT} $2/geos
+    ./build_OsgQt.sh ${RABBIT_BUILD_TARGERT} $2/osgQt
     ./build_osgearth.sh ${RABBIT_BUILD_TARGERT} $2/osgearth
     ./build_x264.sh ${RABBIT_BUILD_TARGERT} $2/x264 
     ./build_libyuv.sh ${RABBIT_BUILD_TARGERT} $2/libyuv 
@@ -84,6 +85,7 @@ else
     ./build_qrencode.sh ${RABBIT_BUILD_TARGERT}
     ./build_gdal.sh ${RABBIT_BUILD_TARGERT} 
     ./build_osg.sh ${RABBIT_BUILD_TARGERT}
+    ./build_OsgQt.sh ${RABBIT_BUILD_TARGERT}
     #./build_geos.sh ${RABBIT_BUILD_TARGERT} 
     ./build_osgearth.sh ${RABBIT_BUILD_TARGERT}
 
