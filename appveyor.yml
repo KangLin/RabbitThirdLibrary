@@ -153,6 +153,7 @@ environment:
     QT_ROOT: /C/Qt/5.9.1/msvc2015_64
     GENERATORS: "Visual Studio 14 2015 Win64"
     DOWNLOAD_FILE: https://sourceforge.net/projects/rabbitthirdlibrary/files/Release/rabbit_windows_msvc14_x64_NO_v$(appveyor_build_version).tar.gz/download
+    BUILD_END: "True"
     PASSWORD:
       secure: 2WEtOQrdty3V3g0aEVvS3Q==
   
@@ -164,6 +165,7 @@ environment:
     QT_ROOT: /C/Qt/5.9.1/msvc2015
     GENERATORS: "Visual Studio 14 2015"
     DOWNLOAD_FILE: https://sourceforge.net/projects/rabbitthirdlibrary/files/Release/rabbit_windows_msvc14_x86_NO_v$(appveyor_build_version).tar.gz/download
+    BUILD_END: "True"
     PASSWORD:
       secure: 2WEtOQrdty3V3g0aEVvS3Q==
       
@@ -175,6 +177,7 @@ environment:
     GENERATORS: "Visual Studio 14 2015 Win64"
     RABBIT_BUILD_THIRDLIBRARY: qxmpp qzxing
     DOWNLOAD_FILE: https://sourceforge.net/projects/rabbitthirdlibrary/files/Release/rabbit_windows_msvc14_x64_NO_v$(appveyor_build_version).tar.gz/download
+    BUILD_END: "True"
     PASSWORD:
       secure: 2WEtOQrdty3V3g0aEVvS3Q==
       
@@ -186,6 +189,7 @@ environment:
     QT_ROOT: /C/Qt/5.8/msvc2015
     GENERATORS: "Visual Studio 14 2015"
     DOWNLOAD_FILE: https://sourceforge.net/projects/rabbitthirdlibrary/files/Release/rabbit_windows_msvc14_x86_NO_v$(appveyor_build_version).tar.gz/download
+    BUILD_END: "True"
     PASSWORD:
       secure: 2WEtOQrdty3V3g0aEVvS3Q==
       
@@ -209,6 +213,7 @@ environment:
     GENERATORS: "Visual Studio 14 2015"
     RABBIT_ARCH: x86
     DOWNLOAD_FILE: https://sourceforge.net/projects/rabbitthirdlibrary/files/Release/rabbit_windows_msvc14_x86_NO_v$(appveyor_build_version).tar.gz/download
+    BUILD_END: "True"
     PASSWORD:
       secure: 2WEtOQrdty3V3g0aEVvS3Q==
       
@@ -220,6 +225,7 @@ environment:
     GENERATORS: "Visual Studio 12 2013"
     RABBIT_ARCH: x86
     DOWNLOAD_FILE: https://sourceforge.net/projects/rabbitthirdlibrary/files/Release/rabbit_windows_msvc12_x86_NO_v$(appveyor_build_version).tar.gz/download
+    BUILD_END: "True"
     PASSWORD:
       secure: 2WEtOQrdty3V3g0aEVvS3Q==
       
@@ -231,6 +237,7 @@ environment:
     GENERATORS: "Visual Studio 12 2013"
     RABBIT_ARCH: x86
     DOWNLOAD_FILE: https://sourceforge.net/projects/rabbitthirdlibrary/files/Release/rabbit_windows_msvc12_x86_NO_v$(appveyor_build_version).tar.gz/download
+    BUILD_END: "True"
     PASSWORD:
       secure: 2WEtOQrdty3V3g0aEVvS3Q==
 
@@ -242,6 +249,7 @@ environment:
     GENERATORS: "Visual Studio 12 2013"
     RABBIT_ARCH: x86
     DOWNLOAD_FILE: https://sourceforge.net/projects/rabbitthirdlibrary/files/Release/rabbit_windows_msvc12_x86_NO_v$(appveyor_build_version).tar.gz/download
+    BUILD_END: "True"
     PASSWORD:
       secure: 2WEtOQrdty3V3g0aEVvS3Q==
 
@@ -252,6 +260,7 @@ environment:
     TOOLCHAIN_VERSION: 4.8
     RABBIT_ARCH: arm
     DOWNLOAD_FILE: https://sourceforge.net/projects/rabbitthirdlibrary/files/Release/rabbit_android4.8_arm_NO_v$(appveyor_build_version).tar.gz/download
+    BUILD_END: "True"
     PASSWORD:
       secure: 2WEtOQrdty3V3g0aEVvS3Q==
       
@@ -262,6 +271,7 @@ environment:
     TOOLCHAIN_VERSION: 4.8
     RABBIT_ARCH: arm
     DOWNLOAD_FILE: https://sourceforge.net/projects/rabbitthirdlibrary/files/Release/rabbit_android4.8_arm_NO_v$(appveyor_build_version).tar.gz/download
+    BUILD_END: "True"
     PASSWORD:
       secure: 2WEtOQrdty3V3g0aEVvS3Q==
       
@@ -272,6 +282,7 @@ environment:
   #  TOOLCHAIN_VERSION: 4.8
   #  RABBIT_ARCH: x86
   #  DOWNLOAD_FILE: https://sourceforge.net/projects/rabbitthirdlibrary/files/Release/rabbit_android4.8_x86_NO_v$(appveyor_build_version).tar.gz/download
+  #  BUILD_END: "True"
   #  PASSWORD:
   #    secure: 2WEtOQrdty3V3g0aEVvS3Q==
       
@@ -283,6 +294,7 @@ environment:
     RABBIT_ARCH: x86
     DOWNLOAD_FILE: https://sourceforge.net/projects/rabbitthirdlibrary/files/Release/rabbit_windows_mingw530_x86_NO_v$(appveyor_build_version).tar.gz/download
     RABBIT_USE_REPOSITORIES: "FALSE"
+    BUILD_END: "True"
     PASSWORD:
       secure: 2WEtOQrdty3V3g0aEVvS3Q==
 
@@ -294,6 +306,7 @@ environment:
     RABBIT_ARCH: x86
     DOWNLOAD_FILE: https://sourceforge.net/projects/rabbitthirdlibrary/files/Release/rabbit_windows_mingw530_x86_NO_v$(appveyor_build_version).tar.gz/download
     RABBIT_USE_REPOSITORIES: "FALSE"
+    BUILD_END: "True"
     PASSWORD:
       secure: 2WEtOQrdty3V3g0aEVvS3Q==
 
@@ -305,6 +318,7 @@ environment:
   #  RABBIT_ARCH: x86
   #  DOWNLOAD_FILE: https://sourceforge.net/projects/rabbitthirdlibrary/files/Release/rabbit_windows_mingw492_x86_NO_v$(appveyor_build_version).tar.gz/download
   #  RABBIT_USE_REPOSITORIES: "FALSE"
+  #  BUILD_END: "True"
   #  PASSWORD:
   #    secure: 2WEtOQrdty3V3g0aEVvS3Q==
   
@@ -434,7 +448,6 @@ environment:
   #  RABBIT_ARCH: x86
   #  RABBIT_BUILD_THIRDLIBRARY: osg
   #  DOWNLOAD_FILE: https://sourceforge.net/projects/rabbitthirdlibrary/files/Release/rabbit_android4.8_x86_qt5.7.1_v$(appveyor_build_version).tar.gz/download
-  #  BUILD_END: "True"
   #  PASSWORD:
   #    secure: 2WEtOQrdty3V3g0aEVvS3Q==
       
@@ -658,8 +671,6 @@ init:
   - del C:\msys64\usr\bin\link.exe
 
 install:
-  #- C:\msys64\usr\bin\pacman.exe -Syu --noconfirm 
-  #- C:\msys64\autorebase.bat
   - if not "%BUILD_TARGERT%" == "android" C:\msys64\usr\bin\pacman.exe -S --noconfirm nasm yasm 
   - C:\msys64\usr\bin\pacman.exe -S --noconfirm unzip expect #zip curl
   - C:\msys64\autorebase.bat
@@ -671,7 +682,7 @@ before_build:
 build_script:
   - cd %APPVEYOR_BUILD_FOLDER%
   - C:\msys64\usr\bin\bash.exe %APPVEYOR_BUILD_FOLDER%\build_script\ci\build.sh
-  #- C:\msys64\usr\bin\bash.exe %APPVEYOR_BUILD_FOLDER%\build_script\ci\Deploy.sh
+  - C:\msys64\usr\bin\bash.exe %APPVEYOR_BUILD_FOLDER%\build_script\ci\Deploy.sh
 
 after_build:
   - cd %APPVEYOR_BUILD_FOLDER%
