@@ -77,7 +77,7 @@ case ${RABBIT_BUILD_TARGERT} in
     unix)
     ;;
     windows_msvc)
-        #GENERATORS="Visual Studio 12 2013"
+        #RABBITIM_GENERATORS="Visual Studio 12 2013"
         MAKE_PARA=""
         ;;
     windows_mingw)
@@ -97,11 +97,11 @@ case ${RABBIT_BUILD_TARGERT} in
 esac
 
 CMAKE_PARA="${CMAKE_PARA} -DCMAKE_VERBOSE_MAKEFILE=ON"
-echo "cmake .. -DCMAKE_INSTALL_PREFIX=$RABBIT_BUILD_PREFIX -DCMAKE_BUILD_TYPE=Release -G\"${GENERATORS}\" ${CMAKE_PARA}"
+echo "cmake .. -DCMAKE_INSTALL_PREFIX=$RABBIT_BUILD_PREFIX -DCMAKE_BUILD_TYPE=Release -G\"${RABBITIM_GENERATORS}\" ${CMAKE_PARA}"
 cmake .. \
     -DCMAKE_INSTALL_PREFIX="$RABBIT_BUILD_PREFIX" \
     -DCMAKE_BUILD_TYPE="Release" \
-    -G"${GENERATORS}" ${CMAKE_PARA} 
+    -G"${RABBITIM_GENERATORS}" ${CMAKE_PARA} 
 
 cmake --build . --target install --config Release #{MAKE_PARA}
 

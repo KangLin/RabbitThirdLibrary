@@ -99,7 +99,7 @@ if [ "$3" = "cmake" ]; then
             ;;
         windows_msvc)
             #因为用Visual Studio 2013生成的目标路径与配置有关，这影响到安装文件的生成，所以用nmake生成
-            GENERATORS="NMake Makefiles" #GENERATORS="Visual Studio 12 2013"
+            RABBITIM_GENERATORS="NMake Makefiles" #RABBITIM_GENERATORS="Visual Studio 12 2013"
             #PARA="${PARA} -DOPTION_RABBIT_USE_LIBCURL=OFF -DOPTION_RABBIT_USE_OPENSSL=OFF"
             PARA="${PARA} -DOPTION_RABBIT_USE_OPENCV=OFF"
             MAKE_PARA=""
@@ -121,8 +121,8 @@ if [ "$3" = "cmake" ]; then
             ;;
     esac
 
-    echo "cmake .. -G\"${GENERATORS}\" $PARA"
-    cmake .. -G"${GENERATORS}" $PARA # --debug-output
+    echo "cmake .. -G\"${RABBITIM_GENERATORS}\" $PARA"
+    cmake .. -G"${RABBITIM_GENERATORS}" $PARA # --debug-output
     echo "build ...."
     echo "cmake --build . --config Release ${CMAKE_PARA} ${MAKE_PARA}"
     cmake --build . --config Release ${CMAKE_PARA} ${MAKE_PARA}

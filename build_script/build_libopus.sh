@@ -114,7 +114,7 @@ case ${RABBIT_BUILD_TARGERT} in
     unix)
         ;;
     windows_msvc)
-        if [ "$GENERATORS" = "Visual Studio 14 2015" ]; then
+        if [ "$RABBITIM_GENERATORS" = "Visual Studio 14 2015" ]; then
             if [ "$RABBIT_ARCH" = "x64" ]; then
                 ARCH=x64
             else
@@ -123,7 +123,7 @@ case ${RABBIT_BUILD_TARGERT} in
             msbuild.exe -m -v:n -p:Configuration=Release -p:Platform=$ARCH win32/VS2015/opus.sln
             cp win32/VS2015/$ARCH/Release/opus.lib $RABBIT_BUILD_PREFIX/lib
         else
-            echo "Don't support $GENERATORS"
+            echo "Don't support $RABBITIM_GENERATORS"
         fi
         cp include/* $RABBIT_BUILD_PREFIX/include
         cd $CUR_DIR

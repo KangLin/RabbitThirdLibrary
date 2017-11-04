@@ -81,11 +81,11 @@ case $TARGET_OS in
     MINGW* | CYGWIN* | MSYS*)
         RABBIT_BUILD_HOST="windows"
         #RABBIT_CMAKE_MAKE_PROGRAM=$ANDROID_NDK/prebuilt/${RABBIT_BUILD_HOST}/bin/make #这个用不着，只有在windows命令行下才有用 
-        GENERATORS="MSYS Makefiles"
+        RABBITIM_GENERATORS="MSYS Makefiles"
         ;;
     Linux* | Unix*)
         RABBIT_BUILD_HOST="linux-`uname -m`"    #windows、linux-x86_64
-        GENERATORS="Unix Makefiles" 
+        RABBITIM_GENERATORS="Unix Makefiles" 
         ;;
     *)
     echo "Please set RABBIT_BUILD_HOST. see build_envsetup_android.sh"

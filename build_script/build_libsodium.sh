@@ -113,7 +113,7 @@ case ${RABBIT_BUILD_TARGERT} in
     unix)
         ;;
     windows_msvc)
-        if [ "$GENERATORS" = "Visual Studio 12 2013*" ]; then
+        if [ "$RABBITIM_GENERATORS" = "Visual Studio 12 2013*" ]; then
             if [ "$RABBIT_ARCH" = "x64" ]; then
                 msbuild.exe -m -v:n -p:Configuration=DynRelease -p:Platform=x64 builds/msvc/vs2013/libsodium.sln
                 cp bin/x64/Release/v120/dynamic/*.dll $RABBIT_BUILD_PREFIX/bin
@@ -124,7 +124,7 @@ case ${RABBIT_BUILD_TARGERT} in
                 cp bin/Win32/Release/v120/dynamic/*.lib $RABBIT_BUILD_PREFIX/lib
             fi
         fi
-        if [ "$GENERATORS" = "Visual Studio 14 2015*" ]; then
+        if [ "$RABBITIM_GENERATORS" = "Visual Studio 14 2015*" ]; then
             if [ "$RABBIT_ARCH" = "x64" ]; then
                 msbuild.exe -m -v:n -p:Configuration=DynRelease -p:Platform=x64 builds/msvc/vs2015/libsodium.sln
                 cp bin/x64/Release/v140/dynamic/*.dll $RABBIT_BUILD_PREFIX/bin

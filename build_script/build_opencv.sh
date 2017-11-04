@@ -122,7 +122,7 @@ case ${RABBIT_BUILD_TARGERT} in
     unix)
         ;;
     windows_msvc)
-        #GENERATORS="Visual Studio 12 2013"
+        #RABBITIM_GENERATORS="Visual Studio 12 2013"
         MAKE_PARA=""
         ;;
     windows_mingw)
@@ -163,11 +163,11 @@ CMAKE_PARA="${CMAKE_PARA} -DENABLE_PRECOMPILED_HEADERS=OFF"
 CMAKE_PARA="${CMAKE_PARA} -DOPENCV_EXTRA_MODULES_PATH=${RABBIT_BUILD_CONTRIB_SOURCE_CODE}/modules"
 CMAKE_PARA="${CMAKE_PARA} -DBUILD_opencv_xfeatures2d=OFF"
 
-echo "cmake .. -DCMAKE_INSTALL_PREFIX=$RABBIT_BUILD_PREFIX -DCMAKE_BUILD_TYPE=Release -G\"${GENERATORS}\" ${CMAKE_PARA}"
+echo "cmake .. -DCMAKE_INSTALL_PREFIX=$RABBIT_BUILD_PREFIX -DCMAKE_BUILD_TYPE=Release -G\"${RABBITIM_GENERATORS}\" ${CMAKE_PARA}"
 cmake .. \
     -DCMAKE_INSTALL_PREFIX="$RABBIT_BUILD_PREFIX" \
     -DCMAKE_BUILD_TYPE="Release" -DCMAKE_VERBOSE=ON \
-    -G"${GENERATORS}" ${CMAKE_PARA}
+    -G"${RABBITIM_GENERATORS}" ${CMAKE_PARA}
 
 if [ -z "$CI" ]; then
     cmake --build . --target install --config Debug ${MAKE_PARA}

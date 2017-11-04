@@ -128,7 +128,7 @@ case ${RABBIT_BUILD_TARGERT} in
         fi
         cmake .. -DCMAKE_INSTALL_PREFIX="$RABBIT_BUILD_PREFIX" \
             -DCMAKE_BUILD_TYPE="Release" \
-            -G"${GENERATORS}" \
+            -G"${RABBITIM_GENERATORS}" \
             -DWITH_TOOLS=NO \
             -DWITH_TESTS=NO \
             ${CMAKE_PARA}

@@ -80,25 +80,33 @@ if [ -n "${QT_ROOT}" ]; then
 fi
 
 TARGET_OS=`uname -s`
-if [ -z "${GENERATORS}" ]; then
+if [ -z "${RABBIT_TOOLCHAIN_VERSION}" ]; then
+    RABBIT_TOOLCHAIN_VERSION=14
+fi
+if [ "$RABBIT_TOOLCHAIN_VERSION" = "14" ]; then
     if [ "${RABBIT_ARCH}" = "x64" ]; then
-        GENERATORS="Visual Studio 14 2015 Win64"
+        RABBITIM_GENERATORS="Visual Studio 14 2015 Win64"
     else
-        GENERATORS="Visual Studio 14 2015"
+        RABBITIM_GENERATORS="Visual Studio 14 2015"
     fi
 fi
-if [ "$GENERATORS" = "Visual Studio 12 2013" \
-    -o "$GENERATORS" = "Visual Studio 12 2013 Win64" ]; then
+if [ "$RABBIT_TOOLCHAIN_VERSION" = "12" ]; then
+    if [ "${RABBIT_ARCH}" = "x64" ]; then
+        RABBITIM_GENERATORS="Visual Studio 12 2013 Win64"
+    else
+        RABBITIM_GENERATORS="Visual Studio 12 2013"
+    fi
+fi
+
+if [ "$RABBIT_TOOLCHAIN_VERSION" = "12" ]; then
    VC_TOOLCHAIN=12
    MSVC_VER=1800
 fi
-if [ "$GENERATORS" = "Visual Studio 14 2015" \
-    -o "$GENERATORS" = "Visual Studio 14 2015 Win64" ]; then
+if [ "$RABBIT_TOOLCHAIN_VERSION" = "14" ]; then
    VC_TOOLCHAIN=14
    MSVC_VER=1900
 fi
-if [ "$GENERATORS" = "Visual Studio 15 2017" \
-    -o "$GENERATORS" = "Visual Studio 15 2017 Win64" ]; then
+if [ "$RABBIT_TOOLCHAIN_VERSION" = "15" ]; then
    VC_TOOLCHAIN=15
    MSVC_VER=2000
 fi

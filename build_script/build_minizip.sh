@@ -40,7 +40,7 @@ CUR_DIR=`pwd`
 
 #下载源码:
 if [ ! -d ${RABBIT_BUILD_SOURCE_CODE} ]; then
-    VERSION=1.1
+    VERSION=1.2
     if [ "TRUE" = "${RABBIT_USE_REPOSITORIES}" ]; then
         echo "git clone -q --branch=$VERSION https://github.com/nmoinvaz/minizip.git ${RABBIT_BUILD_SOURCE_CODE}"
         git clone -q --branch=$VERSION https://github.com/nmoinvaz/minizip.git ${RABBIT_BUILD_SOURCE_CODE}
@@ -112,11 +112,11 @@ case ${RABBIT_BUILD_TARGERT} in
     ;;
 esac
 
-echo "cmake .. -DCMAKE_INSTALL_PREFIX=$RABBIT_BUILD_PREFIX -DCMAKE_BUILD_TYPE=Release -G\"${GENERATORS}\" ${CMAKE_PARA}"
+echo "cmake .. -DCMAKE_INSTALL_PREFIX=$RABBIT_BUILD_PREFIX -DCMAKE_BUILD_TYPE=Release -G\"${RABBITIM_GENERATORS}\" ${CMAKE_PARA}"
 cmake .. \
     -DCMAKE_INSTALL_PREFIX="$RABBIT_BUILD_PREFIX" \
     -DCMAKE_BUILD_TYPE="Release" \
-    -G"${GENERATORS}" ${CMAKE_PARA} -DZLIB_ROOT="$RABBIT_BUILD_PREFIX"
+    -G"${RABBITIM_GENERATORS}" ${CMAKE_PARA} -DZLIB_ROOT="$RABBIT_BUILD_PREFIX"
 
 cmake --build . --target install --config Release ${MAKE_PARA}
 

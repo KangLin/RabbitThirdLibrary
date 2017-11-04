@@ -63,10 +63,10 @@ echo "QT_BIN:$QT_BIN"
 TARGET_OS=`uname -s`
 case $TARGET_OS in
     MINGW* | CYGWIN* | MSYS*)
-        GENERATORS="MSYS Makefiles"
+        RABBITIM_GENERATORS="MSYS Makefiles"
         ;;
     Linux* | Unix*)
-        GENERATORS="Unix Makefiles" 
+        RABBITIM_GENERATORS="Unix Makefiles" 
         ;;
     *)
     echo "Please set RABBIT_BUILD_HOST. see build_envsetup_windows_mingw.sh"

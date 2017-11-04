@@ -58,16 +58,16 @@ if [ -n "$2" ]; then
     ./build_libtiff.sh ${RABBIT_BUILD_TARGERT} $2/libtiff
     ./build_freetype.sh ${RABBIT_BUILD_TARGERT} $2/freetype
     ./build_qrencode.sh ${RABBIT_BUILD_TARGERT}
-    ./build_gdal.sh ${RABBIT_BUILD_TARGERT} $2/gdal
-    ./build_osg.sh ${RABBIT_BUILD_TARGERT} $2/osg
-    #./build_geos.sh ${RABBIT_BUILD_TARGERT} $2/geos
-    ./build_OsgQt.sh ${RABBIT_BUILD_TARGERT} $2/osgQt
-    ./build_osgearth.sh ${RABBIT_BUILD_TARGERT} $2/osgearth
     ./build_x264.sh ${RABBIT_BUILD_TARGERT} $2/x264 
     ./build_libyuv.sh ${RABBIT_BUILD_TARGERT} $2/libyuv 
     ./build_libvpx.sh ${RABBIT_BUILD_TARGERT} $2/libvpx 
     ./build_ffmpeg.sh ${RABBIT_BUILD_TARGERT} $2/ffmpeg 
     ./build_libopus.sh ${RABBIT_BUILD_TARGERT} $2/libopus 
+    ./build_gdal.sh ${RABBIT_BUILD_TARGERT} $2/gdal
+    ./build_osg.sh ${RABBIT_BUILD_TARGERT} $2/osg
+    #./build_geos.sh ${RABBIT_BUILD_TARGERT} $2/geos
+    ./build_OsgQt.sh ${RABBIT_BUILD_TARGERT} $2/osgQt
+    ./build_osgearth.sh ${RABBIT_BUILD_TARGERT} $2/osgearth
     #./build_qt.sh ${RABBIT_BUILD_TARGERT} $2/qt5 
     ./build_qxmpp.sh ${RABBIT_BUILD_TARGERT} $2/qxmpp 
     ./build_qzxing.sh ${RABBIT_BUILD_TARGERT} $2/qzxing

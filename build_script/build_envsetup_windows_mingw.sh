@@ -67,14 +67,14 @@ case $TARGET_OS in
     MINGW* | CYGWIN* | MSYS*)
         MAKE=make
         export PKG_CONFIG_PATH=${RABBIT_BUILD_PREFIX}/lib/pkgconfig:$PKG_CONFIG_PATH
-        GENERATORS="MSYS Makefiles"
+        RABBITIM_GENERATORS="MSYS Makefiles"
         ;;
     Linux* | Unix*)
         #pkg-config帮助文档：http://linux.die.net/man/1/pkg-config
         export PKG_CONFIG_PATH=${RABBIT_BUILD_PREFIX}/lib/pkgconfig
         export PKG_CONFIG_LIBDIR=${PKG_CONFIG_PATH}
         export PKG_CONFIG_SYSROOT_DIR=${RABBIT_BUILD_PREFIX}
-        GENERATORS="Unix Makefiles" 
+        RABBITIM_GENERATORS="Unix Makefiles" 
         ;;
     *)
     echo "Please set RABBIT_BUILD_HOST. see build_envsetup_windows_mingw.sh"

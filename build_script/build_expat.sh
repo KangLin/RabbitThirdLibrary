@@ -119,11 +119,11 @@ case ${RABBIT_BUILD_TARGERT} in
     windows_msvc)
         #sed -i "s/add_custom_command.*//g" ../CMakeLists.txt
         CMAKE_PARA="-DBUILD_tests=OFF -DBUILD_examples=OFF -DBUILD_tools=OFF"
-        echo "cmake .. -DCMAKE_INSTALL_PREFIX=$RABBIT_BUILD_PREFIX -DCMAKE_BUILD_TYPE=Release -G\"${GENERATORS}\" ${CMAKE_PARA}"
+        echo "cmake .. -DCMAKE_INSTALL_PREFIX=$RABBIT_BUILD_PREFIX -DCMAKE_BUILD_TYPE=Release -G\"${RABBITIM_GENERATORS}\" ${CMAKE_PARA}"
         cmake .. \
             -DCMAKE_INSTALL_PREFIX="$RABBIT_BUILD_PREFIX" \
             -DCMAKE_BUILD_TYPE="Release" \
-            -G"${GENERATORS}" ${CMAKE_PARA} 
+            -G"${RABBITIM_GENERATORS}" ${CMAKE_PARA} 
         
         cmake --build . --target install --config Release #{MAKE_PARA}
         exit 0
