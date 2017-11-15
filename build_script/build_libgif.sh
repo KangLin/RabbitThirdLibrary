@@ -114,12 +114,13 @@ case ${RABBIT_BUILD_TARGERT} in
         ;;
     windows_msvc)
         cd ${RABBIT_BUILD_SOURCE_CODE}/lib
+        rm -f *.lib *.obj
         echo "" > unistd.h
         cp ../util/qprintf.c ../util/getarg.* . 
         nmake -f Makefile.ms clean
         nmake -f Makefile.ms
         cp -f gif_lib.h $RABBIT_BUILD_PREFIX/include
-        cp -f giflib.lib $RABBIT_BUILD_PREFIX/lib/libgif.lib
+        mv -f giflib.lib $RABBIT_BUILD_PREFIX/lib/libgif.lib
         rm -f qprintf.c getarg.* unistd.h
         cd $CUR_DIR
         exit 0

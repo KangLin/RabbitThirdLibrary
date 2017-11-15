@@ -44,17 +44,23 @@ CUR_DIR=`pwd`
 
 #下载源码:
 if [ ! -d ${RABBIT_BUILD_SOURCE_CODE} ]; then
-    VERSION=2.3
-    #if [ "TRUE" = "${RABBIT_USE_REPOSITORIES}" ]; then
-        echo "git clone -q http://git.code.sf.net/u/kl222/qzxing ${RABBIT_BUILD_SOURCE_CODE}"
-        git clone -q http://git.code.sf.net/u/kl222/qzxing ${RABBIT_BUILD_SOURCE_CODE}
-        #git clone -q https://github.com/ftylitak/qzxing.git ${RABBIT_BUILD_SOURCE_CODE}
-    #else
-    #    mkdir -p ${RABBIT_BUILD_SOURCE_CODE}
-    #    cd ${RABBIT_BUILD_SOURCE_CODE}
-    #    wget -q -c http://sourceforge.net/projects/qzxing/files/v${VERSION}/QZXing_sourceV${VERSION}.zip/download
-    #    unzip -q download #${RABBIT_BUILD_SOURCE_CODE}
-    #fi
+    VERSION=master
+    if [ "TRUE" = "${RABBIT_USE_REPOSITORIES}" ]; then
+        echo "git clone -q https://github.com/ftylitak/qzxing.git ${RABBIT_BUILD_SOURCE_CODE}"
+        git clone -q https://github.com/KangLin/qzxing.git ${RABBIT_BUILD_SOURCE_CODE}
+        cd ${RABBIT_BUILD_SOURCE_CODE}
+        git checkout -b ${VERSION} ${VERSION}
+    else
+        mkdir -p ${RABBIT_BUILD_SOURCE_CODE}
+        cd ${RABBIT_BUILD_SOURCE_CODE}
+        wget -q -c https://github.com/ftylitak/qzxing/archive/${VERSION}.zip
+        unzip -q ${VERSION}.zip
+        mv qzxing-${FFMPEG_VERSION} ..
+        rm -fr *
+        cd ..
+        rm -fr ${RABBIT_BUILD_SOURCE_CODE}
+        mv -f qzxing-${FFMPEG_VERSION} ${RABBIT_BUILD_SOURCE_CODE}
+    fi
 fi
 
 if [ -d "${RABBIT_BUILD_SOURCE_CODE}/src" ]; then

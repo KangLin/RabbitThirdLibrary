@@ -54,10 +54,10 @@ SOURCE_DIR=${SCRIPT_DIR}/../src
 #下载预编译库
 DOWNLOAD_URL="https://ci.appveyor.com/api/projects/KangLin/rabbitthirdlibrary/artifacts/RABBIT_${BUILD_TARGERT}${RABBIT_TOOLCHAIN_VERSION}_${RABBIT_ARCH}_${QT_VERSION}_v${BUILD_VERSION}.zip?all=true&job=${RABBITIM_JOB}"
 echo "wget -q -c -O ${SCRIPT_DIR}/../${BUILD_TARGERT}.zip ${DOWNLOAD_URL} "
-
 if [ ${LIBRARY_NUMBER} -ne 0 ]; then
-    #appveyor DownloadFile "${DOWNLOAD_URL}" -FileName ${SCRIPT_DIR}/../${BUILD_TARGERT}.zip
-    wget --passive -c -p -O ${SCRIPT_DIR}/../${BUILD_TARGERT}.zip ${DOWNLOAD_URL}
+    echo "appveyor DownloadFile \"${DOWNLOAD_URL}\" -FileName ${SCRIPT_DIR}/../${BUILD_TARGERT}.zip"
+    appveyor DownloadFile "${DOWNLOAD_URL}" -FileName ${SCRIPT_DIR}/../${BUILD_TARGERT}.zip
+    #wget --passive -c -p -O ${SCRIPT_DIR}/../${BUILD_TARGERT}.zip ${DOWNLOAD_URL}
     unzip -d ${SCRIPT_DIR}/.. ${SCRIPT_DIR}/../${BUILD_TARGERT}.zip
     if [ "$PROJECT_NAME" != "RabbitThirdLibrary" \
         -a "$BUILD_TARGERT" != "windows_msvc" \

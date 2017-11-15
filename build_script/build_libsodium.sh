@@ -40,7 +40,7 @@ CUR_DIR=`pwd`
 
 #下载源码:
 if [ ! -d ${RABBIT_BUILD_SOURCE_CODE} ]; then
-    LIBSODIUM_VERSION=1.0.11
+    LIBSODIUM_VERSION=1.0.14
     if [ "TRUE" = "${RABBIT_USE_REPOSITORIES}" ]; then
         echo "git clone -q  -b ${LIBSODIUM_VERSION} https://github.com/jedisct1/libsodium.git ${RABBIT_BUILD_SOURCE_CODE}"
         git clone -q  -b ${LIBSODIUM_VERSION} https://github.com/jedisct1/libsodium.git ${RABBIT_BUILD_SOURCE_CODE}
@@ -61,6 +61,9 @@ fi
 cd ${RABBIT_BUILD_SOURCE_CODE}
 
 if [ "${RABBIT_BUILD_TARGERT}" != "windows_msvc" ]; then
+    if [ -d ".git" ]; then
+        git clean -xdf
+    fi
     if [ ! -f configure ]; then
         echo "sh autogen.sh"
         sh autogen.sh
@@ -113,7 +116,8 @@ case ${RABBIT_BUILD_TARGERT} in
     unix)
         ;;
     windows_msvc)
-        if [ "$RABBITIM_GENERATORS" = "Visual Studio 12 2013*" ]; then
+        if [ "$RABBITIM_GENERATORS" = "Visual Studio 12 2013" \
+            -o "$RABBITIM_GENERATORS" = "Visual Studio 12 2013 Win64" ]; then
             if [ "$RABBIT_ARCH" = "x64" ]; then
                 msbuild.exe -m -v:n -p:Configuration=DynRelease -p:Platform=x64 builds/msvc/vs2013/libsodium.sln
                 cp bin/x64/Release/v120/dynamic/*.dll $RABBIT_BUILD_PREFIX/bin
@@ -124,7 +128,8 @@ case ${RABBIT_BUILD_TARGERT} in
                 cp bin/Win32/Release/v120/dynamic/*.lib $RABBIT_BUILD_PREFIX/lib
             fi
         fi
-        if [ "$RABBITIM_GENERATORS" = "Visual Studio 14 2015*" ]; then
+        if [ "$RABBITIM_GENERATORS" = "Visual Studio 14 2015" \
+         -o "$RABBITIM_GENERATORS" = "Visual Studio 14 2015 Win64" ]; then
             if [ "$RABBIT_ARCH" = "x64" ]; then
                 msbuild.exe -m -v:n -p:Configuration=DynRelease -p:Platform=x64 builds/msvc/vs2015/libsodium.sln
                 cp bin/x64/Release/v140/dynamic/*.dll $RABBIT_BUILD_PREFIX/bin
@@ -165,8 +170,14 @@ case ${RABBIT_BUILD_TARGERT} in
 esac
 
 CONFIG_PARA="${CONFIG_PARA} --prefix=$RABBIT_BUILD_PREFIX "
-echo "../configure ${CONFIG_PARA} CFLAGS=\"${CFLAGS=}\" CPPFLAGS=\"${CPPFLAGS}\""
-../configure ${CONFIG_PARA} CFLAGS="${CFLAGS}" CPPFLAGS="${CPPFLAGS}"
+if [ -n "${CFLAGS}" ]; then
+    CONFIG_PARA="${CONFIG_PARA} CFLAGS=\"${CFLAGS}\" "
+fi
+if [ -n "${CPPFLAGS}" ]; then
+    CONFIG_PARA="${CONFIG_PARA} CPPFLAGS=\"${CPPFLAGS}\""
+fi
+echo "../configure ${CONFIG_PARA}"
+../configure ${CONFIG_PARA}
 
 echo "make install"
 make ${RABBIT_MAKE_JOB_PARA} VERBOSE=1 

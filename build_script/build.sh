@@ -42,11 +42,19 @@ if [ -z "${RABBIT_BUILD_PREFIX}" ]; then
     . `pwd`/build_envsetup_${RABBIT_BUILD_TARGERT}.sh
 fi
 
+case $1 in
+    windows_msvc)
+        export PATH=/mingw32/bin:$PATH #因为mingw32下的工具不识别winodws路径，所以用mingw32下的工具
+        ;;
+    windows_mingw)
+        export PATH=/usr/bin:$PATH
+        ;;
+esac
+
 #产生修改前缀脚本
 ./change_prefix.sh
 
 if [ -n "$2" ]; then
-    #echo "Source dir:$2"
     ./build_zlib.sh ${RABBIT_BUILD_TARGERT} $2/zlib 
     ./build_minizip.sh ${RABBIT_BUILD_TARGERT} $2/minizip
     ./build_openssl.sh ${RABBIT_BUILD_TARGERT} $2/openssl 
@@ -57,12 +65,13 @@ if [ -n "$2" ]; then
     ./build_libgif.sh ${RABBIT_BUILD_TARGERT} $2/libgif
     ./build_libtiff.sh ${RABBIT_BUILD_TARGERT} $2/libtiff
     ./build_freetype.sh ${RABBIT_BUILD_TARGERT} $2/freetype
-    ./build_qrencode.sh ${RABBIT_BUILD_TARGERT}
+    ./build_libqrencode.sh ${RABBIT_BUILD_TARGERT} $2/libqrencode
     ./build_x264.sh ${RABBIT_BUILD_TARGERT} $2/x264 
     ./build_libyuv.sh ${RABBIT_BUILD_TARGERT} $2/libyuv 
     ./build_libvpx.sh ${RABBIT_BUILD_TARGERT} $2/libvpx 
     ./build_ffmpeg.sh ${RABBIT_BUILD_TARGERT} $2/ffmpeg 
     ./build_libopus.sh ${RABBIT_BUILD_TARGERT} $2/libopus 
+    ./build_opencv.sh ${RABBIT_BUILD_TARGERT} $2/opencv
     ./build_gdal.sh ${RABBIT_BUILD_TARGERT} $2/gdal
     ./build_osg.sh ${RABBIT_BUILD_TARGERT} $2/osg
     #./build_geos.sh ${RABBIT_BUILD_TARGERT} $2/geos
@@ -82,18 +91,18 @@ else
     ./build_libgif.sh ${RABBIT_BUILD_TARGERT}
     ./build_libtiff.sh ${RABBIT_BUILD_TARGERT}
     ./build_freetype.sh ${RABBIT_BUILD_TARGERT}
-    ./build_qrencode.sh ${RABBIT_BUILD_TARGERT}
-    ./build_gdal.sh ${RABBIT_BUILD_TARGERT} 
-    ./build_osg.sh ${RABBIT_BUILD_TARGERT}
-    ./build_OsgQt.sh ${RABBIT_BUILD_TARGERT}
-    #./build_geos.sh ${RABBIT_BUILD_TARGERT} 
-    ./build_osgearth.sh ${RABBIT_BUILD_TARGERT}
-
+    ./build_libqrencode.sh ${RABBIT_BUILD_TARGERT}
     ./build_x264.sh ${RABBIT_BUILD_TARGERT} 
     ./build_libyuv.sh ${RABBIT_BUILD_TARGERT} 
     ./build_libvpx.sh ${RABBIT_BUILD_TARGERT} 
     ./build_ffmpeg.sh ${RABBIT_BUILD_TARGERT} 
     ./build_libopus.sh ${RABBIT_BUILD_TARGERT} 
+    ./build_opencv.sh ${RABBIT_BUILD_TARGERT}
+    ./build_gdal.sh ${RABBIT_BUILD_TARGERT} 
+    ./build_osg.sh ${RABBIT_BUILD_TARGERT}
+    ./build_OsgQt.sh ${RABBIT_BUILD_TARGERT}
+    #./build_geos.sh ${RABBIT_BUILD_TARGERT} 
+    ./build_osgearth.sh ${RABBIT_BUILD_TARGERT}
     #./build_qt.sh ${RABBIT_BUILD_TARGERT}
     ./build_qxmpp.sh ${RABBIT_BUILD_TARGERT}
     ./build_qzxing.sh ${RABBIT_BUILD_TARGERT} 
@@ -122,7 +131,7 @@ if [ -n "$2" ]; then
     ./build_osgearth.sh ${RABBIT_BUILD_TARGERT} $2/osgearth
 else
     if [ "${RABBIT_BUILD_TARGERT}" != "windows_msvc" ]; then
-        ./build_qrencode.sh ${RABBIT_BUILD_TARGERT} && \
+        ./build_libqrencode.sh ${RABBIT_BUILD_TARGERT} && \
         ./build_speexdsp.sh ${RABBIT_BUILD_TARGERT} && \
         ./build_speex.sh ${RABBIT_BUILD_TARGERT} && \
         ./build_libopus.sh ${RABBIT_BUILD_TARGERT} && \

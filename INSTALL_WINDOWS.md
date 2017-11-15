@@ -144,7 +144,15 @@ http://www.microsoft.com/en-us/download/confirmation.aspx?id=42273
 主页：http://www.ruby-lang.org/  http://rubyinstaller.org/  
 https://github.com/ruby/ruby
 
-注意：这几个脚本工具的路径要放在环境变量 PATH 中的 /usr/bin 之前
+注意：这几个脚本工具的路径要放在环境变量 PATH 中的 /usr/bin 之前。  
+     因为 msys2 自带的这几个脚本不能识别windows路径。   
+     当然也可用 mingw32 版本的脚本工具，
+     但是需要把环境变量 PATH 中的 /mingw32/bin 放到 /usr/bin 之前。
+
+
+    pacman -S mingw-w64-i686-perl mingw-w64-i686-python2
+    export PATH=/mingw32/bin:$PATH
+    
 
 #### 2.9. 汇编工具（yasm、nasm）
 [yasm](http://yasm.tortall.net/)  
@@ -291,6 +299,11 @@ windows下用mingw交叉编译
         mingw-w64-i686-ruby mingw-w64-i686-yasm mingw-w64-i686-nasm
         mingw-w64-i686-pkg-config mingw-w64-i686-make mingw-w64-i686-gcc
 
+**注意:**因为msys2下的工具不能识别windows路径，所以要用 mingw32 工具。
+
+    export PATH=/mingw32/bin:$PATH
+    
+
 当前msys2的pkg-config好象有BUG，用 mingw-w64-i686-pkg-config 
 
     pacman -S mingw-w64-i686-pkg-config 
@@ -387,9 +400,14 @@ qt5.2.0 ~ qt5.3.X ,使用的版本是：4.8.X。qt安装包中自带了gcc。
 主页：http://www.ruby-lang.org/  http://rubyinstaller.org/  
 https://github.com/ruby/ruby
 
-或者：
+注意：这几个脚本工具的路径要放在环境变量 PATH 中的 /usr/bin 之前。  
+     因为 msys2 自带的这几个脚本才能识别unix路径。   
+     所以 /usr/bin 最前。
 
-    pacman -S mingw-w64-i686-python2 mingw-w64-i686-perl mingw-w64-i686-ruby
+
+    pacman -S python perl ruby
+    export PATH=/usr/bin:$PATH
+    
 
 #### 2.6. 汇编工具（yasm、nasm）
 [yasm](http://yasm.tortall.net/)  

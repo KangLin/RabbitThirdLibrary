@@ -27,7 +27,7 @@
 
 #需要设置下面变量：
 if [ -z "$QT_ROOT" ]; then
-    QT_ROOT=/c/Qt/Qt5.7.1_msvc/5.7/msvc2015 #QT 安装根目录,默认为:${RABBITRoot}/ThirdLibrary/windows_msvc/qt
+    QT_ROOT=/c/Qt/Qt5.8.0/5.8/msvc2015 #QT 安装根目录,默认为:${RABBITRoot}/ThirdLibrary/windows_msvc/qt
 fi
 JOM=make #设置 QT make 工具 JOM
 MAKE="nmake"
@@ -44,7 +44,7 @@ if [ -z "${RABBIT_MAKE_JOB_PARA}" ]; then
 fi
 
 if [ -z "${RABBIT_ARCH}" ]; then
-    if [ "X64" = ${Platform} ]; then
+    if [ "X64" = ${Platform} -o "x64" = ${Platform} ]; then
         RABBIT_ARCH=x64
     else
         RABBIT_ARCH=x86

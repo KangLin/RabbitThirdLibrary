@@ -40,7 +40,7 @@ CUR_DIR=`pwd`
 
 #下载源码:
 if [ ! -d ${RABBIT_BUILD_SOURCE_CODE} ]; then
-    VERSION=1.6.31beta06
+    VERSION=v1.6.34
     if [ "TRUE" = "${RABBIT_USE_REPOSITORIES}" ]; then
         echo "git clone -q --branch=v${VERSION} https://github.com/glennrp/libpng.git ${RABBIT_BUILD_SOURCE_CODE}"
         git clone -q --branch=v$VERSION https://github.com/glennrp/libpng.git ${RABBIT_BUILD_SOURCE_CODE}

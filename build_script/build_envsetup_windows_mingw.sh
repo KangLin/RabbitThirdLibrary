@@ -15,7 +15,7 @@
 
 #需要设置下面变量：
 if [ -z "$QT_ROOT" ]; then
-    QT_ROOT=/c/Qt/Qt5.7.0_android/5.7/mingw53_32 #QT 安装根目录,默认为:${RABBITRoot}/ThirdLibrary/windows_mingw/qt
+    QT_ROOT=/c/Qt/Qt5.8.0_android/5.8/mingw53_32 #QT 安装根目录,默认为:${RABBITRoot}/ThirdLibrary/windows_mingw/qt
 fi
 JOM=nmake #设置 QT make 工具 JOM
 if [ -z "$RABBIT_CLEAN" ]; then
