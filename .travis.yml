@@ -48,7 +48,7 @@ before_script:
 
 script: 
   - bash ${TRAVIS_BUILD_DIR}/build_script/ci/build.sh ${TRAVIS_BUILD_DIR} #> /dev/null
-  - bash ${TRAVIS_BUILD_DIR}/build_script/ci/Deploy.sh ${TRAVIS_BUILD_DIR}
+  #- bash ${TRAVIS_BUILD_DIR}/build_script/ci/Deploy.sh ${TRAVIS_BUILD_DIR}
 
 after_script:
 

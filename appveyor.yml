@@ -92,7 +92,7 @@ after_build:
   - cd %APPVEYOR_BUILD_FOLDER%
 
 artifacts:
-  - path: $(BUILD_TARGERT)_$(RABBIT_ARCH)
+  - path: $(BUILD_TARGERT)$(RABBIT_TOOLCHAIN_VERSION)_$(RABBIT_ARCH)
     name: RABBIT_$(BUILD_TARGERT)$(RABBIT_TOOLCHAIN_VERSION)_$(RABBIT_ARCH)_$(QT_VERSION)_v$(appveyor_build_version)
     type: zip
 

@@ -33,11 +33,26 @@ MAKE="make ${RABBIT_MAKE_JOB_PARA}"
 #   RABBIT_BUILD_CROSS_PREFIX     #交叉编译前缀
 #   RABBIT_BUILD_CROSS_SYSROOT  #交叉编译平台的 sysroot
 
+if [ -z "${RABBIT_ARCH}" ]; then
+    case `uname -m` in
+        x86|i*86)
+            RABBIT_ARCH=x86
+            ;;
+        x86_64)
+            RABBIT_ARCH=x64
+            ;;
+        *)
+            echo "Error RABBIT_ARCH=$MSYSTEM"
+            ;;
+    esac
+fi
+
 if [ -n "${RABBITRoot}" ]; then
     RABBIT_BUILD_PREFIX=${RABBITRoot}/ThirdLibrary/unix
 else
     RABBIT_BUILD_PREFIX=`pwd`/../unix    #修改这里为安装前缀 
 fi
+RABBIT_BUILD_PREFIX=${RABBIT_BUILD_PREFIX}${RABBIT_TOOLCHAIN_VERSION}_${RABBIT_ARCH}
 if [ "$RABBIT_BUILD_STATIC" = "static" ]; then
     RABBIT_BUILD_PREFIX=${RABBIT_BUILD_PREFIX}_static
 fi
