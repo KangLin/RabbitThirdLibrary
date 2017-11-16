@@ -334,7 +334,7 @@ make: fork: Resource temporarily unavailable
 * mingw-w64: http://sourceforge.net/projects/mingw-w64/
 * mingwbuilds: http://sourceforge.net/projects/mingwbuilds/
 
-1. 当前使用qt 5.5.1 自带的mingw-gcc版本：
+1. 当前使用qt 5.5.1 自带的mingw-gcc版本：(最好使用此工具链）
 
 	gcc version 4.9.2 (i686-posix-dwarf-rev3, Built by MinGW-W64 project)
 

@@ -16,6 +16,8 @@
 #需要设置下面变量：
 if [ -z "$QT_ROOT" ]; then
     QT_ROOT=/c/Qt/Qt5.9.2/5.9.2/mingw53_32 #QT 安装根目录,默认为:${RABBITRoot}/ThirdLibrary/windows_mingw/qt
+    TOOLCHAIN=/c/Qt/Qt5.9.2/Tools/mingw530_32/bin
+    export PATH=${TOOLCHAIN}:$PATH  #用与QT相同的工具链
 fi
 JOM=nmake #设置 QT make 工具 JOM
 if [ -z "$RABBIT_CLEAN" ]; then
