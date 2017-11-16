@@ -114,7 +114,6 @@ esac
 echo "cmake .. -DCMAKE_INSTALL_PREFIX=$RABBIT_BUILD_PREFIX -DCMAKE_BUILD_TYPE=Release -G\"${RABBITIM_GENERATORS}\" ${CMAKE_PARA}"
 cmake .. \
     -DCMAKE_INSTALL_PREFIX="$RABBIT_BUILD_PREFIX" \
-    -DCMAKE_BUILD_TYPE="Release" \
     -G"${RABBITIM_GENERATORS}" ${CMAKE_PARA} -Dlzma=OFF
 
 cmake --build . --target install --config Release ${MAKE_PARA}

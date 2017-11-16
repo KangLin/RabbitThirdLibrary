@@ -1,8 +1,8 @@
 #!/bin/bash
 set -ev
 
-RABBITIM_LIBRARY[0]="change_prefix zlib minizip expat libgpx openssl libsodium libcurl libpng jpeg libgif libtiff freetype libyuv libvpx libqrencode libopus x264 ffmpeg "
-RABBITIM_LIBRARY[1]="change_prefix opencv gdal"
+RABBITIM_LIBRARY[0]="change_prefix zlib minizip expat libgpx openssl libsodium libcurl libpng jpeg libgif libtiff freetype libyuv libvpx libqrencode libopus x264 ffmpeg gdal"
+RABBITIM_LIBRARY[1]="change_prefix opencv"
 RABBITIM_LIBRARY[2]="qxmpp qzxing"
 RABBITIM_LIBRARY[3]="osg"
 RABBITIM_LIBRARY[4]="OsgQt osgearth"
