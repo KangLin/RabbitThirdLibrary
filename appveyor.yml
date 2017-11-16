@@ -5,47 +5,72 @@ image: Visual Studio 2015
 
 environment:
   matrix:
+  ##### msvc 2017 ########
+  - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
+    BUILD_TARGERT: windows_msvc
+    RABBIT_TOOLCHAIN_VERSION: 15
+    RABBIT_ARCH: x64
+    QT_VERSION: NO
+    QT_ROOT: NO
+
+  - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
+    BUILD_TARGERT: windows_msvc
+    RABBIT_TOOLCHAIN_VERSION: 15
+    RABBIT_ARCH: x86
+    QT_VERSION: NO
+    QT_ROOT: NO
+    
+  ##### msvc 2015 ########
   - BUILD_TARGERT: windows_msvc
     RABBIT_TOOLCHAIN_VERSION: 14
     RABBIT_ARCH: x64
     QT_VERSION: NO
     QT_ROOT: NO
-    LIBRARY_NUMBER: 0
   
+  - BUILD_TARGERT: windows_msvc
+    RABBIT_TOOLCHAIN_VERSION: 14
+    RABBIT_ARCH: x86
+    QT_VERSION: NO
+    QT_ROOT: NO
+
+  ##### msvc 2013 ########
+  - BUILD_TARGERT: windows_msvc
+    RABBIT_TOOLCHAIN_VERSION: 12
+    RABBIT_ARCH: x64
+    QT_VERSION: NO
+    QT_ROOT: NO
+
+  - BUILD_TARGERT: windows_msvc
+    RABBIT_TOOLCHAIN_VERSION: 12
+    RABBIT_ARCH: x86
+    QT_VERSION: NO
+    QT_ROOT: NO
+  
+  ##### mingw ########
   - BUILD_TARGERT: windows_mingw
     RABBIT_TOOLCHAIN_VERSION: 530
     RABBIT_ARCH: x86
     QT_VERSION: NO
     QT_ROOT: NO
-    LIBRARY_NUMBER: 0
-    
-  - BUILD_TARGERT: windows_msvc
-    RABBIT_TOOLCHAIN_VERSION: 14
-    RABBIT_ARCH: x64
-    QT_VERSION: NO
-    QT_ROOT: NO
-    LIBRARY_NUMBER: 1
-    
-  - BUILD_TARGERT: windows_msvc
-    RABBIT_TOOLCHAIN_VERSION: 14
-    RABBIT_ARCH: x64
-    QT_VERSION: NO
-    QT_ROOT: NO
-    LIBRARY_NUMBER: 2
 
-  - BUILD_TARGERT: windows_msvc
-    RABBIT_TOOLCHAIN_VERSION: 14
-    RABBIT_ARCH: x64
+  - BUILD_TARGERT: windows_mingw
+    RABBIT_TOOLCHAIN_VERSION: 492
+    RABBIT_ARCH: x86
     QT_VERSION: NO
     QT_ROOT: NO
-    LIBRARY_NUMBER: 3
+
+  - BUILD_TARGERT: windows_mingw
+    RABBIT_TOOLCHAIN_VERSION: 482
+    RABBIT_ARCH: x86
+    QT_VERSION: NO
+    QT_ROOT: NO
     
 init:
   - set varch=%RABBIT_ARCH%
   - set PROJECT_NAME=%APPVEYOR_PROJECT_NAME%
   - set BUILD_VERSION=%APPVEYOR_BUILD_VERSION%
   - if "%RABBIT_ARCH%" == "x64" set varch=amd64
-  - if "%BUILD_TARGERT%" == "windows_msvc" call "C:\Program Files (x86)\Microsoft Visual Studio %RABBIT_TOOLCHAIN_VERSION%.0\VC\vcvarsall.bat" %varch%
+  - if "%BUILD_TARGERT%" == "windows_msvc" if %RABBIT_TOOLCHAIN_VERSION% LSS 15 (call "C:\Program Files (x86)\Microsoft Visual Studio %RABBIT_TOOLCHAIN_VERSION%.0\VC\vcvarsall.bat" %varch%) else (call "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Auxiliary\Build\vcvarsall.bat" %varch%)
   - if "%BUILD_TARGERT%" == "windows_mingw" set MSYSTEM=MINGW32  #设置编译系统为MINGW32
   - del C:\msys64\usr\bin\link.exe
 

@@ -114,7 +114,7 @@ case ${RABBIT_BUILD_TARGERT} in
     unix)
         ;;
     windows_msvc)
-        if [ "$RABBITIM_GENERATORS" = "Visual Studio 14 2015" ]; then
+        if [  "$RABBIT_TOOLCHAIN_VERSION" -ge "14" ]; then
             if [ "$RABBIT_ARCH" = "x64" ]; then
                 ARCH=x64
             else

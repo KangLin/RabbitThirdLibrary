@@ -40,7 +40,7 @@ CUR_DIR=`pwd`
 
 #下载源码:
 if [ ! -d ${RABBIT_BUILD_SOURCE_CODE} ]; then
-    LIBSODIUM_VERSION=1.0.14
+    LIBSODIUM_VERSION=1.0.15
     if [ "TRUE" = "${RABBIT_USE_REPOSITORIES}" ]; then
         echo "git clone -q  -b ${LIBSODIUM_VERSION} https://github.com/jedisct1/libsodium.git ${RABBIT_BUILD_SOURCE_CODE}"
         git clone -q  -b ${LIBSODIUM_VERSION} https://github.com/jedisct1/libsodium.git ${RABBIT_BUILD_SOURCE_CODE}
@@ -116,8 +116,22 @@ case ${RABBIT_BUILD_TARGERT} in
     unix)
         ;;
     windows_msvc)
-        if [ "$RABBITIM_GENERATORS" = "Visual Studio 12 2013" \
-            -o "$RABBITIM_GENERATORS" = "Visual Studio 12 2013 Win64" ]; then
+        cd ${RABBIT_BUILD_SOURCE_CODE}
+        if [ -d ".git" ]; then
+            git clean -xdf
+        fi
+        if [  "$RABBIT_TOOLCHAIN_VERSION" = "15" ]; then
+            if [ "$RABBIT_ARCH" = "x64" ]; then
+                msbuild.exe -m -v:n -p:Configuration=DynRelease -p:Platform=x64 builds/msvc/vs2017/libsodium.sln
+                cp bin/x64/Release/v141/dynamic/*.dll $RABBIT_BUILD_PREFIX/bin
+                cp bin/x64/Release/v141/dynamic/*.lib $RABBIT_BUILD_PREFIX/lib
+            else
+                msbuild.exe -m -v:n -p:Configuration=DynRelease -p:Platform=Win32 builds/msvc/vs2017/libsodium.sln
+                cp bin/Win32/Release/v141/dynamic/*.dll $RABBIT_BUILD_PREFIX/bin
+                cp bin/Win32/Release/v141/dynamic/*.lib $RABBIT_BUILD_PREFIX/lib
+            fi
+        fi
+        if [  "$RABBIT_TOOLCHAIN_VERSION" = "12" ]; then
             if [ "$RABBIT_ARCH" = "x64" ]; then
                 msbuild.exe -m -v:n -p:Configuration=DynRelease -p:Platform=x64 builds/msvc/vs2013/libsodium.sln
                 cp bin/x64/Release/v120/dynamic/*.dll $RABBIT_BUILD_PREFIX/bin
@@ -128,8 +142,7 @@ case ${RABBIT_BUILD_TARGERT} in
                 cp bin/Win32/Release/v120/dynamic/*.lib $RABBIT_BUILD_PREFIX/lib
             fi
         fi
-        if [ "$RABBITIM_GENERATORS" = "Visual Studio 14 2015" \
-         -o "$RABBITIM_GENERATORS" = "Visual Studio 14 2015 Win64" ]; then
+        if [  "$RABBIT_TOOLCHAIN_VERSION" = "14" ]; then
             if [ "$RABBIT_ARCH" = "x64" ]; then
                 msbuild.exe -m -v:n -p:Configuration=DynRelease -p:Platform=x64 builds/msvc/vs2015/libsodium.sln
                 cp bin/x64/Release/v140/dynamic/*.dll $RABBIT_BUILD_PREFIX/bin

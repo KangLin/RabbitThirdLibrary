@@ -22,7 +22,7 @@ export ANDROID_SDK=$ANDROID_SDK_ROOT
 
 #ANT=/usr/bin/ant         #ant 程序  
 if [ -z "$QT_ROOT" ]; then
-    QT_ROOT=/c/Qt/Qt5.7.0/5.7/android_armv7       #QT 安装根目录,默认为:${RABBITRoot}/ThirdLibrary/android/qt  
+    QT_ROOT=/c/Qt/Qt5.8.0_android/5.8/android_armv7       #QT 安装根目录,默认为:${RABBITRoot}/ThirdLibrary/android/qt  
 fi
 JOM=make #/c/Qt/Qt5.3.1/Tools/QtCreator/bin/jom   #设置 QT make 工具 JOM  
 if [ -z "$RABBIT_CLEAN" ]; then

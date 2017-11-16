@@ -41,15 +41,19 @@ if [ -z "${RABBIT_BUILD_PREFIX}" ]; then
     echo ". `pwd`/build_envsetup_${RABBIT_BUILD_TARGERT}.sh"
     . `pwd`/build_envsetup_${RABBIT_BUILD_TARGERT}.sh
 fi
-
-case $1 in
-    windows_msvc)
-        export PATH=/mingw32/bin:$PATH #因为mingw32下的工具不识别winodws路径，所以用mingw32下的工具
+TARGET_OS=`uname -s`
+case $TARGET_OS in
+    MINGW* | CYGWIN* | MSYS*)
+        case $1 in
+            windows_msvc)
+                export PATH=/mingw32/bin:$PATH #因为mingw32下的工具不识别winodws路径，所以用mingw32下的工具
+                ;;
+            windows_mingw)
+                export PATH=/usr/bin:$PATH
+                ;;
+        esac
         ;;
-    windows_mingw)
-        export PATH=/usr/bin:$PATH
-        ;;
-esac
+ esac
 
 #产生修改前缀脚本
 ./change_prefix.sh

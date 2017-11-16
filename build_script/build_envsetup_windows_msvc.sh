@@ -43,6 +43,20 @@ if [ -z "${RABBIT_MAKE_JOB_PARA}" ]; then
     fi
 fi
 
+if [ -z "${RABBIT_TOOLCHAIN_VERSION}" ]; then
+    case "${VisualStudioVersion}" in
+        15*)
+            RABBIT_TOOLCHAIN_VERSION=15
+            ;;
+        14*)
+            RABBIT_TOOLCHAIN_VERSION=14
+            ;;
+        *)
+            RABBIT_TOOLCHAIN_VERSION=12
+            ;;
+    esac
+fi
+
 if [ -z "${RABBIT_ARCH}" ]; then
     if [ "X64" = ${Platform} -o "x64" = ${Platform} ]; then
         RABBIT_ARCH=x64
@@ -56,7 +70,7 @@ if [ -n "${RABBITRoot}" ]; then
 else
     RABBIT_BUILD_PREFIX=`pwd`/../windows_msvc    #修改这里为安装前缀 
 fi
-RABBIT_BUILD_PREFIX=${RABBIT_BUILD_PREFIX}_${RABBIT_ARCH}
+RABBIT_BUILD_PREFIX=${RABBIT_BUILD_PREFIX}${RABBIT_TOOLCHAIN_VERSION}_${RABBIT_ARCH}
 
 if [ "$RABBIT_BUILD_STATIC" = "static" ]; then
     RABBIT_BUILD_PREFIX=${RABBIT_BUILD_PREFIX}_static
@@ -80,8 +94,13 @@ if [ -n "${QT_ROOT}" ]; then
 fi
 
 TARGET_OS=`uname -s`
-if [ -z "${RABBIT_TOOLCHAIN_VERSION}" ]; then
-    RABBIT_TOOLCHAIN_VERSION=14
+
+if [ "$RABBIT_TOOLCHAIN_VERSION" = "15" ]; then
+    if [ "${RABBIT_ARCH}" = "x64" ]; then
+        RABBITIM_GENERATORS="Visual Studio 15 2017 Win64"
+    else
+        RABBITIM_GENERATORS="Visual Studio 15 2017"
+    fi
 fi
 if [ "$RABBIT_TOOLCHAIN_VERSION" = "14" ]; then
     if [ "${RABBIT_ARCH}" = "x64" ]; then

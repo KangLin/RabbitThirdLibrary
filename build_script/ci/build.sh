@@ -1,7 +1,7 @@
 #!/bin/bash
 set -ev
 
-RABBITIM_LIBRARY[0]="change_prefix zlib minizip expat libgpx openssl libsodium libcurl libpng jpeg libgif libtiff freetype libyuv libvpx qrencode libopus x264 ffmpeg "
+RABBITIM_LIBRARY[0]="change_prefix zlib minizip expat libgpx openssl libsodium libcurl libpng jpeg libgif libtiff freetype libyuv libvpx libqrencode libopus x264 ffmpeg "
 RABBITIM_LIBRARY[1]="change_prefix opencv gdal"
 RABBITIM_LIBRARY[2]="qxmpp qzxing"
 RABBITIM_LIBRARY[3]="osg"
@@ -50,6 +50,10 @@ if [ -d ${PROJECT_DIR}/ThirdLibrary/build_script ]; then
 fi
 cd ${SCRIPT_DIR}
 SOURCE_DIR=${SCRIPT_DIR}/../src
+
+if [ -z "${LIBRARY_NUMBER}" ]; then
+    LIBRARY_NUMBER=0
+fi
 
 #下载预编译库
 DOWNLOAD_URL="https://ci.appveyor.com/api/projects/KangLin/rabbitthirdlibrary/artifacts/RABBIT_${BUILD_TARGERT}${RABBIT_TOOLCHAIN_VERSION}_${RABBIT_ARCH}_${QT_VERSION}_v${BUILD_VERSION}.zip?all=true&job=${RABBITIM_JOB}"
@@ -114,6 +118,10 @@ do
     if [ "$v" = "rabbitim" ]; then
         bash ./build_$v.sh ${BUILD_TARGERT} # > /dev/null
     else
-        bash ./build_$v.sh ${BUILD_TARGERT} ${SOURCE_DIR}/$v #> /dev/null
+        if [ "$APPVEYOR" = "True" ]; then
+            bash ./build_$v.sh ${BUILD_TARGERT} ${SOURCE_DIR}/$v
+        else
+            bash ./build_$v.sh ${BUILD_TARGERT} ${SOURCE_DIR}/$v > /dev/null
+        fi
     fi
 done

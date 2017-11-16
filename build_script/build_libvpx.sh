@@ -40,8 +40,10 @@ fi
 if [ ! -d ${RABBIT_BUILD_SOURCE_CODE} ]; then
     VERSION=v1.6.1
     echo "git clone -q --branch=$VERSION https://chromium.googlesource.com/webm/libvpx ${RABBIT_BUILD_SOURCE_CODE}"
-    git clone -q --branch=$VERSION https://chromium.googlesource.com/webm/libvpx ${RABBIT_BUILD_SOURCE_CODE}
-    #git clone -q https://chromium.googlesource.com/webm/libvpx ${RABBIT_BUILD_SOURCE_CODE}
+    #git clone -q --branch=$VERSION https://chromium.googlesource.com/webm/libvpx ${RABBIT_BUILD_SOURCE_CODE}
+    git clone -q https://chromium.googlesource.com/webm/libvpx ${RABBIT_BUILD_SOURCE_CODE}
+    cd ${RABBIT_BUILD_SOURCE_CODE}
+    git checkout -b 3e3a5686167a5493a5e2223635d1085cf8c963dd 3e3a5686167a5493a5e2223635d1085cf8c963dd
 fi
 
 CUR_DIR=`pwd`
