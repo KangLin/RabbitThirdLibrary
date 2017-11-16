@@ -26,9 +26,9 @@
 #   注意这种用法，script.sh开头一行必须包含 #!/bin/sh  
 
 #需要设置下面变量：
-if [ -z "$QT_ROOT" ]; then
-    QT_ROOT=/c/Qt/Qt5.8.0/5.8/msvc2015 #QT 安装根目录,默认为:${RABBITRoot}/ThirdLibrary/windows_msvc/qt
-fi
+#if [ -z "$QT_ROOT" ]; then
+#    QT_ROOT=/c/Qt/Qt5.8.0/5.8/msvc2015 #QT 安装根目录,默认为:${RABBITRoot}/ThirdLibrary/windows_msvc/qt
+#fi
 JOM=make #设置 QT make 工具 JOM
 MAKE="nmake"
 if [ -z "$RABBIT_CLEAN" ]; then
@@ -47,12 +47,15 @@ if [ -z "${RABBIT_TOOLCHAIN_VERSION}" ]; then
     case "${VisualStudioVersion}" in
         15*)
             RABBIT_TOOLCHAIN_VERSION=15
+            MSVC_NAME=msvc2017
             ;;
         14*)
             RABBIT_TOOLCHAIN_VERSION=14
+            MSVC_NAME=msvc2015
             ;;
         *)
             RABBIT_TOOLCHAIN_VERSION=12
+            MSVC_NAME=msvc2013
             ;;
     esac
 fi
@@ -60,10 +63,16 @@ fi
 if [ -z "${RABBIT_ARCH}" ]; then
     if [ "X64" = ${Platform} -o "x64" = ${Platform} ]; then
         RABBIT_ARCH=x64
+        MSVC_NAME=${MSVC_NAME}_64
     else
         RABBIT_ARCH=x86
     fi
 fi
+
+if [ -z "$QT_ROOT" ]; then
+    QT_ROOT=/c/Qt/Qt5.9.2/5.9.2/${MSVC_NAME} #QT 安装根目录,默认为:${RABBITRoot}/ThirdLibrary/windows_msvc/qt
+fi
+
 #安装前缀
 if [ -n "${RABBITRoot}" ]; then
     RABBIT_BUILD_PREFIX=${RABBITRoot}/ThirdLibrary/windows_msvc
