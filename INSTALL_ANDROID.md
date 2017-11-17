@@ -29,11 +29,10 @@
 8. QT_ROOT=                              #qt的安装位置,默认为:${RabbitThirdLibraryRoot}/android/qt
 9. RABBIT_MAKE_JOB_PARA="-j`cat /proc/cpuinfo |grep 'cpu cores' |wc -l`" #make 同时工作进程参数,建议设置为你机器CUP个数
 10. RABBIT_BUILD_STATIC="static"       #设置编译静态库，注释掉，则为编译动态库
-11. JOM=make                             #设置 QT make 工具 JOM
-12. RABBIT_USE_REPOSITORIES="FALSE"    #下载指定的压缩包。省略，则下载开发库。
-13. RABBIT_CLEAN=TRUE                  #编译前清理
-14. RABBIT_BUILD_TOOLCHAIN_VERSION=4.9   #工具链版本号，默认为4.8
-15. RABBIT_BUILD_PLATFORMS_VERSION=15    #android ndk api (平台)版本号，默认为9
+11. RABBIT_USE_REPOSITORIES="FALSE"    #下载指定的压缩包。省略，则下载开发库。
+12. RABBIT_CLEAN=TRUE                  #编译前清理
+13. RABBIT_BUILD_TOOLCHAIN_VERSION=4.9   #工具链版本号，默认为4.8
+14. RABBIT_BUILD_PLATFORMS_VERSION=15    #android ndk api (平台)版本号，默认为9
 
 所需要的环境变量可以保存到系统配置文件 ~/.profile 文件中。作为全局环境变量。但这可能会与其它工程需要的环境变量冲突。
 为了避免这个问题。你也可以把环境变量保到 build_envsetup_${RABBIT_BUILD_TARGERT}.sh 文件中。  

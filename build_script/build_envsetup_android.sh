@@ -24,7 +24,6 @@ export ANDROID_SDK=$ANDROID_SDK_ROOT
 if [ -z "$QT_ROOT" ]; then
     QT_ROOT=/c/Qt/Qt5.9.2/5.9.2/android_armv7      #QT 安装根目录,默认为:${RABBITRoot}/ThirdLibrary/android/qt  
 fi
-JOM=make #/c/Qt/Qt5.3.1/Tools/QtCreator/bin/jom   #设置 QT make 工具 JOM  
 if [ -z "$RABBIT_CLEAN" ]; then
     RABBIT_CLEAN=TRUE #编译前清理  
 fi

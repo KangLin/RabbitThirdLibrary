@@ -16,7 +16,7 @@
 if [ -z "$QT_ROOT" ]; then
     QT_ROOT=/home/l/Qt5.8.0/5.8/gcc_64  #QT 安装根目录,默认为:${RABBITRoot}/ThirdLibrary/unix/qt
 fi
-JOM=${MAKE} #设置 QT make 工具 JOM
+
 if [ -z "$RABBIT_CLEAN" ]; then
     RABBIT_CLEAN=TRUE #编译前清理
 fi

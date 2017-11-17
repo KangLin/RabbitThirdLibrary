@@ -28,7 +28,6 @@ esac
 #运行本脚本前,先运行 build_${RABBIT_BUILD_TARGERT}_envsetup.sh 进行环境变量设置,需要先设置下面变量:
 #   RABBIT_BUILD_PREFIX= #修改这里为安装前缀
 #   QMAKE=  #设置用于相应平台编译的 QMAKE
-#   JOM=    #QT 自带的类似 make 的工具
 if [ -z "${RABBIT_BUILD_PREFIX}" ]; then
     echo ". `pwd`/build_envsetup_${RABBIT_BUILD_TARGERT}.sh"
     . `pwd`/build_envsetup_${RABBIT_BUILD_TARGERT}.sh
@@ -144,7 +143,6 @@ else #qmake编译
             #PARA="-r -spec linux-g++ "
             ;;
         windows_msvc)
-            MAKE=nmake
             ;;
         windows_mingw)
             #PARA="-r -spec win32-g++"

@@ -29,7 +29,6 @@
 #if [ -z "$QT_ROOT" ]; then
 #    QT_ROOT=/c/Qt/Qt5.8.0/5.8/msvc2015 #QT 安装根目录,默认为:${RABBITRoot}/ThirdLibrary/windows_msvc/qt
 #fi
-JOM=make #设置 QT make 工具 JOM
 MAKE="nmake"
 if [ -z "$RABBIT_CLEAN" ]; then
     RABBIT_CLEAN=TRUE #编译前清理

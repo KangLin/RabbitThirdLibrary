@@ -19,7 +19,6 @@ if [ -z "$QT_ROOT" ]; then
     TOOLCHAIN=/c/Qt/Qt5.9.2/Tools/mingw530_32/bin
     export PATH=${TOOLCHAIN}:$PATH  #用与QT相同的工具链
 fi
-JOM=nmake #设置 QT make 工具 JOM
 if [ -z "$RABBIT_CLEAN" ]; then
     RABBIT_CLEAN=TRUE #编译前清理
 fi

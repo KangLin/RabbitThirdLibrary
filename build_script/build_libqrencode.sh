@@ -49,8 +49,8 @@ if [ ! -d ${RABBIT_BUILD_SOURCE_CODE} ]; then
         echo "wget -q https://github.com/fukuchi/libqrencode/archive/v${VERSION}.tar.gz"
         mkdir -p ${RABBIT_BUILD_SOURCE_CODE}
         cd ${RABBIT_BUILD_SOURCE_CODE}
-        wget -q -c wget -q https://github.com/fukuchi/libqrencode/archive/v${VERSION}.tar.gz
-        tar xf v${VERSION}.tar.gz
+        wget -q -c https://github.com/fukuchi/libqrencode/archive/v${VERSION}.tar.gz
+        tar xzf v${VERSION}.tar.gz
         mv libqrencode-${VERSION}  ..
         rm -fr *
         cd ..

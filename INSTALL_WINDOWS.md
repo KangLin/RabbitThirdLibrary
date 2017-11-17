@@ -579,10 +579,9 @@ ubuntu下用mingw交叉编译
 1. QT_ROOT=                          #qt的安装位置,默认为:${RabbitThirdLibraryRoot}/windows_mingw/qt
 2. RABBIT_MAKE_JOB_PARA="-j`cat /proc/cpuinfo |grep 'cpu cores' |wc -l`"  #make 同时工作进程参数,建议设置为你机器CUP个数
 3. RABBIT_BUILD_STATIC="static"    #设置编译静态库，注释掉，则为编译动态库
-4. JOM=make                          #设置 QT make 工具 JOM
-5. RABBIT_USE_REPOSITORIES="FALSE" #下载指定的压缩包。省略，则下载开发库。
-6. RABBIT_CLEAN=TRUE               #编译前清理
-7. RABBIT_BUILD_CROSS_HOST=        #编译工具链前缀,用于交叉编译，默认为：i686-w64-mingw32
+4. RABBIT_USE_REPOSITORIES="FALSE" #下载指定的压缩包。省略，则下载开发库。
+5. RABBIT_CLEAN=TRUE               #编译前清理
+6. RABBIT_BUILD_CROSS_HOST=        #编译工具链前缀,用于交叉编译，默认为：i686-w64-mingw32
 
 编译所有依赖的第三方库：
 
