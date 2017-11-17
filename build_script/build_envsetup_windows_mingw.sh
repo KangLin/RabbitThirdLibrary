@@ -116,3 +116,16 @@ if [ -z "${RABBIT_BUILD_CROSS_HOST}" ]; then
     RABBIT_BUILD_CROSS_HOST=i686-w64-mingw32 #编译工具链前缀
 fi
 RABBIT_BUILD_CROSS_PREFIX=${RABBIT_BUILD_CROSS_HOST}-
+
+export PKG_CONFIG=pkg-config
+export PKG_CONFIG_PATH=${RABBIT_BUILD_PREFIX}/lib/pkgconfig
+export PKG_CONFIG_LIBDIR=${PKG_CONFIG_PATH}
+
+echo "---------------------------------------------------------------------------"
+echo "RABBIT_BUILD_PREFIX:$RABBIT_BUILD_PREFIX"
+echo "QT_BIN:$QT_BIN"
+echo "QT_ROOT:$QT_ROOT"
+echo "PKG_CONFIG_PATH:$PKG_CONFIG_PATH"
+echo "PKG_CONFIG_SYSROOT_DIR:$PKG_CONFIG_SYSROOT_DIR"
+echo "PATH=$PATH"
+echo "---------------------------------------------------------------------------"

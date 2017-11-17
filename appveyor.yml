@@ -10,6 +10,7 @@ environment:
     BUILD_TARGERT: windows_msvc
     RABBIT_TOOLCHAIN_VERSION: 15
     RABBIT_ARCH: x64
+    RABBIT_CONFIG: Release
     QT_VERSION: NO
     QT_ROOT: NO
 
@@ -25,6 +26,7 @@ environment:
     BUILD_TARGERT: windows_msvc
     RABBIT_TOOLCHAIN_VERSION: 15
     RABBIT_ARCH: x86
+    RABBIT_CONFIG: Release
     QT_VERSION: NO
     QT_ROOT: NO
     
@@ -40,6 +42,7 @@ environment:
   - BUILD_TARGERT: windows_msvc
     RABBIT_TOOLCHAIN_VERSION: 14
     RABBIT_ARCH: x64
+    RABBIT_CONFIG: Release
     QT_VERSION: NO
     QT_ROOT: NO
     
@@ -53,6 +56,7 @@ environment:
   - BUILD_TARGERT: windows_msvc
     RABBIT_TOOLCHAIN_VERSION: 14
     RABBIT_ARCH: x86
+    RABBIT_CONFIG: Release
     QT_VERSION: NO
     QT_ROOT: NO
   
@@ -67,12 +71,14 @@ environment:
   - BUILD_TARGERT: windows_msvc
     RABBIT_TOOLCHAIN_VERSION: 12
     RABBIT_ARCH: x64
+    RABBIT_CONFIG: Release
     QT_VERSION: NO
     QT_ROOT: NO
 
   - BUILD_TARGERT: windows_msvc
     RABBIT_TOOLCHAIN_VERSION: 12
     RABBIT_ARCH: x86
+    RABBIT_CONFIG: Release
     QT_VERSION: NO
     QT_ROOT: NO
   
@@ -80,6 +86,7 @@ environment:
   - BUILD_TARGERT: windows_mingw
     RABBIT_TOOLCHAIN_VERSION: 530
     RABBIT_ARCH: x86
+    RABBIT_CONFIG: Release
     QT_VERSION: NO
     QT_ROOT: NO
     
@@ -93,12 +100,14 @@ environment:
   - BUILD_TARGERT: windows_mingw
     RABBIT_TOOLCHAIN_VERSION: 492
     RABBIT_ARCH: x86
+    RABBIT_CONFIG: Release
     QT_VERSION: NO
     QT_ROOT: NO
 
   - BUILD_TARGERT: windows_mingw
     RABBIT_TOOLCHAIN_VERSION: 482
     RABBIT_ARCH: x86
+    RABBIT_CONFIG: Release
     QT_VERSION: NO
     QT_ROOT: NO
     
@@ -130,7 +139,7 @@ after_build:
   - cd %APPVEYOR_BUILD_FOLDER%
 
 artifacts:
-  - path: $(BUILD_TARGERT)$(RABBIT_TOOLCHAIN_VERSION)_$(RABBIT_ARCH)
+  - path: $(BUILD_TARGERT)$(RABBIT_TOOLCHAIN_VERSION)_$(RABBIT_ARCH)_$(RABBIT_CONFIG)
     name: RABBIT_$(BUILD_TARGERT)$(RABBIT_TOOLCHAIN_VERSION)_$(RABBIT_ARCH)_$(QT_VERSION)_v$(appveyor_build_version)
     type: zip
 
