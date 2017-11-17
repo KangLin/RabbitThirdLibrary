@@ -40,7 +40,7 @@ CUR_DIR=`pwd`
 
 #下载源码:
 if [ ! -d ${RABBIT_BUILD_SOURCE_CODE} ]; then
-    VERSION=R_2_2_4
+    VERSION=R_2_2_5
     if [ "TRUE" = "${RABBIT_USE_REPOSITORIES}" ]; then
         echo "git clone -q --branch=${VERSION} https://github.com/libexpat/libexpat.git ${RABBIT_BUILD_SOURCE_CODE}"
         git clone --branch=${VERSION} https://github.com/libexpat/libexpat.git ${RABBIT_BUILD_SOURCE_CODE}
@@ -64,7 +64,7 @@ if [ -d expat ]; then
     cd ${RABBIT_BUILD_SOURCE_CODE}
 fi
 
-if [ ! -f configure ]; then
+if [ ! -f configure -a "${RABBIT_BUILD_TARGERT}" != "windows_msvc" ]; then
     echo "sh buildconf.sh"
     sh buildconf.sh
 fi

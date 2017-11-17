@@ -123,9 +123,8 @@ if [ "$3" = "cmake" ]; then
 
     echo "cmake .. -G\"${RABBITIM_GENERATORS}\" $PARA"
     cmake .. -G"${RABBITIM_GENERATORS}" $PARA # --debug-output
-    echo "build ...."
-    echo "cmake --build . --config Release ${CMAKE_PARA} ${MAKE_PARA}"
-    cmake --build . --config Release ${CMAKE_PARA} ${MAKE_PARA}
+    echo "cmake --build . --target install --config ${RABBIT_CONFIG} ${MAKE_PARA}"
+    cmake --build . --target install --config ${RABBIT_CONFIG} ${MAKE_PARA}
 
 else #qmake编译
 
@@ -160,7 +159,7 @@ else #qmake编译
    #     PARA="$PARA CONFIG+=static"
    # fi
     echo "qmake ...."
-    $QMAKE ../RabbitIm.pro  $PARA "CONFIG+=release"  \
+    $QMAKE ../RabbitIm.pro  $PARA "CONFIG*=${RABBIT_CONFIG}"  \
            INCLUDEPATH+=${RABBIT_BUILD_PREFIX}/include \
            LIBS+=-L${RABBIT_BUILD_PREFIX}/lib \
            QXMPP_USE_VPX=1 \

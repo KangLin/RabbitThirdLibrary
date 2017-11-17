@@ -73,14 +73,17 @@ if [ -z "$QT_ROOT" ]; then
     QT_ROOT=/c/Qt/Qt5.9.2/5.9.2/${MSVC_NAME} #QT 安装根目录,默认为:${RABBITRoot}/ThirdLibrary/windows_msvc/qt
 fi
 
-#安装前缀
+if [ -z "$RABBIT_CONFIG" ]; then
+    RABBIT_CONFIG=Release
+fi
+
+#安装前缀  
 if [ -n "${RABBITRoot}" ]; then
     RABBIT_BUILD_PREFIX=${RABBITRoot}/ThirdLibrary/windows_msvc
 else
-    RABBIT_BUILD_PREFIX=`pwd`/../windows_msvc    #修改这里为安装前缀 
+    RABBIT_BUILD_PREFIX=`pwd`/../windows_msvc    #修改这里为安装前缀  
 fi
-RABBIT_BUILD_PREFIX=${RABBIT_BUILD_PREFIX}${RABBIT_TOOLCHAIN_VERSION}_${RABBIT_ARCH}
-
+RABBIT_BUILD_PREFIX=${RABBIT_BUILD_PREFIX}${RABBIT_TOOLCHAIN_VERSION}_${RABBIT_ARCH}_${RABBIT_CONFIG}
 if [ "$RABBIT_BUILD_STATIC" = "static" ]; then
     RABBIT_BUILD_PREFIX=${RABBIT_BUILD_PREFIX}_static
 fi

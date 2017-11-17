@@ -148,7 +148,13 @@ case ${RABBIT_BUILD_TARGERT} in
         else
             MODE=dll
         fi
-        nmake -f Makefile.vc mode=$MODE VC=${VC_TOOLCHAIN} WITH_DEVEL=$RABBIT_BUILD_PREFIX MACHINE=$RABBIT_ARCH
+        if [ "$Debug" = "$RABBIT_CONFIG" ]; then
+            DEBUG=yes
+        else
+            DEBUG=no
+        fi
+        nmake -f Makefile.vc mode=$MODE VC=${VC_TOOLCHAIN} WITH_DEVEL=$RABBIT_BUILD_PREFIX \
+            MACHINE=$RABBIT_ARCH MACHINE=${RABBIT_ARCH} DEBUG=${DEBUG} 
         cp -fr ${RABBIT_BUILD_SOURCE_CODE}/builds/libcurl-vc${VC_TOOLCHAIN}-$RABBIT_ARCH-release-${MODE}-ipv6-sspi-winssl/* ${RABBIT_BUILD_PREFIX}
         cd $CUR_DIR
         exit 0

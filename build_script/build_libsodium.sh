@@ -120,39 +120,46 @@ case ${RABBIT_BUILD_TARGERT} in
         if [ -d ".git" ]; then
             git clean -xdf
         fi
+        
+        if [ "Debug" = "$RABBIT_CONFIG" ]; then
+            Configuration=DynDebug
+        else
+            Configuration=DynRelease
+        fi
         if [  "$RABBIT_TOOLCHAIN_VERSION" = "15" ]; then
             if [ "$RABBIT_ARCH" = "x64" ]; then
-                msbuild.exe -m -v:n -p:Configuration=DynRelease -p:Platform=x64 builds/msvc/vs2017/libsodium.sln
+                msbuild.exe -m -v:n -p:Configuration=${Configuration} -p:Platform=x64 builds/msvc/vs2017/libsodium.sln
                 cp bin/x64/Release/v141/dynamic/*.dll $RABBIT_BUILD_PREFIX/bin
                 cp bin/x64/Release/v141/dynamic/*.lib $RABBIT_BUILD_PREFIX/lib
             else
-                msbuild.exe -m -v:n -p:Configuration=DynRelease -p:Platform=Win32 builds/msvc/vs2017/libsodium.sln
+                msbuild.exe -m -v:n -p:Configuration=${Configuration} -p:Platform=Win32 builds/msvc/vs2017/libsodium.sln
                 cp bin/Win32/Release/v141/dynamic/*.dll $RABBIT_BUILD_PREFIX/bin
                 cp bin/Win32/Release/v141/dynamic/*.lib $RABBIT_BUILD_PREFIX/lib
             fi
         fi
         if [  "$RABBIT_TOOLCHAIN_VERSION" = "12" ]; then
             if [ "$RABBIT_ARCH" = "x64" ]; then
-                msbuild.exe -m -v:n -p:Configuration=DynRelease -p:Platform=x64 builds/msvc/vs2013/libsodium.sln
+                msbuild.exe -m -v:n -p:Configuration=${Configuration} -p:Platform=x64 builds/msvc/vs2013/libsodium.sln
                 cp bin/x64/Release/v120/dynamic/*.dll $RABBIT_BUILD_PREFIX/bin
                 cp bin/x64/Release/v120/dynamic/*.lib $RABBIT_BUILD_PREFIX/lib
             else
-                msbuild.exe -m -v:n -p:Configuration=DynRelease -p:Platform=Win32 builds/msvc/vs2013/libsodium.sln
+                msbuild.exe -m -v:n -p:Configuration=${Configuration} -p:Platform=Win32 builds/msvc/vs2013/libsodium.sln
                 cp bin/Win32/Release/v120/dynamic/*.dll $RABBIT_BUILD_PREFIX/bin
                 cp bin/Win32/Release/v120/dynamic/*.lib $RABBIT_BUILD_PREFIX/lib
             fi
         fi
         if [  "$RABBIT_TOOLCHAIN_VERSION" = "14" ]; then
             if [ "$RABBIT_ARCH" = "x64" ]; then
-                msbuild.exe -m -v:n -p:Configuration=DynRelease -p:Platform=x64 builds/msvc/vs2015/libsodium.sln
+                msbuild.exe -m -v:n -p:Configuration=${Configuration} -p:Platform=x64 builds/msvc/vs2015/libsodium.sln
                 cp bin/x64/Release/v140/dynamic/*.dll $RABBIT_BUILD_PREFIX/bin
                 cp bin/x64/Release/v140/dynamic/*.lib $RABBIT_BUILD_PREFIX/lib
             else
-                msbuild.exe -m -v:n -p:Configuration=DynRelease -p:Platform=Win32 builds/msvc/vs2015/libsodium.sln
+                msbuild.exe -m -v:n -p:Configuration=${Configuration} -p:Platform=Win32 builds/msvc/vs2015/libsodium.sln
                 cp bin/Win32/Release/v140/dynamic/*.dll $RABBIT_BUILD_PREFIX/bin
                 cp bin/Win32/Release/v140/dynamic/*.lib $RABBIT_BUILD_PREFIX/lib
             fi
         fi
+        
         echo "cp -fr src/libsodium/include/* $RABBIT_BUILD_PREFIX"
         cp -fr src/libsodium/include/* $RABBIT_BUILD_PREFIX/include
         cd $CUR_DIR

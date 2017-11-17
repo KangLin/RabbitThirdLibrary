@@ -46,7 +46,7 @@ case $TARGET_OS in
     MINGW* | CYGWIN* | MSYS*)
         case $1 in
             windows_msvc)
-                export PATH=/mingw32/bin:$PATH #因为mingw32下的工具不识别winodws路径，所以用mingw32下的工具
+                export PATH=/mingw32/bin:$PATH #因为msys2下的工具不识别winodws路径，所以用mingw32下的工具
                 ;;
             windows_mingw)
                 export PATH=/usr/bin:$PATH
@@ -61,6 +61,7 @@ case $TARGET_OS in
 if [ -n "$2" ]; then
     ./build_zlib.sh ${RABBIT_BUILD_TARGERT} $2/zlib 
     ./build_minizip.sh ${RABBIT_BUILD_TARGERT} $2/minizip
+    ./build_expat.sh ${RABBIT_BUILD_TARGERT} $2/expat
     ./build_openssl.sh ${RABBIT_BUILD_TARGERT} $2/openssl 
     ./build_libsodium.sh ${RABBIT_BUILD_TARGERT} $2/libsodium
     ./build_libcurl.sh ${RABBIT_BUILD_TARGERT} $2/curl 
@@ -87,6 +88,7 @@ if [ -n "$2" ]; then
 else
     ./build_zlib.sh ${RABBIT_BUILD_TARGERT} 
     ./build_minizip.sh ${RABBIT_BUILD_TARGERT}
+    ./build_expat.sh ${RABBIT_BUILD_TARGERT}
     ./build_openssl.sh ${RABBIT_BUILD_TARGERT} 
     ./build_libsodium.sh ${RABBIT_BUILD_TARGERT} 
     ./build_libcurl.sh ${RABBIT_BUILD_TARGERT} 

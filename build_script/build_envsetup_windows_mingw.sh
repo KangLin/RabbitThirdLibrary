@@ -12,10 +12,10 @@
 #   ./script.sh
 #   注意这种用法，script.sh开头一行必须包含 #!/bin/sh  
 
-
 #需要设置下面变量：
 if [ -z "$QT_ROOT" ]; then
     QT_ROOT=/c/Qt/Qt5.9.2/5.9.2/mingw53_32 #QT 安装根目录,默认为:${RABBITRoot}/ThirdLibrary/windows_mingw/qt
+    RABBIT_TOOLCHAIN_VERSION=530    
     TOOLCHAIN=/c/Qt/Qt5.9.2/Tools/mingw530_32/bin
     export PATH=${TOOLCHAIN}:$PATH  #用与QT相同的工具链
 fi
@@ -45,16 +45,22 @@ if [ -z "${RABBIT_ARCH}" ]; then
             RABBIT_ARCH=x64
             ;;
         *)
-            echo "Error RABBIT_ARCH=$MSYSTEM"
+            echo "Error RABBIT_ARCH=$MSYSTEM, set RABBIT_ARCH=x86"
+            RABBIT_ARCH=x86
             ;;
     esac
 fi
+
+if [ -z "$RABBIT_CONFIG" ]; then
+    RABBIT_CONFIG=Release
+fi
+
 if [ -n "${RABBITRoot}" ]; then
     RABBIT_BUILD_PREFIX=${RABBITRoot}/ThirdLibrary/windows_mingw
 else
     RABBIT_BUILD_PREFIX=`pwd`/../windows_mingw    #修改这里为安装前缀
 fi
-RABBIT_BUILD_PREFIX=${RABBIT_BUILD_PREFIX}${RABBIT_TOOLCHAIN_VERSION}_${RABBIT_ARCH}
+RABBIT_BUILD_PREFIX=${RABBIT_BUILD_PREFIX}${RABBIT_TOOLCHAIN_VERSION}_${RABBIT_ARCH}_${RABBIT_CONFIG}
 if [ "$RABBIT_BUILD_STATIC" = "static" ]; then
     RABBIT_BUILD_PREFIX=${RABBIT_BUILD_PREFIX}_static
 fi

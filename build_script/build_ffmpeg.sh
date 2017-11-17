@@ -158,6 +158,11 @@ CONFIG_PARA="${CONFIG_PARA} --prefix=$RABBIT_BUILD_PREFIX --enable-gpl --enable-
 CONFIG_PARA="${CONFIG_PARA} --disable-manpages --disable-podpages --disable-txtpages  --disable-ffprobe"
 CONFIG_PARA="${CONFIG_PARA} --disable-ffserver --disable-ffplay --disable-programs"
 CONFIG_PARA="${CONFIG_PARA} --enable-runtime-cpudetect"
+if [ "Debug" = "$RABBIT_CONFIG" ]; then
+    CONFIG_PARA="${CONFIG_PARA} --disable-stripping --enable-debug "
+else
+    CONFIG_PARA="${CONFIG_PARA} --disable-debug --enable-stripping"
+fi
 CFLAGS="${CFLAGS} -I$RABBIT_BUILD_PREFIX/include" 
 LDFLAGS="${LDFLAGS} -L$RABBIT_BUILD_PREFIX/lib" 
 

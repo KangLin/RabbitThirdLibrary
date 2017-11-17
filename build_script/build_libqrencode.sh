@@ -50,12 +50,12 @@ if [ ! -d ${RABBIT_BUILD_SOURCE_CODE} ]; then
         mkdir -p ${RABBIT_BUILD_SOURCE_CODE}
         cd ${RABBIT_BUILD_SOURCE_CODE}
         wget -q -c wget -q https://github.com/fukuchi/libqrencode/archive/v${VERSION}.tar.gz
-        tar xf qrencode-${VERSION}.tar.gz
-        mv qrencode-${VERSION}  ..
+        tar xf v${VERSION}.tar.gz
+        mv libqrencode-${VERSION}  ..
         rm -fr *
         cd ..
         rm -fr ${RABBIT_BUILD_SOURCE_CODE}
-        mv -f qrencode-${VERSION} ${RABBIT_BUILD_SOURCE_CODE}
+        mv -f libqrencode-${VERSION} ${RABBIT_BUILD_SOURCE_CODE}
     fi
 fi
 
@@ -132,7 +132,7 @@ case ${RABBIT_BUILD_TARGERT} in
             -DWITH_TOOLS=NO \
             -DWITH_TESTS=NO \
             ${CMAKE_PARA}
-        cmake --build . --target install --config Release 
+        cmake --build . --target install --config ${RABBIT_CONFIG}
         cd $CUR_DIR
         exit 0
         ;;

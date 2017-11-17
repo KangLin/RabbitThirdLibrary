@@ -116,7 +116,9 @@ cmake .. \
     -DCMAKE_INSTALL_PREFIX="$RABBIT_BUILD_PREFIX" \
     -G"${RABBITIM_GENERATORS}" ${CMAKE_PARA} -Dlzma=OFF
 
-cmake --build . --target install --config Release ${MAKE_PARA}
+cmake --build . --target install --config ${RABBIT_CONFIG} ${MAKE_PARA}
+
 mkdir -p $RABBIT_BUILD_PREFIX/lib/pkgconfig
 cp $RABBIT_BUILD_PREFIX/share/pkgconfig/* $RABBIT_BUILD_PREFIX/lib/pkgconfig/.
+
 cd $CUR_DIR

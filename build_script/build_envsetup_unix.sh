@@ -47,12 +47,16 @@ if [ -z "${RABBIT_ARCH}" ]; then
     esac
 fi
 
+if [ -z "$RABBIT_CONFIG" ]; then
+    RABBIT_CONFIG=Release
+fi
+
 if [ -n "${RABBITRoot}" ]; then
     RABBIT_BUILD_PREFIX=${RABBITRoot}/ThirdLibrary/unix
 else
     RABBIT_BUILD_PREFIX=`pwd`/../unix    #修改这里为安装前缀 
 fi
-RABBIT_BUILD_PREFIX=${RABBIT_BUILD_PREFIX}${RABBIT_TOOLCHAIN_VERSION}_${RABBIT_ARCH}
+RABBIT_BUILD_PREFIX=${RABBIT_BUILD_PREFIX}${RABBIT_TOOLCHAIN_VERSION}_${RABBIT_ARCH}_${RABBIT_CONFIG}
 if [ "$RABBIT_BUILD_STATIC" = "static" ]; then
     RABBIT_BUILD_PREFIX=${RABBIT_BUILD_PREFIX}_static
 fi

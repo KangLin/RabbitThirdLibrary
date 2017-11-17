@@ -131,10 +131,8 @@ echo "cmake .. -DCMAKE_INSTALL_PREFIX=$RABBIT_BUILD_PREFIX -DCMAKE_BUILD_TYPE=Re
 cmake .. \
     -DCMAKE_INSTALL_PREFIX="$RABBIT_BUILD_PREFIX" \
     -G"${RABBITIM_GENERATORS}" ${CMAKE_PARA}
-    
-cmake --build . --target install --config Release ${MAKE_PARA}
-if [ -z "$CI" ]; then
-    cmake --build . --target install --config Debug ${MAKE_PARA}
-fi
+
+cmake --build . --target install --config ${RABBIT_CONFIG} ${MAKE_PARA}
+
 
 cd $CUR_DIR

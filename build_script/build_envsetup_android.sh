@@ -47,17 +47,18 @@ fi
 if [ -z "${RABBIT_ARCH}" ]; then
     RABBIT_ARCH=arm #arm,arm64,mips,mips64,x86,x86_64
 fi
+
+if [ -z "$RABBIT_CONFIG" ]; then
+    RABBIT_CONFIG=Release
+fi
+
 #安装前缀  
 if [ -n "${RABBITRoot}" ]; then
     RABBIT_BUILD_PREFIX=${RABBITRoot}/ThirdLibrary/android
 else
     RABBIT_BUILD_PREFIX=`pwd`/../android    #修改这里为安装前缀  
 fi
-RABBIT_BUILD_PREFIX=${RABBIT_BUILD_PREFIX}${RABBIT_TOOLCHAIN_VERSION}_${RABBIT_ARCH}
-
-if [ ! -d ${RABBIT_BUILD_PREFIX} ]; then
-    mkdir -p ${RABBIT_BUILD_PREFIX}
-fi
+RABBIT_BUILD_PREFIX=${RABBIT_BUILD_PREFIX}${RABBIT_TOOLCHAIN_VERSION}_${RABBIT_ARCH}_${RABBIT_CONFIG}
 
 if [ -z "$RABBIT_USE_REPOSITORIES" ]; then
     RABBIT_USE_REPOSITORIES="TRUE" #下载开发库。省略，则下载指定的压缩包  

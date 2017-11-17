@@ -115,20 +115,13 @@ PARA="${PARA} QXMPP_NO_TESTS=1 QXMPP_NO_EXAMPLES=1"
 if [ "$RABBIT_BUILD_TARGERT" != "android"  ]; then
     PARA="${PARA} PREFIX=${RABBIT_BUILD_PREFIX}"
 fi
-DEBUG_PARA="${PARA} CONFIG*=debug CONFIG-=release"
-RELEASE_PARA="${PARA} CONFIG*=release CONFIG-=debug"
+
+RELEASE_PARA="${PARA} CONFIG*=${RABBIT_CONFIG}"
 if [ "$RABBIT_BUILD_TARGERT" = "android"  ]; then
     MAKE_PARA=" INSTALL_ROOT=\"${RABBIT_BUILD_PREFIX}\""
 fi
 echo "$QMAKE ${RELEASE_PARA}"
 $QMAKE ${RELEASE_PARA}
 ${MAKE} -f Makefile install ${MAKE_PARA}
-
-if [ -z "$CI" ]; then
-    git clean -xdf
-    echo "$QMAKE ${DEBUG_PARA}"
-    ${QMAKE} ${DEBUG_PARA}
-    ${MAKE} -f Makefile install ${MAKE_PARA}
-fi
 
 cd $CUR_DIR

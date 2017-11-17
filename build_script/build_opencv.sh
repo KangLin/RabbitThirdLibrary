@@ -169,10 +169,6 @@ cmake .. \
     -DCMAKE_VERBOSE=ON \
     -G"${RABBITIM_GENERATORS}" ${CMAKE_PARA}
 
-if [ -z "$CI" ]; then
-    cmake --build . --target install --config Debug ${MAKE_PARA}
-else
-    cmake --build . --target install --config Release ${MAKE_PARA}
-fi
+cmake --build . --target install --config ${RABBIT_CONFIG} ${MAKE_PARA}
 
 cd $CUR_DIR
