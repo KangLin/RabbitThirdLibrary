@@ -27,6 +27,7 @@
 
 #需要设置下面变量：
 #if [ -z "$QT_ROOT" ]; then
+#    QT_VERSION=5.8.0
 #    QT_ROOT=/c/Qt/Qt5.8.0/5.8/msvc2015 #QT 安装根目录,默认为:${RABBITRoot}/ThirdLibrary/windows_msvc/qt
 #fi
 MAKE="nmake"
@@ -69,7 +70,8 @@ if [ -z "${RABBIT_ARCH}" ]; then
 fi
 
 if [ -z "$QT_ROOT" ]; then
-    QT_ROOT=/c/Qt/Qt5.9.2/5.9.2/${MSVC_NAME} #QT 安装根目录,默认为:${RABBITRoot}/ThirdLibrary/windows_msvc/qt
+    QT_VERSION=5.9.2
+    QT_ROOT=/c/Qt/Qt${QT_VERSION}/${QT_VERSION}/${MSVC_NAME} #QT 安装根目录,默认为:${RABBITRoot}/ThirdLibrary/windows_msvc/qt
 fi
 
 if [ -z "$RABBIT_CONFIG" ]; then
@@ -82,7 +84,7 @@ if [ -n "${RABBITRoot}" ]; then
 else
     RABBIT_BUILD_PREFIX=`pwd`/../windows_msvc    #修改这里为安装前缀  
 fi
-RABBIT_BUILD_PREFIX=${RABBIT_BUILD_PREFIX}${RABBIT_TOOLCHAIN_VERSION}_${RABBIT_ARCH}_${RABBIT_CONFIG}
+RABBIT_BUILD_PREFIX=${RABBIT_BUILD_PREFIX}${RABBIT_TOOLCHAIN_VERSION}_${RABBIT_ARCH}_qt${QT_VERSION}_${RABBIT_CONFIG}
 if [ "$RABBIT_BUILD_STATIC" = "static" ]; then
     RABBIT_BUILD_PREFIX=${RABBIT_BUILD_PREFIX}_static
 fi

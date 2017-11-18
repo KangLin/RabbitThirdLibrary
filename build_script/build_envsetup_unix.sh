@@ -14,7 +14,8 @@
 
 #需要设置下面变量：
 if [ -z "$QT_ROOT" ]; then
-    QT_ROOT=/home/l/Qt5.8.0/5.8/gcc_64  #QT 安装根目录,默认为:${RABBITRoot}/ThirdLibrary/unix/qt
+    QT_VERSION=5.9.2
+    QT_ROOT=/home/l/Qt${QT_VERSION}/${QT_VERSION}/gcc_64  #QT 安装根目录,默认为:${RABBITRoot}/ThirdLibrary/unix/qt
 fi
 
 if [ -z "$RABBIT_CLEAN" ]; then
@@ -56,7 +57,7 @@ if [ -n "${RABBITRoot}" ]; then
 else
     RABBIT_BUILD_PREFIX=`pwd`/../unix    #修改这里为安装前缀 
 fi
-RABBIT_BUILD_PREFIX=${RABBIT_BUILD_PREFIX}${RABBIT_TOOLCHAIN_VERSION}_${RABBIT_ARCH}_${RABBIT_CONFIG}
+RABBIT_BUILD_PREFIX=${RABBIT_BUILD_PREFIX}${RABBIT_TOOLCHAIN_VERSION}_${RABBIT_ARCH}_qt${QT_VERSION}_${RABBIT_CONFIG}
 if [ "$RABBIT_BUILD_STATIC" = "static" ]; then
     RABBIT_BUILD_PREFIX=${RABBIT_BUILD_PREFIX}_static
 fi
