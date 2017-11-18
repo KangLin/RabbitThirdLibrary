@@ -159,15 +159,15 @@ test: off
 #  folder: pfs/Release
 #  active_mode: false
 
-#deploy:
-#  provider: GitHub
-#  release: RABBIT-third-library-v$(appveyor_build_version)
-#  description: 'RABBIT-third-library-v$(appveyor_build_version)'
-#  #token 在这个地址产生 https://github.com/settings/tokens 用这个加密 https://ci.appveyor.com/tools/encrypt
-#  auth_token:
-#    secure: ZwS9M6Ide+GfM4kLxJ5b9tRoB1wn/56nZRCAIP6Z7s3+YwcE+cx0Dv0d6X82lidF
+deploy:
+  provider: GitHub
+  release: RABBIT_$(BUILD_TARGERT)$(RABBIT_TOOLCHAIN_VERSION)_$(RABBIT_ARCH)_qt$(QT_VERSION)_$(QT_VERSION)_$(RABBIT_CONFIG)_v$(appveyor_build_version)
+  description: 'RABBIT_$(BUILD_TARGERT)$(RABBIT_TOOLCHAIN_VERSION)_$(RABBIT_ARCH)_qt$(QT_VERSION)_$(QT_VERSION)_$(RABBIT_CONFIG)_v$(appveyor_build_version)'
+  #token 在这个地址产生 https://github.com/settings/tokens 用这个加密 https://ci.appveyor.com/tools/encrypt
+  auth_token:
+    secure: ZwS9M6Ide+GfM4kLxJ5b9tRoB1wn/56nZRCAIP6Z7s3+YwcE+cx0Dv0d6X82lidF
 #  draft: false
 #  prerelease: false
-#  on:
-#    branch: master                 # release from master branch only
-#    #appveyor_repo_tag: true        # deploy on tag push only
+  on:
+    branch: master                  # release from master branch only
+    #appveyor_repo_tag: true        # deploy on tag push only
