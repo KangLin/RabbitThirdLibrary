@@ -11,7 +11,6 @@ environment:
     RABBIT_TOOLCHAIN_VERSION: 15
     RABBIT_ARCH: x64
     RABBIT_CONFIG: Release
-    QT_VERSION: NO
     QT_ROOT: NO
 
   - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
@@ -19,7 +18,6 @@ environment:
     RABBIT_TOOLCHAIN_VERSION: 15
     RABBIT_ARCH: x64
     RABBIT_CONFIG: Debug
-    QT_VERSION: NO
     QT_ROOT: NO
     
   - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
@@ -27,7 +25,6 @@ environment:
     RABBIT_TOOLCHAIN_VERSION: 15
     RABBIT_ARCH: x86
     RABBIT_CONFIG: Release
-    QT_VERSION: NO
     QT_ROOT: NO
     
   - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
@@ -35,7 +32,6 @@ environment:
     RABBIT_TOOLCHAIN_VERSION: 15
     RABBIT_ARCH: x86
     RABBIT_CONFIG: Debug
-    QT_VERSION: NO
     QT_ROOT: NO
     
   ##### msvc 2015 ########
@@ -43,28 +39,24 @@ environment:
     RABBIT_TOOLCHAIN_VERSION: 14
     RABBIT_ARCH: x64
     RABBIT_CONFIG: Release
-    QT_VERSION: NO
     QT_ROOT: NO
     
   - BUILD_TARGERT: windows_msvc
     RABBIT_TOOLCHAIN_VERSION: 14
     RABBIT_ARCH: x64
     RABBIT_CONFIG: Debug
-    QT_VERSION: NO
     QT_ROOT: NO
   
   - BUILD_TARGERT: windows_msvc
     RABBIT_TOOLCHAIN_VERSION: 14
     RABBIT_ARCH: x86
     RABBIT_CONFIG: Release
-    QT_VERSION: NO
     QT_ROOT: NO
   
   - BUILD_TARGERT: windows_msvc
     RABBIT_TOOLCHAIN_VERSION: 14
     RABBIT_ARCH: x86
     RABBIT_CONFIG: Debug
-    QT_VERSION: NO
     QT_ROOT: NO
     
   ##### msvc 2013 ########
@@ -72,14 +64,12 @@ environment:
     RABBIT_TOOLCHAIN_VERSION: 12
     RABBIT_ARCH: x64
     RABBIT_CONFIG: Release
-    QT_VERSION: NO
     QT_ROOT: NO
 
   - BUILD_TARGERT: windows_msvc
     RABBIT_TOOLCHAIN_VERSION: 12
     RABBIT_ARCH: x86
     RABBIT_CONFIG: Release
-    QT_VERSION: NO
     QT_ROOT: NO
   
   ##### mingw ########
@@ -87,38 +77,38 @@ environment:
     RABBIT_TOOLCHAIN_VERSION: 530
     RABBIT_ARCH: x86
     RABBIT_CONFIG: Release
-    QT_VERSION: NO
     QT_ROOT: NO
     
   - BUILD_TARGERT: windows_mingw
     RABBIT_TOOLCHAIN_VERSION: 530
     RABBIT_ARCH: x86
     RABBIT_CONFIG: Debug
-    QT_VERSION: NO
     QT_ROOT: NO
 
   - BUILD_TARGERT: windows_mingw
     RABBIT_TOOLCHAIN_VERSION: 492
     RABBIT_ARCH: x86
     RABBIT_CONFIG: Release
-    QT_VERSION: NO
     QT_ROOT: NO
 
   - BUILD_TARGERT: windows_mingw
     RABBIT_TOOLCHAIN_VERSION: 482
     RABBIT_ARCH: x86
     RABBIT_CONFIG: Release
-    QT_VERSION: NO
     QT_ROOT: NO
     
 init:
   - set varch=%RABBIT_ARCH%
   - set PROJECT_NAME=%APPVEYOR_PROJECT_NAME%
   - set BUILD_VERSION=%APPVEYOR_BUILD_VERSION%
+  - set QT_VERSION=NO
   #- set RABBIT_USE_REPOSITORIES="FALSE"
   - if "%RABBIT_ARCH%" == "x64" set varch=amd64
   - if "%BUILD_TARGERT%" == "windows_msvc" if %RABBIT_TOOLCHAIN_VERSION% LSS 15 (call "C:\Program Files (x86)\Microsoft Visual Studio %RABBIT_TOOLCHAIN_VERSION%.0\VC\vcvarsall.bat" %varch%) else (call "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Auxiliary\Build\vcvarsall.bat" %varch%)
   - if "%BUILD_TARGERT%" == "windows_mingw" set MSYSTEM=MINGW32  #设置编译系统为MINGW32
+  - if NOT "%QT_ROOT%" == "NO" for /f "delims=" %%i in ('%QT_ROOT%/bin/qmake -query QT_VERSION') do (set QT_VERSION=%%i)
+  - echo QT_VERSION=%QT_VERSION%
+  - echo QT_ROOT=%QT_ROOT%
   - del C:\msys64\usr\bin\link.exe
 
 install:
@@ -140,7 +130,7 @@ after_build:
 
 artifacts:
   - path: $(BUILD_TARGERT)$(RABBIT_TOOLCHAIN_VERSION)_$(RABBIT_ARCH)_qt$(QT_VERSION)_$(RABBIT_CONFIG)
-    name: RABBIT_$(BUILD_TARGERT)$(RABBIT_TOOLCHAIN_VERSION)_$(RABBIT_ARCH)_qt$(QT_VERSION)_$(QT_VERSION)_$(RABBIT_CONFIG)_v$(appveyor_build_version)
+    name: RABBIT_$(BUILD_TARGERT)$(RABBIT_TOOLCHAIN_VERSION)_$(RABBIT_ARCH)_qt$(QT_VERSION)_$(RABBIT_CONFIG)_v$(appveyor_build_version)
     type: zip
 
 test: off
@@ -163,13 +153,10 @@ test: off
 #See:https://www.appveyor.com/docs/deployment/github/
 deploy:
   provider: GitHub
-  release: RABBIT_$(BUILD_TARGERT)$(RABBIT_TOOLCHAIN_VERSION)_$(RABBIT_ARCH)_qt$(QT_VERSION)_$(QT_VERSION)_$(RABBIT_CONFIG)_v$(appveyor_build_version)
-  description: 'RABBIT_$(BUILD_TARGERT)$(RABBIT_TOOLCHAIN_VERSION)_$(RABBIT_ARCH)_qt$(QT_VERSION)_$(QT_VERSION)_$(RABBIT_CONFIG)_v$(appveyor_build_version)'
   #token 在这个地址产生 https://github.com/settings/tokens 用这个加密 https://ci.appveyor.com/tools/encrypt
   auth_token:
     secure: xgIFN2iAfgj1gsWabdHrmFXvj0rce/ZWtKUwm3aDUNfLGu+kO/q94MYD8a46AbDL
 #  draft: false
 #  prerelease: false
   on:
-    branch: master                 # release from master branch only
     appveyor_repo_tag: true        # deploy on tag push only
