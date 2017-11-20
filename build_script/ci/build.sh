@@ -53,7 +53,7 @@ if [ -n "$DOWNLOAD_URL" ]; then
     if [ ! -d ${RABBIT_BUILD_PREFIX} ]; then
         mkdir -p ${RABBIT_BUILD_PREFIX}
     fi
-    unzip -d ${RABBIT_BUILD_PREFIX} ${SCRIPT_DIR}/../${BUILD_TARGERT}.zip
+    unzip -q -d ${RABBIT_BUILD_PREFIX} ${SCRIPT_DIR}/../${BUILD_TARGERT}.zip
     if [ "$PROJECT_NAME" != "RabbitThirdLibrary" \
         -a "$BUILD_TARGERT" != "windows_msvc" \
         -a -f "${RABBIT_BUILD_PREFIX}/change_prefix.sh" ]; then

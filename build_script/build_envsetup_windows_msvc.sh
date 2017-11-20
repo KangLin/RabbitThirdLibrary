@@ -100,7 +100,7 @@ fi
 QMAKE=qmake
 if [ -n "${QT_ROOT}" ]; then
     QT_BIN=${QT_ROOT}/bin       #设置用于 android 平台编译的 qt bin 目录
-    QMAKE=${QT_BIN}/qmake       #设置用于 unix 平台编译的 QMAKE。
+    export QMAKE=${QT_BIN}/qmake.exe       #设置用于 unix 平台编译的 QMAKE。
                             #这里设置的是自动编译时的配置，你需要修改为你本地qt编译环境的配置.
 fi
 
@@ -150,6 +150,7 @@ echo "--------------------------------------------------------------------------
 echo "RABBIT_BUILD_PREFIX:$RABBIT_BUILD_PREFIX"
 echo "QT_BIN:$QT_BIN"
 echo "QT_ROOT:$QT_ROOT"
+echo "QMAKE:$QMAKE"
 echo "PKG_CONFIG_PATH:$PKG_CONFIG_PATH"
 echo "PKG_CONFIG_SYSROOT_DIR:$PKG_CONFIG_SYSROOT_DIR"
 echo "PATH=$PATH"
