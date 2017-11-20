@@ -1,8 +1,6 @@
 #!/bin/bash
 set -ev
     
-RABBITIM_LIBRARY="change_prefix zlib minizip expat libgpx openssl libsodium libcurl libpng jpeg libgif libtiff freetype libyuv libvpx libqrencode libopus x264 ffmpeg gdal"
-    
 #urlendcode
 function urlencode()
 {
@@ -45,29 +43,29 @@ if [ -z "${LIBRARY_NUMBER}" ]; then
 fi
 
 #下载预编译库
-DOWNLOAD_URL="https://github.com/KangLin/RabbitThirdLibrary/releases/download/${DOWNLOAD_VERSION}/RABBIT_${BUILD_TARGERT}${RABBIT_TOOLCHAIN_VERSION}_${RABBIT_ARCH}_qt${QT_VERSION}_${RABBIT_CONFIG}_${BUILD_VERSION}.zip"
-echo "wget -q -c -O ${SCRIPT_DIR}/../${BUILD_TARGERT}.zip ${DOWNLOAD_URL} "
-if [ ${LIBRARY_NUMBER} -ne 0 ]; then
+#DOWNLOAD_URL="https://github.com/KangLin/RabbitThirdLibrary/releases/download/${DOWNLOAD_VERSION}/RABBIT_${BUILD_TARGERT}${RABBIT_TOOLCHAIN_VERSION}_${RABBIT_ARCH}_qt${QT_VERSION}_${RABBIT_CONFIG}_${BUILD_VERSION}.zip"
+#echo "wget -q -c -O ${SCRIPT_DIR}/../${BUILD_TARGERT}.zip ${DOWNLOAD_URL} "
+if [ -n "$DOWNLOAD_URL" ]; then
     echo "appveyor DownloadFile \"${DOWNLOAD_URL}\" -FileName ${SCRIPT_DIR}/../${BUILD_TARGERT}.zip"
     appveyor DownloadFile "${DOWNLOAD_URL}" -FileName ${SCRIPT_DIR}/../${BUILD_TARGERT}.zip
     #wget --passive -c -p -O ${SCRIPT_DIR}/../${BUILD_TARGERT}.zip ${DOWNLOAD_URL}
-    unzip -d ${SCRIPT_DIR}/.. ${SCRIPT_DIR}/../${BUILD_TARGERT}.zip
+    RABBIT_BUILD_PREFIX=${SCRIPT_DIR}/../${BUILD_TARGERT}
+    if [ ! -d ${RABBIT_BUILD_PREFIX} ]; then
+        mkdir -p ${RABBIT_BUILD_PREFIX}
+    fi
+    unzip -d ${RABBIT_BUILD_PREFIX} ${SCRIPT_DIR}/../${BUILD_TARGERT}.zip
     if [ "$PROJECT_NAME" != "RabbitThirdLibrary" \
         -a "$BUILD_TARGERT" != "windows_msvc" \
-        -a -f "${SCRIPT_DIR}/../${BUILD_TARGERT}_${RABBIT_ARCH}/change_prefix.sh" ]; then
+        -a -f "${RABBIT_BUILD_PREFIX}/change_prefix.sh" ]; then
+
+        cd ${RABBIT_BUILD_PREFIX}
+
+        THIRDLIBRARY_DIR_PREFIX=/c/projects/rabbitthirdlibrary/build_script/../${BUILD_TARGERT}
+
+        echo "bash change_prefix.sh"
+        bash change_prefix.sh
+        cat ${SCRIPT_DIR}/../${BUILD_TARGERT}/lib/pkgconfig/libcurl.pc
         
-        cd ${SCRIPT_DIR}/../$BUILD_TARGERT_${RABBIT_ARCH}
-       
-        if [ -n "$APPVEYOR" ]; then
-            THIRDLIBRARY_DIR_PREFIX=/c/projects/rabbitthirdlibrary/build_script/../${BUILD_TARGERT}_${RABBIT_ARCH}
-        else
-            THIRDLIBRARY_DIR_PREFIX=/home/travis/build/KangLin/RabbitThirdLibrary/unix
-        fi
-       
-        echo "bash ${SCRIPT_DIR}/../${BUILD_TARGERT}_${RABBIT_ARCH}/change_prefix.sh $THIRDLIBRARY_DIR_PREFIX `pwd`"
-        bash ${SCRIPT_DIR}/../${BUILD_TARGERT}_${RABBIT_ARCH}/change_prefix.sh $THIRDLIBRARY_DIR_PREFIX `pwd`
-        cat ${SCRIPT_DIR}/../${BUILD_TARGERT}_${RABBIT_ARCH}/lib/pkgconfig/libcurl.pc
-       
         cd ${SCRIPT_DIR}
     fi
 fi

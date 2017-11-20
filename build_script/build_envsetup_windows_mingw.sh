@@ -18,7 +18,7 @@ if [ -z "$QT_ROOT" ]; then
     QT_ROOT=/c/Qt/Qt${QT_VERSION}/${QT_VERSION}/mingw53_32 #QT 安装根目录,默认为:${RABBITRoot}/ThirdLibrary/windows_mingw/qt
     RABBIT_TOOLCHAIN_VERSION=530    
     TOOLCHAIN=/c/Qt/Qt5.9.2/Tools/mingw530_32/bin
-    #export PATH=${TOOLCHAIN}:$PATH  #用与QT相同的工具链
+    export PATH=${TOOLCHAIN}:$PATH  #用与QT相同的工具链
 fi
 if [ -z "$RABBIT_CLEAN" ]; then
     RABBIT_CLEAN=TRUE #编译前清理
@@ -55,18 +55,12 @@ if [ -z "$RABBIT_CONFIG" ]; then
     RABBIT_CONFIG=Release
 fi
 
-if [ -n "${RABBITRoot}" ]; then
-    RABBIT_BUILD_PREFIX=${RABBITRoot}/ThirdLibrary/windows_mingw
-else
-    RABBIT_BUILD_PREFIX=`pwd`/../windows_mingw    #修改这里为安装前缀
-fi
-RABBIT_BUILD_PREFIX=${RABBIT_BUILD_PREFIX}${RABBIT_TOOLCHAIN_VERSION}_${RABBIT_ARCH}
-if [ -n "QT_VERSION" ]; then
-    RABBIT_BUILD_PREFIX=${RABBIT_BUILD_PREFIX}_qt${QT_VERSION}
-fi
-RABBIT_BUILD_PREFIX=${RABBIT_BUILD_PREFIX}_${RABBIT_CONFIG}
-if [ "$RABBIT_BUILD_STATIC" = "static" ]; then
-    RABBIT_BUILD_PREFIX=${RABBIT_BUILD_PREFIX}_static
+if [ -z "${RABBIT_BUILD_PREFIX}" ]; then
+    RABBIT_BUILD_PREFIX=`pwd`/../${RABBIT_BUILD_TARGERT}    #修改这里为安装前缀  
+    RABBIT_BUILD_PREFIX=${RABBIT_BUILD_PREFIX}${RABBIT_TOOLCHAIN_VERSION}_${RABBIT_ARCH}_qt${QT_VERSION}_${RABBIT_CONFIG}
+    if [ "$RABBIT_BUILD_STATIC" = "static" ]; then
+        RABBIT_BUILD_PREFIX=${RABBIT_BUILD_PREFIX}_static
+    fi
 fi
 if [ ! -d ${RABBIT_BUILD_PREFIX} ]; then
     mkdir -p ${RABBIT_BUILD_PREFIX}

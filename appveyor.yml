@@ -98,6 +98,7 @@ environment:
     QT_ROOT: NO
     
 init:
+  - set RABBITIM_LIBRARY="change_prefix zlib minizip expat libgpx openssl libsodium libcurl libpng jpeg libgif libtiff freetype libyuv libvpx libqrencode libopus x264 ffmpeg gdal"
   - set varch=%RABBIT_ARCH%
   - set PROJECT_NAME=%APPVEYOR_PROJECT_NAME%
   - set QT_VERSION=NO
@@ -109,7 +110,7 @@ init:
   - echo QT_VERSION=%QT_VERSION%
   - echo QT_ROOT=%QT_ROOT%
   - del C:\msys64\usr\bin\link.exe
-
+  
 install:
   - for /f "delims=" %%i in ('git describe --tags') do (set BUILD_VERSION=%%i)
   - if "%BUILD_VERSION%" == "" for /f "delims=" %%i in ('git rev-parse HEAD') do (set BUILD_VERSION=%%i) 
