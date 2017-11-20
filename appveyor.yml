@@ -1,5 +1,5 @@
 #TODO:版本变更时，修改成相应的版本
-version: '0.1.1.{build}'
+#version: 'v0.0.1.{build}'
 
 image: Visual Studio 2015
 
@@ -100,7 +100,6 @@ environment:
 init:
   - set varch=%RABBIT_ARCH%
   - set PROJECT_NAME=%APPVEYOR_PROJECT_NAME%
-  - set BUILD_VERSION=%APPVEYOR_BUILD_VERSION%
   - set QT_VERSION=NO
   #- set RABBIT_USE_REPOSITORIES="FALSE"
   - if "%RABBIT_ARCH%" == "x64" set varch=amd64
@@ -112,6 +111,9 @@ init:
   - del C:\msys64\usr\bin\link.exe
 
 install:
+  - for /f "delims=" %%i in ('git describe --tags') do (set BUILD_VERSION=%%i)
+  - if "%BUILD_VERSION%" == "" for /f "delims=" %%i in ('git rev-parse HEAD') do (set BUILD_VERSION=%%i) 
+  - echo BUILD_VERSION=%BUILD_VERSION%
   - if not "%BUILD_TARGERT%" == "android" C:\msys64\usr\bin\pacman.exe -S --noconfirm nasm yasm 
   - C:\msys64\usr\bin\pacman.exe -S --noconfirm unzip expect #zip curl
   - C:\msys64\autorebase.bat
@@ -130,7 +132,7 @@ after_build:
 
 artifacts:
   - path: $(BUILD_TARGERT)$(RABBIT_TOOLCHAIN_VERSION)_$(RABBIT_ARCH)_qt$(QT_VERSION)_$(RABBIT_CONFIG)
-    name: RABBIT_$(BUILD_TARGERT)$(RABBIT_TOOLCHAIN_VERSION)_$(RABBIT_ARCH)_qt$(QT_VERSION)_$(RABBIT_CONFIG)_v$(appveyor_build_version)
+    name: RABBIT_$(BUILD_TARGERT)$(RABBIT_TOOLCHAIN_VERSION)_$(RABBIT_ARCH)_qt$(QT_VERSION)_$(RABBIT_CONFIG)_$(BUILD_VERSION)
     type: zip
 
 test: off

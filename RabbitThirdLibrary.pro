@@ -6,4 +6,5 @@ OTHER_FILES += *.md \
     .travis.yml \
     build_script/* \
     build_script/ci/* \
-    build_script/cmake/platforms/*
+    build_script/cmake/platforms/* \
+    tag.sh
