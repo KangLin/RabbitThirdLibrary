@@ -1,19 +1,8 @@
 #!/bin/bash
 set -ev
-
-RABBITIM_LIBRARY[0]="change_prefix zlib minizip expat libgpx openssl libsodium libcurl libpng jpeg libgif libtiff freetype libyuv libvpx libqrencode libopus x264 ffmpeg gdal"
-RABBITIM_LIBRARY[1]="change_prefix opencv"
-RABBITIM_LIBRARY[2]="qxmpp qzxing"
-RABBITIM_LIBRARY[3]="osg"
-RABBITIM_LIBRARY[4]="OsgQt osgearth"
-
-RABBITIM_JOB="Environment%3A%20BUILD_TARGERT%3D${BUILD_TARGERT}"
-RABBITIM_JOB="${RABBITIM_JOB}%2C%20RABBIT_TOOLCHAIN_VERSION%3D${RABBIT_TOOLCHAIN_VERSION}"
-RABBITIM_JOB="${RABBITIM_JOB}%2C%20RABBIT_ARCH%3D${RABBIT_ARCH}"
-RABBITIM_JOB="${RABBITIM_JOB}%2C%20QT_VERSION%3D${QT_VERSION}"
-RABBITIM_JOB="${RABBITIM_JOB}%2C%20QT_ROOT%3D${QT_ROOT}"
-RABBITIM_JOB="${RABBITIM_JOB}%2C%20LIBRARY_NUMBER%3D$[LIBRARY_NUMBER-1]"
-
+    
+RABBITIM_LIBRARY="change_prefix zlib minizip expat libgpx openssl libsodium libcurl libpng jpeg libgif libtiff freetype libyuv libvpx libqrencode libopus x264 ffmpeg gdal"
+    
 #urlendcode
 function urlencode()
 {
@@ -56,7 +45,7 @@ if [ -z "${LIBRARY_NUMBER}" ]; then
 fi
 
 #下载预编译库
-DOWNLOAD_URL="https://ci.appveyor.com/api/projects/KangLin/rabbitthirdlibrary/artifacts/RABBIT_${BUILD_TARGERT}${RABBIT_TOOLCHAIN_VERSION}_${RABBIT_ARCH}_${QT_VERSION}_v${BUILD_VERSION}.zip?all=true&job=${RABBITIM_JOB}"
+DOWNLOAD_URL="https://github.com/KangLin/RabbitThirdLibrary/releases/download/${DOWNLOAD_VERSION}/RABBIT_${BUILD_TARGERT}${RABBIT_TOOLCHAIN_VERSION}_${RABBIT_ARCH}_qt${QT_VERSION}_${RABBIT_CONFIG}_${BUILD_VERSION}.zip"
 echo "wget -q -c -O ${SCRIPT_DIR}/../${BUILD_TARGERT}.zip ${DOWNLOAD_URL} "
 if [ ${LIBRARY_NUMBER} -ne 0 ]; then
     echo "appveyor DownloadFile \"${DOWNLOAD_URL}\" -FileName ${SCRIPT_DIR}/../${BUILD_TARGERT}.zip"
@@ -113,7 +102,7 @@ echo "PATH=$PATH"
 echo "RABBIT_BUILD_THIRDLIBRARY:$RABBIT_BUILD_THIRDLIBRARY"
 echo "---------------------------------------------------------------------------"
 
-for v in ${RABBITIM_LIBRARY[$LIBRARY_NUMBER]}
+for v in ${RABBITIM_LIBRARY}
 do
     if [ "$v" = "rabbitim" ]; then
         bash ./build_$v.sh ${BUILD_TARGERT} # > /dev/null

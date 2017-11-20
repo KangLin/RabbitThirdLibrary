@@ -1,5 +1,5 @@
 #TODO:版本变更时，修改成相应的版本
-#version: 'v0.0.1.{build}'
+version: 'v0.0.1-2-ga09d62a.{build}'
 
 image: Visual Studio 2015
 
@@ -19,7 +19,7 @@ environment:
     RABBIT_ARCH: x64
     RABBIT_CONFIG: Debug
     QT_ROOT: NO
-    
+
   - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
     BUILD_TARGERT: windows_msvc
     RABBIT_TOOLCHAIN_VERSION: 15
