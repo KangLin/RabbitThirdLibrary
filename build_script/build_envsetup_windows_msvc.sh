@@ -53,9 +53,11 @@ if [ -z "${RABBIT_TOOLCHAIN_VERSION}" ]; then
             RABBIT_TOOLCHAIN_VERSION=14
             MSVC_NAME=msvc2015
             ;;
-        *)
+        12*)
             RABBIT_TOOLCHAIN_VERSION=12
-            MSVC_NAME=msvc2013
+            ;;
+          *)
+            MSVC_NAME=msvc2015
             ;;
     esac
 fi

@@ -40,17 +40,17 @@ CUR_DIR=`pwd`
 
 #下载源码:
 if [ ! -d ${RABBIT_BUILD_SOURCE_CODE} ]; then
-    VERSION=4.0.0-rc3
+    VERSION=master
     if [ "TRUE" = "${RABBIT_USE_REPOSITORIES}" ]; then
         echo "git clone -q https://github.com/fukuchi/libqrencode.git ${RABBIT_BUILD_SOURCE_CODE}"
-        #git clone -q https://github.com/KangLin/libqrencode.git ${RABBIT_BUILD_SOURCE_CODE}
-        git clone -q https://github.com/fukuchi/libqrencode.git ${RABBIT_BUILD_SOURCE_CODE}
+        git clone -q https://github.com/KangLin/libqrencode.git ${RABBIT_BUILD_SOURCE_CODE}
+        #git clone -q  -b v${VERSION} https://github.com/fukuchi/libqrencode.git ${RABBIT_BUILD_SOURCE_CODE} 
     else
-        echo "wget -q https://github.com/fukuchi/libqrencode/archive/v${VERSION}.tar.gz"
+        echo "wget -q https://github.com/fukuchi/libqrencode/archive/${VERSION}.tar.gz"
         mkdir -p ${RABBIT_BUILD_SOURCE_CODE}
         cd ${RABBIT_BUILD_SOURCE_CODE}
-        wget -q -c https://github.com/fukuchi/libqrencode/archive/v${VERSION}.tar.gz
-        tar xzf v${VERSION}.tar.gz
+        wget -q -c https://github.com/fukuchi/libqrencode/archive/${VERSION}.tar.gz
+        tar xzf ${VERSION}.tar.gz
         mv libqrencode-${VERSION}  ..
         rm -fr *
         cd ..
