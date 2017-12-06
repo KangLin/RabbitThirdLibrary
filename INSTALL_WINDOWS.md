@@ -116,7 +116,8 @@ make: fork: Resource temporarily unavailable
 |vs 2013 update 4|12|
 
 #### 2.4. windows sdk
-* windows sdk: https://developer.microsoft.com/zh-cn/windows/  
+* windows sdk: https://developer.microsoft.com/zh-cn/windows/    
+               https://developer.microsoft.com/zh-cn/windows/downloads
 
 * Windows 10 SDK (10.0.16299.15):
 https://developer.microsoft.com/zh-cn/windows/downloads/windows-10-sdk  

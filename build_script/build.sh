@@ -64,6 +64,9 @@ if [ -n "$2" ]; then
     ./build_expat.sh ${RABBIT_BUILD_TARGERT} $2/expat
     ./build_openssl.sh ${RABBIT_BUILD_TARGERT} $2/openssl 
     ./build_libsodium.sh ${RABBIT_BUILD_TARGERT} $2/libsodium
+    ./build_boost.sh ${RABBIT_BUILD_TARGERT} $2/boost
+    ./build_protobuf.sh ${RABBIT_BUILD_TARGERT} $2/protobuf
+    ./build_berkeleydb.sh ${RABBIT_BUILD_TARGERT} $2/berkeleydb
     ./build_libcurl.sh ${RABBIT_BUILD_TARGERT} $2/curl 
     ./build_libpng.sh ${RABBIT_BUILD_TARGERT} $2/libpng
     ./build_jpeg.sh ${RABBIT_BUILD_TARGERT} $2/libjpeg
@@ -91,6 +94,9 @@ else
     ./build_expat.sh ${RABBIT_BUILD_TARGERT}
     ./build_openssl.sh ${RABBIT_BUILD_TARGERT} 
     ./build_libsodium.sh ${RABBIT_BUILD_TARGERT} 
+    ./build_boost.sh ${RABBIT_BUILD_TARGERT} 
+    ./build_protobuf.sh ${RABBIT_BUILD_TARGERT}
+    ./build_berkeleydb.sh ${RABBIT_BUILD_TARGERT} 
     ./build_libcurl.sh ${RABBIT_BUILD_TARGERT} 
     ./build_libpng.sh ${RABBIT_BUILD_TARGERT} 
     ./build_jpeg.sh ${RABBIT_BUILD_TARGERT} 

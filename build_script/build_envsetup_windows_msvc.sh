@@ -63,7 +63,7 @@ if [ -z "${RABBIT_TOOLCHAIN_VERSION}" ]; then
 fi
 
 if [ -z "${RABBIT_ARCH}" ]; then
-    if [ "X64" = ${Platform} -o "x64" = ${Platform} ]; then
+    if [ "X64" = "${Platform}" -o "x64" = "${Platform}" ]; then
         RABBIT_ARCH=x64
         MSVC_NAME=${MSVC_NAME}_64
     else

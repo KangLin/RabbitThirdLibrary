@@ -101,9 +101,7 @@ release/
 Release/
 ipch/
 IncludeLocalDatabase.txt
-unix_mingw/
-unix/
-unix_static/
+unix_*/
 android*/
 windows*/
 src/
