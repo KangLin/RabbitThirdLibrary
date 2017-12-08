@@ -20,7 +20,16 @@ if [ "$BUILD_TARGERT" = "windows_mingw" \
     export PATH=/C/Qt/Tools/mingw${RABBIT_TOOLCHAIN_VERSION}_32/bin:$PATH
     export USER_ROOT_PATH=/C/Qt/Tools/mingw${RABBIT_TOOLCHAIN_VERSION}_32
 fi
-export PKG_CONFIG=/c/msys64/mingw32/bin/pkg-config.exe
+TARGET_OS=`uname -s`
+case $TARGET_OS in
+    MINGW* | CYGWIN* | MSYS*)
+        export PKG_CONFIG=/c/msys64/mingw32/bin/pkg-config.exe
+        ;;
+    Linux* | Unix*)
+    ;;
+    *)
+    ;;
+esac
 if [ "$BUILD_TARGERT" = "windows_msvc" ]; then
     export PATH=/C/Perl/bin:$PATH
     rm -fr /usr/include

@@ -43,8 +43,10 @@ install:
   - bash build_script/ci/build-install-tools.sh > /dev/null
 
 before_script:
+  - eport RABBITIM_LIBRARY="change_prefix zlib minizip expat libgpx openssl libsodium boost libcurl libpng jpeg libgif libtiff freetype protobuf berkeleydb libevent libyuv libvpx libqrencode libopus x264 ffmpeg gdal"
   - source ${TRAVIS_BUILD_DIR}/build_script/ci/build_env.sh
   - cd ${TRAVIS_BUILD_DIR}/build_script
+  
 
 script: 
   - bash ${TRAVIS_BUILD_DIR}/build_script/ci/build.sh ${TRAVIS_BUILD_DIR} #> /dev/null

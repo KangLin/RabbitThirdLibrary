@@ -98,7 +98,7 @@ environment:
     QT_ROOT: NO
     
 init:
-  - set RABBITIM_LIBRARY=change_prefix zlib minizip expat libgpx openssl libsodium libcurl libpng jpeg libgif libtiff freetype libyuv libvpx libqrencode libopus x264 ffmpeg gdal
+  - set RABBITIM_LIBRARY=change_prefix zlib minizip expat libgpx openssl libsodium boost libcurl libpng jpeg libgif libtiff freetype protobuf berkeleydb libevent libyuv libvpx libqrencode libopus x264 ffmpeg gdal
   - set varch=%RABBIT_ARCH%
   - set PROJECT_NAME=%APPVEYOR_PROJECT_NAME%
   - if "%QT_VERSION%" == "" set QT_VERSION=NO
