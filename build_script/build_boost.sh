@@ -147,7 +147,6 @@ fi
     --layout=system \
     toolset=${toolset} ${MAKE_PARA} \
     variant=${variant} link=${link} threading=multi \
-    runtime-link=${link} \
     --without-python \
     install  
     
