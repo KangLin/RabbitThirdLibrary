@@ -87,7 +87,8 @@ case ${RABBIT_BUILD_TARGERT} in
         if [ "$RABBIT_CLEAN" = "TRUE" ]; then
             rm -fr *
         fi
-        ../dist/configure --prefix=${RABBIT_BUILD_PREFIX}
+        ../dist/configure --prefix=${RABBIT_BUILD_PREFIX} \
+            --enable-cxx ${CONFIG_PARA}
         ;;
     windows_msvc)
         cd ${RABBIT_BUILD_SOURCE_CODE}/build_windows

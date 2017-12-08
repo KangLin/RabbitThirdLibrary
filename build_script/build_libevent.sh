@@ -86,8 +86,10 @@ echo ""
 
 if [ "$RABBIT_BUILD_STATIC" = "static" ]; then
     CMAKE_PARA="-DEVENT__BUILD_SHARED_LIBRARIES=OFF"
+    CONFIG_PARA="--enable-static --disable-shared"
 else
     CMAKE_PARA="-DEVENT__BUILD_SHARED_LIBRARIES=ON"
+    CONFIG_PARA="--disable-static --enable-shared"
 fi
 
 if [ "$RABBIT_CONFIG" = "Relase" ]; then
@@ -105,7 +107,16 @@ case ${RABBIT_BUILD_TARGERT} in
         CMAKE_PARA="${CMAKE_PARA} -DCMAKE_TOOLCHAIN_FILE=$RABBIT_BUILD_PREFIX/../build_script/cmake/platforms/toolchain-android.cmake"
     ;;
     unix)
-    ;;
+        #../configure --prefix=$RABBIT_BUILD_PREFIX ${CONFIG_PARA} \
+        #   CFLAGS="-I${RABBIT_BUILD_PREFIX}/include" \
+        #   CPPFLAGS="-I${RABBIT_BUILD_PREFIX}/include" \
+        #   LIBS="-L${RABBIT_BUILD_PREFIX}/lib -lcrypto -lssl"
+        #make ${RABBIT_MAKE_JOB_PARA} V=1
+        #make install
+        
+        #cd $CUR_DIR
+        #exit 0
+        ;;
     windows_msvc)
         #RABBITIM_GENERATORS="Visual Studio 12 2013"
         MAKE_PARA=""
@@ -120,7 +131,7 @@ case ${RABBIT_BUILD_TARGERT} in
             ;;
         esac
         
-        ../configure --prefix=$RABBIT_BUILD_PREFIX
+        ../configure --prefix=$RABBIT_BUILD_PREFIX ${CONFIG_PARA}
         make ${RABBIT_MAKE_JOB_PARA}
         make install
         
