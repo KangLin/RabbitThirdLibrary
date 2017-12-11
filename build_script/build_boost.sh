@@ -97,6 +97,7 @@ case ${RABBIT_BUILD_TARGERT} in
     android)
        ;;
     unix)
+        MAKE_PARA="${MAKE_PARA} CFLAGS=-fPIC"
         if [ "$RABBIT_ARCH" = "x64" ]; then
             MAKE_PARA="${MAKE_PARA} address-model=64"
         fi
