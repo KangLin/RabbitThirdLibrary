@@ -146,7 +146,7 @@ fi
     --build-type=minimal \
     --layout=system \
     toolset=${toolset} ${MAKE_PARA} \
-    variant=${variant} link=${link} threading=multi \
+    variant=${variant} \
     --without-python \
     install  
     
