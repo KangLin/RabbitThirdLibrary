@@ -136,6 +136,9 @@ case ${RABBIT_BUILD_TARGERT} in
         fi
         ;;
     windows_mingw)
+        if [ "$RABBIT_ARCH" = "x64" ]; then
+            ARCH=64
+        fi
         case `uname -s` in
             MINGW*|MSYS*)
                 perl Configure --prefix=${RABBIT_BUILD_PREFIX} \
@@ -143,7 +146,7 @@ case ${RABBIT_BUILD_TARGERT} in
                     $MODE \
                     zlib --with-zlib-lib=${RABBIT_BUILD_PREFIX}/lib \
                     --with-zlib-include=${RABBIT_BUILD_PREFIX}/include \
-                    mingw
+                    mingw${ARCH}
                 ;;
             Linux*|Unix*|CYGWIN*|*)
                 perl Configure --prefix=${RABBIT_BUILD_PREFIX} \
@@ -152,7 +155,7 @@ case ${RABBIT_BUILD_TARGERT} in
                     $MODE \
                     zlib --with-zlib-lib=${RABBIT_BUILD_PREFIX}/lib \
                     --with-zlib-include=${RABBIT_BUILD_PREFIX}/include \
-                    mingw
+                    mingw${ARCH}
                 ;;
         esac
         ;;

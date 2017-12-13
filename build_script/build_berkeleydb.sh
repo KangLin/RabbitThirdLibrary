@@ -88,8 +88,8 @@ case ${RABBIT_BUILD_TARGERT} in
             rm -fr *
         fi
 
-        ../dist/configure --prefix=${RABBIT_BUILD_PREFIX} --enable-cxx 
-            --enable-cxx ${CONFIG_PARA}
+        ../dist/configure --prefix=${RABBIT_BUILD_PREFIX}
+            --enable-cxx # ${CONFIG_PARA}
         ;;
     windows_msvc)
         cd ${RABBIT_BUILD_SOURCE_CODE}/build_windows
@@ -140,7 +140,7 @@ case ${RABBIT_BUILD_TARGERT} in
             rm -fr *
         fi
         ../dist/configure --prefix=${RABBIT_BUILD_PREFIX} --enable-mingw \
-            --enable-cxx ${CONFIG_PARA}
+            --enable-cxx #${CONFIG_PARA}
 
         ;;
     *)

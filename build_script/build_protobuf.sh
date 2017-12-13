@@ -48,11 +48,11 @@ if [ ! -d ${RABBIT_BUILD_SOURCE_CODE} ]; then
         cd ${RABBIT_BUILD_SOURCE_CODE}
         wget -q -c https://github.com/google/protobuf/archive/v${VERSION}.zip
         unzip -q v${VERSION}.zip
-        mv protobuf-${OPENCV_VERSION} ..
+        mv protobuf-${VERSION} ..
         rm -fr *
         cd ..
         rm -fr ${RABBIT_BUILD_SOURCE_CODE}
-        mv -f protobuf-${OPENCV_VERSION} ${RABBIT_BUILD_SOURCE_CODE}
+        mv -f protobuf-${VERSION} ${RABBIT_BUILD_SOURCE_CODE}
     fi
 fi
 
