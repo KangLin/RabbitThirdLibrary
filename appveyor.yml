@@ -3,7 +3,10 @@ version: 'v0.0.3.{build}'
 
 image: Visual Studio 2015
 
+
 environment:
+  TimeOutMins: 2
+  
   matrix:
   ##### msvc 2017 ########
   - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
@@ -118,6 +121,27 @@ install:
   - if not "%BUILD_TARGERT%" == "android" C:\msys64\usr\bin\pacman.exe -S --noconfirm nasm yasm 
   - C:\msys64\usr\bin\pacman.exe -S --noconfirm unzip expect #zip curl
   - C:\msys64\autorebase.bat
+  - ps: |
+      write-host "Waiting for job `"$env:jobToWait`" to complete"
+      
+      $headers = @{
+          "Content-type" = "application/json"
+      }
+  
+      [datetime]$stop = ([datetime]::Now).AddMinutes($env:TimeOutMins)
+      [bool]$success = $false  
+      
+      while(!$success -and ([datetime]::Now) -lt $stop) {
+          $project = Invoke-RestMethod -Uri "https://ci.appveyor.com/api/projects/$env:APPVEYOR_ACCOUNT_NAME/$env:APPVEYOR_PROJECT_SLUG" -Headers $headers -Method GET
+      
+          $jobToWaitJson = $project.build.jobs | where {$_.name -eq $env:jobToWait}  
+          $success = $jobToWaitJson.status -eq "success"
+          $jobToWaitId = $jobToWaitJson.jobId;
+          if (!$success) {Start-sleep 5}
+      }
+      
+      if (!$success) {throw "Job `"$env:jobToWait`" was not finished in $env:TimeOutMins minutes"}
+      if (!$jobToWaitId) {throw "Unable t get JobId for the job `"$env:jobToWait`""}
     
 before_build:
   - cd %APPVEYOR_BUILD_FOLDER%
