@@ -3,18 +3,60 @@ version: 'v0.0.3.{build}'
 
 image: Visual Studio 2015
 
-
 environment:
   TimeOutMins: 2
-  
+  ApiKey:
+    secure: qex0da587ygmywf4315g
+    
   matrix:
-  ##### msvc 2017 ########
+  ##### msvc 2017 x64 release ########
   - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
     BUILD_TARGERT: windows_msvc
     RABBIT_TOOLCHAIN_VERSION: 15
     RABBIT_ARCH: x64
     RABBIT_CONFIG: Release
     QT_ROOT: NO
+    RABBIT_NUMBER: 0
+
+  - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
+    BUILD_TARGERT: windows_msvc
+    RABBIT_TOOLCHAIN_VERSION: 15
+    RABBIT_ARCH: x64
+    RABBIT_CONFIG: Release
+    QT_ROOT: NO
+    RABBIT_NUMBER: 1
+  
+  - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
+    BUILD_TARGERT: windows_msvc
+    RABBIT_TOOLCHAIN_VERSION: 15
+    RABBIT_ARCH: x64
+    RABBIT_CONFIG: Release
+    QT_ROOT: NO
+    RABBIT_NUMBER: 2
+    
+  - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
+    BUILD_TARGERT: windows_msvc
+    RABBIT_TOOLCHAIN_VERSION: 15
+    RABBIT_ARCH: x64
+    RABBIT_CONFIG: Release
+    QT_ROOT: /C/Qt/5.9/msvc2017_64
+    RABBIT_NUMBER: 3
+
+  - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
+    BUILD_TARGERT: windows_msvc
+    RABBIT_TOOLCHAIN_VERSION: 15
+    RABBIT_ARCH: x64
+    RABBIT_CONFIG: Release
+    QT_ROOT: /C/Qt/5.9/msvc2017_64
+    RABBIT_NUMBER: 4
+    
+  - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
+    BUILD_TARGERT: windows_msvc
+    RABBIT_TOOLCHAIN_VERSION: 15
+    RABBIT_ARCH: x64
+    RABBIT_CONFIG: Debug
+    QT_ROOT: NO
+    RABBIT_NUMBER: 0
 
   - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
     BUILD_TARGERT: windows_msvc
@@ -22,13 +64,39 @@ environment:
     RABBIT_ARCH: x64
     RABBIT_CONFIG: Debug
     QT_ROOT: NO
+    RABBIT_NUMBER: 1
+  
+  - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
+    BUILD_TARGERT: windows_msvc
+    RABBIT_TOOLCHAIN_VERSION: 15
+    RABBIT_ARCH: x64
+    RABBIT_CONFIG: Debug
+    QT_ROOT: NO
+    RABBIT_NUMBER: 2
+    
+  - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
+    BUILD_TARGERT: windows_msvc
+    RABBIT_TOOLCHAIN_VERSION: 15
+    RABBIT_ARCH: x64
+    RABBIT_CONFIG: Debug
+    QT_ROOT: /C/Qt/5.9/msvc2017_64
+    RABBIT_NUMBER: 3
 
+  - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
+    BUILD_TARGERT: windows_msvc
+    RABBIT_TOOLCHAIN_VERSION: 15
+    RABBIT_ARCH: x64
+    RABBIT_CONFIG: Debug
+    QT_ROOT: /C/Qt/5.9/msvc2017_64
+    RABBIT_NUMBER: 4
+    
   - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
     BUILD_TARGERT: windows_msvc
     RABBIT_TOOLCHAIN_VERSION: 15
     RABBIT_ARCH: x86
     RABBIT_CONFIG: Release
     QT_ROOT: NO
+    RABBIT_NUMBER: 0
     
   - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
     BUILD_TARGERT: windows_msvc
@@ -36,6 +104,135 @@ environment:
     RABBIT_ARCH: x86
     RABBIT_CONFIG: Debug
     QT_ROOT: NO
+    RABBIT_NUMBER: 0
+    
+  - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
+    BUILD_TARGERT: windows_msvc
+    RABBIT_TOOLCHAIN_VERSION: 15
+    RABBIT_ARCH: x64
+    RABBIT_CONFIG: Release
+    QT_ROOT: /C/Qt/5.9/msvc2017_64
+    RABBIT_NUMBER: 1
+  
+  - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
+    BUILD_TARGERT: windows_msvc
+    RABBIT_TOOLCHAIN_VERSION: 15
+    RABBIT_ARCH: x64
+    RABBIT_CONFIG: Debug
+    QT_ROOT: /C/Qt/5.9/msvc2017_64
+    RABBIT_NUMBER: 1
+ 
+  - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
+    BUILD_TARGERT: windows_msvc
+    RABBIT_TOOLCHAIN_VERSION: 15
+    RABBIT_ARCH: x86
+    RABBIT_CONFIG: Release
+    QT_ROOT: /C/Qt/5.9/msvc2017_64
+    RABBIT_NUMBER: 1
+  
+  - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
+    BUILD_TARGERT: windows_msvc
+    RABBIT_TOOLCHAIN_VERSION: 15
+    RABBIT_ARCH: x86
+    RABBIT_CONFIG: Debug
+    QT_ROOT: /C/Qt/5.9/msvc2017_64
+    RABBIT_NUMBER: 1
+    
+  - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
+    BUILD_TARGERT: windows_msvc
+    RABBIT_TOOLCHAIN_VERSION: 15
+    RABBIT_ARCH: x64
+    RABBIT_CONFIG: Release
+    QT_ROOT: /C/Qt/5.9/msvc2017_64
+    RABBIT_NUMBER: 2
+  
+  - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
+    BUILD_TARGERT: windows_msvc
+    RABBIT_TOOLCHAIN_VERSION: 15
+    RABBIT_ARCH: x64
+    RABBIT_CONFIG: Debug
+    QT_ROOT: /C/Qt/5.9/msvc2017_64
+    RABBIT_NUMBER: 2
+  
+  - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
+    BUILD_TARGERT: windows_msvc
+    RABBIT_TOOLCHAIN_VERSION: 15
+    RABBIT_ARCH: x86
+    RABBIT_CONFIG: Release
+    QT_ROOT: /C/Qt/5.9/msvc2017_64
+    RABBIT_NUMBER: 2
+  
+  - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
+    BUILD_TARGERT: windows_msvc
+    RABBIT_TOOLCHAIN_VERSION: 15
+    RABBIT_ARCH: x86
+    RABBIT_CONFIG: Debug
+    QT_ROOT: /C/Qt/5.9/msvc2017_64
+    RABBIT_NUMBER: 2
+    
+  - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
+    BUILD_TARGERT: windows_msvc
+    RABBIT_TOOLCHAIN_VERSION: 15
+    RABBIT_ARCH: x64
+    RABBIT_CONFIG: Release
+    QT_ROOT: /C/Qt/5.9/msvc2017_64
+    RABBIT_NUMBER: 3
+  
+  - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
+    BUILD_TARGERT: windows_msvc
+    RABBIT_TOOLCHAIN_VERSION: 15
+    RABBIT_ARCH: x64
+    RABBIT_CONFIG: Debug
+    QT_ROOT: /C/Qt/5.9/msvc2017_64
+    RABBIT_NUMBER: 3
+
+  - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
+    BUILD_TARGERT: windows_msvc
+    RABBIT_TOOLCHAIN_VERSION: 15
+    RABBIT_ARCH: x86
+    RABBIT_CONFIG: Release
+    QT_ROOT: /C/Qt/5.9/msvc2017_64
+    RABBIT_NUMBER: 3
+  
+  - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
+    BUILD_TARGERT: windows_msvc
+    RABBIT_TOOLCHAIN_VERSION: 15
+    RABBIT_ARCH: x86
+    RABBIT_CONFIG: Debug
+    QT_ROOT: /C/Qt/5.9/msvc2017_64
+    RABBIT_NUMBER: 3
+    
+  - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
+    BUILD_TARGERT: windows_msvc
+    RABBIT_TOOLCHAIN_VERSION: 15
+    RABBIT_ARCH: x64
+    RABBIT_CONFIG: Release
+    QT_ROOT: /C/Qt/5.9/msvc2017_64
+    RABBIT_NUMBER: 4    
+ 
+  - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
+    BUILD_TARGERT: windows_msvc
+    RABBIT_TOOLCHAIN_VERSION: 15
+    RABBIT_ARCH: x64
+    RABBIT_CONFIG: Debug
+    QT_ROOT: /C/Qt/5.9/msvc2017_64
+    RABBIT_NUMBER: 4 
+  
+  - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
+    BUILD_TARGERT: windows_msvc
+    RABBIT_TOOLCHAIN_VERSION: 15
+    RABBIT_ARCH: x86
+    RABBIT_CONFIG: Release
+    QT_ROOT: /C/Qt/5.9/msvc2017_64
+    RABBIT_NUMBER: 4    
+ 
+  - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
+    BUILD_TARGERT: windows_msvc
+    RABBIT_TOOLCHAIN_VERSION: 15
+    RABBIT_ARCH: x86
+    RABBIT_CONFIG: Debug
+    QT_ROOT: /C/Qt/5.9/msvc2017_64
+    RABBIT_NUMBER: 4 
     
   ##### msvc 2015 ########
   - BUILD_TARGERT: windows_msvc
@@ -43,24 +240,126 @@ environment:
     RABBIT_ARCH: x64
     RABBIT_CONFIG: Release
     QT_ROOT: NO
+    RABBIT_NUMBER: 0
+  
+  - BUILD_TARGERT: windows_msvc
+    RABBIT_TOOLCHAIN_VERSION: 14
+    RABBIT_ARCH: x64
+    RABBIT_CONFIG: Release
+    QT_ROOT: /C/Qt/5.8/msvc2015_64
+    RABBIT_NUMBER: 1
+
+  - BUILD_TARGERT: windows_msvc
+    RABBIT_TOOLCHAIN_VERSION: 14
+    RABBIT_ARCH: x64
+    RABBIT_CONFIG: Release
+    QT_ROOT: /C/Qt/5.8/msvc2015_64
+    RABBIT_NUMBER: 2
     
   - BUILD_TARGERT: windows_msvc
     RABBIT_TOOLCHAIN_VERSION: 14
     RABBIT_ARCH: x64
-    RABBIT_CONFIG: Debug
-    QT_ROOT: NO
-  
+    RABBIT_CONFIG: Release
+    QT_ROOT: /C/Qt/5.8/msvc2015_64
+    RABBIT_NUMBER: 3
+    
+  - BUILD_TARGERT: windows_msvc
+    RABBIT_TOOLCHAIN_VERSION: 14
+    RABBIT_ARCH: x64
+    RABBIT_CONFIG: Release
+    QT_ROOT: /C/Qt/5.8/msvc2015_64
+    RABBIT_NUMBER: 4
+
+  - BUILD_TARGERT: windows_msvc
+    RABBIT_TOOLCHAIN_VERSION: 14
+    RABBIT_ARCH: x64
+    RABBIT_CONFIG: Release
+    QT_ROOT: /C/Qt/5.6/msvc2015_64
+    RABBIT_NUMBER: 1
+
+  - BUILD_TARGERT: windows_msvc
+    RABBIT_TOOLCHAIN_VERSION: 14
+    RABBIT_ARCH: x64
+    RABBIT_CONFIG: Release
+    QT_ROOT: /C/Qt/5.6/msvc2015_64
+    RABBIT_NUMBER: 2
+    
+  - BUILD_TARGERT: windows_msvc
+    RABBIT_TOOLCHAIN_VERSION: 14
+    RABBIT_ARCH: x64
+    RABBIT_CONFIG: Release
+    QT_ROOT: /C/Qt/5.6/msvc2015_64
+    RABBIT_NUMBER: 3
+    
+  - BUILD_TARGERT: windows_msvc
+    RABBIT_TOOLCHAIN_VERSION: 14
+    RABBIT_ARCH: x64
+    RABBIT_CONFIG: Release
+    QT_ROOT: /C/Qt/5.6/msvc2015_64
+    RABBIT_NUMBER: 4
+    
   - BUILD_TARGERT: windows_msvc
     RABBIT_TOOLCHAIN_VERSION: 14
     RABBIT_ARCH: x86
     RABBIT_CONFIG: Release
     QT_ROOT: NO
-  
+    RABBIT_NUMBER: 0
+
   - BUILD_TARGERT: windows_msvc
     RABBIT_TOOLCHAIN_VERSION: 14
     RABBIT_ARCH: x86
-    RABBIT_CONFIG: Debug
-    QT_ROOT: NO
+    RABBIT_CONFIG: Release
+    QT_ROOT: /C/Qt/5.8/msvc2015
+    RABBIT_NUMBER: 1
+
+  - BUILD_TARGERT: windows_msvc
+    RABBIT_TOOLCHAIN_VERSION: 14
+    RABBIT_ARCH: x86
+    RABBIT_CONFIG: Release
+    QT_ROOT: /C/Qt/5.8/msvc2015
+    RABBIT_NUMBER: 2
+    
+  - BUILD_TARGERT: windows_msvc
+    RABBIT_TOOLCHAIN_VERSION: 14
+    RABBIT_ARCH: x86
+    RABBIT_CONFIG: Release
+    QT_ROOT: /C/Qt/5.8/msvc2015
+    RABBIT_NUMBER: 3
+    
+  - BUILD_TARGERT: windows_msvc
+    RABBIT_TOOLCHAIN_VERSION: 14
+    RABBIT_ARCH: x86
+    RABBIT_CONFIG: Release
+    QT_ROOT: /C/Qt/5.8/msvc2015
+    RABBIT_NUMBER: 4
+
+  - BUILD_TARGERT: windows_msvc
+    RABBIT_TOOLCHAIN_VERSION: 14
+    RABBIT_ARCH: x86
+    RABBIT_CONFIG: Release
+    QT_ROOT: /C/Qt/5.6/msvc2015
+    RABBIT_NUMBER: 1
+
+  - BUILD_TARGERT: windows_msvc
+    RABBIT_TOOLCHAIN_VERSION: 14
+    RABBIT_ARCH: x86
+    RABBIT_CONFIG: Release
+    QT_ROOT: /C/Qt/5.6/msvc2015
+    RABBIT_NUMBER: 2
+    
+  - BUILD_TARGERT: windows_msvc
+    RABBIT_TOOLCHAIN_VERSION: 14
+    RABBIT_ARCH: x86
+    RABBIT_CONFIG: Release
+    QT_ROOT: /C/Qt/5.6/msvc2015
+    RABBIT_NUMBER: 3
+    
+  - BUILD_TARGERT: windows_msvc
+    RABBIT_TOOLCHAIN_VERSION: 14
+    RABBIT_ARCH: x86
+    RABBIT_CONFIG: Release
+    QT_ROOT: /C/Qt/5.6/msvc2015
+    RABBIT_NUMBER: 4
     
   ##### msvc 2013 ########
   - BUILD_TARGERT: windows_msvc
@@ -68,40 +367,45 @@ environment:
     RABBIT_ARCH: x64
     RABBIT_CONFIG: Release
     QT_ROOT: NO
-
+    RABBIT_NUMBER: 0
+    
   - BUILD_TARGERT: windows_msvc
     RABBIT_TOOLCHAIN_VERSION: 12
     RABBIT_ARCH: x86
     RABBIT_CONFIG: Release
     QT_ROOT: NO
-  
+    RABBIT_NUMBER: 0
+    
   ##### mingw ########
   - BUILD_TARGERT: windows_mingw
     RABBIT_TOOLCHAIN_VERSION: 530
     RABBIT_ARCH: x86
     RABBIT_CONFIG: Release
     QT_ROOT: NO
+    RABBIT_NUMBER: 0
     
   - BUILD_TARGERT: windows_mingw
     RABBIT_TOOLCHAIN_VERSION: 530
     RABBIT_ARCH: x86
     RABBIT_CONFIG: Debug
     QT_ROOT: NO
-
+    RABBIT_NUMBER: 0
+    
   - BUILD_TARGERT: windows_mingw
     RABBIT_TOOLCHAIN_VERSION: 492
     RABBIT_ARCH: x86
     RABBIT_CONFIG: Release
     QT_ROOT: NO
-
+    RABBIT_NUMBER: 0
+    
   - BUILD_TARGERT: windows_mingw
     RABBIT_TOOLCHAIN_VERSION: 482
     RABBIT_ARCH: x86
     RABBIT_CONFIG: Release
     QT_ROOT: NO
+    RABBIT_NUMBER: 0
     
 init:
-  - set RABBITIM_LIBRARY=change_prefix zlib minizip expat libgpx openssl libsodium boost libcurl libpng jpeg libgif libtiff freetype protobuf berkeleydb libevent libyuv libvpx libqrencode libopus x264 ffmpeg gdal
   - set varch=%RABBIT_ARCH%
   - set PROJECT_NAME=%APPVEYOR_PROJECT_NAME%
   - if "%QT_VERSION%" == "" set QT_VERSION=NO
@@ -121,9 +425,22 @@ install:
   - if not "%BUILD_TARGERT%" == "android" C:\msys64\usr\bin\pacman.exe -S --noconfirm nasm yasm 
   - C:\msys64\usr\bin\pacman.exe -S --noconfirm unzip expect #zip curl
   - C:\msys64\autorebase.bat
+    
+before_build:
+  - cd %APPVEYOR_BUILD_FOLDER%
+  - if "%BUILD_TARGERT%" == "android" C:\msys64\usr\bin\bash.exe %APPVEYOR_BUILD_FOLDER%\build_script\ci\build-install-tools-windows.sh
   - ps: |
-      write-host "Waiting for job `"$env:jobToWait`" to complete"
+      if($env:RABBIT_NUMBER -eq 0) {return 0}
       
+      $RABBIT_JOB_NAME="Environment: "
+      if ($env:APPVEYOR_BUILD_WORKER_IMAGE -eq "Visual Studio 2017")
+      {$RABBIT_JOB_NAME=$RABBIT_JOB_NAME+"APPVEYOR_BUILD_WORKER_IMAGE=$env:APPVEYOR_BUILD_WORKER_IMAGE,"}
+      $RABBIT_JOB_NAME=$RABBIT_JOB_NAME+" BUILD_TARGERT=$env:BUILD_TARGERT, RABBIT_TOOLCHAIN_VERSION=$env:RABBIT_TOOLCHAIN_VERSION, RABBIT_ARCH=$env:RABBIT_ARCH, RABBIT_CONFIG=$env:RABBIT_CONFIG"
+      if($env:RABBIT_NUMBER -lt 3) { $RABBIT_JOB_NAME=$RABBIT_JOB_NAME+", QT_ROOT=NO" } else { $RABBIT_JOB_NAME=$RABBIT_JOB_NAME+", QT_ROOT=${env:QT_ROOT}" }
+      $number=${env:RABBIT_NUMBER}-1
+      $RABBIT_JOB_NAME=$RABBIT_JOB_NAME+", RABBIT_NUMBER=$number"
+      
+      write-host "Waiting for job `"$RABBIT_JOB_NAME`" to complete"
       $headers = @{
           "Content-type" = "application/json"
       }
@@ -134,19 +451,21 @@ install:
       while(!$success -and ([datetime]::Now) -lt $stop) {
           $project = Invoke-RestMethod -Uri "https://ci.appveyor.com/api/projects/$env:APPVEYOR_ACCOUNT_NAME/$env:APPVEYOR_PROJECT_SLUG" -Headers $headers -Method GET
       
-          $jobToWaitJson = $project.build.jobs | where {$_.name -eq $env:jobToWait}  
+          $jobToWaitJson = $project.build.jobs | where {$_.name -eq $RABBIT_JOB_NAME} 
+          if($jobToWaitJson.status -eq "failed") {break}
           $success = $jobToWaitJson.status -eq "success"
           $jobToWaitId = $jobToWaitJson.jobId;
           if (!$success) {Start-sleep 5}
       }
       
-      if (!$success) {throw "Job `"$env:jobToWait`" was not finished in $env:TimeOutMins minutes"}
-      if (!$jobToWaitId) {throw "Unable t get JobId for the job `"$env:jobToWait`""}
-    
-before_build:
-  - cd %APPVEYOR_BUILD_FOLDER%
-  - if "%BUILD_TARGERT%" == "android" C:\msys64\usr\bin\bash.exe %APPVEYOR_BUILD_FOLDER%\build_script\ci\build-install-tools-windows.sh
-  
+      if (!$success) {throw "Job `"$env:RABBIT_JOB_NAME`" was not finished in $env:TimeOutMins minutes"}
+      if (!$jobToWaitId) {throw "Unable t get JobId for the job `"$env:RABBIT_JOB_NAME`""}
+      
+      $url="https://ci.appveyor.com/api/buildjobs/$jobToWaitId/artifacts/RABBIT_${env:BUILD_TARGERT}${env:RABBIT_TOOLCHAIN_VERSION}_${env:RABBIT_ARCH}_qt${env:QT_VERSION}_${env:RABBIT_CONFIG}_${env:BUILD_VERSION}.zip"
+      
+      Start-FileDownload "$url" -FileName build_script/${env:BUILD_TARGERT}.zip
+      if(!$?){return -1}
+      
 build_script:
   - cd %APPVEYOR_BUILD_FOLDER%
   - C:\msys64\usr\bin\bash.exe %APPVEYOR_BUILD_FOLDER%\build_script\ci\build.sh

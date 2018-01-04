@@ -1,6 +1,12 @@
 #!/bin/bash
 set -ev
-    
+
+RABBIT_LIBRARYS[0]="change_prefix zlib minizip expat libgpx openssl libsodium libcurl libpng jpeg libgif libtiff freetype protobuf libyuv libvpx libqrencode libopus x264 ffmpeg gdal"
+RABBIT_LIBRARYS[1]="opencv gdal"
+RABBIT_LIBRARYS[2]="osg"
+RABBIT_LIBRARYS[3]="OsgQt osgearth"
+RABBIT_LIBRARYS[4]="qxmpp qzxing"
+
 #urlendcode
 function urlencode()
 {
@@ -54,15 +60,16 @@ fi
 #下载预编译库
 #DOWNLOAD_URL="https://github.com/KangLin/RabbitThirdLibrary/releases/download/${DOWNLOAD_VERSION}/RABBIT_${BUILD_TARGERT}${RABBIT_TOOLCHAIN_VERSION}_${RABBIT_ARCH}_qt${QT_VERSION}_${RABBIT_CONFIG}_${BUILD_VERSION}.zip"
 #echo "wget -q -c -O ${SCRIPT_DIR}/../${BUILD_TARGERT}.zip ${DOWNLOAD_URL} "
-if [ -n "$DOWNLOAD_URL" ]; then
-    echo "appveyor DownloadFile \"${DOWNLOAD_URL}\" -FileName ${SCRIPT_DIR}/../${BUILD_TARGERT}.zip"
-    appveyor DownloadFile "${DOWNLOAD_URL}" -FileName ${SCRIPT_DIR}/../${BUILD_TARGERT}.zip
-    #wget --passive -c -p -O ${SCRIPT_DIR}/../${BUILD_TARGERT}.zip ${DOWNLOAD_URL}
+#if [ -n "$DOWNLOAD_URL" ]; then
+#    echo "appveyor DownloadFile \"${DOWNLOAD_URL}\" -FileName ${SCRIPT_DIR}/../${BUILD_TARGERT}.zip"
+#    appveyor DownloadFile "${DOWNLOAD_URL}" -FileName ${SCRIPT_DIR}/../${BUILD_TARGERT}.zip
+#    #wget --passive -c -p -O ${SCRIPT_DIR}/../${BUILD_TARGERT}.zip ${DOWNLOAD_URL}
     RABBIT_BUILD_PREFIX=${SCRIPT_DIR}/../${BUILD_TARGERT}
     if [ ! -d ${RABBIT_BUILD_PREFIX} ]; then
         mkdir -p ${RABBIT_BUILD_PREFIX}
     fi
-    unzip -q -d ${RABBIT_BUILD_PREFIX} ${SCRIPT_DIR}/../${BUILD_TARGERT}.zip
+if [ -f ${SCRIPT_DIR}/${BUILD_TARGERT}.zip ]; then
+    unzip -q -d ${RABBIT_BUILD_PREFIX} ${SCRIPT_DIR}/${BUILD_TARGERT}.zip
     if [ "$PROJECT_NAME" != "RabbitThirdLibrary" \
         -a "$BUILD_TARGERT" != "windows_msvc" \
         -a -f "${RABBIT_BUILD_PREFIX}/change_prefix.sh" ]; then
@@ -109,7 +116,7 @@ echo "PATH=$PATH"
 echo "RABBIT_BUILD_THIRDLIBRARY:$RABBIT_BUILD_THIRDLIBRARY"
 echo "---------------------------------------------------------------------------"
 
-for v in ${RABBITIM_LIBRARY}
+for v in ${RABBIT_LIBRARYS[$RABBIT_NUMBER]}
 do
     if [ "$v" = "rabbitim" ]; then
         bash ./build_$v.sh ${BUILD_TARGERT} # > /dev/null
