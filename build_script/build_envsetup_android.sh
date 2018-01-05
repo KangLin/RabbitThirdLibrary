@@ -96,7 +96,7 @@ esac
 
 
 if [ -z "${RABBIT_BUILD_TOOLCHAIN_VERSION}" ]; then
-    RABBIT_BUILD_TOOLCHAIN_VERSION=4.8  #工具链版本号  
+    RABBIT_BUILD_TOOLCHAIN_VERSION=4.9  #工具链版本号  
 fi
 if [ -z "${RABBIT_BUILD_PLATFORMS_VERSION}" ]; then
     RABBIT_BUILD_PLATFORMS_VERSION=18    #android ndk api (平台)版本号  

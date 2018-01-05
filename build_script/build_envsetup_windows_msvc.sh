@@ -25,11 +25,6 @@
 #   ./script.sh
 #   注意这种用法，script.sh开头一行必须包含 #!/bin/sh  
 
-#需要设置下面变量：
-#if [ -z "$QT_ROOT" ]; then
-#    QT_VERSION=5.8.0
-#    QT_ROOT=/c/Qt/Qt5.8.0/5.8/msvc2015 #QT 安装根目录,默认为:${RABBITRoot}/ThirdLibrary/windows_msvc/qt
-#fi
 MAKE="nmake"
 if [ -z "$RABBIT_CLEAN" ]; then
     RABBIT_CLEAN=TRUE #编译前清理
@@ -71,6 +66,7 @@ if [ -z "${RABBIT_ARCH}" ]; then
     fi
 fi
 
+#需要设置下面变量：
 if [ -z "$QT_ROOT" ]; then
     QT_VERSION=5.9.2
     QT_ROOT=/c/Qt/Qt${QT_VERSION}/${QT_VERSION}/${MSVC_NAME} #QT 安装根目录,默认为:${RABBITRoot}/ThirdLibrary/windows_msvc/qt

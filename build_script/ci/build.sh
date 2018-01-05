@@ -1,11 +1,11 @@
 #!/bin/bash
 set -ev
 
-RABBIT_LIBRARYS[0]="change_prefix" # zlib minizip expat libgpx openssl libsodium libcurl libpng jpeg libgif libtiff freetype protobuf libyuv libvpx libqrencode libopus x264 ffmpeg gdal"
+RABBIT_LIBRARYS[0]="change_prefix zlib minizip expat libgpx openssl libsodium libcurl libpng jpeg libgif libtiff freetype protobuf libyuv libvpx libqrencode libopus x264 ffmpeg gdal"
 RABBIT_LIBRARYS[1]="opencv gdal"
-RABBIT_LIBRARYS[2]="osg"
-RABBIT_LIBRARYS[3]="OsgQt osgearth"
-RABBIT_LIBRARYS[4]="qxmpp qzxing"
+#RABBIT_LIBRARYS[2]="osg"
+#RABBIT_LIBRARYS[3]="OsgQt osgearth"
+RABBIT_LIBRARYS[2]="qxmpp qzxing"
 
 #urlendcode
 function urlencode()
@@ -45,7 +45,7 @@ PROJECT_DIR=`pwd`
 if [ -n "$1" ]; then
     PROJECT_DIR=$1
 fi
-
+echo "PROJECT_DIR:${PROJECT_DIR}"
 SCRIPT_DIR=${PROJECT_DIR}/build_script
 if [ -d ${PROJECT_DIR}/ThirdLibrary/build_script ]; then
     SCRIPT_DIR=${PROJECT_DIR}/ThirdLibrary/build_script
@@ -64,23 +64,21 @@ fi
 #    echo "appveyor DownloadFile \"${DOWNLOAD_URL}\" -FileName ${SCRIPT_DIR}/../${BUILD_TARGERT}.zip"
 #    appveyor DownloadFile "${DOWNLOAD_URL}" -FileName ${SCRIPT_DIR}/../${BUILD_TARGERT}.zip
 #    #wget --passive -c -p -O ${SCRIPT_DIR}/../${BUILD_TARGERT}.zip ${DOWNLOAD_URL}
-    RABBIT_BUILD_PREFIX=${SCRIPT_DIR}/../${BUILD_TARGERT}
+    
+if [ -f ${PROJECT_DIR}/${BUILD_TARGERT}.zip ]; then
+    RABBIT_BUILD_PREFIX=${PROJECT_DIR}/${BUILD_TARGERT}${RABBIT_TOOLCHAIN_VERSION}_${RABBIT_ARCH}_qt${QT_VERSION}_${RABBIT_CONFIG}
     if [ ! -d ${RABBIT_BUILD_PREFIX} ]; then
         mkdir -p ${RABBIT_BUILD_PREFIX}
     fi
-if [ -f ${SCRIPT_DIR}/${BUILD_TARGERT}.zip ]; then
-    unzip -q -d ${RABBIT_BUILD_PREFIX} ${SCRIPT_DIR}/${BUILD_TARGERT}.zip
+    unzip -q -d ${RABBIT_BUILD_PREFIX} ${PROJECT_DIR}/${BUILD_TARGERT}.zip
     if [ "$PROJECT_NAME" != "RabbitThirdLibrary" \
         -a "$BUILD_TARGERT" != "windows_msvc" \
         -a -f "${RABBIT_BUILD_PREFIX}/change_prefix.sh" ]; then
 
         cd ${RABBIT_BUILD_PREFIX}
 
-        THIRDLIBRARY_DIR_PREFIX=/c/projects/rabbitthirdlibrary/build_script/../${BUILD_TARGERT}
-
         echo "bash change_prefix.sh"
         bash change_prefix.sh
-        cat ${SCRIPT_DIR}/../${BUILD_TARGERT}/lib/pkgconfig/libcurl.pc
         
         cd ${SCRIPT_DIR}
     fi

@@ -43,7 +43,7 @@ CUR_DIR=`pwd`
 
 #下载源码:
 if [ ! -d ${RABBIT_BUILD_SOURCE_CODE} ]; then
-    VERSION=master
+    VERSION=master 
     if [ "TRUE" = "${RABBIT_USE_REPOSITORIES}" ]; then
         echo "git clone -q https://github.com/ftylitak/qzxing.git ${RABBIT_BUILD_SOURCE_CODE}"
         git clone -q https://github.com/KangLin/qzxing.git ${RABBIT_BUILD_SOURCE_CODE}
@@ -54,11 +54,11 @@ if [ ! -d ${RABBIT_BUILD_SOURCE_CODE} ]; then
         cd ${RABBIT_BUILD_SOURCE_CODE}
         wget -q -c https://github.com/ftylitak/qzxing/archive/${VERSION}.zip
         unzip -q ${VERSION}.zip
-        mv qzxing-${FFMPEG_VERSION} ..
+        mv qzxing-${VERSION} ..
         rm -fr *
         cd ..
         rm -fr ${RABBIT_BUILD_SOURCE_CODE}
-        mv -f qzxing-${FFMPEG_VERSION} ${RABBIT_BUILD_SOURCE_CODE}
+        mv -f qzxing-${VERSION} ${RABBIT_BUILD_SOURCE_CODE}
     fi
 fi
 
@@ -121,8 +121,8 @@ if [ "$RABBIT_BUILD_TARGERT" = "android"  ]; then
     MAKE_PARA=" INSTALL_ROOT=\"${RABBIT_BUILD_PREFIX}\""
 fi
 echo "$QMAKE ${RELEASE_PARA}"
-$QMAKE ${RELEASE_PARA}
-${MAKE} -f Makefile install ${MAKE_PARA}
+$QMAKE ${RELEASE_PARA} QZXing.pro
+${MAKE} -f Makefile install ${MAKE_PARA} 
 
 
 cd $CUR_DIR
