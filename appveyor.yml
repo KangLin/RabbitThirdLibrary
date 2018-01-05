@@ -9,7 +9,7 @@ environment:
     secure: qex0da587ygmywf4315g
     
   matrix:
-  ##### msvc 2017 x64 release ########
+  ##### test ########
   - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
     BUILD_TARGERT: windows_msvc
     RABBIT_TOOLCHAIN_VERSION: 15
@@ -17,7 +17,7 @@ environment:
     RABBIT_CONFIG: Release
     QT_ROOT: NO
     RABBIT_NUMBER: 0
-
+    
   - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
     BUILD_TARGERT: windows_msvc
     RABBIT_TOOLCHAIN_VERSION: 15
@@ -25,7 +25,7 @@ environment:
     RABBIT_CONFIG: Release
     QT_ROOT: NO
     RABBIT_NUMBER: 1
-  
+    
   - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
     BUILD_TARGERT: windows_msvc
     RABBIT_TOOLCHAIN_VERSION: 15
@@ -41,7 +41,7 @@ environment:
     RABBIT_CONFIG: Release
     QT_ROOT: /C/Qt/5.9/msvc2017_64
     RABBIT_NUMBER: 3
-
+    
   - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
     BUILD_TARGERT: windows_msvc
     RABBIT_TOOLCHAIN_VERSION: 15
@@ -50,6 +50,15 @@ environment:
     QT_ROOT: /C/Qt/5.9/msvc2017_64
     RABBIT_NUMBER: 4
     
+  ##### msvc 2017 ########
+  - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
+    BUILD_TARGERT: windows_msvc
+    RABBIT_TOOLCHAIN_VERSION: 15
+    RABBIT_ARCH: x64
+    RABBIT_CONFIG: Release
+    QT_ROOT: NO
+    RABBIT_NUMBER: 0
+  
   - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
     BUILD_TARGERT: windows_msvc
     RABBIT_TOOLCHAIN_VERSION: 15
@@ -58,38 +67,6 @@ environment:
     QT_ROOT: NO
     RABBIT_NUMBER: 0
 
-  - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
-    BUILD_TARGERT: windows_msvc
-    RABBIT_TOOLCHAIN_VERSION: 15
-    RABBIT_ARCH: x64
-    RABBIT_CONFIG: Debug
-    QT_ROOT: NO
-    RABBIT_NUMBER: 1
-  
-  - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
-    BUILD_TARGERT: windows_msvc
-    RABBIT_TOOLCHAIN_VERSION: 15
-    RABBIT_ARCH: x64
-    RABBIT_CONFIG: Debug
-    QT_ROOT: NO
-    RABBIT_NUMBER: 2
-    
-  - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
-    BUILD_TARGERT: windows_msvc
-    RABBIT_TOOLCHAIN_VERSION: 15
-    RABBIT_ARCH: x64
-    RABBIT_CONFIG: Debug
-    QT_ROOT: /C/Qt/5.9/msvc2017_64
-    RABBIT_NUMBER: 3
-
-  - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
-    BUILD_TARGERT: windows_msvc
-    RABBIT_TOOLCHAIN_VERSION: 15
-    RABBIT_ARCH: x64
-    RABBIT_CONFIG: Debug
-    QT_ROOT: /C/Qt/5.9/msvc2017_64
-    RABBIT_NUMBER: 4
-    
   - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
     BUILD_TARGERT: windows_msvc
     RABBIT_TOOLCHAIN_VERSION: 15
@@ -105,134 +82,6 @@ environment:
     RABBIT_CONFIG: Debug
     QT_ROOT: NO
     RABBIT_NUMBER: 0
-    
-  - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
-    BUILD_TARGERT: windows_msvc
-    RABBIT_TOOLCHAIN_VERSION: 15
-    RABBIT_ARCH: x64
-    RABBIT_CONFIG: Release
-    QT_ROOT: /C/Qt/5.9/msvc2017_64
-    RABBIT_NUMBER: 1
-  
-  - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
-    BUILD_TARGERT: windows_msvc
-    RABBIT_TOOLCHAIN_VERSION: 15
-    RABBIT_ARCH: x64
-    RABBIT_CONFIG: Debug
-    QT_ROOT: /C/Qt/5.9/msvc2017_64
-    RABBIT_NUMBER: 1
- 
-  - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
-    BUILD_TARGERT: windows_msvc
-    RABBIT_TOOLCHAIN_VERSION: 15
-    RABBIT_ARCH: x86
-    RABBIT_CONFIG: Release
-    QT_ROOT: /C/Qt/5.9/msvc2017_64
-    RABBIT_NUMBER: 1
-  
-  - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
-    BUILD_TARGERT: windows_msvc
-    RABBIT_TOOLCHAIN_VERSION: 15
-    RABBIT_ARCH: x86
-    RABBIT_CONFIG: Debug
-    QT_ROOT: /C/Qt/5.9/msvc2017_64
-    RABBIT_NUMBER: 1
-    
-  - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
-    BUILD_TARGERT: windows_msvc
-    RABBIT_TOOLCHAIN_VERSION: 15
-    RABBIT_ARCH: x64
-    RABBIT_CONFIG: Release
-    QT_ROOT: /C/Qt/5.9/msvc2017_64
-    RABBIT_NUMBER: 2
-  
-  - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
-    BUILD_TARGERT: windows_msvc
-    RABBIT_TOOLCHAIN_VERSION: 15
-    RABBIT_ARCH: x64
-    RABBIT_CONFIG: Debug
-    QT_ROOT: /C/Qt/5.9/msvc2017_64
-    RABBIT_NUMBER: 2
-  
-  - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
-    BUILD_TARGERT: windows_msvc
-    RABBIT_TOOLCHAIN_VERSION: 15
-    RABBIT_ARCH: x86
-    RABBIT_CONFIG: Release
-    QT_ROOT: /C/Qt/5.9/msvc2017_64
-    RABBIT_NUMBER: 2
-  
-  - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
-    BUILD_TARGERT: windows_msvc
-    RABBIT_TOOLCHAIN_VERSION: 15
-    RABBIT_ARCH: x86
-    RABBIT_CONFIG: Debug
-    QT_ROOT: /C/Qt/5.9/msvc2017_64
-    RABBIT_NUMBER: 2
-    
-  - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
-    BUILD_TARGERT: windows_msvc
-    RABBIT_TOOLCHAIN_VERSION: 15
-    RABBIT_ARCH: x64
-    RABBIT_CONFIG: Release
-    QT_ROOT: /C/Qt/5.9/msvc2017_64
-    RABBIT_NUMBER: 3
-  
-  - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
-    BUILD_TARGERT: windows_msvc
-    RABBIT_TOOLCHAIN_VERSION: 15
-    RABBIT_ARCH: x64
-    RABBIT_CONFIG: Debug
-    QT_ROOT: /C/Qt/5.9/msvc2017_64
-    RABBIT_NUMBER: 3
-
-  - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
-    BUILD_TARGERT: windows_msvc
-    RABBIT_TOOLCHAIN_VERSION: 15
-    RABBIT_ARCH: x86
-    RABBIT_CONFIG: Release
-    QT_ROOT: /C/Qt/5.9/msvc2017_64
-    RABBIT_NUMBER: 3
-  
-  - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
-    BUILD_TARGERT: windows_msvc
-    RABBIT_TOOLCHAIN_VERSION: 15
-    RABBIT_ARCH: x86
-    RABBIT_CONFIG: Debug
-    QT_ROOT: /C/Qt/5.9/msvc2017_64
-    RABBIT_NUMBER: 3
-    
-  - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
-    BUILD_TARGERT: windows_msvc
-    RABBIT_TOOLCHAIN_VERSION: 15
-    RABBIT_ARCH: x64
-    RABBIT_CONFIG: Release
-    QT_ROOT: /C/Qt/5.9/msvc2017_64
-    RABBIT_NUMBER: 4    
- 
-  - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
-    BUILD_TARGERT: windows_msvc
-    RABBIT_TOOLCHAIN_VERSION: 15
-    RABBIT_ARCH: x64
-    RABBIT_CONFIG: Debug
-    QT_ROOT: /C/Qt/5.9/msvc2017_64
-    RABBIT_NUMBER: 4 
-  
-  - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
-    BUILD_TARGERT: windows_msvc
-    RABBIT_TOOLCHAIN_VERSION: 15
-    RABBIT_ARCH: x86
-    RABBIT_CONFIG: Release
-    QT_ROOT: /C/Qt/5.9/msvc2017_64
-    RABBIT_NUMBER: 4    
- 
-  - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
-    BUILD_TARGERT: windows_msvc
-    RABBIT_TOOLCHAIN_VERSION: 15
-    RABBIT_ARCH: x86
-    RABBIT_CONFIG: Debug
-    QT_ROOT: /C/Qt/5.9/msvc2017_64
-    RABBIT_NUMBER: 4 
     
   ##### msvc 2015 ########
   - BUILD_TARGERT: windows_msvc
@@ -245,58 +94,9 @@ environment:
   - BUILD_TARGERT: windows_msvc
     RABBIT_TOOLCHAIN_VERSION: 14
     RABBIT_ARCH: x64
-    RABBIT_CONFIG: Release
-    QT_ROOT: /C/Qt/5.8/msvc2015_64
-    RABBIT_NUMBER: 1
-
-  - BUILD_TARGERT: windows_msvc
-    RABBIT_TOOLCHAIN_VERSION: 14
-    RABBIT_ARCH: x64
-    RABBIT_CONFIG: Release
-    QT_ROOT: /C/Qt/5.8/msvc2015_64
-    RABBIT_NUMBER: 2
-    
-  - BUILD_TARGERT: windows_msvc
-    RABBIT_TOOLCHAIN_VERSION: 14
-    RABBIT_ARCH: x64
-    RABBIT_CONFIG: Release
-    QT_ROOT: /C/Qt/5.8/msvc2015_64
-    RABBIT_NUMBER: 3
-    
-  - BUILD_TARGERT: windows_msvc
-    RABBIT_TOOLCHAIN_VERSION: 14
-    RABBIT_ARCH: x64
-    RABBIT_CONFIG: Release
-    QT_ROOT: /C/Qt/5.8/msvc2015_64
-    RABBIT_NUMBER: 4
-
-  - BUILD_TARGERT: windows_msvc
-    RABBIT_TOOLCHAIN_VERSION: 14
-    RABBIT_ARCH: x64
-    RABBIT_CONFIG: Release
-    QT_ROOT: /C/Qt/5.6/msvc2015_64
-    RABBIT_NUMBER: 1
-
-  - BUILD_TARGERT: windows_msvc
-    RABBIT_TOOLCHAIN_VERSION: 14
-    RABBIT_ARCH: x64
-    RABBIT_CONFIG: Release
-    QT_ROOT: /C/Qt/5.6/msvc2015_64
-    RABBIT_NUMBER: 2
-    
-  - BUILD_TARGERT: windows_msvc
-    RABBIT_TOOLCHAIN_VERSION: 14
-    RABBIT_ARCH: x64
-    RABBIT_CONFIG: Release
-    QT_ROOT: /C/Qt/5.6/msvc2015_64
-    RABBIT_NUMBER: 3
-    
-  - BUILD_TARGERT: windows_msvc
-    RABBIT_TOOLCHAIN_VERSION: 14
-    RABBIT_ARCH: x64
-    RABBIT_CONFIG: Release
-    QT_ROOT: /C/Qt/5.6/msvc2015_64
-    RABBIT_NUMBER: 4
+    RABBIT_CONFIG: Debug
+    QT_ROOT: NO
+    RABBIT_NUMBER: 0
     
   - BUILD_TARGERT: windows_msvc
     RABBIT_TOOLCHAIN_VERSION: 14
@@ -308,58 +108,9 @@ environment:
   - BUILD_TARGERT: windows_msvc
     RABBIT_TOOLCHAIN_VERSION: 14
     RABBIT_ARCH: x86
-    RABBIT_CONFIG: Release
-    QT_ROOT: /C/Qt/5.8/msvc2015
-    RABBIT_NUMBER: 1
-
-  - BUILD_TARGERT: windows_msvc
-    RABBIT_TOOLCHAIN_VERSION: 14
-    RABBIT_ARCH: x86
-    RABBIT_CONFIG: Release
-    QT_ROOT: /C/Qt/5.8/msvc2015
-    RABBIT_NUMBER: 2
-    
-  - BUILD_TARGERT: windows_msvc
-    RABBIT_TOOLCHAIN_VERSION: 14
-    RABBIT_ARCH: x86
-    RABBIT_CONFIG: Release
-    QT_ROOT: /C/Qt/5.8/msvc2015
-    RABBIT_NUMBER: 3
-    
-  - BUILD_TARGERT: windows_msvc
-    RABBIT_TOOLCHAIN_VERSION: 14
-    RABBIT_ARCH: x86
-    RABBIT_CONFIG: Release
-    QT_ROOT: /C/Qt/5.8/msvc2015
-    RABBIT_NUMBER: 4
-
-  - BUILD_TARGERT: windows_msvc
-    RABBIT_TOOLCHAIN_VERSION: 14
-    RABBIT_ARCH: x86
-    RABBIT_CONFIG: Release
-    QT_ROOT: /C/Qt/5.6/msvc2015
-    RABBIT_NUMBER: 1
-
-  - BUILD_TARGERT: windows_msvc
-    RABBIT_TOOLCHAIN_VERSION: 14
-    RABBIT_ARCH: x86
-    RABBIT_CONFIG: Release
-    QT_ROOT: /C/Qt/5.6/msvc2015
-    RABBIT_NUMBER: 2
-    
-  - BUILD_TARGERT: windows_msvc
-    RABBIT_TOOLCHAIN_VERSION: 14
-    RABBIT_ARCH: x86
-    RABBIT_CONFIG: Release
-    QT_ROOT: /C/Qt/5.6/msvc2015
-    RABBIT_NUMBER: 3
-    
-  - BUILD_TARGERT: windows_msvc
-    RABBIT_TOOLCHAIN_VERSION: 14
-    RABBIT_ARCH: x86
-    RABBIT_CONFIG: Release
-    QT_ROOT: /C/Qt/5.6/msvc2015
-    RABBIT_NUMBER: 4
+    RABBIT_CONFIG: Debug
+    QT_ROOT: NO
+    RABBIT_NUMBER: 0
     
   ##### msvc 2013 ########
   - BUILD_TARGERT: windows_msvc
@@ -368,11 +119,25 @@ environment:
     RABBIT_CONFIG: Release
     QT_ROOT: NO
     RABBIT_NUMBER: 0
+  
+  - BUILD_TARGERT: windows_msvc
+    RABBIT_TOOLCHAIN_VERSION: 12
+    RABBIT_ARCH: x64
+    RABBIT_CONFIG: Debug
+    QT_ROOT: NO
+    RABBIT_NUMBER: 0
     
   - BUILD_TARGERT: windows_msvc
     RABBIT_TOOLCHAIN_VERSION: 12
     RABBIT_ARCH: x86
     RABBIT_CONFIG: Release
+    QT_ROOT: NO
+    RABBIT_NUMBER: 0
+  
+  - BUILD_TARGERT: windows_msvc
+    RABBIT_TOOLCHAIN_VERSION: 12
+    RABBIT_ARCH: x86
+    RABBIT_CONFIG: Debug
     QT_ROOT: NO
     RABBIT_NUMBER: 0
     
@@ -404,6 +169,399 @@ environment:
     RABBIT_CONFIG: Release
     QT_ROOT: NO
     RABBIT_NUMBER: 0
+
+  ##### msvc 2017 ########
+  - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
+    BUILD_TARGERT: windows_msvc
+    RABBIT_TOOLCHAIN_VERSION: 15
+    RABBIT_ARCH: x64
+    RABBIT_CONFIG: Release
+    QT_ROOT: NO
+    RABBIT_NUMBER: 1
+  
+  - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
+    BUILD_TARGERT: windows_msvc
+    RABBIT_TOOLCHAIN_VERSION: 15
+    RABBIT_ARCH: x64
+    RABBIT_CONFIG: Debug
+    QT_ROOT: NO
+    RABBIT_NUMBER: 1
+
+  - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
+    BUILD_TARGERT: windows_msvc
+    RABBIT_TOOLCHAIN_VERSION: 15
+    RABBIT_ARCH: x86
+    RABBIT_CONFIG: Release
+    QT_ROOT: NO
+    RABBIT_NUMBER: 1
+    
+  - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
+    BUILD_TARGERT: windows_msvc
+    RABBIT_TOOLCHAIN_VERSION: 15
+    RABBIT_ARCH: x86
+    RABBIT_CONFIG: Debug
+    QT_ROOT: NO
+    RABBIT_NUMBER: 1
+    
+  ##### msvc 2015 ########
+  - BUILD_TARGERT: windows_msvc
+    RABBIT_TOOLCHAIN_VERSION: 14
+    RABBIT_ARCH: x64
+    RABBIT_CONFIG: Release
+    QT_ROOT: NO
+    RABBIT_NUMBER: 1
+  
+  - BUILD_TARGERT: windows_msvc
+    RABBIT_TOOLCHAIN_VERSION: 14
+    RABBIT_ARCH: x64
+    RABBIT_CONFIG: Debug
+    QT_ROOT: NO
+    RABBIT_NUMBER: 1
+    
+  - BUILD_TARGERT: windows_msvc
+    RABBIT_TOOLCHAIN_VERSION: 14
+    RABBIT_ARCH: x86
+    RABBIT_CONFIG: Release
+    QT_ROOT: NO
+    RABBIT_NUMBER: 1
+
+  - BUILD_TARGERT: windows_msvc
+    RABBIT_TOOLCHAIN_VERSION: 14
+    RABBIT_ARCH: x86
+    RABBIT_CONFIG: Debug
+    QT_ROOT: NO
+    RABBIT_NUMBER: 1
+    
+  ##### msvc 2013 ########
+  - BUILD_TARGERT: windows_msvc
+    RABBIT_TOOLCHAIN_VERSION: 12
+    RABBIT_ARCH: x64
+    RABBIT_CONFIG: Release
+    QT_ROOT: NO
+    RABBIT_NUMBER: 1
+  
+  - BUILD_TARGERT: windows_msvc
+    RABBIT_TOOLCHAIN_VERSION: 12
+    RABBIT_ARCH: x64
+    RABBIT_CONFIG: Debug
+    QT_ROOT: NO
+    RABBIT_NUMBER: 1
+    
+  - BUILD_TARGERT: windows_msvc
+    RABBIT_TOOLCHAIN_VERSION: 12
+    RABBIT_ARCH: x86
+    RABBIT_CONFIG: Release
+    QT_ROOT: NO
+    RABBIT_NUMBER: 1
+  
+  - BUILD_TARGERT: windows_msvc
+    RABBIT_TOOLCHAIN_VERSION: 12
+    RABBIT_ARCH: x86
+    RABBIT_CONFIG: Debug
+    QT_ROOT: NO
+    RABBIT_NUMBER: 1
+    
+  ##### mingw ########
+  - BUILD_TARGERT: windows_mingw
+    RABBIT_TOOLCHAIN_VERSION: 530
+    RABBIT_ARCH: x86
+    RABBIT_CONFIG: Release
+    QT_ROOT: NO
+    RABBIT_NUMBER: 1
+    
+  - BUILD_TARGERT: windows_mingw
+    RABBIT_TOOLCHAIN_VERSION: 530
+    RABBIT_ARCH: x86
+    RABBIT_CONFIG: Debug
+    QT_ROOT: NO
+    RABBIT_NUMBER: 1
+    
+  - BUILD_TARGERT: windows_mingw
+    RABBIT_TOOLCHAIN_VERSION: 492
+    RABBIT_ARCH: x86
+    RABBIT_CONFIG: Release
+    QT_ROOT: NO
+    RABBIT_NUMBER: 1
+    
+  - BUILD_TARGERT: windows_mingw
+    RABBIT_TOOLCHAIN_VERSION: 482
+    RABBIT_ARCH: x86
+    RABBIT_CONFIG: Release
+    QT_ROOT: NO
+    RABBIT_NUMBER: 1
+
+  ##### msvc 2017 ########
+  - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
+    BUILD_TARGERT: windows_msvc
+    RABBIT_TOOLCHAIN_VERSION: 15
+    RABBIT_ARCH: x64
+    RABBIT_CONFIG: Release
+    QT_ROOT: NO
+    RABBIT_NUMBER: 2
+  
+  - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
+    BUILD_TARGERT: windows_msvc
+    RABBIT_TOOLCHAIN_VERSION: 15
+    RABBIT_ARCH: x64
+    RABBIT_CONFIG: Debug
+    QT_ROOT: NO
+    RABBIT_NUMBER: 2
+
+  - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
+    BUILD_TARGERT: windows_msvc
+    RABBIT_TOOLCHAIN_VERSION: 15
+    RABBIT_ARCH: x86
+    RABBIT_CONFIG: Release
+    QT_ROOT: NO
+    RABBIT_NUMBER: 2
+    
+  - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
+    BUILD_TARGERT: windows_msvc
+    RABBIT_TOOLCHAIN_VERSION: 15
+    RABBIT_ARCH: x86
+    RABBIT_CONFIG: Debug
+    QT_ROOT: NO
+    RABBIT_NUMBER: 2
+    
+  ##### msvc 2015 ########
+  - BUILD_TARGERT: windows_msvc
+    RABBIT_TOOLCHAIN_VERSION: 14
+    RABBIT_ARCH: x64
+    RABBIT_CONFIG: Release
+    QT_ROOT: NO
+    RABBIT_NUMBER: 2
+  
+  - BUILD_TARGERT: windows_msvc
+    RABBIT_TOOLCHAIN_VERSION: 14
+    RABBIT_ARCH: x64
+    RABBIT_CONFIG: Debug
+    QT_ROOT: NO
+    RABBIT_NUMBER: 2
+    
+  - BUILD_TARGERT: windows_msvc
+    RABBIT_TOOLCHAIN_VERSION: 14
+    RABBIT_ARCH: x86
+    RABBIT_CONFIG: Release
+    QT_ROOT: NO
+    RABBIT_NUMBER: 2
+
+  - BUILD_TARGERT: windows_msvc
+    RABBIT_TOOLCHAIN_VERSION: 14
+    RABBIT_ARCH: x86
+    RABBIT_CONFIG: Debug
+    QT_ROOT: NO
+    RABBIT_NUMBER: 2
+    
+  ##### msvc 2013 ########
+  - BUILD_TARGERT: windows_msvc
+    RABBIT_TOOLCHAIN_VERSION: 12
+    RABBIT_ARCH: x64
+    RABBIT_CONFIG: Release
+    QT_ROOT: NO
+    RABBIT_NUMBER: 2
+  
+  - BUILD_TARGERT: windows_msvc
+    RABBIT_TOOLCHAIN_VERSION: 12
+    RABBIT_ARCH: x64
+    RABBIT_CONFIG: Debug
+    QT_ROOT: NO
+    RABBIT_NUMBER: 2
+    
+  - BUILD_TARGERT: windows_msvc
+    RABBIT_TOOLCHAIN_VERSION: 12
+    RABBIT_ARCH: x86
+    RABBIT_CONFIG: Release
+    QT_ROOT: NO
+    RABBIT_NUMBER: 2
+  
+  - BUILD_TARGERT: windows_msvc
+    RABBIT_TOOLCHAIN_VERSION: 12
+    RABBIT_ARCH: x86
+    RABBIT_CONFIG: Debug
+    QT_ROOT: NO
+    RABBIT_NUMBER: 2
+
+  ##### mingw ########
+  - BUILD_TARGERT: windows_mingw
+    RABBIT_TOOLCHAIN_VERSION: 530
+    RABBIT_ARCH: x86
+    RABBIT_CONFIG: Release
+    QT_ROOT: NO
+    RABBIT_NUMBER: 2
+    
+  - BUILD_TARGERT: windows_mingw
+    RABBIT_TOOLCHAIN_VERSION: 530
+    RABBIT_ARCH: x86
+    RABBIT_CONFIG: Debug
+    QT_ROOT: NO
+    RABBIT_NUMBER: 2
+    
+  - BUILD_TARGERT: windows_mingw
+    RABBIT_TOOLCHAIN_VERSION: 492
+    RABBIT_ARCH: x86
+    RABBIT_CONFIG: Release
+    QT_ROOT: NO
+    RABBIT_NUMBER: 2
+    
+  - BUILD_TARGERT: windows_mingw
+    RABBIT_TOOLCHAIN_VERSION: 482
+    RABBIT_ARCH: x86
+    RABBIT_CONFIG: Release
+    QT_ROOT: NO
+    RABBIT_NUMBER: 2
+    
+  ##### msvc 2017 ########
+  - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
+    BUILD_TARGERT: windows_msvc
+    RABBIT_TOOLCHAIN_VERSION: 15
+    RABBIT_ARCH: x64
+    RABBIT_CONFIG: Release
+    QT_ROOT: /C/Qt/5.9/msvc2017_64
+    RABBIT_NUMBER: 3
+    
+  - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
+    BUILD_TARGERT: windows_msvc
+    RABBIT_TOOLCHAIN_VERSION: 15
+    RABBIT_ARCH: x64
+    RABBIT_CONFIG: Debug
+    QT_ROOT: /C/Qt/5.9/msvc2017_64
+    RABBIT_NUMBER: 3
+  
+  - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
+    BUILD_TARGERT: windows_msvc
+    RABBIT_TOOLCHAIN_VERSION: 15
+    RABBIT_ARCH: x86
+    RABBIT_CONFIG: Release
+    QT_ROOT: /C/Qt/5.9/msvc2017
+    RABBIT_NUMBER: 3
+    
+  - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
+    BUILD_TARGERT: windows_msvc
+    RABBIT_TOOLCHAIN_VERSION: 15
+    RABBIT_ARCH: x86
+    RABBIT_CONFIG: Debug
+    QT_ROOT: /C/Qt/5.9/msvc2017
+    RABBIT_NUMBER: 3
+
+  ##### msvc 2015 ########
+  - BUILD_TARGERT: windows_msvc
+    RABBIT_TOOLCHAIN_VERSION: 14
+    RABBIT_ARCH: x64
+    RABBIT_CONFIG: Release
+    QT_ROOT: /C/Qt/5.9/msvc2015_64
+    RABBIT_NUMBER: 3
+  
+  - BUILD_TARGERT: windows_msvc
+    RABBIT_TOOLCHAIN_VERSION: 14
+    RABBIT_ARCH: x64
+    RABBIT_CONFIG: Debug
+    QT_ROOT: /C/Qt/5.9/msvc2015_64
+    RABBIT_NUMBER: 3
+    
+  - BUILD_TARGERT: windows_msvc
+    RABBIT_TOOLCHAIN_VERSION: 14
+    RABBIT_ARCH: x86
+    RABBIT_CONFIG: Release
+    QT_ROOT: /C/Qt/5.9/msvc2015
+    RABBIT_NUMBER: 3
+
+  - BUILD_TARGERT: windows_msvc
+    RABBIT_TOOLCHAIN_VERSION: 14
+    RABBIT_ARCH: x86
+    RABBIT_CONFIG: Debug
+    QT_ROOT: /C/Qt/5.9/msvc2015
+    RABBIT_NUMBER: 3
+
+  ##### msvc 2017 ########
+  - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
+    BUILD_TARGERT: windows_msvc
+    RABBIT_TOOLCHAIN_VERSION: 15
+    RABBIT_ARCH: x64
+    RABBIT_CONFIG: Release
+    QT_ROOT: /C/Qt/5.9/msvc2017_64
+    RABBIT_NUMBER: 4
+    
+  - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
+    BUILD_TARGERT: windows_msvc
+    RABBIT_TOOLCHAIN_VERSION: 15
+    RABBIT_ARCH: x64
+    RABBIT_CONFIG: Debug
+    QT_ROOT: /C/Qt/5.9/msvc2017_64
+    RABBIT_NUMBER: 4
+  
+  - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
+    BUILD_TARGERT: windows_msvc
+    RABBIT_TOOLCHAIN_VERSION: 15
+    RABBIT_ARCH: x86
+    RABBIT_CONFIG: Release
+    QT_ROOT: /C/Qt/5.9/msvc2017
+    RABBIT_NUMBER: 4
+    
+  - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
+    BUILD_TARGERT: windows_msvc
+    RABBIT_TOOLCHAIN_VERSION: 15
+    RABBIT_ARCH: x86
+    RABBIT_CONFIG: Debug
+    QT_ROOT: /C/Qt/5.9/msvc2017
+    RABBIT_NUMBER: 4
+ 
+  ##### msvc 2015 ########
+  - BUILD_TARGERT: windows_msvc
+    RABBIT_TOOLCHAIN_VERSION: 14
+    RABBIT_ARCH: x64
+    RABBIT_CONFIG: Release
+    QT_ROOT: /C/Qt/5.9/msvc2015_64
+    RABBIT_NUMBER: 4
+  
+  - BUILD_TARGERT: windows_msvc
+    RABBIT_TOOLCHAIN_VERSION: 14
+    RABBIT_ARCH: x64
+    RABBIT_CONFIG: Debug
+    QT_ROOT: /C/Qt/5.9/msvc2015_64
+    RABBIT_NUMBER: 4
+    
+  - BUILD_TARGERT: windows_msvc
+    RABBIT_TOOLCHAIN_VERSION: 14
+    RABBIT_ARCH: x86
+    RABBIT_CONFIG: Release
+    QT_ROOT: /C/Qt/5.9/msvc2015
+    RABBIT_NUMBER: 4
+ 
+  - BUILD_TARGERT: windows_msvc
+    RABBIT_TOOLCHAIN_VERSION: 14
+    RABBIT_ARCH: x86
+    RABBIT_CONFIG: Debug
+    QT_ROOT: /C/Qt/5.9/msvc2015
+    RABBIT_NUMBER: 4
+    
+  ##### msvc 2015 ########
+  - BUILD_TARGERT: windows_msvc
+    RABBIT_TOOLCHAIN_VERSION: 14
+    RABBIT_ARCH: x64
+    RABBIT_CONFIG: Release
+    QT_ROOT: /C/Qt/5.8/msvc2015_64
+    RABBIT_NUMBER: 3
+  
+  - BUILD_TARGERT: windows_msvc
+    RABBIT_TOOLCHAIN_VERSION: 14
+    RABBIT_ARCH: x64
+    RABBIT_CONFIG: Debug
+    QT_ROOT: /C/Qt/5.8/msvc2015_64
+    RABBIT_NUMBER: 3
+    
+  - BUILD_TARGERT: windows_msvc
+    RABBIT_TOOLCHAIN_VERSION: 14
+    RABBIT_ARCH: x86
+    RABBIT_CONFIG: Release
+    QT_ROOT: /C/Qt/5.8/msvc2015
+    RABBIT_NUMBER: 3
+ 
+  - BUILD_TARGERT: windows_msvc
+    RABBIT_TOOLCHAIN_VERSION: 14
+    RABBIT_ARCH: x86
+    RABBIT_CONFIG: Debug
+    QT_ROOT: /C/Qt/5.8/msvc2015
+    RABBIT_NUMBER: 3
     
 init:
   - set varch=%RABBIT_ARCH%
