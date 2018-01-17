@@ -186,7 +186,7 @@ case ${RABBIT_BUILD_TARGERT} in
         CONFIG_PARA="${CONFIG_PARA} -android-sdk ${ANDROID_SDK_ROOT} -android-ndk ${ANDROID_NDK_ROOT}"
         CONFIG_PARA="${CONFIG_PARA} -android-ndk-host ${RABBIT_BUILD_HOST}"
         CONFIG_PARA="${CONFIG_PARA} -android-toolchain-version ${RABBIT_BUILD_TOOLCHAIN_VERSION}"
-        CONFIG_PARA="${CONFIG_PARA} -android-ndk-platform android-${RABBIT_BUILD_PLATFORMS_VERSION}"
+        CONFIG_PARA="${CONFIG_PARA} -android-ndk-platform android-${ANDROID_NATIVE_API_LEVEL}"
         MODULE_PARA="${MODULE_PARA} module-qtandroidextras"
         ;;
     unix)

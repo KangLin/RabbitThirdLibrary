@@ -105,19 +105,28 @@ fi
 echo "configure ..."
 case ${RABBIT_BUILD_TARGERT} in
     android)
-        #export ANDROID_DEV="${RABBIT_BUILD_CROSS_SYSROOT}/usr"
-        export LDFLAGS="--sysroot=${RABBIT_BUILD_CROSS_SYSROOT}"
-        if [ "${RABBIT_ARCH}" = "arm" ]; then
-            CFLAGS="-march=armv7-a -mfpu=neon"
-            CPPFLAGS="-march=armv7-a -mfpu=neon"
-        fi
-        CFLAGS="${CFLAGS} --sysroot=${RABBIT_BUILD_CROSS_SYSROOT}"
-        CPPFLAGS="${CPPFLAGS} --sysroot=${RABBIT_BUILD_CROSS_SYSROOT}"
+        export CROSS_SYSROOT=${RABBIT_BUILD_CROSS_SYSROOT}
+        export CROSS_COMPILE=${RABBIT_BUILD_CROSS_HOST}
+        case ${RABBIT_ARCH} in
+            arm)
+                COMPILE=android-armeabi
+            ;;
+            arm64)
+                COMPILE=android64
+            ;;
+            x86|mips)
+                COMPILE=android-${RABBIT_ARCH}
+            ;;
+            x86_64|mips64)
+                COMPILE=android64-${RABBIT_ARCH}
+            ;;
+        esac
         perl Configure --cross-compile-prefix=${RABBIT_BUILD_CROSS_PREFIX} \
                 --prefix=${RABBIT_BUILD_PREFIX} \
                 --openssldir=${RABBIT_BUILD_PREFIX} \
+                no-threads \
                 $MODE \
-                android-armeabi --sysroot="${RABBIT_BUILD_CROSS_SYSROOT}" -march=armv7-a -mfpu=neon
+                ${COMPILE} ${RABBIT_CFLAGS}
         ;;
     unix)
         ./config --prefix=${RABBIT_BUILD_PREFIX} --openssldir=${RABBIT_BUILD_PREFIX} $MODE

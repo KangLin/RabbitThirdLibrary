@@ -100,30 +100,19 @@ fi
 case ${RABBIT_BUILD_TARGERT} in
     android)
         #https://github.com/nutiteq/gdal/wiki/AndroidHowto
-        export CC=${RABBIT_BUILD_CROSS_PREFIX}gcc 
-        export CXX=${RABBIT_BUILD_CROSS_PREFIX}g++
-        export AR=${RABBIT_BUILD_CROSS_PREFIX}ar
-        export LD=${RABBIT_BUILD_CROSS_PREFIX}ld
-        export AS=${RABBIT_BUILD_CROSS_PREFIX}as
-        export STRIP=${RABBIT_BUILD_CROSS_PREFIX}strip
-        export NM=${RABBIT_BUILD_CROSS_PREFIX}nm
-        LIBS=" -lstdc++ "
-        CONFIG_PARA="CC=${RABBIT_BUILD_CROSS_PREFIX}gcc "
-        CONFIG_PARA="${CONFIG_PARA} CXX=${RABBIT_BUILD_CROSS_PREFIX}g++ LD=${RABBIT_BUILD_CROSS_PREFIX}ld"
-        #CONFIG_PARA="${CONFIG_PARA} --disable-shared -enable-static"
+        #export CC=${RABBIT_BUILD_CROSS_PREFIX}gcc 
+        #export CXX=${RABBIT_BUILD_CROSS_PREFIX}g++
+        #export AR=${RABBIT_BUILD_CROSS_PREFIX}ar
+        #export LD=${RABBIT_BUILD_CROSS_PREFIX}ld
+        #export AS=${RABBIT_BUILD_CROSS_PREFIX}as
+        #export STRIP=${RABBIT_BUILD_CROSS_PREFIX}strip
+        #export NM=${RABBIT_BUILD_CROSS_PREFIX}nm
+        #CONFIG_PARA="CC=${RABBIT_BUILD_CROSS_PREFIX}gcc LD=${RABBIT_BUILD_CROSS_PREFIX}ld"
         CONFIG_PARA="${CONFIG_PARA} --host=$RABBIT_BUILD_CROSS_HOST"
-        CONFIG_PARA="${CONFIG_PARA} --with-sysroot=${RABBIT_BUILD_CROSS_SYSROOT}"
-        #CONFIG_PARA="$CONFIG_PARA --with-curl=$RABBIT_BUILD_PREFIX/bin"
-        if [ "${RABBIT_ARCH}" = "arm" ]; then
-            CFLAGS="-march=armv7-a -mfpu=neon"
-            CPPFLAGS="-march=armv7-a -mfpu=neon"
-        fi
-        CFLAGS="${CFLAGS} --sysroot=${RABBIT_BUILD_CROSS_SYSROOT}"
-        CPPFLAGS="${CPPFLAGS} --sysroot=${RABBIT_BUILD_CROSS_SYSROOT} ${RABBIT_BUILD_CROSS_STL_INCLUDE_FLAGS}"
-        CXXFLAGS=${CPPFLAGS}
-        if [ -n "${RABBIT_BUILD_CROSS_STL_LIBS}" ]; then
-            LDFLAGS="-L${RABBIT_BUILD_CROSS_STL_LIBS}"
-        fi
+        #CONFIG_PARA="${CONFIG_PARA} --with-sysroot=${RABBIT_BUILD_CROSS_SYSROOT}"
+        CFLAGS="${RABBIT_CFLAGS}"
+        CPPFLAGS="${RABBIT_CPPFLAGS}"
+        LDFLAGS="${RABBIT_LDFLAGS}" # -lsupc++"
         ;;
     unix)
         ;;
@@ -184,19 +173,17 @@ case ${RABBIT_BUILD_TARGERT} in
         ;;
 esac
 
-echo "make install"
 echo "pwd:`pwd`"
-CONFIG_PARA="${CONFIG_PARA} --prefix=${RABBIT_BUILD_PREFIX} "
+#CONFIG_PARA="${CONFIG_PARA} --with-geos=${RABBIT_BUILD_PREFIX}/bin/geos-config"
+CONFIG_PARA="${CONFIG_PARA} --with-curl=${RABBIT_BUILD_PREFIX}/bin/curl-config"
+CONFIG_PARA="${CONFIG_PARA} --prefix=$RABBIT_BUILD_PREFIX"
+echo "../configure ${CONFIG_PARA} CFLAGS=\"${CFLAGS=}\" CPPFLAGS=\"${CPPFLAGS}\" CXXFLAGS=\"${CPPFLAGS}\" LDFLAGS=\"${LDFLAGS}\""
+./configure ${CONFIG_PARA} \
+    CFLAGS="${CFLAGS}" CPPFLAGS="${CPPFLAGS}" CXXFLAGS="${CPPFLAGS}" \
+    LDFLAGS="${LDFLAGS}"
 
-echo "./configure ${CONFIG_PARA} CFLAGS=\"${CFLAGS=}\" 
-     CPPFLAGS=\"${CPPFLAGS}\" CXXFLAGS=\"${CXXFLAGS}\" 
-     LDFLAGS=\"$LDFLAGS\" LIBS=\"$LIBS\""
-./configure ${CONFIG_PARA} CFLAGS="${CFLAGS}" \
-    CPPFLAGS="${CPPFLAGS}" CXXFLAGS="${CXXFLAGS}" \
-    LDFLAGS="$LDFLAGS" LIBS="$LIBS" --with-curl=${RABBIT_BUILD_PREFIX}/bin/curl-config #\
-    #--with-geos=${RABBIT_BUILD_PREFIX}/bin/geos-config
-
-${MAKE} ${RABBIT_MAKE_JOB_PARA}
+${MAKE} V=1 # ${RABBIT_MAKE_JOB_PARA}
+echo "make install ....................................."
 ${MAKE} install
 
 cd $CUR_DIR

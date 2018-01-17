@@ -50,7 +50,7 @@ CUR_DIR=`pwd`
 
 #下载源码:
 if [ ! -d ${RABBIT_BUILD_SOURCE_CODE} ]; then
-    FFMPEG_VERSION=n3.3.4
+    FFMPEG_VERSION=n3.4
     if [ "TRUE" = "${RABBIT_USE_REPOSITORIES}" ]; then
         echo "git clone git://source.ffmpeg.org/ffmpeg.git ${RABBIT_BUILD_SOURCE_CODE}"
         #git clone -q -b ${FFMPEG_VERSION} git://source.ffmpeg.org/ffmpeg.git ${RABBIT_BUILD_SOURCE_CODE}
@@ -104,20 +104,27 @@ fi
 THIRD_LIB="--enable-libx264"
 case ${RABBIT_BUILD_TARGERT} in
     android)
-        CONFIG_PARA="--enable-cross-compile --target-os=linux --arch=arm --cpu=armv7-a --enable-neon"
-        CONFIG_PARA="${CONFIG_PARA} --enable-static --disable-shared --disable-w32threads"
+        CONFIG_PARA="--enable-cross-compile"
+        CONFIG_PARA="${CONFIG_PARA} --disable-w32threads"
         CONFIG_PARA="${CONFIG_PARA} --cross-prefix=${RABBIT_BUILD_CROSS_PREFIX}"
         CONFIG_PARA="${CONFIG_PARA} --sysroot=${RABBIT_BUILD_CROSS_SYSROOT}"
         #CONFIG_PARA="${CONFIG_PARA} --pkg-config="${PKG_CONFIG}"
         CONFIG_PARA="${CONFIG_PARA} --pkgconfigdir=${RABBIT_BUILD_PREFIX}/lib/pkgconfig"
         CONFIG_PARA="${CONFIG_PARA} ${THIRD_LIB}"
-        if [ "${RABBIT_ARCH}" = "arm" ]; then
-            CFLAGS="-march=armv7-a -mfpu=neon"
-            CPPFLAGS="-march=armv7-a -mfpu=neon"
-        fi
-        CFLAGS="${CFLAGS} --sysroot=${RABBIT_BUILD_CROSS_SYSROOT}"
-        CPPFLAGS="${CPPFLAGS} --sysroot=${RABBIT_BUILD_CROSS_SYSROOT}"
-        LDFLAGS="-lcpu-features --sysroot=${RABBIT_BUILD_CROSS_SYSROOT}" 
+
+        CONFIG_PARA="${CONFIG_PARA} --target-os=android"
+        CONFIG_PARA="${CONFIG_PARA} --arch=$RABBIT_ARCH"
+        
+        case $RABBIT_ARCH in
+            arm*)
+                CONFIG_PARA="${CONFIG_PARA} --cpu=armv7-a --enable-neon"
+                ;;
+        esac
+        
+        CONFIG_PARA="${CONFIG_PARA} --host-os=$RABBIT_BUILD_CROSS_HOST"
+        CFLAGS="${RABBIT_CFLAGS}"
+        CPPFLAGS="${RABBIT_CPPFLAGS}"
+        LDFLAGS="${RABBIT_LDFLAGS} -lcpu-features"
         ;;
     unix)
         CONFIG_PARA="${CONFIG_PARA} ${THIRD_LIB}"

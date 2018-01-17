@@ -66,7 +66,9 @@ if [ ! -f configure ]; then
     sh autogen.sh
 fi
 
-mkdir -p build_${RABBIT_BUILD_TARGERT}
+if [ ! -d build_${RABBIT_BUILD_TARGERT} ]; then
+    mkdir -p build_${RABBIT_BUILD_TARGERT}
+fi
 cd build_${RABBIT_BUILD_TARGERT}
 if [ "$RABBIT_CLEAN" = "TRUE" ]; then
     rm -fr *
@@ -93,19 +95,20 @@ else
 fi
 case ${RABBIT_BUILD_TARGERT} in
     android)
-        export CC=${RABBIT_BUILD_CROSS_PREFIX}gcc 
-        export CXX=${RABBIT_BUILD_CROSS_PREFIX}g++
-        export AR=${RABBIT_BUILD_CROSS_PREFIX}ar
-        export LD=${RABBIT_BUILD_CROSS_PREFIX}ld
-        export AS=${RABBIT_BUILD_CROSS_PREFIX}as
-        export STRIP=${RABBIT_BUILD_CROSS_PREFIX}strip
-        export NM=${RABBIT_BUILD_CROSS_PREFIX}nm
-        CONFIG_PARA="CC=${RABBIT_BUILD_CROSS_PREFIX}gcc LD=${RABBIT_BUILD_CROSS_PREFIX}ld"
-        CONFIG_PARA="${CONFIG_PARA} --disable-shared -enable-static --host=$RABBIT_BUILD_CROSS_HOST"
-        CONFIG_PARA="${CONFIG_PARA} --with-sysroot=${RABBIT_BUILD_CROSS_SYSROOT}"
-        CFLAGS="-march=armv7-a -mfpu=neon --sysroot=${RABBIT_BUILD_CROSS_SYSROOT}"
-        CPPFLAGS="-march=armv7-a -mfpu=neon --sysroot=${RABBIT_BUILD_CROSS_SYSROOT}"
-    ;;
+        #export CC=${RABBIT_BUILD_CROSS_PREFIX}gcc 
+        #export CXX=${RABBIT_BUILD_CROSS_PREFIX}g++
+        #export AR=${RABBIT_BUILD_CROSS_PREFIX}ar
+        #export LD=${RABBIT_BUILD_CROSS_PREFIX}ld
+        #export AS=${RABBIT_BUILD_CROSS_PREFIX}as
+        #export STRIP=${RABBIT_BUILD_CROSS_PREFIX}strip
+        #export NM=${RABBIT_BUILD_CROSS_PREFIX}nm
+        #CONFIG_PARA="CC=${RABBIT_BUILD_CROSS_PREFIX}gcc LD=${RABBIT_BUILD_CROSS_PREFIX}ld"
+        CONFIG_PARA="${CONFIG_PARA} --host=$RABBIT_BUILD_CROSS_HOST"
+        #CONFIG_PARA="${CONFIG_PARA} --with-sysroot=${RABBIT_BUILD_CROSS_SYSROOT}"
+        CFLAGS="${RABBIT_CFLAGS}"
+        CPPFLAGS="${RABBIT_CPPFLAGS}"
+        LDFLAGS="${RABBIT_LDFLAGS}"
+        ;;
     unix)
         CONFIG_PARA="${CONFIG_PARA} --with-gnu-ld --enable-sse "
         ;;
@@ -141,10 +144,11 @@ esac
 
 CONFIG_PARA="${CONFIG_PARA} SPEEXDSP_CFLAGS=-I${RABBIT_BUILD_PREFIX}/include"
 CONFIG_PARA="${CONFIG_PARA} SPEEXDSP_LIBS=-L${RABBIT_BUILD_PREFIX}/lib"
-CONFIG_PARA="${CONFIG_PARA} --prefix=$RABBIT_BUILD_PREFIX "
-echo "../configure ${CONFIG_PARA} CFLAGS=\"${CFLAGS=}\" CPPFLAGS=\"${CPPFLAGS}\""
-../configure ${CONFIG_PARA} CFLAGS="${CFLAGS}" CPPFLAGS="${CPPFLAGS}"
-
+CONFIG_PARA="${CONFIG_PARA} --prefix=$RABBIT_BUILD_PREFIX"
+echo "../configure ${CONFIG_PARA} CFLAGS=\"${CFLAGS=}\" CPPFLAGS=\"${CPPFLAGS}\" CXXFLAGS=\"${CPPFLAGS}\" LDFLAGS=\"${LDFLAGS}\""
+../configure ${CONFIG_PARA} \
+    CFLAGS="${CFLAGS}" CPPFLAGS="${CPPFLAGS}" CXXFLAGS="${CPPFLAGS}" 
+    
 echo "make install"
 make ${RABBIT_MAKE_JOB_PARA} 
 make install

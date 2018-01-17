@@ -86,9 +86,9 @@ case ${RABBIT_BUILD_TARGERT} in
         echo "#define PJ_CONFIG_ANDROID 1" > ${RABBIT_BUILD_SOURCE_CODE}/pjlib/include/pj/config_site.h
         echo "#define PJMEDIA_HAS_VIDEO 1" >> ${RABBIT_BUILD_SOURCE_CODE}/pjlib/include/pj/config_site.h
         echo "#include <pj/config_site_sample.h>" >> ${RABBIT_BUILD_SOURCE_CODE}/pjlib/include/pj/config_site.h
-        export APP_PLATFORM=$ANDROID_API_VERSION
-        export ANDROID_NDK_PLATFORM=$ANDROID_API_VERSION
-        export TARGET_ABI=armeabi-v7a
+        export APP_PLATFORM=$ANDROID_NATIVE_API_LEVEL
+        export ANDROID_NDK_PLATFORM=$ANDROID_NATIVE_API_LEVEL
+        export TARGET_ABI=$ANDROID_ABI
         echo "./configure-android --use-ndk-cflags ${CONFIG_PARA}"
         ./configure-android --use-ndk-cflags ${CONFIG_PARA} 
         ;;

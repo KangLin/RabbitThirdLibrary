@@ -49,10 +49,11 @@ if [ ! -d ${RABBIT_BUILD_SOURCE_CODE} ]; then
     else
         mkdir -p ${RABBIT_BUILD_SOURCE_CODE}
         cd ${RABBIT_BUILD_SOURCE_CODE}
-        #wget -q -c https://github.com/KangLin/qxmpp/archive/master.zip
-        wget -q -c https://github.com/qxmpp-project/qxmpp/archive/v${VERSION}.zip
-        unzip -q v${VERSION}.zip
+        #wget -q -c -nv https://github.com/KangLin/qxmpp/archive/master.zip
+        wget -q -c -nv https://github.com/qxmpp-project/qxmpp/archive/v${VERSION}.tar.gz
+        tar xvf v${VERSION}.tar.gz
         mv qxmpp-${VERSION} ..
+        rm -fr *
         cd ..
         rm -fr ${RABBIT_BUILD_SOURCE_CODE}
         mv -f qxmpp-${VERSION} ${RABBIT_BUILD_SOURCE_CODE}
@@ -61,8 +62,12 @@ fi
 
 cd ${RABBIT_BUILD_SOURCE_CODE}
 
+if [ ! -d build_${RABBIT_BUILD_TARGERT} ]; then
+    mkdir -p build_${RABBIT_BUILD_TARGERT}
+fi
+cd build_${RABBIT_BUILD_TARGERT}
 if [ "$RABBIT_CLEAN" = "TRUE" ]; then
-    git clean -xdf
+    rm -fr *
 fi
 
 echo ""
@@ -119,7 +124,7 @@ if [ "$RABBIT_BUILD_TARGERT" = "android"  ]; then
     MAKE_PARA=" INSTALL_ROOT=\"${RABBIT_BUILD_PREFIX}\""
 fi
 echo "$QMAKE ${RELEASE_PARA}"
-$QMAKE ${RELEASE_PARA} qxmpp.pro
+$QMAKE ${RELEASE_PARA} ../qxmpp.pro
 ${MAKE} -f Makefile install ${MAKE_PARA}
 
 cd $CUR_DIR

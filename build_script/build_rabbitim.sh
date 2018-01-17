@@ -80,13 +80,7 @@ if [ "$3" = "cmake" ]; then
     MAKE_PARA="-- ${RABBIT_MAKE_JOB_PARA} VERBOSE=1"
     case $1 in
         android)
-            #export ANDROID_NATIVE_API_LEVEL=android-${RABBIT_BUILD_PLATFORMS_VERSION}
-            #export ANDROID_TOOLCHAIN_NAME=${RABBIT_BUILD_CROSS_HOST}-${RABBIT_BUILD_TOOLCHAIN_VERSION}
-            #export ANDROID_NDK_ABI_NAME="armeabi-v7a with NEON"
             CMAKE_PARA="${CMAKE_PARA} -DCMAKE_TOOLCHAIN_FILE=$RABBIT_BUILD_PREFIX/../build_script/cmake/platforms/toolchain-android.cmake"
-            PARA="${PARA} -DANDROID_NATIVE_API_LEVEL=android-${RABBIT_BUILD_PLATFORMS_VERSION}"
-            PARA="${PARA} -DANDROID_TOOLCHAIN_NAME=${RABBIT_BUILD_CROSS_HOST}-${RABBIT_BUILD_TOOLCHAIN_VERSION}"
-            PARA="${PARA} -DANDROID_NDK_ABI_NAME=${ANDROID_NDK_ABI_NAME}"
             PARA="${PARA} -DLIBRARY_OUTPUT_PATH:PATH=`pwd`"
             PARA="${PARA} -DOPTION_RABBIT_USE_OPENCV=OFF"
             #PARA="${PARA} -DOPTION_RABBIT_USE_LIBCURL=OFF -DOPTION_RABBIT_USE_OPENSSL=OFF"
@@ -130,7 +124,7 @@ else #qmake编译
     MAKE="make ${RABBIT_MAKE_JOB_PARA}"
     case $1 in
         android)
-            export ANDROID_NDK_PLATFORM=$ANDROID_API_VERSION
+            export ANDROID_NDK_PLATFORM=$ANDROID_NATIVE_API_LEVEL
             #PARA="-r -spec android-g++ " #RABBIT_USE_OPENCV=1
             if [ -n "$RABBIT_CMAKE_MAKE_PROGRAM" ]; then
                 MAKE="$RABBIT_CMAKE_MAKE_PROGRAM"

@@ -32,7 +32,7 @@
 11. RABBIT_USE_REPOSITORIES="FALSE"    #下载指定的压缩包。省略，则下载开发库。
 12. RABBIT_CLEAN=TRUE                  #编译前清理
 13. RABBIT_BUILD_TOOLCHAIN_VERSION=4.9   #工具链版本号，默认为4.8
-14. RABBIT_BUILD_PLATFORMS_VERSION=15    #android ndk api (平台)版本号，默认为9
+14. ANDROID_NATIVE_API_LEVEL=15    #android ndk api (平台)版本号，默认为9
 
 所需要的环境变量可以保存到系统配置文件 ~/.profile 文件中。作为全局环境变量。但这可能会与其它工程需要的环境变量冲突。
 为了避免这个问题。你也可以把环境变量保到 build_envsetup_${RABBIT_BUILD_TARGERT}.sh 文件中。  

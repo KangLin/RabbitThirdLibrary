@@ -43,7 +43,7 @@ CUR_DIR=`pwd`
 
 #下载源码:
 if [ ! -d ${RABBIT_BUILD_SOURCE_CODE} ]; then
-    VERSION=master 
+    VERSION=892dda9821592e6320836d3b90e051777ea7b552 
     if [ "TRUE" = "${RABBIT_USE_REPOSITORIES}" ]; then
         echo "git clone -q https://github.com/ftylitak/qzxing.git ${RABBIT_BUILD_SOURCE_CODE}"
         git clone -q https://github.com/KangLin/qzxing.git ${RABBIT_BUILD_SOURCE_CODE}
@@ -52,8 +52,8 @@ if [ ! -d ${RABBIT_BUILD_SOURCE_CODE} ]; then
     else
         mkdir -p ${RABBIT_BUILD_SOURCE_CODE}
         cd ${RABBIT_BUILD_SOURCE_CODE}
-        wget -q -c https://github.com/ftylitak/qzxing/archive/${VERSION}.zip
-        unzip -q ${VERSION}.zip
+        wget -q -c -nv -O qzxing.zip https://github.com/ftylitak/qzxing/archive/${VERSION}.zip
+        unzip -q qzxing.zip
         mv qzxing-${VERSION} ..
         rm -fr *
         cd ..
@@ -67,8 +67,12 @@ if [ -d "${RABBIT_BUILD_SOURCE_CODE}/src" ]; then
 fi
 cd ${RABBIT_BUILD_SOURCE_CODE}
 
+if [ ! -d build_${RABBIT_BUILD_TARGERT} ]; then
+    mkdir -p build_${RABBIT_BUILD_TARGERT}
+fi
+cd build_${RABBIT_BUILD_TARGERT}
 if [ "$RABBIT_CLEAN" = "TRUE" ]; then
-    git clean -xdf
+    rm -fr *
 fi
 
 echo ""
@@ -121,7 +125,7 @@ if [ "$RABBIT_BUILD_TARGERT" = "android"  ]; then
     MAKE_PARA=" INSTALL_ROOT=\"${RABBIT_BUILD_PREFIX}\""
 fi
 echo "$QMAKE ${RELEASE_PARA}"
-$QMAKE ${RELEASE_PARA} QZXing.pro
+$QMAKE ${RELEASE_PARA} ..
 ${MAKE} -f Makefile install ${MAKE_PARA} 
 
 

@@ -113,22 +113,19 @@ else
 fi
 case ${RABBIT_BUILD_TARGERT} in
     android)
-        export CC=${RABBIT_BUILD_CROSS_PREFIX}gcc 
-        export CXX=${RABBIT_BUILD_CROSS_PREFIX}g++
-        export AR=${RABBIT_BUILD_CROSS_PREFIX}ar
-        export LD=${RABBIT_BUILD_CROSS_PREFIX}ld
-        export AS=${RABBIT_BUILD_CROSS_PREFIX}as
-        export STRIP=${RABBIT_BUILD_CROSS_PREFIX}strip
-        export NM=${RABBIT_BUILD_CROSS_PREFIX}nm
-        CONFIG_PARA="CC=${RABBIT_BUILD_CROSS_PREFIX}gcc --disable-shared -enable-static"
-        CONFIG_PARA="$CONFIG_PARA --host=${RABBIT_BUILD_CROSS_HOST} "
-        CONFIG_PARA="${CONFIG_PARA} --with-sysroot=${RABBIT_BUILD_CROSS_SYSROOT}"
-        if [ "${RABBIT_ARCH}" = "arm" ]; then
-            CFLAGS="-march=armv7-a -mfpu=neon"
-            CPPFLAGS="-march=armv7-a -mfpu=neon"
-        fi
-        CFLAGS="${CFLAGS} --sysroot=${RABBIT_BUILD_CROSS_SYSROOT}"
-        CPPFLAGS="${CPPFLAGS} --sysroot=${RABBIT_BUILD_CROSS_SYSROOT}"
+        #export CC=${RABBIT_BUILD_CROSS_PREFIX}gcc 
+        #export CXX=${RABBIT_BUILD_CROSS_PREFIX}g++
+        #export AR=${RABBIT_BUILD_CROSS_PREFIX}ar
+        #export LD=${RABBIT_BUILD_CROSS_PREFIX}ld
+        #export AS=${RABBIT_BUILD_CROSS_PREFIX}as
+        #export STRIP=${RABBIT_BUILD_CROSS_PREFIX}strip
+        #export NM=${RABBIT_BUILD_CROSS_PREFIX}nm
+        #CONFIG_PARA="CC=${RABBIT_BUILD_CROSS_PREFIX}gcc LD=${RABBIT_BUILD_CROSS_PREFIX}ld"
+        CONFIG_PARA="${CONFIG_PARA} --host=$RABBIT_BUILD_CROSS_HOST"
+        #CONFIG_PARA="${CONFIG_PARA} --with-sysroot=${RABBIT_BUILD_CROSS_SYSROOT}"
+        CFLAGS="${RABBIT_CFLAGS}"
+        CPPFLAGS="${RABBIT_CPPFLAGS}"
+        LDFLAGS="${RABBIT_LDFLAGS}"
         ;;
     unix)
         CONFIG_PARA="${CONFIG_PARA} --with-gnu-ld --enable-sse"
@@ -178,20 +175,17 @@ esac
 
 echo "make install"
 echo "pwd:`pwd`"
-CONFIG_PARA="${CONFIG_PARA} --prefix=${RABBIT_BUILD_PREFIX} --disable-manual --enable-verbose"
+CONFIG_PARA="${CONFIG_PARA} --disable-manual --enable-verbose"
 #CONFIG_PARA="${CONFIG_PARA} --enable-libgcc  "
 CONFIG_PARA="${CONFIG_PARA} --with-ssl=${RABBIT_BUILD_PREFIX} --with-zlib=${RABBIT_BUILD_PREFIX}/lib"
 #CONFIG_PARA="${CONFIG_PARA} --with-gnutls=${RABBIT_BUILD_PREFIX} --with-nss=${RABBIT_BUILD_PREFIX}"
 #CONFIG_PARA="${CONFIG_PARA} --with-libssh2=${RABBIT_BUILD_PREFIX} --with-libidn=${RABBIT_BUILD_PREFIX}"
 #CONFIG_PARA="${CONFIG_PARA} --with-winidn=${RABBIT_BUILD_PREFIX} --with-libidn=${RABBIT_BUILD_PREFIX}"
 #CONFIG_PARA="${CONFIG_PARA} --with-nghttp2=${RABBIT_BUILD_PREFIX} --with-librtmp=${RABBIT_BUILD_PREFIX}"  #--with-sysroot=${RABBIT_BUILD_PREFIX}"
-if [ "${RABBIT_BUILD_TARGERT}" = android ]; then
-    echo "../configure ${CONFIG_PARA} CFLAGS=\"${CFLAGS=}\" CPPFLAGS=\"${CPPFLAGS}\" LDFLAGS=\"${LDFLAGS}\""
-    ../configure ${CONFIG_PARA} CFLAGS="${CFLAGS}" CPPFLAGS="${CPPFLAGS}" LDFLAGS="${LDFLAGS}"
-else
-    echo "../configure ${CONFIG_PARA} LDFLAGS=\"${LDFLAGS}\""
-    ../configure ${CONFIG_PARA} LDFLAGS="${LDFLAGS}"
-fi
+CONFIG_PARA="${CONFIG_PARA} --prefix=$RABBIT_BUILD_PREFIX"
+echo "../configure ${CONFIG_PARA} CFLAGS=\"${CFLAGS=}\" CPPFLAGS=\"${CPPFLAGS}\" CXXFLAGS=\"${CPPFLAGS}\" LDFLAGS=\"${LDFLAGS}\""
+../configure ${CONFIG_PARA} \
+    CFLAGS="${CFLAGS}" CPPFLAGS="${CPPFLAGS}" CXXFLAGS="${CPPFLAGS}" 
 
 ${MAKE} V=1 
 ${MAKE} install

@@ -38,7 +38,7 @@ fi
 
 #下载源码:
 if [ ! -d ${RABBIT_BUILD_SOURCE_CODE} ]; then
-    VERSION=3e3a5686167a5493a5e2223635d1085cf8c963dd
+    VERSION=9debbc2ec7e6ff004dba4d66d2780e216ca50b1a
     echo "git clone -q --branch=$VERSION https://chromium.googlesource.com/webm/libvpx ${RABBIT_BUILD_SOURCE_CODE}"
     #git clone -q --branch=$VERSION https://chromium.googlesource.com/webm/libvpx ${RABBIT_BUILD_SOURCE_CODE}
     git clone -q https://chromium.googlesource.com/webm/libvpx ${RABBIT_BUILD_SOURCE_CODE}
@@ -69,24 +69,31 @@ echo ""
 echo "configure ..."
 case ${RABBIT_BUILD_TARGERT} in
     android)
-        export CC=${RABBIT_BUILD_CROSS_PREFIX}gcc 
-        export CXX=${RABBIT_BUILD_CROSS_PREFIX}g++
-        export AR=${RABBIT_BUILD_CROSS_PREFIX}ar
-        export LD=${RABBIT_BUILD_CROSS_PREFIX}gcc
-        export AS=yasm
-        export STRIP=${RABBIT_BUILD_CROSS_PREFIX}strip
-        export NM=${RABBIT_BUILD_CROSS_PREFIX}nm
-        CONFIG_PARA="--sdk-path=${ANDROID_NDK_ROOT} --disable-shared --enable-static"
-        if [ "${RABBIT_ARCH}" = "arm" ]; then
-            CFLAGS="-march=armv7-a -mfpu=neon"
-            CPPFLAGS="-march=armv7-a -mfpu=neon"
-            CONFIG_PARA="${CONFIG_PARA} --target=armv7-android-gcc"
-        elif [ "${RABBIT_ARCH}" = "x86" ]; then
-            CONFIG_PARA="${CONFIG_PARA} --target=x86-android-gcc"
-        fi
-        
-        CFLAGS="${CFLAGS} --sysroot=${RABBIT_BUILD_CROSS_SYSROOT}"
-        CPPFLAGS="${CPPFLAGS} --sysroot=${RABBIT_BUILD_CROSS_SYSROOT}"
+        #export CC=${RABBIT_BUILD_CROSS_PREFIX}gcc 
+        #export CXX=${RABBIT_BUILD_CROSS_PREFIX}g++
+        #export AR=${RABBIT_BUILD_CROSS_PREFIX}ar
+        #export LD=${RABBIT_BUILD_CROSS_PREFIX}ld
+        #export AS=${RABBIT_BUILD_CROSS_PREFIX}as
+        #export STRIP=${RABBIT_BUILD_CROSS_PREFIX}strip
+        #export NM=${RABBIT_BUILD_CROSS_PREFIX}nm
+        export CROSS=${RABBIT_BUILD_CROSS_PREFIX}
+        #CONFIG_PARA="--sdk-path=${ANDROID_NDK_ROOT}"
+        case ${RABBIT_ARCH} in 
+            arm)
+                CONFIG_PARA="${CONFIG_PARA} --target=armv7-android-gcc"
+                ;;
+            x86*|arm64)
+                CONFIG_PARA="${CONFIG_PARA} --target=${RABBIT_ARCH}-android-gcc"
+                ;;
+            *)
+                echo "Don't support target ${RABBIT_ARCH}"
+                exit 0
+            ;;
+        esac
+
+        export CFLAGS="${RABBIT_CFLAGS}"
+        export CPPFLAGS="${RABBIT_CPPFLAGS}"
+        export LDFLAGS="${RABBIT_LDFLAGS}"
 
         #编译 cpufeatures
         echo "${RABBIT_BUILD_CROSS_PREFIX}gcc -I${RABBIT_BUILD_CROSS_SYSROOT}/usr/include -c ${ANDROID_NDK_ROOT}/sources/android/cpufeatures/cpu-features.c"
@@ -132,14 +139,13 @@ case ${RABBIT_BUILD_TARGERT} in
         ;;
 esac
 
-CONFIG_PARA="${CONFIG_PARA} --enable-libs --prefix=${RABBIT_BUILD_PREFIX}"
+CONFIG_PARA="${CONFIG_PARA} --enable-libs --prefix=$RABBIT_BUILD_PREFIX"
 CONFIG_PARA="${CONFIG_PARA} --disable-docs --disable-examples --disable-install-docs"
 CONFIG_PARA="${CONFIG_PARA} --disable-install-bins --enable-install-libs"
 CONFIG_PARA="${CONFIG_PARA} --disable-unit-tests --disable-debug --disable-debug-libs"
-
 echo "../configure ${CONFIG_PARA} --extra-cflags=\"${CFLAGS=}\""
-../configure ${CONFIG_PARA} --extra-cflags="${CFLAGS}"
-
+../configure ${CONFIG_PARA} --extra-cflags="${CFLAGS}" --extra-cxxflags="${CPPFLAGS}"
+   
 echo "make install"
 make ${RABBIT_MAKE_JOB_PARA} 
 make install

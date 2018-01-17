@@ -40,10 +40,13 @@ CUR_DIR=`pwd`
 
 #下载源码:
 if [ ! -d ${RABBIT_BUILD_SOURCE_CODE} ]; then
-    VERSION=1.2
+    VERSION=7855c3efd0214fbe014ebd3672348758da200990
     if [ "TRUE" = "${RABBIT_USE_REPOSITORIES}" ]; then
         echo "git clone -q --branch=${VERSION} https://github.com/nmoinvaz/minizip.git ${RABBIT_BUILD_SOURCE_CODE}"
-        git clone -q --branch=${VERSION} https://github.com/nmoinvaz/minizip.git ${RABBIT_BUILD_SOURCE_CODE}
+        git clone -q https://github.com/nmoinvaz/minizip.git ${RABBIT_BUILD_SOURCE_CODE}
+        if [ "$VERSION" != "master" ]; then
+            git checkout -b $VERSION $VERSION
+        fi
     else
         mkdir -p ${RABBIT_BUILD_SOURCE_CODE}
         cd ${RABBIT_BUILD_SOURCE_CODE}
@@ -89,6 +92,8 @@ case ${RABBIT_BUILD_TARGERT} in
             CMAKE_PARA="${CMAKE_PARA} -DCMAKE_MAKE_PROGRAM=$RABBIT_CMAKE_MAKE_PROGRAM" 
         fi
         CMAKE_PARA="${CMAKE_PARA} -DCMAKE_TOOLCHAIN_FILE=$RABBIT_BUILD_PREFIX/../build_script/cmake/platforms/toolchain-android.cmake"
+        CMAKE_PARA="${CMAKE_PARA} -DANDROID_NATIVE_API_LEVEL=${ANDROID_NATIVE_API_LEVEL}"
+        #CMAKE_PARA="${CMAKE_PARA} -DANDROID_ABI=${ANDROID_ABI}"  
     ;;
     unix)
         CONFIG_PARA="${CONFIG_PARA} --with-gnu-ld --enable-sse "
@@ -112,7 +117,7 @@ case ${RABBIT_BUILD_TARGERT} in
     ;;
 esac
 
-echo "cmake .. -DCMAKE_INSTALL_PREFIX=$RABBIT_BUILD_PREFIX -DCMAKE_BUILD_TYPE=Release -G\"${RABBITIM_GENERATORS}\" ${CMAKE_PARA}"
+echo "cmake .. -DCMAKE_INSTALL_PREFIX=$RABBIT_BUILD_PREFIX -DZLIB_ROOT=\"$RABBIT_BUILD_PREFIX\" -G\"${RABBITIM_GENERATORS}\" ${CMAKE_PARA}"
 cmake .. \
     -DCMAKE_INSTALL_PREFIX="$RABBIT_BUILD_PREFIX" \
     -G"${RABBITIM_GENERATORS}" ${CMAKE_PARA} -DZLIB_ROOT="$RABBIT_BUILD_PREFIX"

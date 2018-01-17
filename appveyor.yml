@@ -154,7 +154,7 @@ install:
   - C:\msys64\usr\bin\pacman.exe -S --noconfirm unzip expect #zip curl
   - C:\msys64\autorebase.bat
   - if "%RABBIT_ARCH%" == "x64" if "%BUILD_TARGERT%" == "windows_mingw" set BUILD_EXIT=TRUE
-  - if "%RABBIT_ARCH%" == "x86" if "%APPVEYOR_BUILD_WORKER_IMAGE%" == "Visual Studio 2017" set BUILD_EXIT=TRUE
+  - if "%RABBIT_ARCH%" == "x86" if "%APPVEYOR_BUILD_WORKER_IMAGE%" == "Visual Studio 2017" if NOT "%QT_ROOT%" == "NO" set BUILD_EXIT=TRUE
   - echo "BUILD_EXIT:%BUILD_EXIT%"
     
 before_build:
