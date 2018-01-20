@@ -40,15 +40,20 @@ CUR_DIR=`pwd`
 
 #下载源码:
 if [ ! -d ${RABBIT_BUILD_SOURCE_CODE} ]; then
-    OSG_VERSION=1319065a089824074357f0594a661a0e86c8055b #3.5.6
+    OSG_VERSION=master #3.5.7
     if [ "TRUE" = "${RABBIT_USE_REPOSITORIES}" ]; then
         echo "git clone -q --branch=${OSG_VERSION} https://github.com/openscenegraph/osgQt.git ${RABBIT_BUILD_SOURCE_CODE}"
-        git clone -q --branch=$OSG_VERSION https://github.com/openscenegraph/osgQt.git ${RABBIT_BUILD_SOURCE_CODE}
+        git clone -q https://github.com/openscenegraph/osgQt.git ${RABBIT_BUILD_SOURCE_CODE}
+        git clone -q https://github.com/KangLin/osgQt.git ${RABBIT_BUILD_SOURCE_CODE}
+        if [ "$OSG_VERSION" != "master" ]; then
+            git checkout -b $OSG_VERSION $OSG_VERSION
+        fi
     else
         echo "wget -q https://github.com/openscenegraph/osgQt/archive/${OSG_VERSION}.zip"
         mkdir -p ${RABBIT_BUILD_SOURCE_CODE}
         cd ${RABBIT_BUILD_SOURCE_CODE}
-        wget -q https://github.com/openscenegraph/osgQt/archive/${OSG_VERSION}.zip
+        #wget -q https://github.com/openscenegraph/osgQt/archive/${OSG_VERSION}.zip
+        wget -q https://github.com/KangLin/osgQt/archive/${OSG_VERSION}.zip
         unzip -q ${OSG_VERSION}.zip
         mv osgQt-${OSG_VERSION} ..
         rm -fr *
@@ -59,6 +64,10 @@ if [ ! -d ${RABBIT_BUILD_SOURCE_CODE} ]; then
 fi
 
 cd ${RABBIT_BUILD_SOURCE_CODE}
+
+if [ ! -f CMakeModules/Find3rdPartyDependencies.cmake ]; then
+    wget -O CMakeModules/Find3rdPartyDependencies.cmake https://raw.githubusercontent.com/openscenegraph/OpenSceneGraph/master/CMakeModules/Find3rdPartyDependencies.cmake
+fi
 
 mkdir -p build_${RABBIT_BUILD_TARGERT}
 cd build_${RABBIT_BUILD_TARGERT}
@@ -106,7 +115,7 @@ case ${RABBIT_BUILD_TARGERT} in
     unix)
         ;;
     windows_msvc)
-        export OSG_3RDPARTY_DIR=$RABBIT_BUILD_PREFIX
+        
         MAKE_PARA=""
         CMAKE_PARA="${CMAKE_PARA} -DWIN32_USE_MP=ON"
         ;;
@@ -120,10 +129,13 @@ case ${RABBIT_BUILD_TARGERT} in
     ;;
 esac
 
+export OSG_3RDPARTY_DIR=$RABBIT_BUILD_PREFIX
 CMAKE_PARA="${CMAKE_PARA} -DBUILD_DOCUMENTATION=OFF -DBUILD_OSG_EXAMPLES=OFF" # -DBUILD_OSG_APPLICATIONS=OFF"
-CMAKE_PARA="${CMAKE_PARA} -DQt5_DIR=${QT_ROOT}/lib/cmake/Qt5"
+CMAKE_PARA="${CMAKE_PARA} -DDESIRED_QT_VERSION=5 -DQt5_DIR=${QT_ROOT}/lib/cmake/Qt5"
 CMAKE_PARA="${CMAKE_PARA} -DCMAKE_VERBOSE_MAKEFILE=ON "
 CMAKE_PARA="${CMAKE_PARA} -DCMAKE_MODULE_PATH=$RABBIT_BUILD_PREFIX/lib/cmake"
+
+#export QTDIR=${QT_ROOT}
 
 echo "cmake .. -DCMAKE_INSTALL_PREFIX=$RABBIT_BUILD_PREFIX -DCMAKE_BUILD_TYPE=Release -G\"${RABBITIM_GENERATORS}\" ${CMAKE_PARA}"
 cmake .. \

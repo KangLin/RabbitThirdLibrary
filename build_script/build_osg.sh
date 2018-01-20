@@ -40,7 +40,7 @@ CUR_DIR=`pwd`
 
 #下载源码:
 if [ ! -d ${RABBIT_BUILD_SOURCE_CODE} ]; then
-    OSG_VERSION=OpenSceneGraph-3.5.6
+    OSG_VERSION=OpenSceneGraph-3.5.8
     if [ "TRUE" = "${RABBIT_USE_REPOSITORIES}" ]; then
         echo "git clone -q --branch=${OSG_VERSION} https://github.com/openscenegraph/OpenSceneGraph.git ${RABBIT_BUILD_SOURCE_CODE}"
         git clone -q --branch=$OSG_VERSION https://github.com/openscenegraph/OpenSceneGraph.git ${RABBIT_BUILD_SOURCE_CODE}
@@ -106,8 +106,7 @@ case ${RABBIT_BUILD_TARGERT} in
         ;;
     unix)
         ;;
-    windows_msvc)
-        export OSG_3RDPARTY_DIR=$RABBIT_BUILD_PREFIX
+    windows_msvc)        
         MAKE_PARA=""
         ;;
     windows_mingw)
@@ -120,10 +119,10 @@ case ${RABBIT_BUILD_TARGERT} in
     ;;
 esac
 
+export OSG_3RDPARTY_DIR=$RABBIT_BUILD_PREFIX
 CMAKE_PARA="${CMAKE_PARA} -DWIN32_USE_MP=ON"
-CMAKE_PARA="${CMAKE_PARA} -DBUILD_DOCUMENTATION=OFF -DBUILD_OSG_EXAMPLES=OFF -DBUILD_OSG_APPLICATIONS=OFF"
-#CMAKE_PARA="${CMAKE_PARA} -DQt5_DIR=${QT_ROOT}/lib/cmake/Qt5"
-CMAKE_PARA="${CMAKE_PARA} -DCMAKE_VERBOSE_MAKEFILE=ON -DUSE_3RDPARTY_BIN=OFF"
+CMAKE_PARA="${CMAKE_PARA} -DBUILD_DOCUMENTATION=OFF -DBUILD_OSG_EXAMPLES=OFF -DBUILD_OSG_APPLICATIONS=OFF -DUSE_3RDPARTY_BIN=OFF"
+#CMAKE_PARA="${CMAKE_PARA} -DCMAKE_VERBOSE_MAKEFILE=ON "
 CMAKE_PARA="${CMAKE_PARA} -DCMAKE_MODULE_PATH=$RABBIT_BUILD_PREFIX/lib/cmake"
 
 echo "cmake .. -DCMAKE_INSTALL_PREFIX=$RABBIT_BUILD_PREFIX -DCMAKE_BUILD_TYPE=Release -G\"${RABBITIM_GENERATORS}\" ${CMAKE_PARA}"

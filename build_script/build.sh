@@ -60,13 +60,13 @@ case $TARGET_OS in
 
 if [ -n "$2" ]; then
     ./build_zlib.sh ${RABBIT_BUILD_TARGERT} $2/zlib 
-    ./build_minizip.sh ${RABBIT_BUILD_TARGERT} $2/minizip
+    #./build_minizip.sh ${RABBIT_BUILD_TARGERT} $2/minizip
     ./build_expat.sh ${RABBIT_BUILD_TARGERT} $2/expat
     ./build_openssl.sh ${RABBIT_BUILD_TARGERT} $2/openssl 
     ./build_libsodium.sh ${RABBIT_BUILD_TARGERT} $2/libsodium
-    ./build_boost.sh ${RABBIT_BUILD_TARGERT} $2/boost
-    ./build_protobuf.sh ${RABBIT_BUILD_TARGERT} $2/protobuf
-    ./build_berkeleydb.sh ${RABBIT_BUILD_TARGERT} $2/berkeleydb
+    #./build_boost.sh ${RABBIT_BUILD_TARGERT} $2/boost
+    #./build_protobuf.sh ${RABBIT_BUILD_TARGERT} $2/protobuf
+    #./build_berkeleydb.sh ${RABBIT_BUILD_TARGERT} $2/berkeleydb
     ./build_libcurl.sh ${RABBIT_BUILD_TARGERT} $2/curl 
     ./build_libpng.sh ${RABBIT_BUILD_TARGERT} $2/libpng
     ./build_jpeg.sh ${RABBIT_BUILD_TARGERT} $2/libjpeg

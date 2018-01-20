@@ -44,6 +44,7 @@ if [ ! -d ${RABBIT_BUILD_SOURCE_CODE} ]; then
     if [ "TRUE" = "${RABBIT_USE_REPOSITORIES}" ]; then
         echo "git clone -q --branch=${VERSION} https://github.com/nmoinvaz/minizip.git ${RABBIT_BUILD_SOURCE_CODE}"
         git clone -q https://github.com/nmoinvaz/minizip.git ${RABBIT_BUILD_SOURCE_CODE}
+        cd ${RABBIT_BUILD_SOURCE_CODE}
         if [ "$VERSION" != "master" ]; then
             git checkout -b $VERSION $VERSION
         fi

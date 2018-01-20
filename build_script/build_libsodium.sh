@@ -40,15 +40,23 @@ CUR_DIR=`pwd`
 
 #下载源码:
 if [ ! -d ${RABBIT_BUILD_SOURCE_CODE} ]; then
-    LIBSODIUM_VERSION=1.0.16
+    LIBSODIUM_VERSION=master #1.0.16
     if [ "TRUE" = "${RABBIT_USE_REPOSITORIES}" ]; then
-        echo "git clone -q  -b ${LIBSODIUM_VERSION} https://github.com/jedisct1/libsodium.git ${RABBIT_BUILD_SOURCE_CODE}"
-        git clone -q  -b ${LIBSODIUM_VERSION} https://github.com/jedisct1/libsodium.git ${RABBIT_BUILD_SOURCE_CODE}
+        #echo "git clone -q https://github.com/jedisct1/libsodium.git ${RABBIT_BUILD_SOURCE_CODE}"
+        #git clone -q https://github.com/jedisct1/libsodium.git ${RABBIT_BUILD_SOURCE_CODE}
+        echo "git clone -q https://github.com/KangLin/libsodium.git ${RABBIT_BUILD_SOURCE_CODE}"
+        git clone -q https://github.com/KangLin/libsodium.git ${RABBIT_BUILD_SOURCE_CODE}
+        cd ${RABBIT_BUILD_SOURCE_CODE}
+        if [ "$LIBSODIUM_VERSION" != "master" ]; then
+            git checkout -b $LIBSODIUM_VERSION $LIBSODIUM_VERSION
+        fi
     else
-        echo "wget -q https://github.com/jedisct1/libsodium/archive/${LIBSODIUM_VERSION}.zip"
         mkdir -p ${RABBIT_BUILD_SOURCE_CODE}
         cd ${RABBIT_BUILD_SOURCE_CODE}
-        wget -c -q https://github.com/jedisct1/libsodium/archive/${LIBSODIUM_VERSION}.zip
+        #echo "wget -q https://github.com/jedisct1/libsodium/archive/${LIBSODIUM_VERSION}.zip"
+        #wget -c -q https://github.com/jedisct1/libsodium/archive/${LIBSODIUM_VERSION}.zip
+        echo "wget -c -q https://github.com/KangLin/libsodium/archive/${LIBSODIUM_VERSION}.zip"
+        wget -c -q https://github.com/KangLin/libsodium/archive/${LIBSODIUM_VERSION}.zip
         unzip -q ${LIBSODIUM_VERSION}.zip
         mv libsodium-${LIBSODIUM_VERSION} ..
         rm -fr *
@@ -60,21 +68,24 @@ fi
 
 cd ${RABBIT_BUILD_SOURCE_CODE}
 
-if [ "${RABBIT_BUILD_TARGERT}" != "windows_msvc" ]; then
-    if [ -d ".git" ]; then
-        git clean -xdf
-    fi
-    if [ ! -f configure ]; then
-        echo "sh autogen.sh"
-        sh autogen.sh
-    fi
-    
-    mkdir -p build_${RABBIT_BUILD_TARGERT}
-    cd build_${RABBIT_BUILD_TARGERT}
-    if [ "$RABBIT_CLEAN" = "TRUE" ]; then
-        rm -fr *
-    fi
+if [ "$RABBIT_CLEAN" = "TRUE" ]; then
+    if [ "${RABBIT_BUILD_TARGERT}" != "windows_msvc" ]; then
+        if [ -d ".git" ]; then
+            git clean -xdf
+        fi
+    fi 
 fi
+if [ ! -f configure ]; then
+    echo "sh autogen.sh"
+    sh autogen.sh
+fi
+
+mkdir -p build_${RABBIT_BUILD_TARGERT}
+cd build_${RABBIT_BUILD_TARGERT}
+if [ "$RABBIT_CLEAN" = "TRUE" ]; then
+    rm -fr *
+fi
+
 echo ""
 echo "RABBIT_BUILD_TARGERT:${RABBIT_BUILD_TARGERT}"
 echo "RABBIT_BUILD_SOURCE_CODE:$RABBIT_BUILD_SOURCE_CODE"

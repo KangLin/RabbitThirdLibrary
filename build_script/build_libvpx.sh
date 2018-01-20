@@ -43,7 +43,9 @@ if [ ! -d ${RABBIT_BUILD_SOURCE_CODE} ]; then
     #git clone -q --branch=$VERSION https://chromium.googlesource.com/webm/libvpx ${RABBIT_BUILD_SOURCE_CODE}
     git clone -q https://chromium.googlesource.com/webm/libvpx ${RABBIT_BUILD_SOURCE_CODE}
     cd ${RABBIT_BUILD_SOURCE_CODE}
-    git checkout -b $VERSION $VERSION
+    if [ "$VERSION" != "master" ]; then
+        git checkout -b $VERSION $VERSION
+    fi
 fi
 
 CUR_DIR=`pwd`

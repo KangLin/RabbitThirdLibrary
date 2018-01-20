@@ -65,15 +65,19 @@ if [ "${RABBIT_CLEAN}" = "TRUE" ]; then
     if [ -d "../.git" ]; then
         echo "git clean -xdf"
         git clean -xdf
+        rm configure
     else
         if [ "${RABBIT_BUILD_TARGERT}" != "windows_msvc" -a -f Makefile ]; then
             ${MAKE} clean
         fi
     fi
 fi
+
+./autogen.sh
+
 #mkdir -p build_${RABBIT_BUILD_TARGERT}
 #cd build_${RABBIT_BUILD_TARGERT}
-#if [ -n "$RABBIT_CLEAN" ]; then
+#if [  "${RABBIT_CLEAN}" = "TRUE" ]; then
 #    rm -fr *
 #fi
 
@@ -111,8 +115,9 @@ case ${RABBIT_BUILD_TARGERT} in
         CONFIG_PARA="${CONFIG_PARA} --host=$RABBIT_BUILD_CROSS_HOST"
         #CONFIG_PARA="${CONFIG_PARA} --with-sysroot=${RABBIT_BUILD_CROSS_SYSROOT}"
         CFLAGS="${RABBIT_CFLAGS}"
-        CPPFLAGS="${RABBIT_CPPFLAGS}"
-        LDFLAGS="${RABBIT_LDFLAGS}" # -lsupc++"
+        CPPFLAGS="${RABBIT_CPPFLAGS} -std=c++11"
+        LDFLAGS="$LDFLAGS ${RABBIT_LDFLAGS}" # -lsupc++"
+        export LIBS="-lstdc++" #-lsupc++
         ;;
     unix)
         ;;

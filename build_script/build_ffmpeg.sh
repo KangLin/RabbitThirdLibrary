@@ -119,6 +119,9 @@ case ${RABBIT_BUILD_TARGERT} in
             arm*)
                 CONFIG_PARA="${CONFIG_PARA} --cpu=armv7-a --enable-neon"
                 ;;
+            x86*)
+                CONFIG_PARA="${CONFIG_PARA} --cpu=i586"
+            ;;
         esac
         
         CONFIG_PARA="${CONFIG_PARA} --host-os=$RABBIT_BUILD_CROSS_HOST"
@@ -165,6 +168,7 @@ CONFIG_PARA="${CONFIG_PARA} --prefix=$RABBIT_BUILD_PREFIX --enable-gpl --enable-
 CONFIG_PARA="${CONFIG_PARA} --disable-manpages --disable-podpages --disable-txtpages  --disable-ffprobe"
 CONFIG_PARA="${CONFIG_PARA} --disable-ffserver --disable-ffplay --disable-programs"
 CONFIG_PARA="${CONFIG_PARA} --enable-runtime-cpudetect"
+#CONFIG_PARA="${CONFIG_PARA} --enable-avresample"
 if [ "Debug" = "$RABBIT_CONFIG" ]; then
     CONFIG_PARA="${CONFIG_PARA} --disable-stripping --enable-debug "
 else
@@ -206,6 +210,9 @@ if [ "${RABBIT_BUILD_TARGERT}" = "windows_msvc" ]; then
         mv libswresample.a swresample.lib
         mv libavformat.a avformat.lib
         mv libswscale.a swscale.lib
+        if [ -f libavresample.a ]; then
+            mv libavresample.a avresample.lib
+        fi
     else
         mv ${RABBIT_BUILD_PREFIX}/bin/*.lib ${RABBIT_BUILD_PREFIX}/lib/.
     fi
