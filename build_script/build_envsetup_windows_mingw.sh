@@ -25,7 +25,7 @@ if [ -z "$RABBIT_CLEAN" ]; then
 fi
 #RABBIT_BUILD_STATIC="static" #设置编译静态库，注释掉，则为编译动态库
 #RABBIT_BUILD_CROSS_HOST=i686-w64-mingw32  #编译工具链前缀,用于交叉编译
-#RABBIT_USE_REPOSITORIES="FALSE" #下载指定的压缩包。省略，则下载开发库。
+#RABBIT_USE_REPOSITORIES="TRUE" #下载指定的压缩包。省略，则下载开发库。
 if [ -z "${RABBIT_MAKE_JOB_PARA}" ]; then
     RABBIT_MAKE_JOB_PARA="-j`cat /proc/cpuinfo |grep 'cpu cores' |wc -l`"  #make 同时工作进程参数
     if [ "$RABBIT_MAKE_JOB_PARA" = "-j1" ];then
@@ -96,7 +96,7 @@ if [ "$RABBIT_BUILD_STATIC" = "static" ]; then
 fi
 
 if [ -z "$RABBIT_USE_REPOSITORIES" ]; then
-    RABBIT_USE_REPOSITORIES="TRUE" #下载开发库。省略，则下载指定的压缩包
+    RABBIT_USE_REPOSITORIES="FALSE" #下载开发库。省略，则下载指定的压缩包
 fi
 
 if [ -z "$QT_ROOT" -a -d "${RABBIT_BUILD_PREFIX}/qt" ]; then

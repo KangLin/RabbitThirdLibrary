@@ -146,7 +146,7 @@ init:
   - set varch=%RABBIT_ARCH%
   - set PROJECT_NAME=%APPVEYOR_PROJECT_NAME%
   - if "%QT_VERSION%" == "" set QT_VERSION=NO
-  - if "%RABBIT_ARCH%" == "x86" set RABBIT_USE_REPOSITORIES="FALSE"
+  - if "%RABBIT_ARCH%" == "x86" if "%BUILD_TARGERT%" == "windows_msvc" set RABBIT_USE_REPOSITORIES="TRUE"
   - if "%RABBIT_ARCH%" == "x64" set varch=amd64
   - if "%BUILD_TARGERT%" == "windows_msvc" if %RABBIT_TOOLCHAIN_VERSION% LSS 15 (call "C:\Program Files (x86)\Microsoft Visual Studio %RABBIT_TOOLCHAIN_VERSION%.0\VC\vcvarsall.bat" %varch%) else (call "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Auxiliary\Build\vcvarsall.bat" %varch%)
   - if "%BUILD_TARGERT%" == "windows_mingw" set MSYSTEM=MINGW32  #设置编译系统为MINGW32
