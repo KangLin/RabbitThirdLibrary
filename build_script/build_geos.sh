@@ -40,31 +40,29 @@ CUR_DIR=`pwd`
 
 #下载源码:
 if [ ! -d ${RABBIT_BUILD_SOURCE_CODE} ]; then
-    #VERSION=3.5.0
-    #if [ "TRUE" = "${RABBIT_USE_REPOSITORIES}" ]; then
-        echo "svn checkout http://svn.osgeo.org/geos/trunk ${RABBIT_BUILD_SOURCE_CODE}"
-        svn checkout http://svn.osgeo.org/geos/trunk ${RABBIT_BUILD_SOURCE_CODE}
-    #else
-    #    echo "wget -c -nv http://download.osgeo.org/geos/geos-$VERSION.tar.bz2"
-    #    mkdir -p ${RABBIT_BUILD_SOURCE_CODE}
-    #    cd ${RABBIT_BUILD_SOURCE_CODE}
-    #    wget -c -nv http://download.osgeo.org/geos/geos-$VERSION.tar.bz2
-    #    tar xf geos-$VERSION.tar.bz2
-    #    mv geos-$VERSION ..
-    #    cd ..
-    #    rm -fr ${RABBIT_BUILD_SOURCE_CODE}
-    #    mv geos-$VERSION ${RABBIT_BUILD_SOURCE_CODE}
-    #fi
+    VERSION=3.6.2
+    if [ "TRUE" = "${RABBIT_USE_REPOSITORIES}" ]; then
+        echo "git clone -q https://github.com/OSGeo/geos.git ${RABBIT_BUILD_SOURCE_CODE}"
+        git clone -q https://github.com/OSGeo/geos.git ${RABBIT_BUILD_SOURCE_CODE}
+        if [ "$VERSION" != "master" ]; then
+            git checkout -b $VERSION $VERSION
+        fi
+    else
+        echo "wget -q -c -nv https://github.com/OSGeo/geos/archive/$VERSION.tar.bz2"
+        mkdir -p ${RABBIT_BUILD_SOURCE_CODE}
+        cd ${RABBIT_BUILD_SOURCE_CODE}
+        wget -q -c -nv https://github.com/OSGeo/geos/archive/$VERSION.tar.bz2
+        tar xf $VERSION.tar.bz2
+        mv geos-$VERSION ..
+        cd ..
+        rm -fr ${RABBIT_BUILD_SOURCE_CODE}
+        mv geos-$VERSION ${RABBIT_BUILD_SOURCE_CODE}
+    fi
 fi
 
 cd ${RABBIT_BUILD_SOURCE_CODE}
 
-if [ ! -f configure ]; then
-    echo "sh autogen.sh"
-    sh autogen.sh
-fi
-
-tools/svn_repo_revision.sh
+cd ${RABBIT_BUILD_SOURCE_CODE}
 
 mkdir -p build_${RABBIT_BUILD_TARGERT}
 cd build_${RABBIT_BUILD_TARGERT}
@@ -85,56 +83,31 @@ echo "RABBIT_BUILD_STATIC:$RABBIT_BUILD_STATIC"
 echo ""
 
 echo "configure ..."
-MAKE_PARA="-- ${RABBIT_MAKE_JOB_PARA}"
-
 if [ "$RABBIT_BUILD_STATIC" = "static" ]; then
-    CONFIG_PARA="--enable-static --disable-shared"
+    CMAKE_PARA="-DGEOS_BUILD_STATIC=ON -DGEOS_BUILD_SHARE=OFF" 
 else
-    CONFIG_PARA="--disable-static --enable-shared"
+    CMAKE_PARA="-DGEOS_BUILD_STATIC=OFF -DGEOS_BUILD_SHARE=ON"
 fi
+MAKE_PARA="-- ${RABBIT_MAKE_JOB_PARA} VERBOSE=1"
 case ${RABBIT_BUILD_TARGERT} in
     android)
-        #export CC=${RABBIT_BUILD_CROSS_PREFIX}gcc 
-        #export CXX=${RABBIT_BUILD_CROSS_PREFIX}g++
-        #export AR=${RABBIT_BUILD_CROSS_PREFIX}ar
-        #export LD=${RABBIT_BUILD_CROSS_PREFIX}ld
-        #export AS=${RABBIT_BUILD_CROSS_PREFIX}as
-        #export STRIP=${RABBIT_BUILD_CROSS_PREFIX}strip
-        #export NM=${RABBIT_BUILD_CROSS_PREFIX}nm
-        #CONFIG_PARA="CC=${RABBIT_BUILD_CROSS_PREFIX}gcc LD=${RABBIT_BUILD_CROSS_PREFIX}ld"
-        CONFIG_PARA="${CONFIG_PARA} --host=$RABBIT_BUILD_CROSS_HOST"
-        #CONFIG_PARA="${CONFIG_PARA} --with-sysroot=${RABBIT_BUILD_CROSS_SYSROOT}"
-        CFLAGS="${RABBIT_CFLAGS}"
-        CPPFLAGS="${RABBIT_CPPFLAGS} -std=c++11"
-        LDFLAGS="$LDFLAGS ${RABBIT_LDFLAGS}" # -lsupc++"
-        export LIBS="-lstdc++" #-lsupc++
+        if [ -n "$RABBIT_CMAKE_MAKE_PROGRAM" ]; then
+            CMAKE_PARA="${CMAKE_PARA} -DCMAKE_MAKE_PROGRAM=$RABBIT_CMAKE_MAKE_PROGRAM" 
+        fi
+        CMAKE_PARA="${CMAKE_PARA} -DCMAKE_TOOLCHAIN_FILE=$RABBIT_BUILD_PREFIX/../build_script/cmake/platforms/toolchain-android.cmake"
+        CMAKE_PARA="${CMAKE_PARA} -DANDROID_NATIVE_API_LEVEL=${ANDROID_NATIVE_API_LEVEL}"
+        #CMAKE_PARA="${CMAKE_PARA} -DANDROID_ABI=${ANDROID_ABI}"  
         ;;
     unix)
+        CONFIG_PARA="${CONFIG_PARA} --with-gnu-ld --enable-sse "
         ;;
     windows_msvc)
-        cd ${RABBIT_BUILD_SOURCE_CODE}
-        ./autogen.bat
-        nmake -f makefile.vc clean
-        nmake -f makefile.vc
-        cp src/*.dll $RABBIT_BUILD_PREFIX/bin
-        cp src/*.lib $RABBIT_BUILD_PREFIX/lib
-        cp capi/geos_c.h include/geos.h $RABBIT_BUILD_PREFIX/include
-        cp -r include/geos $RABBIT_BUILD_PREFIX/include/
-        cd $CUR_DIR
-        exit 0
+        MAKE_PARA=""
         ;;
     windows_mingw)
         case `uname -s` in
             Linux*|Unix*|CYGWIN*)
-                export CC=${RABBIT_BUILD_CROSS_PREFIX}gcc 
-                export CXX=${RABBIT_BUILD_CROSS_PREFIX}g++
-                export AR=${RABBIT_BUILD_CROSS_PREFIX}ar
-                export LD=${RABBIT_BUILD_CROSS_PREFIX}ld
-                export AS=${RABBIT_BUILD_CROSS_PREFIX}as
-                export STRIP=${RABBIT_BUILD_CROSS_PREFIX}strip
-                export NM=${RABBIT_BUILD_CROSS_PREFIX}nm
-                CONFIG_PARA="${CONFIG_PARA} CC=${RABBIT_BUILD_CROSS_PREFIX}gcc"
-                CONFIG_PARA="${CONFIG_PARA} --host=${RABBIT_BUILD_CROSS_HOST}"
+                CMAKE_PARA="${CMAKE_PARA} -DCMAKE_TOOLCHAIN_FILE=$RABBIT_BUILD_PREFIX/../build_script/cmake/platforms/toolchain-mingw.cmake"
                 ;;
             *)
             ;;
@@ -143,20 +116,14 @@ case ${RABBIT_BUILD_TARGERT} in
     *)
     echo "${HELP_STRING}"
     cd $CUR_DIR
-    exit 2
+    exit 3
     ;;
 esac
+echo "cmake .. -DCMAKE_INSTALL_PREFIX=$RABBIT_BUILD_PREFIX -DCMAKE_BUILD_TYPE=Release -G\"${RABBITIM_GENERATORS}\" ${CMAKE_PARA}"
+cmake .. \
+    -DCMAKE_INSTALL_PREFIX="$RABBIT_BUILD_PREFIX" \
+    -G"${RABBITIM_GENERATORS}" ${CMAKE_PARA}
 
-CONFIG_PARA="${CONFIG_PARA} --prefix=$RABBIT_BUILD_PREFIX "
-echo "../configure ${CONFIG_PARA} CFLAGS=\"${CFLAGS=}\" CPPFLAGS=\"${CPPFLAGS}\" LDFLAGS=\"$LDFLAGS\" LIBS=\"$LIBS\""
-../configure ${CONFIG_PARA} CFLAGS="${CFLAGS}" \
-    CPPFLAGS="${CPPFLAGS}" CXXFLAGS="${CXXFLAGS}" \
-    LDFLAGS="$LDFLAGS" LIBS="$LIBS" \
-    --disable-python --disable-ruby --disable-php \
-    --enable-dependency-tracking
-
-echo "make install"
-make ${RABBIT_MAKE_JOB_PARA} 
-make install
+cmake --build . --target install --config ${RABBIT_CONFIG} ${MAKE_PARA}
 
 cd $CUR_DIR
