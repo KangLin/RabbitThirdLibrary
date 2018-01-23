@@ -40,10 +40,13 @@ CUR_DIR=`pwd`
 
 #下载源码:
 if [ ! -d ${RABBIT_BUILD_SOURCE_CODE} ]; then
-    OPENCV_VERSION=3.4.0-rc
+    OPENCV_VERSION=12ea8477a30fe6b4b7f73af3cdd154c38516caec
     if [ "TRUE" = "${RABBIT_USE_REPOSITORIES}" ]; then
         echo "git clone -q  https://github.com/opencv/opencv.git ${RABBIT_BUILD_SOURCE_CODE}"
-        git clone -q --branch=${OPENCV_VERSION} https://github.com/opencv/opencv.git ${RABBIT_BUILD_SOURCE_CODE}
+        git clone -q https://github.com/opencv/opencv.git ${RABBIT_BUILD_SOURCE_CODE}
+        if [ "$OPENCV_VERSION" != "master" ]; then
+            git checkout -b $OPENCV_VERSION $OPENCV_VERSION
+        fi
     else
         echo "wget -q -c https://github.com/opencv/opencv/archive/${OPENCV_VERSION}.zip"
         mkdir -p ${RABBIT_BUILD_SOURCE_CODE}

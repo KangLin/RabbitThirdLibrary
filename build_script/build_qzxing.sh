@@ -54,7 +54,10 @@ if [ ! -d ${RABBIT_BUILD_SOURCE_CODE} ]; then
     else
         mkdir -p ${RABBIT_BUILD_SOURCE_CODE}
         cd ${RABBIT_BUILD_SOURCE_CODE}
-        wget -q -c -nv -O qzxing.zip https://github.com/ftylitak/qzxing/archive/${VERSION}.zip
+        #echo "wget -q -c -nv -O qzxing.zip https://github.com/ftylitak/qzxing/archive/${VERSION}.zip"
+        #wget -q -c -nv -O qzxing.zip https://github.com/ftylitak/qzxing/archive/${VERSION}.zip
+        echo "wget -q -c -nv -O qzxing.zip https://github.com/KangLin/qzxing/archive/${VERSION}.zip"
+        wget -q -c -nv -O qzxing.zip https://github.com/KangLin/qzxing/archive/${VERSION}.zip
         unzip -q qzxing.zip
         mv qzxing-${VERSION} ..
         rm -fr *
