@@ -44,6 +44,7 @@ if [ ! -d ${RABBIT_BUILD_SOURCE_CODE} ]; then
     if [ "TRUE" = "${RABBIT_USE_REPOSITORIES}" ]; then
         echo "git clone -q https://github.com/OSGeo/geos.git ${RABBIT_BUILD_SOURCE_CODE}"
         git clone -q https://github.com/OSGeo/geos.git ${RABBIT_BUILD_SOURCE_CODE}
+        cd ${RABBIT_BUILD_SOURCE_CODE}
         if [ "$VERSION" != "master" ]; then
             git checkout -b $VERSION $VERSION
         fi
@@ -59,8 +60,6 @@ if [ ! -d ${RABBIT_BUILD_SOURCE_CODE} ]; then
         mv geos-$VERSION ${RABBIT_BUILD_SOURCE_CODE}
     fi
 fi
-
-cd ${RABBIT_BUILD_SOURCE_CODE}
 
 cd ${RABBIT_BUILD_SOURCE_CODE}
 
