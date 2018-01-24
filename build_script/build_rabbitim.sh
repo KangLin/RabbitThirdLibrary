@@ -25,6 +25,8 @@ case $1 in
     ;;
 esac
 
+echo "CUR_DIR:`pwd`"
+
 #运行本脚本前,先运行 build_${RABBIT_BUILD_TARGERT}_envsetup.sh 进行环境变量设置,需要先设置下面变量:
 #   RABBIT_BUILD_PREFIX= #修改这里为安装前缀
 #   QMAKE=  #设置用于相应平台编译的 QMAKE
@@ -48,7 +50,6 @@ fi
 CUR_DIR=`pwd`
 cd ${RABBIT_BUILD_SOURCE_CODE}
 
-echo ""
 echo "RABBIT_BUILD_TARGERT:${RABBIT_BUILD_TARGERT}"
 echo "RABBIT_BUILD_SOURCE_CODE:$RABBIT_BUILD_SOURCE_CODE"
 echo "RABBIT_BUILD_PREFIX:$RABBIT_BUILD_PREFIX"
@@ -59,6 +60,8 @@ echo "RABBIT_BUILD_HOST:$RABBIT_BUILD_HOST"
 echo "PKG_CONFIG:$PKG_CONFIG"
 echo "PKG_CONFIG_PATH:$PKG_CONFIG_PATH"
 echo "RABBIT_BUILD_STATIC:$RABBIT_BUILD_STATIC"
+echo "QMAKE:$QMAKE"
+echo "MAKE:$MAKE"
 echo "PATH:$PATH"
 
 mkdir -p build_${RABBIT_BUILD_TARGERT}
@@ -121,7 +124,6 @@ if [ "$3" = "cmake" ]; then
 
 else #qmake编译
 
-    MAKE="make ${RABBIT_MAKE_JOB_PARA}"
     case $1 in
         android)
             export ANDROID_NDK_PLATFORM=$ANDROID_NATIVE_API_LEVEL
@@ -135,12 +137,13 @@ else #qmake编译
             ;;
         unix)
             #PARA="-r -spec linux-g++ "
+            MAKE="$MAKE ${RABBIT_MAKE_JOB_PARA}"
             ;;
         windows_msvc)
             ;;
         windows_mingw)
             #PARA="-r -spec win32-g++"
-	    MAKE="mingw32-make ${RABBIT_MAKE_JOB_PARA}"
+	        MAKE="$MAKE ${RABBIT_MAKE_JOB_PARA}"
             ;;
         *)
             echo "${HELP_STRING}"
@@ -150,14 +153,14 @@ else #qmake编译
    # if [ "${RABBIT_BUILD_STATIC}" = "static" ]; then
    #     PARA="$PARA CONFIG+=static"
    # fi
-    echo "qmake ...."
-    $QMAKE ../RabbitIm.pro  $PARA "CONFIG*=${RABBIT_CONFIG}"  \
-           INCLUDEPATH+=${RABBIT_BUILD_PREFIX}/include \
-           LIBS+=-L${RABBIT_BUILD_PREFIX}/lib \
-           QXMPP_USE_VPX=1 \
-           RABBIT_USE_FFMPEG=1 \
-           RABBIT_USE_LIBCURL=1 \
-           RABBIT_USE_OPENSSL=1
+    PARA="${PARA} -o Makefile"
+    PARA="${PARA} CONFIG*=${RABBIT_CONFIG}"
+    PARA="${PARA} QXMPP_USE_VPX=1"
+    PARA="${PARA} RABBIT_USE_FFMPEG=1"
+    PARA="${PARA} RABBIT_USE_LIBCURL=1"
+    PARA="${PARA} RABBIT_USE_OPENSSL=1"
+    echo "$QMAKE ...."
+    $QMAKE $PARA ../RabbitIm.pro 
     echo "$MAKE ...."
     if [ "$1" == "android" ]; then
         $MAKE -f Makefile install INSTALL_ROOT="`pwd`/android-build"
