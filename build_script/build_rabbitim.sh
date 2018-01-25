@@ -43,8 +43,8 @@ fi
 
 #下载源码:
 if [ ! -d ${RABBIT_BUILD_SOURCE_CODE} ]; then
-    echo "git clone https://github.com/KangLin/RABBIT.git"
-    git clone -q https://github.com/KangLin/RABBIT.git ${RABBIT_BUILD_SOURCE_CODE}
+    echo "git clone https://github.com/KangLin/RabbitIm.git"
+    git clone -q https://github.com/KangLin/RabbitIm.git ${RABBIT_BUILD_SOURCE_CODE}
 fi
 
 CUR_DIR=`pwd`

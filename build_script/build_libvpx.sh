@@ -84,7 +84,7 @@ case ${RABBIT_BUILD_TARGERT} in
             arm)
                 CONFIG_PARA="${CONFIG_PARA} --target=armv7-android-gcc"
                 ;;
-            x86*|arm64)
+            x86*|arm64*)
                 CONFIG_PARA="${CONFIG_PARA} --target=${RABBIT_ARCH}-android-gcc"
                 ;;
             *)

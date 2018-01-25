@@ -40,11 +40,11 @@ CUR_DIR=`pwd`
 
 #下载源码:
 if [ ! -d ${RABBIT_BUILD_SOURCE_CODE} ]; then
-    OSG_VERSION=master #3.5.7
+    OSG_VERSION=f21bd829268a84594e5adccfabd1fd68f47ccfeb #3.5.7
     if [ "TRUE" = "${RABBIT_USE_REPOSITORIES}" ]; then
         echo "git clone -q --branch=${OSG_VERSION} https://github.com/openscenegraph/osgQt.git ${RABBIT_BUILD_SOURCE_CODE}"
         git clone -q https://github.com/openscenegraph/osgQt.git ${RABBIT_BUILD_SOURCE_CODE}
-        git clone -q https://github.com/KangLin/osgQt.git ${RABBIT_BUILD_SOURCE_CODE}
+        #git clone -q https://github.com/KangLin/osgQt.git ${RABBIT_BUILD_SOURCE_CODE}
         if [ "$OSG_VERSION" != "master" ]; then
             git checkout -b $OSG_VERSION $OSG_VERSION
         fi
@@ -52,8 +52,8 @@ if [ ! -d ${RABBIT_BUILD_SOURCE_CODE} ]; then
         echo "wget -q https://github.com/openscenegraph/osgQt/archive/${OSG_VERSION}.zip"
         mkdir -p ${RABBIT_BUILD_SOURCE_CODE}
         cd ${RABBIT_BUILD_SOURCE_CODE}
-        #wget -q https://github.com/openscenegraph/osgQt/archive/${OSG_VERSION}.zip
-        wget -q https://github.com/KangLin/osgQt/archive/${OSG_VERSION}.zip
+        wget -q https://github.com/openscenegraph/osgQt/archive/${OSG_VERSION}.zip
+        #wget -q https://github.com/KangLin/osgQt/archive/${OSG_VERSION}.zip
         unzip -q ${OSG_VERSION}.zip
         mv osgQt-${OSG_VERSION} ..
         rm -fr *
@@ -131,11 +131,12 @@ esac
 
 export OSG_3RDPARTY_DIR=$RABBIT_BUILD_PREFIX
 CMAKE_PARA="${CMAKE_PARA} -DBUILD_DOCUMENTATION=OFF -DBUILD_OSG_EXAMPLES=OFF" # -DBUILD_OSG_APPLICATIONS=OFF"
-CMAKE_PARA="${CMAKE_PARA} -DDESIRED_QT_VERSION=5 -DQt5_DIR=${QT_ROOT}/lib/cmake/Qt5"
+CMAKE_PARA="${CMAKE_PARA} -DDESIRED_QT_VERSION=5 -DQt5Widgets_DIR=${QT_ROOT}/lib/cmake/Qt5Widgets"
+CMAKE_PARA="${CMAKE_PARA} -DQt5Gui_DIR=${QT_ROOT}/lib/cmake/Qt5Gui"
+CMAKE_PARA="${CMAKE_PARA} -DQt5Core_DIR=${QT_ROOT}/lib/cmake/Qt5Core"
+CMAKE_PARA="${CMAKE_PARA} -DQt5OpenGL_DIR=${QT_ROOT}/lib/cmake/Qt5OpenGL"
 CMAKE_PARA="${CMAKE_PARA} -DCMAKE_VERBOSE_MAKEFILE=ON "
 CMAKE_PARA="${CMAKE_PARA} -DCMAKE_MODULE_PATH=$RABBIT_BUILD_PREFIX/lib/cmake"
-
-#export QTDIR=${QT_ROOT}
 
 echo "cmake .. -DCMAKE_INSTALL_PREFIX=$RABBIT_BUILD_PREFIX -DCMAKE_BUILD_TYPE=Release -G\"${RABBITIM_GENERATORS}\" ${CMAKE_PARA}"
 cmake .. \

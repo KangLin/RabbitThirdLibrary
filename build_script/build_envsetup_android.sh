@@ -20,10 +20,7 @@ export ANDROID_NDK=$ANDROID_NDK_ROOT            #指定 android ndk 根目录
 export ANDROID_SDK=$ANDROID_SDK_ROOT
 
 #ANT=/usr/bin/ant         #ant 程序  
-if [ -z "$QT_ROOT" ]; then
-    QT_VERSION=5.9.2
-    QT_ROOT=/c/Qt/Qt${QT_VERSION}/${QT_VERSION}/android_armv7      #QT 安装根目录,默认为:${RABBITRoot}/ThirdLibrary/android/qt  
-fi
+
 if [ -z "$RABBIT_CLEAN" ]; then
     RABBIT_CLEAN=TRUE #编译前清理  
 fi
@@ -44,7 +41,13 @@ if [ -z "$ANDROID_NDK_ROOT" -o -z "$ANDROID_NDK" -o -z "$ANDROID_SDK" -o -z "$AN
 fi
 
 if [ -z "${RABBIT_ARCH}" ]; then
-    RABBIT_ARCH=arm #arm,arm64,mips,mips64,x86,x86_64
+    RABBIT_ARCH=arm #armv7,arm64,mips,mips64,x86,x86_64
+fi
+
+#需要设置下面变量：
+if [ -z "$QT_ROOT" ]; then
+    QT_VERSION=5.9.2
+    QT_ROOT=/c/Qt/Qt${QT_VERSION}/${QT_VERSION}/android_$RABBIT_ARCH #QT 安装根目录,默认为:${RABBITRoot}/ThirdLibrary/android/qt
 fi
 
 if [ -z "$RABBIT_CONFIG" ]; then
