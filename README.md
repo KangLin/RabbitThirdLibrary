@@ -9,6 +9,7 @@
     3. [windows](INSTALL_WINDOWS.md)
 
 * 预编译库存放位置：
+  https://github.com/KangLin/RabbitThirdLibrary/releases
   https://sourceforge.net/projects/rabbitthirdlibrary/files/
   
   文件格式： rabbit_$(平台)$(版本号)_$(架构)_$(QT 版本).zip
