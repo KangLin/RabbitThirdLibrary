@@ -49,11 +49,11 @@ if [ ! -d ${RABBIT_BUILD_SOURCE_CODE} ]; then
             git checkout -b $VERSION $VERSION
         fi
     else
-        echo "wget -q -c -nv https://github.com/OSGeo/geos/archive/$VERSION.tar.bz2"
+        echo "wget -q -c -nv https://github.com/OSGeo/geos/archive/$VERSION.tar.gz"
         mkdir -p ${RABBIT_BUILD_SOURCE_CODE}
         cd ${RABBIT_BUILD_SOURCE_CODE}
-        wget -q -c -nv https://github.com/OSGeo/geos/archive/$VERSION.tar.bz2
-        tar xf $VERSION.tar.bz2
+        wget -q -c -nv https://github.com/OSGeo/geos/archive/$VERSION.tar.gz
+        tar xf $VERSION.tar.gz
         mv geos-$VERSION ..
         cd ..
         rm -fr ${RABBIT_BUILD_SOURCE_CODE}
