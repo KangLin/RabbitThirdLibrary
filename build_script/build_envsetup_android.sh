@@ -159,6 +159,9 @@ export PATH=${RABBIT_BUILD_CROSS_ROOT}/bin:${QT_BIN}:$PATH
 if [ -z "$PKG_CONFIG" ]; then
     export PKG_CONFIG=pkg-config 
 fi
+if [ "$RABBIT_BUILD_STATIC" = "static" ]; then
+    export PKG_CONFIG="${PKG_CONFIG} --static"
+fi
 export PKG_CONFIG_PATH=${RABBIT_BUILD_PREFIX}/lib/pkgconfig
 export PKG_CONFIG_LIBDIR=${PKG_CONFIG_PATH}
 export PKG_CONFIG_SYSROOT_DIR=${RABBIT_BUILD_PREFIX}

@@ -92,7 +92,7 @@ if [ -z "$PKG_CONFIG" ]; then
     export PKG_CONFIG=pkg-config 
 fi
 if [ "$RABBIT_BUILD_STATIC" = "static" ]; then
-    export PKG_CONFIG="pkg-config --static"
+    export PKG_CONFIG="${PKG_CONFIG} --static"
 fi
 
 if [ -z "$RABBIT_USE_REPOSITORIES" ]; then
@@ -116,7 +116,6 @@ if [ -z "${RABBIT_BUILD_CROSS_HOST}" ]; then
 fi
 RABBIT_BUILD_CROSS_PREFIX=${RABBIT_BUILD_CROSS_HOST}-
 
-export PKG_CONFIG=pkg-config
 export PKG_CONFIG_PATH=${RABBIT_BUILD_PREFIX}/lib/pkgconfig
 export PKG_CONFIG_LIBDIR=${PKG_CONFIG_PATH}
 

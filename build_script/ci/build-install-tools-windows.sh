@@ -1,7 +1,7 @@
 #!/bin/bash 
 #下载工具  
 
-set -ev
+set -e
 
 SOURCE_DIR="`pwd`"
 echo $SOURCE_DIR

@@ -93,7 +93,12 @@ case $TARGET_OS in
 esac
 
 #pkg-config帮助文档：http://linux.die.net/man/1/pkg-config
-export PKG_CONFIG=pkg-config 
+if [ -z "$PKG_CONFIG" ]; then
+    export PKG_CONFIG=pkg-config 
+fi
+if [ "$RABBIT_BUILD_STATIC" = "static" ]; then
+    export PKG_CONFIG="${PKG_CONFIG} --static"
+fi
 if [ "${RABBIT_BUILD_THIRDLIBRARY}" = "TRUE" ]; then
     #不用系统的第三方库,用下面
     export PKG_CONFIG_PATH=${RABBIT_BUILD_PREFIX}/lib/pkgconfig 

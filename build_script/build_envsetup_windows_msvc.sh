@@ -140,7 +140,12 @@ if [ "$RABBIT_TOOLCHAIN_VERSION" = "15" ]; then
 fi
 
 export PATH=${RABBIT_BUILD_PREFIX}/bin:${RABBIT_BUILD_PREFIX}/lib:${QT_BIN}:$PATH
-export PKG_CONFIG=pkg-config
+if [ -z "$PKG_CONFIG" ]; then
+    export PKG_CONFIG=pkg-config 
+fi
+if [ "$RABBIT_BUILD_STATIC" = "static" ]; then
+    export PKG_CONFIG="${PKG_CONFIG} --static"
+fi
 export PKG_CONFIG_PATH=${RABBIT_BUILD_PREFIX}/lib/pkgconfig
 export PKG_CONFIG_LIBDIR=${PKG_CONFIG_PATH}
 

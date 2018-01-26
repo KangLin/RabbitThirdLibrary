@@ -1,5 +1,5 @@
 #!/bin/bash
-set -ev
+set -e
 
 RABBIT_LIBRARYS[0]="change_prefix zlib expat libgpx openssl libsodium libcurl libpng jpeg libgif libtiff freetype protobuf libyuv libvpx libqrencode libopus x264 ffmpeg"
 RABBIT_LIBRARYS[1]="opencv gdal geos"
@@ -105,6 +105,7 @@ echo "--------------------------------------------------------------------------
 echo "RABBIT_BUILD_PREFIX:$RABBIT_BUILD_PREFIX"
 echo "QT_BIN:$QT_BIN"
 echo "QT_ROOT:$QT_ROOT"
+echo "PKG_CONFIG:$PKG_CONFIG"
 echo "PKG_CONFIG_PATH:$PKG_CONFIG_PATH"
 echo "PKG_CONFIG_SYSROOT_DIR:$PKG_CONFIG_SYSROOT_DIR"
 echo "PATH=$PATH"
@@ -115,7 +116,7 @@ echo "--------------------------------------------------------------------------
 cd ${SCRIPT_DIR}
 
 if [ "$PROJECT_NAME" = "rabbitim" ]; then
-    bash ./build_rabbitim.sh ${BUILD_TARGERT} $PROJECT_DIR
+    bash ./build_rabbitim.sh ${BUILD_TARGERT} $PROJECT_DIR $CMAKE
     exit 0
 fi
 
