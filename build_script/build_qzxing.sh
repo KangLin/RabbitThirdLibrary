@@ -122,7 +122,11 @@ PARA="${PARA} LIBS+=-L${RABBIT_BUILD_PREFIX}/lib"
 if [ "$RABBIT_BUILD_TARGERT" != "android"  ]; then
     PARA="${PARA} PREFIX=${RABBIT_BUILD_PREFIX}"
 fi
-RELEASE_PARA="${PARA} CONFIG*=${RABBIT_CONFIG}"
+if [ "${RABBIT_CONFIG}" = "Debug" -o "${RABBIT_CONFIG}" = "debug" ]; then
+    RELEASE_PARA="${PARA} CONFIG-=release CONFIG+=debug"
+else
+    RELEASE_PARA="${PARA} CONFIG-=debug CONFIG+=release"
+fi
 if [ "$RABBIT_BUILD_STATIC" = "static" -o "$RABBIT_BUILD_TARGERT" = "android" ]; then
     RELEASE_PARA="${RELEASE_PARA} CONFIG+=static"
 fi

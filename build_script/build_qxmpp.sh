@@ -119,7 +119,11 @@ if [ "$RABBIT_BUILD_TARGERT" != "android"  ]; then
     PARA="${PARA} PREFIX=${RABBIT_BUILD_PREFIX}"
 fi
 
-RELEASE_PARA="${PARA} CONFIG*=${RABBIT_CONFIG}"
+if [ "${RABBIT_CONFIG}" = "Debug" -o "${RABBIT_CONFIG}" = "debug" ]; then
+    RELEASE_PARA="${PARA} CONFIG-=release CONFIG+=debug"
+else
+    RELEASE_PARA="${PARA} CONFIG-=debug CONFIG+=release"
+fi
 if [ "$RABBIT_BUILD_TARGERT" = "android"  ]; then
     MAKE_PARA=" INSTALL_ROOT=\"${RABBIT_BUILD_PREFIX}\""
 fi
