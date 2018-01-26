@@ -38,7 +38,6 @@ else
 fi
 
 CUR_DIR=`pwd`
-RABBIT_USE_REPOSITORIES="FALSE"
 #下载源码:
 if [ ! -d ${RABBIT_BUILD_SOURCE_CODE} ]; then
     VERSION=0.9.3

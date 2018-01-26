@@ -81,8 +81,8 @@ if [ -n "$2" ]; then
     ./build_libopus.sh ${RABBIT_BUILD_TARGERT} $2/libopus 
     ./build_opencv.sh ${RABBIT_BUILD_TARGERT} $2/opencv
     ./build_gdal.sh ${RABBIT_BUILD_TARGERT} $2/gdal
-    ./build_osg.sh ${RABBIT_BUILD_TARGERT} $2/osg
     ./build_geos.sh ${RABBIT_BUILD_TARGERT} $2/geos
+    ./build_osg.sh ${RABBIT_BUILD_TARGERT} $2/osg
     ./build_OsgQt.sh ${RABBIT_BUILD_TARGERT} $2/osgQt
     ./build_osgearth.sh ${RABBIT_BUILD_TARGERT} $2/osgearth
     #./build_qt.sh ${RABBIT_BUILD_TARGERT} $2/qt5 
