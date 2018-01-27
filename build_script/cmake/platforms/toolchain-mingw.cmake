@@ -29,9 +29,7 @@ find_program(CMAKE_NM NAMES ${COMPILER_PREFIX}-nm)
 find_program(CMAKE_RANLIB NAMES ${COMPILER_PREFIX}-ranlib)
 
 # here is the target environment located
-#SET(USER_ROOT_PATH /home/erk/erk-win32-dev)
-SET(CMAKE_FIND_ROOT_PATH $ENV{USER_ROOT_PATH}) # /usr/${COMPILER_PREFIX} $ENV{RABBIT_BUILD_PREFIX})
-
+SET(CMAKE_FIND_ROOT_PATH $ENV{RABBIT_BUILD_CROSS_SYSROOT}) 
 # adjust the default behaviour of the FIND_XXX() commands:
 # search headers and libraries in the target environment, search 
 # programs in the host and target environment

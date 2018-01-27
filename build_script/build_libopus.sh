@@ -93,7 +93,7 @@ else
     CONFIG_PARA="--disable-static --enable-shared"
 fi
 case ${RABBIT_BUILD_TARGERT} in
-    android)
+    android|windows_mingw)
         #export CC=${RABBIT_BUILD_CROSS_PREFIX}gcc 
         #export CXX=${RABBIT_BUILD_CROSS_PREFIX}g++
         #export AR=${RABBIT_BUILD_CROSS_PREFIX}ar
@@ -125,23 +125,6 @@ case ${RABBIT_BUILD_TARGERT} in
         cp include/* $RABBIT_BUILD_PREFIX/include
         cd $CUR_DIR
         exit 0
-        ;;
-    windows_mingw)
-        case `uname -s` in
-            Linux*|Unix*|CYGWIN*)
-                export CC=${RABBIT_BUILD_CROSS_PREFIX}gcc 
-                export CXX=${RABBIT_BUILD_CROSS_PREFIX}g++
-                export AR=${RABBIT_BUILD_CROSS_PREFIX}ar
-                export LD=${RABBIT_BUILD_CROSS_PREFIX}ld
-                export AS=${RABBIT_BUILD_CROSS_PREFIX}as
-                export STRIP=${RABBIT_BUILD_CROSS_PREFIX}strip
-                export NM=${RABBIT_BUILD_CROSS_PREFIX}nm
-                CONFIG_PARA="${CONFIG_PARA} CC=${RABBIT_BUILD_CROSS_PREFIX}gcc"
-                CONFIG_PARA="${CONFIG_PARA} --host=${RABBIT_BUILD_CROSS_HOST}"
-                ;;
-            *)
-            ;;
-        esac
         ;;
     *)
     echo "${HELP_STRING}"

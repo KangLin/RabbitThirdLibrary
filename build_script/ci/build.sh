@@ -3,9 +3,9 @@ set -e
 
 RABBIT_LIBRARYS[0]="change_prefix zlib expat libgpx openssl libsodium libcurl libpng jpeg libgif libtiff freetype protobuf libyuv libvpx libqrencode libopus x264 ffmpeg"
 RABBIT_LIBRARYS[1]="opencv gdal geos"
-RABBIT_LIBRARYS[2]="osg"
-RABBIT_LIBRARYS[3]="OsgQt osgearth"
-RABBIT_LIBRARYS[4]="qxmpp qzxing"
+#RABBIT_LIBRARYS[2]="osg"
+#RABBIT_LIBRARYS[3]="OsgQt osgearth"
+RABBIT_LIBRARYS[2]="qxmpp qzxing"
 
 #urlendcode
 function urlencode()
@@ -23,8 +23,8 @@ function urlencode()
 
 if [ "$BUILD_TARGERT" = "windows_mingw" \
     -a -n "$APPVEYOR" ]; then
-    export PATH=/C/Qt/Tools/mingw${RABBIT_TOOLCHAIN_VERSION}_32/bin:$PATH
-    export USER_ROOT_PATH=/C/Qt/Tools/mingw${RABBIT_TOOLCHAIN_VERSION}_32
+    export RABBIT_TOOLCHAIN_ROOT=/C/Qt/Tools/mingw${RABBIT_TOOLCHAIN_VERSION}_32
+    export PATH=${RABBIT_TOOLCHAIN_ROOT}/bin:$PATH
 fi
 TARGET_OS=`uname -s`
 case $TARGET_OS in

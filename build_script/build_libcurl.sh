@@ -163,8 +163,14 @@ case ${RABBIT_BUILD_TARGERT} in
                 CONFIG_PARA="${CONFIG_PARA} CC=${RABBIT_BUILD_CROSS_PREFIX}gcc --host=${RABBIT_BUILD_CROSS_HOST}"
                 ;;
             *)
+                CONFIG_PARA="${CONFIG_PARA} --host=$RABBIT_BUILD_CROSS_HOST"
+                #CONFIG_PARA="${CONFIG_PARA} --with-sysroot=${RABBIT_BUILD_CROSS_SYSROOT}"
+                CFLAGS="${RABBIT_CFLAGS}"
+                CPPFLAGS="${RABBIT_CPPFLAGS}"
+                LDFLAGS="${RABBIT_LDFLAGS}"
             ;;
         esac
+        
         ;;
     *)
         echo "${HELP_STRING}"

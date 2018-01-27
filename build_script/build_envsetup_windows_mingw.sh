@@ -17,8 +17,8 @@ if [ -z "$QT_ROOT" ]; then
     QT_VERSION=5.9.2
     QT_ROOT=/c/Qt/Qt${QT_VERSION}/${QT_VERSION}/mingw53_32 #QT 安装根目录,默认为:${RABBITRoot}/ThirdLibrary/windows_mingw/qt
     RABBIT_TOOLCHAIN_VERSION=530    
-    TOOLCHAIN=/c/Qt/Qt5.9.2/Tools/mingw530_32/bin
-    export PATH=${TOOLCHAIN}:$PATH  #用与QT相同的工具链
+    RABBIT_TOOLCHAIN_ROOT=/c/Qt/Qt5.9.2/Tools/mingw530_32/bin
+    export PATH=${RABBIT_TOOLCHAIN_ROOT}:$PATH  #用与QT相同的工具链
 fi
 if [ -z "$RABBIT_CLEAN" ]; then
     RABBIT_CLEAN=TRUE #编译前清理
@@ -40,15 +40,28 @@ if [ -z "${RABBIT_ARCH}" ]; then
     case $MSYSTEM in
         MINGW32)
             RABBIT_ARCH=x86
+            if [ -z "${RABBIT_BUILD_CROSS_HOST}" ]; then
+                RABBIT_BUILD_CROSS_HOST=i686-w64-mingw32 #编译工具链前缀
+            fi
             ;;
         MINGW64)
             RABBIT_ARCH=x64
+            if [ -z "${RABBIT_BUILD_CROSS_HOST}" ]; then
+                RABBIT_BUILD_CROSS_HOST=x86_64-w64-mingw32 #编译工具链前缀
+            fi
             ;;
         *)
             echo "Error RABBIT_ARCH=$MSYSTEM, set RABBIT_ARCH=x86"
             RABBIT_ARCH=x86
+            if [ -z "${RABBIT_BUILD_CROSS_HOST}" ]; then
+                RABBIT_BUILD_CROSS_HOST=i686-w64-mingw32 #编译工具链前缀
+            fi
             ;;
     esac
+fi
+
+if [ -z "RABBIT_BUILD_CROSS_SYSROOT" -a -n "${RABBIT_TOOLCHAIN_ROOT}" ];then
+    RABBIT_BUILD_CROSS_SYSROOT=${RABBIT_TOOLCHAIN_ROOT}/${RABBIT_BUILD_CROSS_HOST}
 fi
 
 if [ -z "$RABBIT_CONFIG" ]; then
@@ -118,6 +131,11 @@ RABBIT_BUILD_CROSS_PREFIX=${RABBIT_BUILD_CROSS_HOST}-
 
 export PKG_CONFIG_PATH=${RABBIT_BUILD_PREFIX}/lib/pkgconfig
 export PKG_CONFIG_LIBDIR=${PKG_CONFIG_PATH}
+if [ -n "$RABBIT_BUILD_CROSS_SYSROOT" ]; then
+    export RABBIT_CFLAGS="--sysroot=${RABBIT_BUILD_CROSS_SYSROOT}"
+    export RABBIT_CPPFLAGS="--sysroot=${RABBIT_BUILD_CROSS_SYSROOT}"
+    export RABBIT_LDFLAGS="--sysroot=${RABBIT_BUILD_CROSS_SYSROOT}"
+fi
 
 echo "---------------------------------------------------------------------------"
 echo "RABBIT_BUILD_PREFIX:$RABBIT_BUILD_PREFIX"
@@ -125,5 +143,6 @@ echo "QT_BIN:$QT_BIN"
 echo "QT_ROOT:$QT_ROOT"
 echo "PKG_CONFIG_PATH:$PKG_CONFIG_PATH"
 echo "PKG_CONFIG_SYSROOT_DIR:$PKG_CONFIG_SYSROOT_DIR"
-echo "PATH=$PATH"
+echo "PATH:$PATH"
+echo "RABBIT_BUILD_CROSS_HOST:$RABBIT_BUILD_CROSS_HOST"
 echo "---------------------------------------------------------------------------"

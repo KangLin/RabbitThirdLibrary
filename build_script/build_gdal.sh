@@ -102,7 +102,9 @@ else
     CONFIG_PARA="--disable-static --enable-shared"
 fi
 case ${RABBIT_BUILD_TARGERT} in
-    android)
+    unix)
+        ;;
+    android|windows_mingw)
         #https://github.com/nutiteq/gdal/wiki/AndroidHowto
         #export CC=${RABBIT_BUILD_CROSS_PREFIX}gcc 
         #export CXX=${RABBIT_BUILD_CROSS_PREFIX}g++
@@ -119,8 +121,7 @@ case ${RABBIT_BUILD_TARGERT} in
         LDFLAGS="$LDFLAGS ${RABBIT_LDFLAGS}" # -lsupc++"
         export LIBS="-lstdc++" #-lsupc++
         ;;
-    unix)
-        ;;
+
     windows_msvc)
         cd ${RABBIT_BUILD_SOURCE_CODE}
         echo "nmake -f makefile.vc MSVC_VER=${MSVC_VER} GDAL_HOME=${RABBIT_BUILD_PREFIX}"
@@ -158,18 +159,6 @@ case ${RABBIT_BUILD_TARGERT} in
         cp apps/gdal_utils.h ${RABBIT_BUILD_PREFIX}/include
         cd $CUR_DIR
         exit 0
-        ;;
-    windows_mingw)
-        case `uname -s` in
-            Linux*|Unix*|CYGWIN*)
-                CONFIG_PARA="${CONFIG_PARA} CC=${RABBIT_BUILD_CROSS_PREFIX}gcc --host=${RABBIT_BUILD_CROSS_HOST} "
-                CONFIG_PARA="${CONFIG_PARA}"
-                ;;
-            MINGW* | MSYS*)
-                ;;
-            *)
-            ;;
-        esac
         ;;
     *)
         echo "${HELP_STRING}"
