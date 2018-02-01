@@ -39,6 +39,12 @@ environment:
     APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
     BUILD_TARGERT: windows_msvc
     RABBIT_TOOLCHAIN_VERSION: 15
+    QT_ROOT: C:/Qt/5.10.0/msvc2017
+    
+  - RABBIT_NUMBER: 2
+    APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
+    BUILD_TARGERT: windows_msvc
+    RABBIT_TOOLCHAIN_VERSION: 15
     QT_ROOT: C:/Qt/5.9/msvc2017
     
   ##### vs2015 #####
@@ -66,6 +72,11 @@ environment:
     BUILD_TARGERT: windows_msvc
     RABBIT_TOOLCHAIN_VERSION: 14
     QT_ROOT: C:/Qt/5.9/msvc2015
+  
+  - RABBIT_NUMBER: 2
+    BUILD_TARGERT: windows_msvc
+    RABBIT_TOOLCHAIN_VERSION: 14
+    QT_ROOT: C:/Qt/5.10.0/msvc2015
     
   ##### vs2013 #####
   - RABBIT_NUMBER: 0
@@ -78,6 +89,11 @@ environment:
     RABBIT_TOOLCHAIN_VERSION: 12
     QT_ROOT: NO
   
+  - RABBIT_NUMBER: 2
+    BUILD_TARGERT: windows_msvc
+    RABBIT_TOOLCHAIN_VERSION: 12
+    QT_ROOT: C:/Qt/5.10.0/msvc2013
+    
   - RABBIT_NUMBER: 2
     BUILD_TARGERT: windows_msvc
     RABBIT_TOOLCHAIN_VERSION: 12
@@ -103,6 +119,11 @@ environment:
     BUILD_TARGERT: windows_mingw
     RABBIT_TOOLCHAIN_VERSION: 530
     QT_ROOT: NO
+    
+  - RABBIT_NUMBER: 2
+    BUILD_TARGERT: windows_mingw
+    RABBIT_TOOLCHAIN_VERSION: 530
+    QT_ROOT: C:/Qt/5.10.0/mingw53_32
     
   - RABBIT_NUMBER: 2
     BUILD_TARGERT: windows_mingw
