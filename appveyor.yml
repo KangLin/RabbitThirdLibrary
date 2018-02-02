@@ -149,17 +149,6 @@ environment:
     BUILD_TARGERT: windows_mingw
     RABBIT_TOOLCHAIN_VERSION: 492
     QT_ROOT: C:/Qt/5.6/mingw49_32
-  
-  ##### android #####
-  - RABBIT_NUMBER: 0
-    BUILD_TARGERT: android
-    RABBIT_TOOLCHAIN_VERSION: 530
-    QT_ROOT: NO
-    
-  - RABBIT_NUMBER: 1
-    BUILD_TARGERT: android
-    RABBIT_TOOLCHAIN_VERSION: 530
-    QT_ROOT: NO
 
 init:
   - set RABBIT_ARCH=%PLATFORM%

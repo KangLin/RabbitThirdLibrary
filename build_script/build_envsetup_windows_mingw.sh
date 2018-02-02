@@ -17,7 +17,7 @@ if [ -z "$QT_ROOT" ]; then
     QT_VERSION=5.9.2
     QT_ROOT=/c/Qt/Qt${QT_VERSION}/${QT_VERSION}/mingw53_32 #QT 安装根目录,默认为:${RABBITRoot}/ThirdLibrary/windows_mingw/qt
     RABBIT_TOOLCHAIN_VERSION=530    
-    RABBIT_TOOLCHAIN_ROOT=/c/Qt/Qt5.9.2/Tools/mingw530_32/bin
+    RABBIT_TOOLCHAIN_ROOT=/c/Qt/Qt${QT_VERSION}/Tools/mingw530_32/bin
     export PATH=${RABBIT_TOOLCHAIN_ROOT}:$PATH  #用与QT相同的工具链
 fi
 if [ -z "$RABBIT_CLEAN" ]; then
@@ -60,7 +60,7 @@ if [ -z "${RABBIT_ARCH}" ]; then
     esac
 fi
 
-if [ -z "RABBIT_BUILD_CROSS_SYSROOT" -a -n "${RABBIT_TOOLCHAIN_ROOT}" ];then
+if [ -z "$RABBIT_BUILD_CROSS_SYSROOT" -a -n "${RABBIT_TOOLCHAIN_ROOT}" ];then
     RABBIT_BUILD_CROSS_SYSROOT=${RABBIT_TOOLCHAIN_ROOT}/${RABBIT_BUILD_CROSS_HOST}
 fi
 
@@ -125,7 +125,7 @@ fi
 export PATH=${RABBIT_BUILD_PREFIX}/bin:${RABBIT_BUILD_PREFIX}/lib:${QT_BIN}:$PATH
 
 if [ -z "${RABBIT_BUILD_CROSS_HOST}" ]; then
-    RABBIT_BUILD_CROSS_HOST=i686-w64-mingw32 #编译工具链前缀
+    export RABBIT_BUILD_CROSS_HOST=i686-w64-mingw32 #编译工具链前缀
 fi
 RABBIT_BUILD_CROSS_PREFIX=${RABBIT_BUILD_CROSS_HOST}-
 
@@ -143,6 +143,8 @@ echo "QT_BIN:$QT_BIN"
 echo "QT_ROOT:$QT_ROOT"
 echo "PKG_CONFIG_PATH:$PKG_CONFIG_PATH"
 echo "PKG_CONFIG_SYSROOT_DIR:$PKG_CONFIG_SYSROOT_DIR"
-echo "PATH:$PATH"
 echo "RABBIT_BUILD_CROSS_HOST:$RABBIT_BUILD_CROSS_HOST"
+echo "RABBIT_BUILD_CROSS_SYSROOT:$RABBIT_BUILD_CROSS_SYSROOT"
+echo "RABBIT_TOOLCHAIN_ROOT:$RABBIT_TOOLCHAIN_ROOT"
+echo "PATH:$PATH"
 echo "---------------------------------------------------------------------------"
