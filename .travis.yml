@@ -15,9 +15,10 @@ jdk: oraclejdk7
 
 os:
   - unix
-
-addons:
-  ssh_known_hosts: frs.sourceforge.net
+  - android
+  
+#addons:
+#  ssh_known_hosts: frs.sourceforge.net
   
 env:
   global:
@@ -26,8 +27,7 @@ env:
     - RABBIT_USE_REPOSITORIES="TRUE"
     - QMAKE=qmake
     - RABBIT_BUILD_THIRDLIBRARY="TRUE" 
-    - secure: cMXl/vgEQwyV4KravjvwYFqp+Pqxp52Jhku7GwWE4LZrbAOIrEvNWHVcAki4ygxhiq4eRktrBezMm29oviLC4ogt8ypg0ulmvk+O/x9hCGTfRl4LHxK+H68hD2WMN8CfjTB1FYfi6BGViiSJ2qKUZ7UU2BBcxegZkoL+Q/mKhKeIEtOsMJIbsnxcFfE1FtBg0YFBvbqdKHjHYwjnZNMEn5vh2fSERT7FPxitZmH8ARwM+4V4nbK89KI/UGXuPL4RfmonJpmMT6C7srWHMKkyVOgbtQuNLwjjMm/ibAmZE8553HqxoBBs8rbGQC7zXkH+8OvWMFhI6rFkE9awmAB6YYAnTcArrK35iZDtMdGqlNg/KkBuZqiTxJNHe1Ty1cvZGOdvDiB03ny4ZWmuXZnaKUpQq76iwRC5Kxwcz/M1hFebn2bONFDCqmqdsuNGbZ7puiNiPPCKITFrj1DJtgUWMDM4qi37bO7YhNGp6LF+ihEdS25H4IcT2k0dZky9EWq7m4GbCxFpFzBUeNe+MCffbdnPYKJAwO/850inxaCrhY8QNNPpsVhD7aGHDv2RmnV9q6ew/ab8wAcobXEju/jaFANDHFTPXOJLFtvFLmxTTzMbZeU3BwBrxxa/sVDGZst+G6WbDYkJNzAG8UpDxagPLvPNmflHJfGElg79vhmuKQY=
-
+    
   matrix:
     - BUILD_TARGERT="unix" RABBIT_ARCH=amd64
     - BUILD_TARGERT="android" RABBIT_ARCH=arm
@@ -43,10 +43,8 @@ install:
   - bash build_script/ci/build-install-tools.sh > /dev/null
 
 before_script:
-  - eport RABBITIM_LIBRARY="change_prefix zlib minizip expat libgpx openssl libsodium boost libcurl libpng jpeg libgif libtiff freetype protobuf berkeleydb libevent libyuv libvpx libqrencode libopus x264 ffmpeg gdal"
   - source ${TRAVIS_BUILD_DIR}/build_script/ci/build_env.sh
   - cd ${TRAVIS_BUILD_DIR}/build_script
-  
 
 script: 
   - bash ${TRAVIS_BUILD_DIR}/build_script/ci/build.sh ${TRAVIS_BUILD_DIR} #> /dev/null
