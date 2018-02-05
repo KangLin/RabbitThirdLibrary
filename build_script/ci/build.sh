@@ -1,10 +1,10 @@
 #!/bin/bash
 set -e
 
-RABBIT_LIBRARYS[0]="change_prefix zlib expat libgpx openssl libsodium libcurl libpng jpeg libgif libtiff freetype protobuf libyuv libvpx libqrencode libopus x264 ffmpeg"
-RABBIT_LIBRARYS[1]="opencv gdal geos"
+RABBIT_LIBRARYS[0]="zlib expat libgpx openssl libsodium libcurl libpng jpeg libgif libtiff freetype protobuf libyuv libvpx libqrencode libopus x264 ffmpeg"
+RABBIT_LIBRARYS[1]="opencv gdal" # geos"
 #RABBIT_LIBRARYS[2]="osg"
-#RABBIT_LIBRARYS[3]="OsgQt osgearth change_prefix "
+#RABBIT_LIBRARYS[3]="OsgQt osgearth "
 RABBIT_LIBRARYS[2]="qxmpp qzxing change_prefix "
 
 #urlendcode
