@@ -4,8 +4,8 @@ set -e
 RABBIT_LIBRARYS[0]="change_prefix zlib expat libgpx openssl libsodium libcurl libpng jpeg libgif libtiff freetype protobuf libyuv libvpx libqrencode libopus x264 ffmpeg"
 RABBIT_LIBRARYS[1]="opencv gdal geos"
 #RABBIT_LIBRARYS[2]="osg"
-#RABBIT_LIBRARYS[3]="OsgQt osgearth"
-RABBIT_LIBRARYS[2]="qxmpp qzxing"
+#RABBIT_LIBRARYS[3]="OsgQt osgearth change_prefix "
+RABBIT_LIBRARYS[2]="qxmpp qzxing change_prefix "
 
 #urlendcode
 function urlencode()
@@ -74,9 +74,10 @@ if [ -f ${SCRIPT_DIR}/../${BUILD_TARGERT}.zip ]; then
 
         cd ${RABBIT_BUILD_PREFIX}
 
+        cat change_prefix.sh
         echo "bash change_prefix.sh"
         bash change_prefix.sh
-        
+        cat lib/pkgconfig/zlib.pc
         cd ${SCRIPT_DIR}
     fi
 fi

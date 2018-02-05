@@ -33,7 +33,7 @@ fi
 
 #产生修改前缀脚本
 if [ ! -f ${RABBIT_BUILD_PREFIX}/change_prefix.sh ]; then
-    cp change_prefix.sh ${RABBIT_BUILD_PREFIX}/change_prefix.sh
+    cp -f change_prefix.sh ${RABBIT_BUILD_PREFIX}/change_prefix.sh
     sed -i.orig -e "s,@@CONTRIB_PREFIX@@,${RABBIT_BUILD_PREFIX},g" ${RABBIT_BUILD_PREFIX}/change_prefix.sh
     rm -f ${RABBIT_BUILD_PREFIX}/change_prefix.sh.orig
 fi
