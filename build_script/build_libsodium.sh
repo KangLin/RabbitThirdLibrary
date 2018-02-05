@@ -40,7 +40,7 @@ CUR_DIR=`pwd`
 
 #下载源码:
 if [ ! -d ${RABBIT_BUILD_SOURCE_CODE} ]; then
-    LIBSODIUM_VERSION=master #1.0.16
+    LIBSODIUM_VERSION=b862bf026765f69e83b962f85e93da89035b07bb #1.0.16
     if [ "TRUE" = "${RABBIT_USE_REPOSITORIES}" ]; then
         #echo "git clone -q https://github.com/jedisct1/libsodium.git ${RABBIT_BUILD_SOURCE_CODE}"
         #git clone -q https://github.com/jedisct1/libsodium.git ${RABBIT_BUILD_SOURCE_CODE}
