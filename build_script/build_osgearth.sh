@@ -40,7 +40,7 @@ CUR_DIR=`pwd`
 
 #下载源码:
 if [ ! -d ${RABBIT_BUILD_SOURCE_CODE} ]; then
-    OSG_VERSION=osgearth-2.9rc2
+    OSG_VERSION=osgearth-2.9rc3
     if [ "TRUE" = "${RABBIT_USE_REPOSITORIES}" ]; then
         echo "git clone -q --branch=${OSG_VERSION} https://github.com/gwaldron/osgearth.git ${RABBIT_BUILD_SOURCE_CODE}"
         git clone -q https://github.com/gwaldron/osgearth.git ${RABBIT_BUILD_SOURCE_CODE}
@@ -106,6 +106,7 @@ case ${RABBIT_BUILD_TARGERT} in
     windows_msvc)
         #RABBITIM_GENERATORS="Visual Studio 12 2013"
         MAKE_PARA=""
+        CMAKE_PARA="${CMAKE_PARA} -DWIN32_USE_MP=ON"
         ;;
     windows_mingw)
         case `uname -s` in
@@ -124,7 +125,7 @@ case ${RABBIT_BUILD_TARGERT} in
 esac
 
 CMAKE_PARA="${CMAKE_PARA} -DDESIRED_QT_VERSION=5 -DOSGEARTH_QT_BUILD=ON -DQt5_DIR=${QT_ROOT}/lib/cmake/Qt5 -DCMAKE_VERBOSE_MAKEFILE=TRUE"
-CMAKE_PARA="${CMAKE_PARA} -DTHIRD_PARTY_DIR=${RABBIT_BUILD_PREFIX} -DOSG_DIR=${RABBIT_BUILD_PREFIX} -DWIN32_USE_MP=ON"
+CMAKE_PARA="${CMAKE_PARA} -DTHIRD_PARTY_DIR=${RABBIT_BUILD_PREFIX} -DOSG_DIR=${RABBIT_BUILD_PREFIX}"
 CMAKE_PARA="${CMAKE_PARA} -DBUILD_OSGEARTH_EXAMPLES=OFF"
 echo "cmake .. -DCMAKE_INSTALL_PREFIX=$RABBIT_BUILD_PREFIX -DCMAKE_BUILD_TYPE=Release -G\"${RABBITIM_GENERATORS}\" ${CMAKE_PARA}"
 cmake .. \

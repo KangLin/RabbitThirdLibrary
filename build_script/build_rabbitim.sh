@@ -157,7 +157,11 @@ else #qmake编译
    #     PARA="$PARA CONFIG+=static"
    # fi
     PARA="${PARA} -o Makefile"
-    PARA="${PARA} CONFIG*=${RABBIT_CONFIG}"
+    if [ "${RABBIT_CONFIG}" = "Debug" -o "${RABBIT_CONFIG}" = "debug" ]; then
+        PARA="${PARA} CONFIG-=release CONFIG+=debug"
+    else
+        PARA="${PARA} CONFIG-=debug CONFIG+=release"
+    fi
     PARA="${PARA} QXMPP_USE_VPX=1"
     PARA="${PARA} RABBIT_USE_FFMPEG=1"
     PARA="${PARA} RABBIT_USE_LIBCURL=1"
