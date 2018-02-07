@@ -10,10 +10,9 @@
 #   PLATFORM=$ANDROID_NDK_ROOT/platforms/android-${PLATFORMS_VERSION}/arch-arm
 #   CROSS_PREFIX=$PREBUILT/${HOST}/bin/arm-linux-androideabi-
 #   PREFIX=`pwd`/../android
-if [ -z "$ANDROID_NDK" -o -z "$PREFIX" -o -z "$HOST" ]; then
-    echo "source build_android_envsetup.sh"
-    source build_android_envsetup.sh
-fi
+
+echo "source build_android_envsetup.sh"
+source build_android_envsetup.sh
 
 if [ -n "$1" ]; then
     SOURCE_CODE=$1

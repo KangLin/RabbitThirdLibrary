@@ -25,11 +25,8 @@ case $1 in
     ;;
 esac
 
-#运行本脚本前,先运行 build_${RABBIT_BUILD_TARGERT}_envsetup.sh 进行环境变量设置,需要先设置下面变量:
-if [ -z "${RABBIT_BUILD_PREFIX}" ]; then
-    echo ". `pwd`/build_envsetup_${RABBIT_BUILD_TARGERT}.sh"
-    . `pwd`/build_envsetup_${RABBIT_BUILD_TARGERT}.sh
-fi
+echo ". `pwd`/build_envsetup_${RABBIT_BUILD_TARGERT}.sh"
+. `pwd`/build_envsetup_${RABBIT_BUILD_TARGERT}.sh
 
 if [ -n "$2" ]; then
     RABBIT_BUILD_SOURCE_CODE=$2

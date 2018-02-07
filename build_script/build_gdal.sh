@@ -25,10 +25,8 @@ case $1 in
     ;;
 esac
 
-if [ -z "${RABBIT_BUILD_PREFIX}" ]; then
-    echo ". `pwd`/build_envsetup_${RABBIT_BUILD_TARGERT}.sh"
-    . `pwd`/build_envsetup_${RABBIT_BUILD_TARGERT}.sh
-fi
+echo ". `pwd`/build_envsetup_${RABBIT_BUILD_TARGERT}.sh"
+. `pwd`/build_envsetup_${RABBIT_BUILD_TARGERT}.sh
 
 if [ -n "$2" ]; then
     RABBIT_BUILD_SOURCE_CODE=$2
@@ -40,7 +38,7 @@ CUR_DIR=`pwd`
 
 #下载源码:
 if [ ! -d ${RABBIT_BUILD_SOURCE_CODE} ]; then
-    GDAL_VERSION=2.2.2
+    GDAL_VERSION=2.2.3
     if [ "TRUE" = "${RABBIT_USE_REPOSITORIES}" ]; then
         echo "git clone -q --branch=tags/${GDAL_VERSION} https://github.com/OSGeo/gdal.git ${RABBIT_BUILD_SOURCE_CODE}"
         git clone -q --branch=tags/$GDAL_VERSION https://github.com/OSGeo/gdal.git ${RABBIT_BUILD_SOURCE_CODE}

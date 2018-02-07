@@ -1,11 +1,11 @@
 #!/bin/bash
 set -e
 
-RABBIT_LIBRARYS[0]="zlib expat libgpx openssl libsodium libcurl libpng jpeg libgif libtiff freetype protobuf libyuv libvpx libqrencode libopus x264 ffmpeg"
+RABBIT_LIBRARYS[0]="change_prefix zlib expat libgpx openssl libsodium libcurl libpng jpeg libgif libtiff freetype protobuf libyuv libvpx libqrencode libopus x264 ffmpeg"
 RABBIT_LIBRARYS[1]="opencv gdal" # geos"
 #RABBIT_LIBRARYS[2]="osg"
 #RABBIT_LIBRARYS[3]="OsgQt osgearth "
-RABBIT_LIBRARYS[2]="qxmpp qzxing change_prefix "
+RABBIT_LIBRARYS[2]="qxmpp qzxing"
 
 #urlendcode
 function urlencode()
@@ -62,11 +62,12 @@ if [ -n "$DOWNLOAD_URL" ]; then
     wget -c -q -p -O ${SCRIPT_DIR}/../${BUILD_TARGERT}.zip ${DOWNLOAD_URL}
 fi
     
+export RABBIT_BUILD_PREFIX=${SCRIPT_DIR}/../build #${BUILD_TARGERT}${RABBIT_TOOLCHAIN_VERSION}_${RABBIT_ARCH}_qt${QT_VERSION}_${RABBIT_CONFIG}
+if [ ! -d ${RABBIT_BUILD_PREFIX} ]; then
+    mkdir -p ${RABBIT_BUILD_PREFIX}
+fi
+
 if [ -f ${SCRIPT_DIR}/../${BUILD_TARGERT}.zip ]; then
-    RABBIT_BUILD_PREFIX=${SCRIPT_DIR}/../${BUILD_TARGERT}${RABBIT_TOOLCHAIN_VERSION}_${RABBIT_ARCH}_qt${QT_VERSION}_${RABBIT_CONFIG}
-    if [ ! -d ${RABBIT_BUILD_PREFIX} ]; then
-        mkdir -p ${RABBIT_BUILD_PREFIX}
-    fi
     unzip -q -d ${RABBIT_BUILD_PREFIX} ${SCRIPT_DIR}/../${BUILD_TARGERT}.zip
     if [ "$PROJECT_NAME" != "RabbitThirdLibrary" \
         -a "$BUILD_TARGERT" != "windows_msvc" \

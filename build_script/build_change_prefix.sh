@@ -26,10 +26,8 @@ case $1 in
     ;;
 esac
 
-if [ -z "${RABBIT_BUILD_PREFIX}" ]; then
-    echo ". `pwd`/build_envsetup_${RABBIT_BUILD_TARGERT}.sh"
-    . `pwd`/build_envsetup_${RABBIT_BUILD_TARGERT}.sh
-fi
+echo ". `pwd`/build_envsetup_${RABBIT_BUILD_TARGERT}.sh"
+. `pwd`/build_envsetup_${RABBIT_BUILD_TARGERT}.sh
 
 #产生修改前缀脚本
 if [ ! -f ${RABBIT_BUILD_PREFIX}/change_prefix.sh ]; then

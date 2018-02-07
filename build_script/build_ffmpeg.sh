@@ -35,10 +35,8 @@ case $1 in
     ;;
 esac
 
-if [ -z "${RABBIT_BUILD_PREFIX}" ]; then
-    echo ". `pwd`/build_envsetup_${RABBIT_BUILD_TARGERT}.sh"
-    . `pwd`/build_envsetup_${RABBIT_BUILD_TARGERT}.sh
-fi
+echo ". `pwd`/build_envsetup_${RABBIT_BUILD_TARGERT}.sh"
+. `pwd`/build_envsetup_${RABBIT_BUILD_TARGERT}.sh
 
 if [ -n "$2" ]; then
     RABBIT_BUILD_SOURCE_CODE=$2
