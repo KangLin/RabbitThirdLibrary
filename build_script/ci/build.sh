@@ -66,7 +66,9 @@ export RABBIT_BUILD_PREFIX=${SCRIPT_DIR}/../build #${BUILD_TARGERT}${RABBIT_TOOL
 if [ ! -d ${RABBIT_BUILD_PREFIX} ]; then
     mkdir -p ${RABBIT_BUILD_PREFIX}
 fi
-
+cd ${RABBIT_BUILD_PREFIX}
+export RABBIT_BUILD_PREFIX=`pwd`
+cd ${SCRIPT_DIR}
 if [ -f ${SCRIPT_DIR}/../${BUILD_TARGERT}.zip ]; then
     unzip -q -d ${RABBIT_BUILD_PREFIX} ${SCRIPT_DIR}/../${BUILD_TARGERT}.zip
     if [ "$PROJECT_NAME" != "RabbitThirdLibrary" \
@@ -74,7 +76,7 @@ if [ -f ${SCRIPT_DIR}/../${BUILD_TARGERT}.zip ]; then
         -a -f "${RABBIT_BUILD_PREFIX}/change_prefix.sh" ]; then
 
         cd ${RABBIT_BUILD_PREFIX}
-
+        cat lib/pkgconfig/zlib.pc
         cat change_prefix.sh
         echo "bash change_prefix.sh"
         bash change_prefix.sh
