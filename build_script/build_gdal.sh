@@ -71,7 +71,9 @@ if [ "${RABBIT_CLEAN}" = "TRUE" ]; then
     fi
 fi
 
-./autogen.sh
+if [ ! -f configure ]; then
+    ./autogen.sh
+fi
 
 #mkdir -p build_${RABBIT_BUILD_TARGERT}
 #cd build_${RABBIT_BUILD_TARGERT}
@@ -166,8 +168,13 @@ case ${RABBIT_BUILD_TARGERT} in
 esac
 
 echo "pwd:`pwd`"
-#CONFIG_PARA="${CONFIG_PARA} --with-geos=${RABBIT_BUILD_PREFIX}/bin/geos-config"
+CONFIG_PARA="${CONFIG_PARA} --with-geos=${RABBIT_BUILD_PREFIX}/bin/geos-config"
 CONFIG_PARA="${CONFIG_PARA} --with-curl=${RABBIT_BUILD_PREFIX}/bin/curl-config"
+CONFIG_PARA="${CONFIG_PARA} --with-png=${RABBIT_BUILD_PREFIX}"
+CONFIG_PARA="${CONFIG_PARA} --with-expat=${RABBIT_BUILD_PREFIX}"
+CONFIG_PARA="${CONFIG_PARA} --with-gif=${RABBIT_BUILD_PREFIX}"
+CONFIG_PARA="${CONFIG_PARA} --with-jpeg=${RABBIT_BUILD_PREFIX}"
+CONFIG_PARA="${CONFIG_PARA} --with-libtiff=${RABBIT_BUILD_PREFIX}"
 CONFIG_PARA="${CONFIG_PARA} --prefix=$RABBIT_BUILD_PREFIX"
 echo "../configure ${CONFIG_PARA} CFLAGS=\"${CFLAGS=}\" CPPFLAGS=\"${CPPFLAGS}\" CXXFLAGS=\"${CPPFLAGS}\" LDFLAGS=\"${LDFLAGS}\""
 ./configure ${CONFIG_PARA} \

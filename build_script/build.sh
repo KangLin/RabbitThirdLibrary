@@ -80,8 +80,8 @@ if [ -n "$2" ]; then
     ./build_ffmpeg.sh ${RABBIT_BUILD_TARGERT} $2/ffmpeg 
     ./build_libopus.sh ${RABBIT_BUILD_TARGERT} $2/libopus 
     ./build_opencv.sh ${RABBIT_BUILD_TARGERT} $2/opencv
-    ./build_gdal.sh ${RABBIT_BUILD_TARGERT} $2/gdal
     ./build_geos.sh ${RABBIT_BUILD_TARGERT} $2/geos
+    ./build_gdal.sh ${RABBIT_BUILD_TARGERT} $2/gdal
     ./build_osg.sh ${RABBIT_BUILD_TARGERT} $2/osg
     ./build_OsgQt.sh ${RABBIT_BUILD_TARGERT} $2/osgQt
     ./build_osgearth.sh ${RABBIT_BUILD_TARGERT} $2/osgearth

@@ -132,9 +132,9 @@ RABBIT_BUILD_CROSS_PREFIX=${RABBIT_BUILD_CROSS_HOST}-
 export PKG_CONFIG_PATH=${RABBIT_BUILD_PREFIX}/lib/pkgconfig
 export PKG_CONFIG_LIBDIR=${PKG_CONFIG_PATH}
 if [ -n "$RABBIT_BUILD_CROSS_SYSROOT" ]; then
-    export RABBIT_CFLAGS="--sysroot=${RABBIT_BUILD_CROSS_SYSROOT}"
-    export RABBIT_CPPFLAGS="--sysroot=${RABBIT_BUILD_CROSS_SYSROOT}"
-    export RABBIT_LDFLAGS="--sysroot=${RABBIT_BUILD_CROSS_SYSROOT}"
+    export RABBIT_CFLAGS="--sysroot=${RABBIT_BUILD_CROSS_SYSROOT} -I${RABBIT_BUILD_PREFIX}/include"
+    export RABBIT_CPPFLAGS="--sysroot=${RABBIT_BUILD_CROSS_SYSROOT} -I${RABBIT_BUILD_PREFIX}/include"
+    export RABBIT_LDFLAGS="--sysroot=${RABBIT_BUILD_CROSS_SYSROOT} -L${RABBIT_BUILD_PREFIX}/lib"
 fi
 
 echo "---------------------------------------------------------------------------"
