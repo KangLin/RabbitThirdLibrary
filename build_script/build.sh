@@ -110,50 +110,12 @@ else
     ./build_ffmpeg.sh ${RABBIT_BUILD_TARGERT} 
     ./build_libopus.sh ${RABBIT_BUILD_TARGERT} 
     ./build_opencv.sh ${RABBIT_BUILD_TARGERT}
+    ./build_geos.sh ${RABBIT_BUILD_TARGERT} 
     ./build_gdal.sh ${RABBIT_BUILD_TARGERT} 
     ./build_osg.sh ${RABBIT_BUILD_TARGERT}
     ./build_OsgQt.sh ${RABBIT_BUILD_TARGERT}
-    #./build_geos.sh ${RABBIT_BUILD_TARGERT} 
     ./build_osgearth.sh ${RABBIT_BUILD_TARGERT}
     #./build_qt.sh ${RABBIT_BUILD_TARGERT}
     ./build_qxmpp.sh ${RABBIT_BUILD_TARGERT}
     ./build_qzxing.sh ${RABBIT_BUILD_TARGERT} 
-fi
-
-
-exit 0
-
-
-if [ -n "$2" ]; then
-    echo "Source dir:$2"
-    if [ "${RABBIT_BUILD_TARGERT}" != "windows_msvc" ]; then
-        echo "building ......"
-        ./build_libopus.sh ${RABBIT_BUILD_TARGERT} $2/libopus && \
-        ./build_speexdsp.sh ${RABBIT_BUILD_TARGERT} $2/speexdsp && \
-        ./build_speex.sh ${RABBIT_BUILD_TARGERT} $2/speex && \
-        ./build_libsodium.sh ${RABBIT_BUILD_TARGERT} $2/libsodium && \
-        ./build_filter_audio.sh ${RABBIT_BUILD_TARGERT} $2/filter_audio && \
-        ./build_toxcore.sh ${RABBIT_BUILD_TARGERT} $2/toxcore
-    fi
-    ./build_opencv.sh ${RABBIT_BUILD_TARGERT} $2/opencv && \
-    # ./build_pjsip.sh ${RABBIT_BUILD_TARGERT} $2/pjsip && \
-    # ./build_icu.sh ${RABBIT_BUILD_TARGERT} $2/icu && \
-    ./build_gdal.sh ${RABBIT_BUILD_TARGERT} $2/gdal && \
-    ./build_osg.sh ${RABBIT_BUILD_TARGERT} $2/osg && \
-    ./build_osgearth.sh ${RABBIT_BUILD_TARGERT} $2/osgearth
-else
-    if [ "${RABBIT_BUILD_TARGERT}" != "windows_msvc" ]; then
-        ./build_libqrencode.sh ${RABBIT_BUILD_TARGERT} && \
-        ./build_speexdsp.sh ${RABBIT_BUILD_TARGERT} && \
-        ./build_speex.sh ${RABBIT_BUILD_TARGERT} && \
-        ./build_libopus.sh ${RABBIT_BUILD_TARGERT} && \
-        ./build_libsodium.sh ${RABBIT_BUILD_TARGERT} && \
-        ./build_toxcore.sh ${RABBIT_BUILD_TARGERT}
-    fi
-    ./build_opencv.sh ${RABBIT_BUILD_TARGERT} && \
-    # ./build_pjsip.sh ${RABBIT_BUILD_TARGERT} && \
-    # ./build_icu.sh ${RABBIT_BUILD_TARGERT} && \
-    ./build_gdal.sh ${RABBIT_BUILD_TARGERT} && \
-    ./build_osg.sh ${RABBIT_BUILD_TARGERT} && \
-    ./build_osgearth.sh ${RABBIT_BUILD_TARGERT}
 fi

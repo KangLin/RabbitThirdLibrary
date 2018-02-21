@@ -81,9 +81,9 @@ echo ""
 
 echo "configure ..."
 if [ "$RABBIT_BUILD_STATIC" = "static" ]; then
-    CMAKE_PARA="-DGEOS_BUILD_STATIC=ON -DGEOS_BUILD_SHARE=OFF" 
+    CMAKE_PARA="-DGEOS_BUILD_STATIC=ON -DGEOS_BUILD_SHARED=OFF" 
 else
-    CMAKE_PARA="-DGEOS_BUILD_STATIC=OFF -DGEOS_BUILD_SHARE=ON"
+    CMAKE_PARA="-DGEOS_BUILD_STATIC=OFF -DGEOS_BUILD_SHARED=ON"
 fi
 MAKE_PARA="-- ${RABBIT_MAKE_JOB_PARA} VERBOSE=1"
 case ${RABBIT_BUILD_TARGERT} in
@@ -102,13 +102,7 @@ case ${RABBIT_BUILD_TARGERT} in
         MAKE_PARA=""
         ;;
     windows_mingw)
-        case `uname -s` in
-            Linux*|Unix*|CYGWIN*)
-                CMAKE_PARA="${CMAKE_PARA} -DCMAKE_TOOLCHAIN_FILE=$RABBIT_BUILD_PREFIX/../build_script/cmake/platforms/toolchain-mingw.cmake"
-                ;;
-            *)
-            ;;
-        esac
+        CMAKE_PARA="${CMAKE_PARA} -DCMAKE_TOOLCHAIN_FILE=$RABBIT_BUILD_PREFIX/../build_script/cmake/platforms/toolchain-mingw.cmake"
         ;;
     *)
     echo "${HELP_STRING}"
@@ -116,10 +110,13 @@ case ${RABBIT_BUILD_TARGERT} in
     exit 3
     ;;
 esac
-echo "cmake .. -DCMAKE_INSTALL_PREFIX=$RABBIT_BUILD_PREFIX -DCMAKE_BUILD_TYPE=Release -G\"${RABBITIM_GENERATORS}\" ${CMAKE_PARA}"
+
+CMAKE_PARA="${CMAKE_PARA} -DCMAKE_BUILD_TYPE=${RABBIT_CONFIG}"
+CMAKE_PARA="${CMAKE_PARA} -DGEOS_ENABLE_TESTS=OFF"
+echo "cmake .. ${CMAKE_PARA} -DCMAKE_INSTALL_PREFIX=$RABBIT_BUILD_PREFIX -DCMAKE_BUILD_TYPE=Release -G\"${RABBITIM_GENERATORS}\" ${CMAKE_PARA}"
 cmake .. \
     -DCMAKE_INSTALL_PREFIX="$RABBIT_BUILD_PREFIX" \
-    -G"${RABBITIM_GENERATORS}" ${CMAKE_PARA}
+    -G"${RABBITIM_GENERATORS}" ${CMAKE_PARA} -DCMAKE_VERBOSE_MAKEFILE=TRUE
 
 cmake --build . --target install --config ${RABBIT_CONFIG} ${MAKE_PARA}
 

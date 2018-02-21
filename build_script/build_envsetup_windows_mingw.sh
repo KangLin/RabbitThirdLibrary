@@ -17,8 +17,8 @@ if [ -z "$QT_ROOT" ]; then
     QT_VERSION=5.9.4
     QT_ROOT=/c/Qt/Qt${QT_VERSION}/${QT_VERSION}/mingw53_32 #QT 安装根目录,默认为:${RABBITRoot}/ThirdLibrary/windows_mingw/qt
     RABBIT_TOOLCHAIN_VERSION=530    
-    RABBIT_TOOLCHAIN_ROOT=/c/Qt/Qt${QT_VERSION}/Tools/mingw530_32/bin
-    export PATH=${RABBIT_TOOLCHAIN_ROOT}:$PATH  #用与QT相同的工具链
+    RABBIT_TOOLCHAIN_ROOT=/c/Qt/Qt${QT_VERSION}/Tools/mingw530_32
+    export PATH=${RABBIT_TOOLCHAIN_ROOT}/bin:$PATH  #用与QT相同的工具链
 fi
 if [ -z "$RABBIT_CLEAN" ]; then
     RABBIT_CLEAN=TRUE #编译前清理
@@ -61,7 +61,7 @@ if [ -z "${RABBIT_ARCH}" ]; then
 fi
 
 if [ -z "$RABBIT_BUILD_CROSS_SYSROOT" -a -n "${RABBIT_TOOLCHAIN_ROOT}" ];then
-    RABBIT_BUILD_CROSS_SYSROOT=${RABBIT_TOOLCHAIN_ROOT}/${RABBIT_BUILD_CROSS_HOST}
+    export RABBIT_BUILD_CROSS_SYSROOT=${RABBIT_TOOLCHAIN_ROOT}/${RABBIT_BUILD_CROSS_HOST}
 fi
 
 if [ -z "$RABBIT_CONFIG" ]; then
@@ -122,11 +122,12 @@ if [ -n "${QT_ROOT}" ]; then
                             #这里设置的是自动编译时的配置，你需要修改为你本地qt编译环境的配置.
 fi
 
-export PATH=${RABBIT_BUILD_PREFIX}/bin:${RABBIT_BUILD_PREFIX}/lib:${QT_BIN}:$PATH
+#export PATH=${RABBIT_BUILD_PREFIX}/bin:${RABBIT_BUILD_PREFIX}/lib:${QT_BIN}:$PATH
 
 if [ -z "${RABBIT_BUILD_CROSS_HOST}" ]; then
-    export RABBIT_BUILD_CROSS_HOST=i686-w64-mingw32 #编译工具链前缀
+    RABBIT_BUILD_CROSS_HOST=i686-w64-mingw32 #编译工具链前缀
 fi
+export RABBIT_BUILD_CROSS_HOST=$RABBIT_BUILD_CROSS_HOST
 RABBIT_BUILD_CROSS_PREFIX=${RABBIT_BUILD_CROSS_HOST}-
 
 export PKG_CONFIG_PATH=${RABBIT_BUILD_PREFIX}/lib/pkgconfig
@@ -135,6 +136,12 @@ if [ -n "$RABBIT_BUILD_CROSS_SYSROOT" ]; then
     export RABBIT_CFLAGS="--sysroot=${RABBIT_BUILD_CROSS_SYSROOT} -I${RABBIT_BUILD_PREFIX}/include"
     export RABBIT_CPPFLAGS="--sysroot=${RABBIT_BUILD_CROSS_SYSROOT} -I${RABBIT_BUILD_PREFIX}/include"
     export RABBIT_LDFLAGS="--sysroot=${RABBIT_BUILD_CROSS_SYSROOT} -L${RABBIT_BUILD_PREFIX}/lib"
+    
+    RABBIT_BUILD_CROSS_STL=${RABBIT_BUILD_CROSS_SYSROOT}
+    RABBIT_BUILD_CROSS_STL_INCLUDE=${RABBIT_BUILD_CROSS_STL}/include
+    RABBIT_BUILD_CROSS_STL_LIBS=${RABBIT_BUILD_CROSS_STL}/libs
+    RABBIT_BUILD_CROSS_STL_INCLUDE_FLAGS="-I${RABBIT_BUILD_CROSS_STL_INCLUDE} -I${RABBIT_BUILD_CROSS_STL_LIBS}/include"
+    
 fi
 
 echo "---------------------------------------------------------------------------"

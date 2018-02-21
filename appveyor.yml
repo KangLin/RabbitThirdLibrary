@@ -165,20 +165,20 @@ init:
   - if NOT "%QT_ROOT%" == "NO" for /f "delims=" %%i in ('%QT_ROOT%/bin/qmake -query QT_VERSION') do (set QT_VERSION=%%i)
   - echo QT_VERSION=%QT_VERSION%
   - echo QT_ROOT=%QT_ROOT%
-  - del C:\msys64\usr\bin\link.exe
   
 install:
   - for /f "delims=" %%i in ('git describe --tags') do (set BUILD_VERSION=%%i)
   - if "%BUILD_VERSION%" == "" for /f "delims=" %%i in ('git rev-parse HEAD') do (set BUILD_VERSION=%%i) 
   - echo BUILD_VERSION=%BUILD_VERSION%
-  - C:\msys64\usr\bin\pacman.exe --noconfirm -Syu
+  #- C:\msys64\usr\bin\pacman.exe --noconfirm -Syu
   - if not "%BUILD_TARGERT%" == "android" C:\msys64\usr\bin\pacman.exe -S --noconfirm nasm yasm 
-  - C:\msys64\usr\bin\pacman.exe -S --noconfirm unzip expect #zip curl
+  - C:\msys64\usr\bin\pacman.exe -S --noconfirm unzip #expect zip curl
   - C:\msys64\autorebase.bat
   - if "%RABBIT_ARCH%" == "x64" if "%BUILD_TARGERT%" == "windows_mingw" set BUILD_EXIT=TRUE
   - if "%RABBIT_ARCH%" == "x86" if "%APPVEYOR_BUILD_WORKER_IMAGE%" == "Visual Studio 2017" if NOT "%QT_ROOT%" == "NO" set BUILD_EXIT=TRUE
   - echo "BUILD_EXIT:%BUILD_EXIT%"
-    
+  - del C:\msys64\usr\bin\link.exe
+  
 before_build:
   - cd %APPVEYOR_BUILD_FOLDER%
   - if "%BUILD_TARGERT%" == "android" C:\msys64\usr\bin\bash.exe %APPVEYOR_BUILD_FOLDER%\build_script\ci\build-install-tools-windows.sh
