@@ -102,7 +102,30 @@ case ${RABBIT_BUILD_TARGERT} in
         MAKE_PARA=""
         ;;
     windows_mingw)
-        CMAKE_PARA="${CMAKE_PARA} -DCMAKE_TOOLCHAIN_FILE=$RABBIT_BUILD_PREFIX/../build_script/cmake/platforms/toolchain-mingw.cmake"
+        #CMAKE_PARA="${CMAKE_PARA} -DCMAKE_TOOLCHAIN_FILE=$RABBIT_BUILD_PREFIX/../build_script/cmake/platforms/toolchain-mingw.cmake"
+        cd ${RABBIT_BUILD_SOURCE_CODE}
+        if [ ! -f configure ]; then
+            ./autogen.sh
+        fi
+        cd build_${RABBIT_BUILD_TARGERT}
+        CONFIG_PARA="${CONFIG_PARA} --host=$RABBIT_BUILD_CROSS_HOST"
+        #CONFIG_PARA="${CONFIG_PARA} --with-sysroot=${RABBIT_BUILD_CROSS_SYSROOT}"
+        CFLAGS="${RABBIT_CFLAGS}"
+        CPPFLAGS="${RABBIT_CPPFLAGS} -std=c++11"
+        LDFLAGS="$LDFLAGS ${RABBIT_LDFLAGS}" # -lsupc++"
+        export LIBS="-lstdc++" #-lsupc++
+        CONFIG_PARA="${CONFIG_PARA} --prefix=$RABBIT_BUILD_PREFIX"
+        echo "../configure ${CONFIG_PARA} CFLAGS=\"${CFLAGS=}\" CPPFLAGS=\"${CPPFLAGS}\" CXXFLAGS=\"${CPPFLAGS}\" LDFLAGS=\"${LDFLAGS}\""
+        ../configure ${CONFIG_PARA} \
+            CFLAGS="${CFLAGS}" CPPFLAGS="${CPPFLAGS}" CXXFLAGS="${CPPFLAGS}" \
+            LDFLAGS="${LDFLAGS}"
+        
+        ${MAKE} V=1 ${RABBIT_MAKE_JOB_PARA}
+        echo "make install ....................................."
+        ${MAKE} install
+        
+        cd $CUR_DIR
+        exit 0
         ;;
     *)
     echo "${HELP_STRING}"

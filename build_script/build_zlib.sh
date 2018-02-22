@@ -116,13 +116,8 @@ case ${RABBIT_BUILD_TARGERT} in
         #exit 0
         
         #CMAKE_PARA="${CMAKE_PARA} -DASM686=ON"
-        case `uname -s` in
-            Linux*|Unix*|CYGWIN*)
-                CMAKE_PARA="${CMAKE_PARA} -DCMAKE_TOOLCHAIN_FILE=$RABBIT_BUILD_PREFIX/../build_script/cmake/platforms/toolchain-mingw.cmake"
-                ;;
-            *)
-            ;;
-        esac
+
+        CMAKE_PARA="${CMAKE_PARA} -DCMAKE_TOOLCHAIN_FILE=$RABBIT_BUILD_PREFIX/../build_script/cmake/platforms/toolchain-mingw.cmake"
         ;;
     *)
     echo "${HELP_STRING}"
