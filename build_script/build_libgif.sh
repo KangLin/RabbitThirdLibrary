@@ -39,20 +39,25 @@ CUR_DIR=`pwd`
 #下载源码:
 if [ ! -d ${RABBIT_BUILD_SOURCE_CODE} ]; then
     VERSION=master
-    #if [ "TRUE" = "${RABBIT_USE_REPOSITORIES}" ]; then
-        echo "git clone -q --branch=${VERSION} git://git.code.sf.net/u/kl222/giflib ${RABBIT_BUILD_SOURCE_CODE}"
-        git clone -q --branch=$VERSION git://git.code.sf.net/u/kl222/giflib ${RABBIT_BUILD_SOURCE_CODE}
-    #else
-    #    mkdir -p ${RABBIT_BUILD_SOURCE_CODE}
-    #    cd ${RABBIT_BUILD_SOURCE_CODE}
-    #    echo "wget -nv -c https://sourceforge.net/projects/giflib/files/giflib-${VERSION}.tar.gz/download"
-    #    wget -nv -c -O giflib-${VERSION}.tar.gz https://sourceforge.net/projects/giflib/files/giflib-${VERSION}.tar.gz/download 
-    #    tar xvzf giflib-${VERSION}.tar.gz
-    #    mv giflib-${VERSION} ..
-    #    rm -fr giflib-${VERSION}.tar.gz ${RABBIT_BUILD_SOURCE_CODE}
-    #    cd ..
-    #    mv giflib-${VERSION} ${RABBIT_BUILD_SOURCE_CODE} 
-    #fi
+    if [ "TRUE" = "${RABBIT_USE_REPOSITORIES}" ]; then
+        #echo "git clone -q --branch=${VERSION} git://git.code.sf.net/u/kl222/giflib ${RABBIT_BUILD_SOURCE_CODE}"
+        #git clone -q --branch=$VERSION git://git.code.sf.net/u/kl222/giflib ${RABBIT_BUILD_SOURCE_CODE}
+        echo "git clone -q https://github.com/KangLin/giflib.git ${RABBIT_BUILD_SOURCE_CODE}"
+        git clone -q https://github.com/KangLin/giflib.git ${RABBIT_BUILD_SOURCE_CODE}
+        if [ "$VERSION" != "master" ]; then
+            git checkout -b $VERSION $VERSION
+        fi
+    else
+        mkdir -p ${RABBIT_BUILD_SOURCE_CODE}
+        cd ${RABBIT_BUILD_SOURCE_CODE}
+        echo "wget -nv -c -O giflib-${VERSION}.zip https://github.com/KangLin/giflib/archive/${VERSION}.zip"
+        wget -nv -c -O giflib-${VERSION}.zip https://github.com/KangLin/giflib/archive/${VERSION}.zip
+        unzip giflib-${VERSION}.zip
+        mv giflib-${VERSION} ..
+        rm -fr giflib-${VERSION}.zip ${RABBIT_BUILD_SOURCE_CODE}
+        cd ..
+        mv giflib-${VERSION} ${RABBIT_BUILD_SOURCE_CODE} 
+    fi
 fi
 
 cd ${RABBIT_BUILD_SOURCE_CODE}
