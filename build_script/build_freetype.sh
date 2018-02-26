@@ -38,8 +38,8 @@ CUR_DIR=`pwd`
 
 #下载源码:
 if [ ! -d ${RABBIT_BUILD_SOURCE_CODE} ]; then
-    VERSION=2.8
-    GITVERSION=VER-2-8
+    VERSION=2.9
+    GITVERSION=VER-2-9
     if [ "TRUE" = "${RABBIT_USE_REPOSITORIES}" ]; then
         echo "git clone -q --branch=${GITVERSION} http://git.sv.nongnu.org/r/freetype/freetype2.git ${RABBIT_BUILD_SOURCE_CODE}"
         git clone -q --branch=${GITVERSION} http://git.sv.nongnu.org/r/freetype/freetype2.git ${RABBIT_BUILD_SOURCE_CODE}
