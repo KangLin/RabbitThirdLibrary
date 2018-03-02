@@ -41,18 +41,21 @@ if [ ! -d ${RABBIT_BUILD_SOURCE_CODE} ]; then
     VERSION=2.9
     GITVERSION=VER-2-9
     if [ "TRUE" = "${RABBIT_USE_REPOSITORIES}" ]; then
-        echo "git clone -q --branch=${GITVERSION} http://git.sv.nongnu.org/r/freetype/freetype2.git ${RABBIT_BUILD_SOURCE_CODE}"
-        git clone -q --branch=${GITVERSION} http://git.sv.nongnu.org/r/freetype/freetype2.git ${RABBIT_BUILD_SOURCE_CODE}
+        #echo "git clone -q --branch=${GITVERSION} http://git.sv.nongnu.org/r/freetype/freetype2.git ${RABBIT_BUILD_SOURCE_CODE}"
+        #git clone -q --branch=${GITVERSION} http://git.sv.nongnu.org/r/freetype/freetype2.git ${RABBIT_BUILD_SOURCE_CODE}
+        echo "git clone -q -b ${GITVERSION} https://github.com/KangLin/freetype.git ${RABBIT_BUILD_SOURCE_CODE}"
+        git clone -q -b ${GITVERSION} https://github.com/KangLin/freetype.git ${RABBIT_BUILD_SOURCE_CODE}
     else
         mkdir -p ${RABBIT_BUILD_SOURCE_CODE}
         cd ${RABBIT_BUILD_SOURCE_CODE}
-        echo "wget -nv -c https://sourceforge.net/projects/freetype/files/freetype2/${VERSION}/freetype-${VERSION}.tar.gz/download"
-        wget -nv -c -O freetype-${VERSION}.tar.gz https://sourceforge.net/projects/freetype/files/freetype2/${VERSION}/freetype-${VERSION}.tar.gz/download
+        #echo "wget -nv -c https://sourceforge.net/projects/freetype/files/freetype2/${VERSION}/freetype-${VERSION}.tar.gz/download"
+        #wget -nv -c -O freetype-${VERSION}.tar.gz https://sourceforge.net/projects/freetype/files/freetype2/${VERSION}/freetype-${VERSION}.tar.gz/download
+        wget -nv -O freetype-${VERSION}.tar.gz https://github.com/KangLin/freetype/archive/${GITVERSION}.tar.gz
         tar xvzf freetype-${VERSION}.tar.gz
-        mv freetype-${VERSION} ..
+        mv freetype-${GITVERSION} ..
         rm -fr freetype-${VERSION}.tar.gz ${RABBIT_BUILD_SOURCE_CODE}
         cd ..
-        mv freetype-${VERSION} ${RABBIT_BUILD_SOURCE_CODE} 
+        mv freetype-${GITVERSION} ${RABBIT_BUILD_SOURCE_CODE} 
     fi
 fi
 
