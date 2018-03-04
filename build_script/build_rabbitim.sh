@@ -157,6 +157,7 @@ else #qmake编译
     else
         PARA="${PARA} CONFIG-=debug CONFIG+=release"
     fi
+    PARA="${PARA} THIRD_LIBRARY_PATH=$RABBIT_BUILD_PREFIX"
     PARA="${PARA} QXMPP_USE_VPX=1"
     PARA="${PARA} RABBIT_USE_FFMPEG=1"
     PARA="${PARA} RABBIT_USE_LIBCURL=1"

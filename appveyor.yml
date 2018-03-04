@@ -1,5 +1,5 @@
 #TODO:版本变更时，修改成相应的版本
-version: 'v0.0.3.{build}'
+version: 'v0.0.4.{build}'
 
 image: Visual Studio 2015
 
@@ -23,21 +23,21 @@ environment:
     
   matrix: 
   ##### android ####
-  - RABBIT_NUMBER: 0
-    BUILD_TARGERT: android
-    RABBIT_TOOLCHAIN_VERSION: 4.9
-    QT_ROOT: NO
+  #- RABBIT_NUMBER: 0
+  #  BUILD_TARGERT: android
+  #  RABBIT_TOOLCHAIN_VERSION: 4.9
+  #  QT_ROOT: NO
   
-  - RABBIT_NUMBER: 1
-    BUILD_TARGERT: android
-    RABBIT_TOOLCHAIN_VERSION: 4.9
-    QT_ROOT: NO
+  #- RABBIT_NUMBER: 1
+  #  BUILD_TARGERT: android
+  #  RABBIT_TOOLCHAIN_VERSION: 4.9
+  #  QT_ROOT: NO
   
-  - RABBIT_NUMBER: 2
-    BUILD_TARGERT: android
-    RABBIT_TOOLCHAIN_VERSION: 4.9
-    QT_VERSION: 5.9.4
-    QT_VERSION_DIR: 5.9
+  #- RABBIT_NUMBER: 2
+  #  BUILD_TARGERT: android
+  #  RABBIT_TOOLCHAIN_VERSION: 4.9
+  #  QT_VERSION: 5.9.4
+  #  QT_VERSION_DIR: 5.9
     
   ##### vs2017 #####
   - RABBIT_NUMBER: 0
@@ -284,3 +284,4 @@ deploy:
 #  prerelease: false
   on:
     appveyor_repo_tag: true        # deploy on tag push only
+    RABBIT_NUMBER: 2
