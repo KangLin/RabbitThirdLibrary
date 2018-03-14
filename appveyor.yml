@@ -38,6 +38,47 @@ environment:
   #  RABBIT_TOOLCHAIN_VERSION: 4.9
   #  QT_VERSION: 5.9.4
   #  QT_VERSION_DIR: 5.9
+  
+  ##### mingw #####
+  - RABBIT_NUMBER: 0
+    BUILD_TARGERT: windows_mingw
+    RABBIT_TOOLCHAIN_VERSION: 530
+    QT_ROOT: NO
+    
+  - RABBIT_NUMBER: 1
+    BUILD_TARGERT: windows_mingw
+    RABBIT_TOOLCHAIN_VERSION: 530
+    QT_ROOT: NO
+  
+  - RABBIT_NUMBER: 2
+    BUILD_TARGERT: windows_mingw
+    RABBIT_TOOLCHAIN_VERSION: 530
+    QT_ROOT: C:/Qt/5.10.0/mingw53_32
+    
+  - RABBIT_NUMBER: 2
+    BUILD_TARGERT: windows_mingw
+    RABBIT_TOOLCHAIN_VERSION: 530
+    QT_ROOT: C:/Qt/5.9/mingw53_32
+  
+  - RABBIT_NUMBER: 2
+    BUILD_TARGERT: windows_mingw
+    RABBIT_TOOLCHAIN_VERSION: 530
+    QT_ROOT: C:/Qt/5.8/mingw53_32
+  
+  - RABBIT_NUMBER: 0
+    BUILD_TARGERT: windows_mingw
+    RABBIT_TOOLCHAIN_VERSION: 492
+    QT_ROOT: NO
+  
+  - RABBIT_NUMBER: 1
+    BUILD_TARGERT: windows_mingw
+    RABBIT_TOOLCHAIN_VERSION: 492
+    QT_ROOT: NO
+    
+  - RABBIT_NUMBER: 2
+    BUILD_TARGERT: windows_mingw
+    RABBIT_TOOLCHAIN_VERSION: 492
+    QT_ROOT: C:/Qt/5.6/mingw49_32
     
   ##### vs2017 #####
   - RABBIT_NUMBER: 0
@@ -115,47 +156,6 @@ environment:
     BUILD_TARGERT: windows_msvc
     RABBIT_TOOLCHAIN_VERSION: 12
     QT_ROOT: C:/Qt/5.6/msvc2013
-
-  ##### mingw #####
-  - RABBIT_NUMBER: 0
-    BUILD_TARGERT: windows_mingw
-    RABBIT_TOOLCHAIN_VERSION: 530
-    QT_ROOT: NO
-    
-  - RABBIT_NUMBER: 1
-    BUILD_TARGERT: windows_mingw
-    RABBIT_TOOLCHAIN_VERSION: 530
-    QT_ROOT: NO
-  
-  - RABBIT_NUMBER: 2
-    BUILD_TARGERT: windows_mingw
-    RABBIT_TOOLCHAIN_VERSION: 530
-    QT_ROOT: C:/Qt/5.10.0/mingw53_32
-    
-  - RABBIT_NUMBER: 2
-    BUILD_TARGERT: windows_mingw
-    RABBIT_TOOLCHAIN_VERSION: 530
-    QT_ROOT: C:/Qt/5.9/mingw53_32
-  
-  - RABBIT_NUMBER: 2
-    BUILD_TARGERT: windows_mingw
-    RABBIT_TOOLCHAIN_VERSION: 530
-    QT_ROOT: C:/Qt/5.8/mingw53_32
-  
-  - RABBIT_NUMBER: 0
-    BUILD_TARGERT: windows_mingw
-    RABBIT_TOOLCHAIN_VERSION: 492
-    QT_ROOT: NO
-  
-  - RABBIT_NUMBER: 1
-    BUILD_TARGERT: windows_mingw
-    RABBIT_TOOLCHAIN_VERSION: 492
-    QT_ROOT: NO
-    
-  - RABBIT_NUMBER: 2
-    BUILD_TARGERT: windows_mingw
-    RABBIT_TOOLCHAIN_VERSION: 492
-    QT_ROOT: C:/Qt/5.6/mingw49_32
   
 init:
   - set RABBIT_ARCH=%PLATFORM%
