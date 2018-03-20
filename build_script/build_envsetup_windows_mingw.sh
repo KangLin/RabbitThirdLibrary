@@ -54,6 +54,7 @@ if [ -z "${RABBIT_ARCH}" ]; then
             fi
             ;;
     esac
+    export RABBIT_ARCH=$RABBIT_ARCH
 fi
 case ${RABBIT_ARCH} in
     x86)

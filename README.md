@@ -16,8 +16,12 @@
   
   |平台|编译器|版本号|架构|Qt 版本|
   |:--:|:--:|:--:|:--:|:--:|
+  |windows_msvc|VS2017|15|x86|qt5.10|
+  |windows_msvc|VS2017|15|x64|qt5.10|
   |windows_msvc|VS2017|15|x86|qt5.9|
   |windows_msvc|VS2017|15|x64|qt5.9|
+  |windows_msvc|VS2017|14|x86|qt5.10|
+  |windows_msvc|VS2017|14|x64|qt5.10|
   |windows_msvc|VS2015|14|x86|qt5.9|
   |windows_msvc|VS2015|14|x64|qt5.9|
   |windows_msvc|VS2015|14|x86|qt5.8|
@@ -30,7 +34,6 @@
   |windows_msvc|VS2013|12|x64|qt5.6|
   |windows_mingw|gcc 5.3.0|530|x86|qt5.9|
   |windows_mingw|gcc 5.3.0|530|x86|qt5.8|
-  |windows_mingw|gcc 4.9.2|530|x86|qt5.6|
   |unix|gcc 5.3.0|530|x86|qt5.8.0|
   |unix|gcc 5.3.0|530|x86|qt5.7.1|
   |unix|gcc 5.3.0|530|x86_64|qt5.8.0|

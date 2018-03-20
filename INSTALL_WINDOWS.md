@@ -370,36 +370,37 @@ make: fork: Resource temporarily unavailable
 * mingw主页： http://www.mingw.org/ 。这个主页好象不是最新的，
 * mingwbuilds: http://sourceforge.net/projects/mingwbuilds/
 
-1. 当前使用qt 5.5.1 自带的mingw-gcc版本：(最好使用此工具链）
+1. 当前使用qt 5.10.0 自带的mingw-gcc版本：(最好使用此工具链）
 
-	gcc version 4.9.2 (i686-posix-dwarf-rev3, Built by MinGW-W64 project)
+	gcc version 5.3.0 (i686-posix-dwarf-rev3, Built by MinGW-W64 project)
 
-在安装qt5.5.1时，在选择组件中选中 MinGW 4.9.2
+在安装qt5.10.0时，在选择组件中选中 MinGW 5.3.0
 修改msys2中的配置文件：etc/fstab 加入
 
-    C:\Qt\Qt5.5.1\Tools\mingw492_32 /mingw49_32
+    C:\Qt\Qt5.10.1\Tools\mingw530_32 /mingw530_32
 
 修改 etc/profile 把      MINGW_MOUNT_POINT= 改成
 
-     MINGW_MOUNT_POINT=/mingw49_32
+     MINGW_MOUNT_POINT=/mingw530_32
 
-2. msys2中有自带的mingw：gcc.exe (Rev5, Built by MSYS2 project) 5.2.0
+2. msys2中有自带的mingw：gcc.exe (Rev5, Built by MSYS2 project) 5.3.0
 
     pacman -S mingw-w64-i686-gcc
 
-3. cygwin中安装也自带有的mingw：i686-w64-mingw32-gcc (GCC) 4.8.3
+3. cygwin中安装也自带有的mingw：i686-w64-mingw32-gcc (GCC) 5.3.0
 
 **需要注意gcc版本与你qt的使用的gcc版本相同，否则可能会出现不明错误。**
 例如：
-qt5.2.0 ~ qt5.3.X ,使用的版本是：4.8.X。qt安装包中自带了gcc。
+qt5.2.0 ~ qt5.6.X ,使用的版本是：4.8.X。qt安装包中自带了gcc。
+qt5.7 ~ qt5.10,使用的版本是：5.3.0
 如果你使用官方发行版本qt，请使用qt自带的gcc
-例如使用qt5.2.1自带的gcc
+例如使用qt5.10.0自带的gcc
 
     vim /etc/fstab
 
 增加下面挂载点：
 
-    C:\Qt\Qt5.2.1\Tools\mingw48_32 /mingw32
+    C:\Qt\Qt5.10.0\Tools\mingw530_32 /mingw32
 
 #### 2.2. 下载工具：
 
@@ -491,8 +492,8 @@ https://github.com/ruby/ruby
 
 #### 2.14. 第三方依赖库
 1. 预编译的第三方依赖库
-gcc version 5.2.0 (Rev4, Built by MSYS2 project)
-qt5.5.1
+gcc version 5.3.0 (Rev4, Built by MSYS2 project)
+qt5.10.0
 
 下载后解压到 ${RabbitThirdLibraryRoot}/ThirdLibrary 目录下。然后执行脚本 change_prefix.sh
 
@@ -504,7 +505,7 @@ qt5.5.1
     pacman -S mingw-w64-i686-ffmpeg
     pacman -S mingw-w64-i686-qt #安装动态与静态库
 
-3. 如果你用的Qt版本不是5.5.1，那么你需要按下面的方法重新编译qxmpp库。
+3. 如果你下载的QT与下载的第三方依赖库QT版本不同，那么你需要按下面的方法重新编译qxmpp库。
 
 ### 3. 编译
 #### 3.1 启动下列环境之一：
