@@ -40,15 +40,11 @@ if [ -z "${RABBIT_ARCH}" ]; then
     case $MSYSTEM in
         MINGW32)
             RABBIT_ARCH=x86
-            if [ -z "${RABBIT_BUILD_CROSS_HOST}" ]; then
-                RABBIT_BUILD_CROSS_HOST=i686-w64-mingw32 #编译工具链前缀
-            fi
+            
             ;;
         MINGW64)
             RABBIT_ARCH=x64
-            if [ -z "${RABBIT_BUILD_CROSS_HOST}" ]; then
-                RABBIT_BUILD_CROSS_HOST=x86_64-w64-mingw32 #编译工具链前缀
-            fi
+            
             ;;
         *)
             echo "Error RABBIT_ARCH=$MSYSTEM, set RABBIT_ARCH=x86"
@@ -59,6 +55,28 @@ if [ -z "${RABBIT_ARCH}" ]; then
             ;;
     esac
 fi
+case ${RABBIT_ARCH} in
+    x86)
+        if [ -z "${RABBIT_BUILD_CROSS_HOST}" ]; then
+            RABBIT_BUILD_CROSS_HOST=i686-w64-mingw32 #编译工具链前缀
+        fi
+        ;;
+    x64)
+        if [ -z "${RABBIT_BUILD_CROSS_HOST}" ]; then
+            RABBIT_BUILD_CROSS_HOST=x86_64-w64-mingw32 #编译工具链前缀
+        fi
+        ;;
+    *)
+        if [ -z "${RABBIT_BUILD_CROSS_HOST}" ]; then
+            RABBIT_BUILD_CROSS_HOST=i686-w64-mingw32 #编译工具链前缀
+        fi
+        ;;
+esac
+if [ -z "${RABBIT_BUILD_CROSS_HOST}" ]; then
+    RABBIT_BUILD_CROSS_HOST=i686-w64-mingw32 #编译工具链前缀
+fi
+export RABBIT_BUILD_CROSS_HOST=$RABBIT_BUILD_CROSS_HOST
+RABBIT_BUILD_CROSS_PREFIX=${RABBIT_BUILD_CROSS_HOST}-
 
 if [ -z "$RABBIT_BUILD_CROSS_SYSROOT" -a -n "${RABBIT_TOOLCHAIN_ROOT}" ];then
     export RABBIT_BUILD_CROSS_SYSROOT=${RABBIT_TOOLCHAIN_ROOT}/${RABBIT_BUILD_CROSS_HOST}
@@ -124,12 +142,6 @@ fi
 
 #export PATH=${RABBIT_BUILD_PREFIX}/bin:${RABBIT_BUILD_PREFIX}/lib:${QT_BIN}:$PATH
 
-if [ -z "${RABBIT_BUILD_CROSS_HOST}" ]; then
-    RABBIT_BUILD_CROSS_HOST=i686-w64-mingw32 #编译工具链前缀
-fi
-export RABBIT_BUILD_CROSS_HOST=$RABBIT_BUILD_CROSS_HOST
-RABBIT_BUILD_CROSS_PREFIX=${RABBIT_BUILD_CROSS_HOST}-
-
 export PKG_CONFIG_PATH=${RABBIT_BUILD_PREFIX}/lib/pkgconfig
 export PKG_CONFIG_LIBDIR=${PKG_CONFIG_PATH}
 if [ -n "$RABBIT_BUILD_CROSS_SYSROOT" ]; then
@@ -137,7 +149,7 @@ if [ -n "$RABBIT_BUILD_CROSS_SYSROOT" ]; then
     export RABBIT_CPPFLAGS="--sysroot=${RABBIT_BUILD_CROSS_SYSROOT} -I${RABBIT_BUILD_PREFIX}/include"
     export RABBIT_LDFLAGS="--sysroot=${RABBIT_BUILD_CROSS_SYSROOT} -L${RABBIT_BUILD_PREFIX}/lib"
     
-    RABBIT_BUILD_CROSS_STL=${RABBIT_BUILD_CROSS_SYSROOT}/
+    RABBIT_BUILD_CROSS_STL=${RABBIT_BUILD_CROSS_SYSROOT}
     RABBIT_BUILD_CROSS_STL_INCLUDE=${RABBIT_BUILD_CROSS_STL}/include/c++
     #RABBIT_BUILD_CROSS_STL_LIBS=${RABBIT_BUILD_CROSS_STL}/libs
     RABBIT_BUILD_CROSS_STL_INCLUDE_FLAGS="-I${RABBIT_BUILD_CROSS_STL_INCLUDE}" # -I${RABBIT_BUILD_CROSS_STL_LIBS}/include"

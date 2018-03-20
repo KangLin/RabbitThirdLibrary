@@ -42,6 +42,21 @@ environment:
   ##### mingw #####
   - RABBIT_NUMBER: 0
     BUILD_TARGERT: windows_mingw
+    RABBIT_TOOLCHAIN_VERSION: 492
+    QT_ROOT: NO
+  
+  - RABBIT_NUMBER: 1
+    BUILD_TARGERT: windows_mingw
+    RABBIT_TOOLCHAIN_VERSION: 492
+    QT_ROOT: NO
+    
+  - RABBIT_NUMBER: 2
+    BUILD_TARGERT: windows_mingw
+    RABBIT_TOOLCHAIN_VERSION: 492
+    QT_ROOT: C:/Qt/5.6/mingw49_32
+    
+  - RABBIT_NUMBER: 0
+    BUILD_TARGERT: windows_mingw
     RABBIT_TOOLCHAIN_VERSION: 530
     QT_ROOT: NO
     
@@ -64,21 +79,6 @@ environment:
     BUILD_TARGERT: windows_mingw
     RABBIT_TOOLCHAIN_VERSION: 530
     QT_ROOT: C:/Qt/5.8/mingw53_32
-  
-  - RABBIT_NUMBER: 0
-    BUILD_TARGERT: windows_mingw
-    RABBIT_TOOLCHAIN_VERSION: 492
-    QT_ROOT: NO
-  
-  - RABBIT_NUMBER: 1
-    BUILD_TARGERT: windows_mingw
-    RABBIT_TOOLCHAIN_VERSION: 492
-    QT_ROOT: NO
-    
-  - RABBIT_NUMBER: 2
-    BUILD_TARGERT: windows_mingw
-    RABBIT_TOOLCHAIN_VERSION: 492
-    QT_ROOT: C:/Qt/5.6/mingw49_32
     
   ##### vs2017 #####
   - RABBIT_NUMBER: 0

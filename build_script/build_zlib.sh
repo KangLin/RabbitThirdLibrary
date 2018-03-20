@@ -38,8 +38,25 @@ CUR_DIR=`pwd`
 
 #下载源码:
 if [ ! -d ${RABBIT_BUILD_SOURCE_CODE} ]; then
-    echo "git clone -q https://github.com/KangLin/zlib.git ${RABBIT_BUILD_SOURCE_CODE}"
-    git clone -q https://github.com/KangLin/zlib.git ${RABBIT_BUILD_SOURCE_CODE}
+    VERSION=1.2.11
+    if [ "TRUE" = "${RABBIT_USE_REPOSITORIES}" ]; then
+        echo "git clone -q https://github.com/madler/zlib.git ${RABBIT_BUILD_SOURCE_CODE}"
+        git clone -q https://github.com/madler/zlib.git ${RABBIT_BUILD_SOURCE_CODE}
+        if [ "$VERSION" != "master" ]; then
+            git checkout -b v${VERSION} v${VERSION}
+        fi
+    else
+        mkdir -p ${RABBIT_BUILD_SOURCE_CODE}
+        cd ${RABBIT_BUILD_SOURCE_CODE}
+        echo "wget -q -c -nv https://github.com/madler/zlib/archive/v${VERSION}.zip"
+        wget -q -c -nv https://github.com/madler/zlib/archive/v${VERSION}.zip
+        unzip -q v${VERSION}.zip
+        mv zlib-${VERSION} ..
+        rm -fr *
+        cd ..
+        rm -fr ${RABBIT_BUILD_SOURCE_CODE}
+        mv -f zlib-${VERSION} ${RABBIT_BUILD_SOURCE_CODE}
+    fi
 fi
 
 echo ""
