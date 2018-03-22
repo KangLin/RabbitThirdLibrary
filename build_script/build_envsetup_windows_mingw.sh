@@ -40,18 +40,13 @@ if [ -z "${RABBIT_ARCH}" ]; then
     case $MSYSTEM in
         MINGW32)
             RABBIT_ARCH=x86
-            
             ;;
         MINGW64)
             RABBIT_ARCH=x64
-            
             ;;
         *)
             echo "Error RABBIT_ARCH=$MSYSTEM, set RABBIT_ARCH=x86"
             RABBIT_ARCH=x86
-            if [ -z "${RABBIT_BUILD_CROSS_HOST}" ]; then
-                RABBIT_BUILD_CROSS_HOST=i686-w64-mingw32 #编译工具链前缀
-            fi
             ;;
     esac
     export RABBIT_ARCH=$RABBIT_ARCH
@@ -73,9 +68,7 @@ case ${RABBIT_ARCH} in
         fi
         ;;
 esac
-if [ -z "${RABBIT_BUILD_CROSS_HOST}" ]; then
-    RABBIT_BUILD_CROSS_HOST=i686-w64-mingw32 #编译工具链前缀
-fi
+
 export RABBIT_BUILD_CROSS_HOST=$RABBIT_BUILD_CROSS_HOST
 RABBIT_BUILD_CROSS_PREFIX=${RABBIT_BUILD_CROSS_HOST}-
 
@@ -146,9 +139,9 @@ fi
 export PKG_CONFIG_PATH=${RABBIT_BUILD_PREFIX}/lib/pkgconfig
 export PKG_CONFIG_LIBDIR=${PKG_CONFIG_PATH}
 if [ -n "$RABBIT_BUILD_CROSS_SYSROOT" ]; then
-    export RABBIT_CFLAGS="--sysroot=${RABBIT_BUILD_CROSS_SYSROOT} -I${RABBIT_BUILD_PREFIX}/include"
-    export RABBIT_CPPFLAGS="--sysroot=${RABBIT_BUILD_CROSS_SYSROOT} -I${RABBIT_BUILD_PREFIX}/include"
-    export RABBIT_LDFLAGS="--sysroot=${RABBIT_BUILD_CROSS_SYSROOT} -L${RABBIT_BUILD_PREFIX}/lib"
+    export RABBIT_CFLAGS="--sysroot=${RABBIT_BUILD_CROSS_SYSROOT}" # -I${RABBIT_BUILD_PREFIX}/include"
+    export RABBIT_CPPFLAGS="--sysroot=${RABBIT_BUILD_CROSS_SYSROOT}" # -I${RABBIT_BUILD_PREFIX}/include"
+    export RABBIT_LDFLAGS="--sysroot=${RABBIT_BUILD_CROSS_SYSROOT}" # -L${RABBIT_BUILD_PREFIX}/lib"
     
     RABBIT_BUILD_CROSS_STL=${RABBIT_BUILD_CROSS_SYSROOT}
     RABBIT_BUILD_CROSS_STL_INCLUDE=${RABBIT_BUILD_CROSS_STL}/include/c++

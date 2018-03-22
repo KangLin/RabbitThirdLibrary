@@ -121,7 +121,11 @@ esac
 
 CONFIG_PARA="${CONFIG_PARA} --prefix=$RABBIT_BUILD_PREFIX "
 echo "../configure ${CONFIG_PARA} CFLAGS=\"${CFLAGS=}\" CPPFLAGS=\"${CPPFLAGS}\""
-../configure ${CONFIG_PARA} CFLAGS="${CFLAGS}" CPPFLAGS="${CPPFLAGS}"
+../configure ${CONFIG_PARA} \
+    CFLAGS="${CFLAGS}" \
+    CPPFLAGS="${CPPFLAGS}" \
+    CXXFLAGS="${CPPFLAGS}" \
+    LDFLAGS="${LDFLAGS}"
 
 echo "make install"
 make ${RABBIT_MAKE_JOB_PARA} 

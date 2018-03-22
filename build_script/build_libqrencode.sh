@@ -157,8 +157,11 @@ CONFIG_PARA="${CONFIG_PARA} --without-tools" # --without-png --without-sdl"
 CONFIG_PARA="${CONFIG_PARA} --prefix=$RABBIT_BUILD_PREFIX"
 echo "../configure ${CONFIG_PARA} CFLAGS=\"${CFLAGS=}\" CPPFLAGS=\"${CPPFLAGS}\" CXXFLAGS=\"${CPPFLAGS}\" LDFLAGS=\"${LDFLAGS}\""
 ../configure ${CONFIG_PARA} \
-    CFLAGS="${CFLAGS}" CPPFLAGS="${CPPFLAGS}" CXXFLAGS="${CPPFLAGS}" 
-
+    CFLAGS="${CFLAGS}" \
+    CPPFLAGS="${CPPFLAGS}" \
+    CXXFLAGS="${CPPFLAGS}" \
+    LDFLAGS="${LDFLAGS}"
+    
 ${MAKE} ${MAKE_PARA}
 ${MAKE} install
 

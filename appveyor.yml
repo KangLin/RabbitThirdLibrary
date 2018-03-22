@@ -1,5 +1,5 @@
 #TODO:版本变更时，修改成相应的版本
-version: 'v0.0.3-60-gf0caeda.{build}'
+version: 'v0.0.4.{build}'
 
 image: Visual Studio 2015
 
@@ -40,31 +40,46 @@ environment:
   #  QT_VERSION_DIR: 5.9
   
   ##### mingw #####
-  #- RABBIT_NUMBER: 0
-  #  BUILD_TARGERT: windows_mingw
-  #  RABBIT_TOOLCHAIN_VERSION: 530
-  #  QT_ROOT: NO
+  - RABBIT_NUMBER: 0
+    BUILD_TARGERT: windows_mingw
+    RABBIT_TOOLCHAIN_VERSION: 530
+    QT_ROOT: NO
     
-  #- RABBIT_NUMBER: 1
-  #  BUILD_TARGERT: windows_mingw
-  #  RABBIT_TOOLCHAIN_VERSION: 530
-  #  QT_ROOT: NO
+  - RABBIT_NUMBER: 1
+    BUILD_TARGERT: windows_mingw
+    RABBIT_TOOLCHAIN_VERSION: 530
+    QT_ROOT: NO
   
-  #- RABBIT_NUMBER: 2
-  #  BUILD_TARGERT: windows_mingw
-  #  RABBIT_TOOLCHAIN_VERSION: 530
-  #  QT_ROOT: C:/Qt/5.10.1/mingw53_32
+  - RABBIT_NUMBER: 2
+    BUILD_TARGERT: windows_mingw
+    RABBIT_TOOLCHAIN_VERSION: 530
+    QT_ROOT: C:/Qt/5.10.1/mingw53_32
     
-  #- RABBIT_NUMBER: 2
-  #  BUILD_TARGERT: windows_mingw
-  #  RABBIT_TOOLCHAIN_VERSION: 530
-  #  QT_ROOT: C:/Qt/5.9/mingw53_32
+  - RABBIT_NUMBER: 2
+    BUILD_TARGERT: windows_mingw
+    RABBIT_TOOLCHAIN_VERSION: 530
+    QT_ROOT: C:/Qt/5.9/mingw53_32
   
-  #- RABBIT_NUMBER: 2
-  #  BUILD_TARGERT: windows_mingw
-  #  RABBIT_TOOLCHAIN_VERSION: 530
-  #  QT_ROOT: C:/Qt/5.8/mingw53_32
+  - RABBIT_NUMBER: 2
+    BUILD_TARGERT: windows_mingw
+    RABBIT_TOOLCHAIN_VERSION: 530
+    QT_ROOT: C:/Qt/5.8/mingw53_32
+  
+  - RABBIT_NUMBER: 0
+    BUILD_TARGERT: windows_mingw
+    RABBIT_TOOLCHAIN_VERSION: 492
+    QT_ROOT: NO
     
+  - RABBIT_NUMBER: 1
+    BUILD_TARGERT: windows_mingw
+    RABBIT_TOOLCHAIN_VERSION: 492
+    QT_ROOT: NO
+  
+  - RABBIT_NUMBER: 2
+    BUILD_TARGERT: windows_mingw
+    RABBIT_TOOLCHAIN_VERSION: 492
+    QT_ROOT: C:/Qt/5.6/mingw49_32
+  
   ##### vs2017 #####
   - RABBIT_NUMBER: 0
     APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017

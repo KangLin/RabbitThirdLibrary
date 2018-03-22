@@ -165,7 +165,7 @@ echo "make install"
 echo "pwd:`pwd`"
 CONFIG_PARA="${CONFIG_PARA} --disable-manual --enable-verbose"
 #CONFIG_PARA="${CONFIG_PARA} --enable-libgcc  "
-CONFIG_PARA="${CONFIG_PARA} --with-ssl=${RABBIT_BUILD_PREFIX} --with-zlib=${RABBIT_BUILD_PREFIX}/lib"
+CONFIG_PARA="${CONFIG_PARA} --with-ssl=${RABBIT_BUILD_PREFIX} --with-zlib=${RABBIT_BUILD_PREFIX}"
 #CONFIG_PARA="${CONFIG_PARA} --with-gnutls=${RABBIT_BUILD_PREFIX} --with-nss=${RABBIT_BUILD_PREFIX}"
 #CONFIG_PARA="${CONFIG_PARA} --with-libssh2=${RABBIT_BUILD_PREFIX} --with-libidn=${RABBIT_BUILD_PREFIX}"
 #CONFIG_PARA="${CONFIG_PARA} --with-winidn=${RABBIT_BUILD_PREFIX} --with-libidn=${RABBIT_BUILD_PREFIX}"
@@ -173,7 +173,10 @@ CONFIG_PARA="${CONFIG_PARA} --with-ssl=${RABBIT_BUILD_PREFIX} --with-zlib=${RABB
 CONFIG_PARA="${CONFIG_PARA} --prefix=$RABBIT_BUILD_PREFIX"
 echo "../configure ${CONFIG_PARA} CFLAGS=\"${CFLAGS=}\" CPPFLAGS=\"${CPPFLAGS}\" CXXFLAGS=\"${CPPFLAGS}\" LDFLAGS=\"${LDFLAGS}\""
 ../configure ${CONFIG_PARA} \
-    CFLAGS="${CFLAGS}" CPPFLAGS="${CPPFLAGS}" CXXFLAGS="${CPPFLAGS}" 
+    CFLAGS="${CFLAGS}" \
+    CPPFLAGS="${CPPFLAGS}" \
+    CXXFLAGS="${CPPFLAGS}" \
+    LDFLAGS="${LDFLAGS}"
 
 ${MAKE} V=1 
 ${MAKE} install
