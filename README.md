@@ -10,15 +10,12 @@
 
 * 预编译库存放位置：  
   https://github.com/KangLin/RabbitThirdLibrary/releases  
-  https://sourceforge.net/projects/rabbitthirdlibrary/files/
   
   文件格式： rabbit_$(平台)$(版本号)_$(架构)_$(QT 版本).zip
   
   |平台|编译器|版本号|架构|Qt 版本|
   |:--:|:--:|:--:|:--:|:--:|
-  |windows_msvc|VS2017|15|x86|qt5.10|
   |windows_msvc|VS2017|15|x64|qt5.10|
-  |windows_msvc|VS2017|15|x86|qt5.9|
   |windows_msvc|VS2017|15|x64|qt5.9|
   |windows_msvc|VS2017|14|x86|qt5.10|
   |windows_msvc|VS2017|14|x64|qt5.10|
