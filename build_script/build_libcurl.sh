@@ -38,7 +38,7 @@ CUR_DIR=`pwd`
 
 #下载源码:
 if [ ! -d ${RABBIT_BUILD_SOURCE_CODE} ]; then
-	CURL_FILE=curl-7_58_0
+	CURL_FILE=curl-7_59_0
     if [ "TRUE" = "${RABBIT_USE_REPOSITORIES}" ]; then
         echo "git clone -q  git://github.com/bagder/curl.git ${RABBIT_BUILD_SOURCE_CODE}"
         #git clone -q --branch=$CURL_FILE git://github.com/bagder/curl.git ${RABBIT_BUILD_SOURCE_CODE}
@@ -110,7 +110,7 @@ else
     CONFIG_PARA="--disable-static --enable-shared"
 fi
 case ${RABBIT_BUILD_TARGERT} in
-    android)
+    android|windows_mingw)
         #export CC=${RABBIT_BUILD_CROSS_PREFIX}gcc 
         #export CXX=${RABBIT_BUILD_CROSS_PREFIX}g++
         #export AR=${RABBIT_BUILD_CROSS_PREFIX}ar
@@ -153,22 +153,6 @@ case ${RABBIT_BUILD_TARGERT} in
         cp -fr ${RABBIT_BUILD_SOURCE_CODE}/builds/libcurl-vc${VC_TOOLCHAIN}-$RABBIT_ARCH-release-${MODE}-ipv6-sspi-winssl/* ${RABBIT_BUILD_PREFIX}
         cd $CUR_DIR
         exit 0
-        ;;
-    windows_mingw)
-        case `uname -s` in
-            Linux*|Unix*|CYGWIN*)
-                CONFIG_PARA="${CONFIG_PARA} --enable-sse "
-                CONFIG_PARA="${CONFIG_PARA} CC=${RABBIT_BUILD_CROSS_PREFIX}gcc --host=${RABBIT_BUILD_CROSS_HOST}"
-                ;;
-            *)
-                CONFIG_PARA="${CONFIG_PARA} --host=$RABBIT_BUILD_CROSS_HOST"
-                #CONFIG_PARA="${CONFIG_PARA} --with-sysroot=${RABBIT_BUILD_CROSS_SYSROOT}"
-                CFLAGS="${RABBIT_CFLAGS}"
-                CPPFLAGS="${RABBIT_CPPFLAGS}"
-                LDFLAGS="${RABBIT_LDFLAGS}"
-            ;;
-        esac
-        
         ;;
     *)
         echo "${HELP_STRING}"
