@@ -17,6 +17,7 @@ if [ -z "$QT_ROOT" ]; then
     QT_VERSION=5.9.4
     QT_ROOT=/c/Qt/Qt${QT_VERSION}/${QT_VERSION}/mingw53_32 #QT 安装根目录,默认为:${RABBITRoot}/ThirdLibrary/windows_mingw/qt
     RABBIT_TOOLCHAIN_VERSION=530    
+    set MSYSTEM=MINGW32
     RABBIT_TOOLCHAIN_ROOT=/c/Qt/Qt${QT_VERSION}/Tools/mingw530_32
     export PATH=${RABBIT_TOOLCHAIN_ROOT}/bin:$PATH  #用与QT相同的工具链
 fi
