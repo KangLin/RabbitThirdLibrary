@@ -63,7 +63,6 @@ if [ "${RABBIT_CLEAN}" = "TRUE" ]; then
     if [ -d "../.git" ]; then
         echo "git clean -xdf"
         git clean -xdf
-        rm configure
     else
         if [ "${RABBIT_BUILD_TARGERT}" != "windows_msvc" -a -f Makefile ]; then
             ${MAKE} clean
