@@ -128,7 +128,7 @@ if [ -z "$QT_ROOT" -a -d "${RABBIT_BUILD_PREFIX}/qt" ]; then
     QT_ROOT=${RABBIT_BUILD_PREFIX}/qt
 fi
 QMAKE=qmake
-if [ -n "${QT_ROOT}" ]; then
+if [ -n "${QT_ROOT}" -a "${QT_ROOT}" != "NO" ]; then
     QT_BIN=${QT_ROOT}/bin       #设置用于 android 平台编译的 qt bin 目录
     QMAKE=${QT_BIN}/qmake       #设置用于 unix 平台编译的 QMAKE。
                             #这里设置的是自动编译时的配置，你需要修改为你本地qt编译环境的配置.
