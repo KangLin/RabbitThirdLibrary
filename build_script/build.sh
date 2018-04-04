@@ -60,7 +60,7 @@ case $TARGET_OS in
 
 if [ -n "$2" ]; then
     ./build_zlib.sh ${RABBIT_BUILD_TARGERT} $2/zlib 
-    #./build_minizip.sh ${RABBIT_BUILD_TARGERT} $2/minizip
+    ./build_minizip.sh ${RABBIT_BUILD_TARGERT} $2/minizip
     ./build_expat.sh ${RABBIT_BUILD_TARGERT} $2/expat
     ./build_openssl.sh ${RABBIT_BUILD_TARGERT} $2/openssl 
     ./build_libsodium.sh ${RABBIT_BUILD_TARGERT} $2/libsodium
