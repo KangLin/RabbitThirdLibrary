@@ -40,45 +40,45 @@ environment:
   #  QT_VERSION_DIR: 5.9
   
   ##### mingw #####
-  - RABBIT_NUMBER: 0
-    BUILD_TARGERT: windows_mingw
-    RABBIT_TOOLCHAIN_VERSION: 530
-    QT_ROOT: NO
+  #- RABBIT_NUMBER: 0
+  #  BUILD_TARGERT: windows_mingw
+  #  RABBIT_TOOLCHAIN_VERSION: 530
+  #  QT_ROOT: NO
     
-  - RABBIT_NUMBER: 1
-    BUILD_TARGERT: windows_mingw
-    RABBIT_TOOLCHAIN_VERSION: 530
-    QT_ROOT: NO
+  #- RABBIT_NUMBER: 1
+  #  BUILD_TARGERT: windows_mingw
+  #  RABBIT_TOOLCHAIN_VERSION: 530
+  #  QT_ROOT: NO
   
-  - RABBIT_NUMBER: 2
-    BUILD_TARGERT: windows_mingw
-    RABBIT_TOOLCHAIN_VERSION: 530
-    QT_ROOT: C:/Qt/5.10.1/mingw53_32
+  #- RABBIT_NUMBER: 2
+  #  BUILD_TARGERT: windows_mingw
+  #  RABBIT_TOOLCHAIN_VERSION: 530
+  #  QT_ROOT: C:/Qt/5.10.1/mingw53_32
     
-  - RABBIT_NUMBER: 2
-    BUILD_TARGERT: windows_mingw
-    RABBIT_TOOLCHAIN_VERSION: 530
-    QT_ROOT: C:/Qt/5.9/mingw53_32
+  #- RABBIT_NUMBER: 2
+  #  BUILD_TARGERT: windows_mingw
+  #  RABBIT_TOOLCHAIN_VERSION: 530
+  #  QT_ROOT: C:/Qt/5.9/mingw53_32
   
-  - RABBIT_NUMBER: 2
-    BUILD_TARGERT: windows_mingw
-    RABBIT_TOOLCHAIN_VERSION: 530
-    QT_ROOT: C:/Qt/5.8/mingw53_32
+  #- RABBIT_NUMBER: 2
+  #  BUILD_TARGERT: windows_mingw
+  #  RABBIT_TOOLCHAIN_VERSION: 530
+  #  QT_ROOT: C:/Qt/5.8/mingw53_32
   
-  - RABBIT_NUMBER: 0
-    BUILD_TARGERT: windows_mingw
-    RABBIT_TOOLCHAIN_VERSION: 492
-    QT_ROOT: NO
+  #- RABBIT_NUMBER: 0
+  #  BUILD_TARGERT: windows_mingw
+  #  RABBIT_TOOLCHAIN_VERSION: 492
+  #  QT_ROOT: NO
     
-  - RABBIT_NUMBER: 1
-    BUILD_TARGERT: windows_mingw
-    RABBIT_TOOLCHAIN_VERSION: 492
-    QT_ROOT: NO
+  #- RABBIT_NUMBER: 1
+  #  BUILD_TARGERT: windows_mingw
+  #  RABBIT_TOOLCHAIN_VERSION: 492
+  #  QT_ROOT: NO
   
-  - RABBIT_NUMBER: 2
-    BUILD_TARGERT: windows_mingw
-    RABBIT_TOOLCHAIN_VERSION: 492
-    QT_ROOT: C:/Qt/5.6/mingw49_32
+  #- RABBIT_NUMBER: 2
+  #  BUILD_TARGERT: windows_mingw
+  #  RABBIT_TOOLCHAIN_VERSION: 492
+  #  QT_ROOT: C:/Qt/5.6/mingw49_32
   
   ##### vs2017 #####
   - RABBIT_NUMBER: 0
@@ -92,14 +92,32 @@ environment:
     BUILD_TARGERT: windows_msvc
     RABBIT_TOOLCHAIN_VERSION: 15
     QT_ROOT: NO
-    
+  
   - RABBIT_NUMBER: 2
+    APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
+    BUILD_TARGERT: windows_msvc
+    RABBIT_TOOLCHAIN_VERSION: 15
+    QT_ROOT: NO
+    
+  - RABBIT_NUMBER: 3
     APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
     BUILD_TARGERT: windows_msvc
     RABBIT_TOOLCHAIN_VERSION: 15
     QT_ROOT: C:/Qt/5.10.1/msvc2017
     
-  - RABBIT_NUMBER: 2
+  - RABBIT_NUMBER: 3
+    APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
+    BUILD_TARGERT: windows_msvc
+    RABBIT_TOOLCHAIN_VERSION: 15
+    QT_ROOT: C:/Qt/5.9/msvc2017
+  
+  - RABBIT_NUMBER: 4
+    APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
+    BUILD_TARGERT: windows_msvc
+    RABBIT_TOOLCHAIN_VERSION: 15
+    QT_ROOT: C:/Qt/5.10.1/msvc2017
+    
+  - RABBIT_NUMBER: 4
     APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
     BUILD_TARGERT: windows_msvc
     RABBIT_TOOLCHAIN_VERSION: 15
@@ -119,19 +137,44 @@ environment:
   - RABBIT_NUMBER: 2
     BUILD_TARGERT: windows_msvc
     RABBIT_TOOLCHAIN_VERSION: 14
+    QT_ROOT: NO
+    
+  - RABBIT_NUMBER: 3
+    BUILD_TARGERT: windows_msvc
+    RABBIT_TOOLCHAIN_VERSION: 14
     QT_ROOT: C:/Qt/5.10.1/msvc2015
   
-  - RABBIT_NUMBER: 2
+  - RABBIT_NUMBER: 3
     BUILD_TARGERT: windows_msvc
     RABBIT_TOOLCHAIN_VERSION: 14
     QT_ROOT: C:/Qt/5.9/msvc2015
     
-  - RABBIT_NUMBER: 2
+  - RABBIT_NUMBER: 3
     BUILD_TARGERT: windows_msvc
     RABBIT_TOOLCHAIN_VERSION: 14
     QT_ROOT: C:/Qt/5.8/msvc2015
   
-  - RABBIT_NUMBER: 2
+  - RABBIT_NUMBER: 3
+    BUILD_TARGERT: windows_msvc
+    RABBIT_TOOLCHAIN_VERSION: 14
+    QT_ROOT: C:/Qt/5.6/msvc2015
+  
+  - RABBIT_NUMBER: 4
+    BUILD_TARGERT: windows_msvc
+    RABBIT_TOOLCHAIN_VERSION: 14
+    QT_ROOT: C:/Qt/5.10.1/msvc2015
+  
+  - RABBIT_NUMBER: 4
+    BUILD_TARGERT: windows_msvc
+    RABBIT_TOOLCHAIN_VERSION: 14
+    QT_ROOT: C:/Qt/5.9/msvc2015
+    
+  - RABBIT_NUMBER: 4
+    BUILD_TARGERT: windows_msvc
+    RABBIT_TOOLCHAIN_VERSION: 14
+    QT_ROOT: C:/Qt/5.8/msvc2015
+  
+  - RABBIT_NUMBER: 4
     BUILD_TARGERT: windows_msvc
     RABBIT_TOOLCHAIN_VERSION: 14
     QT_ROOT: C:/Qt/5.6/msvc2015
@@ -146,17 +189,32 @@ environment:
     BUILD_TARGERT: windows_msvc
     RABBIT_TOOLCHAIN_VERSION: 12
     QT_ROOT: NO
-    
+  
   - RABBIT_NUMBER: 2
+    BUILD_TARGERT: windows_msvc
+    RABBIT_TOOLCHAIN_VERSION: 12
+    QT_ROOT: NO
+    
+  - RABBIT_NUMBER: 3
     BUILD_TARGERT: windows_msvc
     RABBIT_TOOLCHAIN_VERSION: 12
     QT_ROOT: C:/Qt/5.8/msvc2013
     
-  - RABBIT_NUMBER: 2
+  - RABBIT_NUMBER: 3
     BUILD_TARGERT: windows_msvc
     RABBIT_TOOLCHAIN_VERSION: 12
     QT_ROOT: C:/Qt/5.6/msvc2013
   
+  - RABBIT_NUMBER: 4
+    BUILD_TARGERT: windows_msvc
+    RABBIT_TOOLCHAIN_VERSION: 12
+    QT_ROOT: C:/Qt/5.8/msvc2013
+    
+  - RABBIT_NUMBER: 4
+    BUILD_TARGERT: windows_msvc
+    RABBIT_TOOLCHAIN_VERSION: 12
+    QT_ROOT: C:/Qt/5.6/msvc2013
+    
 init:
   - set RABBIT_ARCH=%PLATFORM%
   - set RABBIT_CONFIG=%CONFIGURATION%
@@ -204,7 +262,7 @@ before_build:
       }
       $RABBIT_JOB_NAME = $RABBIT_JOB_NAME + ", BUILD_TARGERT=${env:BUILD_TARGERT}, RABBIT_TOOLCHAIN_VERSION=${env:RABBIT_TOOLCHAIN_VERSION}"
       
-      if($env:RABBIT_NUMBER -lt 3)
+      if($env:RABBIT_NUMBER -lt 2)
       {
           $RABBIT_JOB_NAME = $RABBIT_JOB_NAME+ ", QT_ROOT=NO"
           $JOB_QT_VERSION = "NO"
