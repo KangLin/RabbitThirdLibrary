@@ -25,34 +25,33 @@ case $1 in
     ;;
 esac
 
-if [ -n "$2" ]; then
-    RABBIT_BUILD_SOURCE_CODE=$2
-else
-    RABBIT_BUILD_SOURCE_CODE=${RABBIT_BUILD_PREFIX}/../src/gdal
-fi
-
 echo ". `pwd`/build_envsetup_${RABBIT_BUILD_TARGERT}.sh"
 . `pwd`/build_envsetup_${RABBIT_BUILD_TARGERT}.sh
+
+RABBIT_BUILD_SOURCE_CODE=$2
+if [ -z "$RABBIT_BUILD_SOURCE_CODE" ]; then
+    RABBIT_BUILD_SOURCE_CODE=${RABBIT_BUILD_PREFIX}/../src/gdal
+fi
 
 CUR_DIR=`pwd`
 
 #下载源码:
 if [ ! -d ${RABBIT_BUILD_SOURCE_CODE} ]; then
-    GDAL_VERSION=2.2.3
+    GDAL_VERSION=2.2.4
     if [ "TRUE" = "${RABBIT_USE_REPOSITORIES}" ]; then
         echo "git clone -q --branch=tags/${GDAL_VERSION} https://github.com/OSGeo/gdal.git ${RABBIT_BUILD_SOURCE_CODE}"
         git clone -q --branch=tags/$GDAL_VERSION https://github.com/OSGeo/gdal.git ${RABBIT_BUILD_SOURCE_CODE}
     else
         mkdir -p ${RABBIT_BUILD_SOURCE_CODE}
-        echo "wget -q https://github.com/OSGeo/gdal/archive/tags/${GDAL_VERSION}.zip"
+        echo "wget -q https://github.com/OSGeo/gdal/archive/tags/v${GDAL_VERSION}.zip"
         cd ${RABBIT_BUILD_SOURCE_CODE}
-        wget -q -c https://github.com/OSGeo/gdal/archive/tags/${GDAL_VERSION}.zip
-        unzip -q ${GDAL_VERSION}.zip
-        mv gdal-tags-${GDAL_VERSION} ..
+        wget -q -c https://github.com/OSGeo/gdal/archive/tags/v${GDAL_VERSION}.zip
+        unzip -q v${GDAL_VERSION}.zip
+        mv gdal-tags-v${GDAL_VERSION} ..
         rm -fr *
         cd ..
         rm -fr ${RABBIT_BUILD_SOURCE_CODE}
-        mv -f gdal-tags-${GDAL_VERSION} ${RABBIT_BUILD_SOURCE_CODE}
+        mv -f gdal-tags-v${GDAL_VERSION} ${RABBIT_BUILD_SOURCE_CODE}
     fi
 fi
 

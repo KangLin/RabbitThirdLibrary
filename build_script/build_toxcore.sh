@@ -25,14 +25,14 @@ case $1 in
     ;;
 esac
 
-if [ -n "$2" ]; then
-    RABBIT_BUILD_SOURCE_CODE=$2
-else
-    RABBIT_BUILD_SOURCE_CODE=${RABBIT_BUILD_PREFIX}/../src/toxcore
-fi
+RABBIT_BUILD_SOURCE_CODE=$2
 
 echo ". `pwd`/build_envsetup_${RABBIT_BUILD_TARGERT}.sh"
 . `pwd`/build_envsetup_${RABBIT_BUILD_TARGERT}.sh
+
+if [ -z "$RABBIT_BUILD_SOURCE_CODE" ]; then
+    RABBIT_BUILD_SOURCE_CODE=${RABBIT_BUILD_PREFIX}/../src/toxcore
+fi
 
 CUR_DIR=`pwd`
 

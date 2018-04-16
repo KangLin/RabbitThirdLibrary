@@ -15,7 +15,7 @@
 
 #参数:
 #    $1:编译目标
-#    $2:源码的位置 
+#    $DIR:源码的位置 
 
 #运行本脚本前,先运行 build_unix_envsetup.sh 进行环境变量设置,需要先设置下面变量:
 #   RABBIT_BUILD_TARGERT   编译目标（android、windows_msvc、windows_mingw、unix）
@@ -24,9 +24,9 @@
 #   RABBIT_BUILD_CROSS_PREFIX     #交叉编译前缀
 #   RABBIT_BUILD_CROSS_SYSROOT  #交叉编译平台的 sysroot
 
-set -e
+set -ev
 HELP_STRING="Usage $0 PLATFORM (android|windows_msvc|windows_mingw|unix) [SOURCE_CODE_ROOT_DIRECTORY]"
-
+DIR=$2
 case $1 in
     android|windows_msvc|windows_mingw|unix)
     RABBIT_BUILD_TARGERT=$1
@@ -58,36 +58,36 @@ case $TARGET_OS in
 #产生修改前缀脚本
 ./change_prefix.sh
 
-if [ -n "$2" ]; then
-    ./build_zlib.sh ${RABBIT_BUILD_TARGERT} $2/zlib 
-    ./build_minizip.sh ${RABBIT_BUILD_TARGERT} $2/minizip
-    ./build_expat.sh ${RABBIT_BUILD_TARGERT} $2/expat
-    ./build_openssl.sh ${RABBIT_BUILD_TARGERT} $2/openssl 
-    ./build_libsodium.sh ${RABBIT_BUILD_TARGERT} $2/libsodium
-    #./build_boost.sh ${RABBIT_BUILD_TARGERT} $2/boost
-    #./build_protobuf.sh ${RABBIT_BUILD_TARGERT} $2/protobuf
-    #./build_berkeleydb.sh ${RABBIT_BUILD_TARGERT} $2/berkeleydb
-    ./build_libcurl.sh ${RABBIT_BUILD_TARGERT} $2/curl 
-    ./build_libpng.sh ${RABBIT_BUILD_TARGERT} $2/libpng
-    ./build_jpeg.sh ${RABBIT_BUILD_TARGERT} $2/libjpeg
-    ./build_libgif.sh ${RABBIT_BUILD_TARGERT} $2/libgif
-    ./build_libtiff.sh ${RABBIT_BUILD_TARGERT} $2/libtiff
-    ./build_freetype.sh ${RABBIT_BUILD_TARGERT} $2/freetype
-    ./build_libqrencode.sh ${RABBIT_BUILD_TARGERT} $2/libqrencode
-    ./build_x264.sh ${RABBIT_BUILD_TARGERT} $2/x264 
-    ./build_libyuv.sh ${RABBIT_BUILD_TARGERT} $2/libyuv 
-    ./build_libvpx.sh ${RABBIT_BUILD_TARGERT} $2/libvpx 
-    ./build_ffmpeg.sh ${RABBIT_BUILD_TARGERT} $2/ffmpeg 
-    ./build_libopus.sh ${RABBIT_BUILD_TARGERT} $2/libopus 
-    ./build_opencv.sh ${RABBIT_BUILD_TARGERT} $2/opencv
-    ./build_geos.sh ${RABBIT_BUILD_TARGERT} $2/geos
-    ./build_gdal.sh ${RABBIT_BUILD_TARGERT} $2/gdal
-    ./build_osg.sh ${RABBIT_BUILD_TARGERT} $2/osg
-    ./build_OsgQt.sh ${RABBIT_BUILD_TARGERT} $2/osgQt
-    ./build_osgearth.sh ${RABBIT_BUILD_TARGERT} $2/osgearth
-    #./build_qt.sh ${RABBIT_BUILD_TARGERT} $2/qt5 
-    ./build_qxmpp.sh ${RABBIT_BUILD_TARGERT} $2/qxmpp 
-    ./build_qzxing.sh ${RABBIT_BUILD_TARGERT} $2/qzxing
+if [ -n "$DIR" ]; then
+    ./build_zlib.sh ${RABBIT_BUILD_TARGERT} $DIR/zlib 
+    ./build_minizip.sh ${RABBIT_BUILD_TARGERT} $DIR/minizip
+    ./build_expat.sh ${RABBIT_BUILD_TARGERT} $DIR/expat
+    ./build_openssl.sh ${RABBIT_BUILD_TARGERT} $DIR/openssl 
+    ./build_libsodium.sh ${RABBIT_BUILD_TARGERT} $DIR/libsodium
+    #./build_boost.sh ${RABBIT_BUILD_TARGERT} $DIR/boost
+    #./build_protobuf.sh ${RABBIT_BUILD_TARGERT} $DIR/protobuf
+    #./build_berkeleydb.sh ${RABBIT_BUILD_TARGERT} $DIR/berkeleydb
+    ./build_libcurl.sh ${RABBIT_BUILD_TARGERT} $DIR/curl 
+    ./build_libpng.sh ${RABBIT_BUILD_TARGERT} $DIR/libpng
+    ./build_jpeg.sh ${RABBIT_BUILD_TARGERT} $DIR/libjpeg
+    ./build_libgif.sh ${RABBIT_BUILD_TARGERT} $DIR/libgif
+    ./build_libtiff.sh ${RABBIT_BUILD_TARGERT} $DIR/libtiff
+    ./build_freetype.sh ${RABBIT_BUILD_TARGERT} $DIR/freetype
+    ./build_libqrencode.sh ${RABBIT_BUILD_TARGERT} $DIR/libqrencode
+    ./build_x264.sh ${RABBIT_BUILD_TARGERT} $DIR/x264 
+    ./build_libyuv.sh ${RABBIT_BUILD_TARGERT} $DIR/libyuv 
+    ./build_libvpx.sh ${RABBIT_BUILD_TARGERT} $DIR/libvpx 
+    ./build_ffmpeg.sh ${RABBIT_BUILD_TARGERT} $DIR/ffmpeg 
+    ./build_libopus.sh ${RABBIT_BUILD_TARGERT} $DIR/libopus 
+    ./build_opencv.sh ${RABBIT_BUILD_TARGERT} $DIR/opencv
+    ./build_geos.sh ${RABBIT_BUILD_TARGERT} $DIR/geos
+    ./build_gdal.sh ${RABBIT_BUILD_TARGERT} $DIR/gdal
+    ./build_osg.sh ${RABBIT_BUILD_TARGERT} $DIR/osg
+    ./build_OsgQt.sh ${RABBIT_BUILD_TARGERT} $DIR/osgQt
+    ./build_osgearth.sh ${RABBIT_BUILD_TARGERT} $DIR/osgearth
+    #./build_qt.sh ${RABBIT_BUILD_TARGERT} $DIR/qt5 
+    ./build_qxmpp.sh ${RABBIT_BUILD_TARGERT} $DIR/qxmpp 
+    ./build_qzxing.sh ${RABBIT_BUILD_TARGERT} $DIR/qzxing
 else
     ./build_zlib.sh ${RABBIT_BUILD_TARGERT} 
     ./build_minizip.sh ${RABBIT_BUILD_TARGERT}
