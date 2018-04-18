@@ -12,7 +12,7 @@ function urlencode()
 {
     content=$1
     x=”
-    content=`echo -n “$content” | od -An -tx1 | tr ‘ ‘ %`
+    content=`echo -n "$content" | od -An -tx1 | tr ' ' %`
     for i in $content
     do
               x=$x$i;

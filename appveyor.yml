@@ -40,45 +40,45 @@ environment:
   #  QT_VERSION_DIR: 5.9
   
   ##### mingw #####
-  #- RABBIT_NUMBER: 0
-  #  BUILD_TARGERT: windows_mingw
-  #  RABBIT_TOOLCHAIN_VERSION: 530
-  #  QT_ROOT: NO
+  - RABBIT_NUMBER: 0
+    BUILD_TARGERT: windows_mingw
+    RABBIT_TOOLCHAIN_VERSION: 530
+    QT_ROOT: NO
     
-  #- RABBIT_NUMBER: 1
-  #  BUILD_TARGERT: windows_mingw
-  #  RABBIT_TOOLCHAIN_VERSION: 530
-  #  QT_ROOT: NO
+  - RABBIT_NUMBER: 1
+    BUILD_TARGERT: windows_mingw
+    RABBIT_TOOLCHAIN_VERSION: 530
+    QT_ROOT: NO
   
-  #- RABBIT_NUMBER: 2
-  #  BUILD_TARGERT: windows_mingw
-  #  RABBIT_TOOLCHAIN_VERSION: 530
-  #  QT_ROOT: C:/Qt/5.10.1/mingw53_32
+  - RABBIT_NUMBER: 2
+    BUILD_TARGERT: windows_mingw
+    RABBIT_TOOLCHAIN_VERSION: 530
+    QT_ROOT: C:/Qt/5.10.1/mingw53_32
     
-  #- RABBIT_NUMBER: 2
-  #  BUILD_TARGERT: windows_mingw
-  #  RABBIT_TOOLCHAIN_VERSION: 530
-  #  QT_ROOT: C:/Qt/5.9/mingw53_32
+  - RABBIT_NUMBER: 2
+    BUILD_TARGERT: windows_mingw
+    RABBIT_TOOLCHAIN_VERSION: 530
+    QT_ROOT: C:/Qt/5.9/mingw53_32
   
-  #- RABBIT_NUMBER: 2
-  #  BUILD_TARGERT: windows_mingw
-  #  RABBIT_TOOLCHAIN_VERSION: 530
-  #  QT_ROOT: C:/Qt/5.8/mingw53_32
+  - RABBIT_NUMBER: 2
+    BUILD_TARGERT: windows_mingw
+    RABBIT_TOOLCHAIN_VERSION: 530
+    QT_ROOT: C:/Qt/5.8/mingw53_32
   
-  #- RABBIT_NUMBER: 0
-  #  BUILD_TARGERT: windows_mingw
-  #  RABBIT_TOOLCHAIN_VERSION: 492
-  #  QT_ROOT: NO
+  - RABBIT_NUMBER: 0
+    BUILD_TARGERT: windows_mingw
+    RABBIT_TOOLCHAIN_VERSION: 492
+    QT_ROOT: NO
     
-  #- RABBIT_NUMBER: 1
-  #  BUILD_TARGERT: windows_mingw
-  #  RABBIT_TOOLCHAIN_VERSION: 492
-  #  QT_ROOT: NO
+  - RABBIT_NUMBER: 1
+    BUILD_TARGERT: windows_mingw
+    RABBIT_TOOLCHAIN_VERSION: 492
+    QT_ROOT: NO
   
-  #- RABBIT_NUMBER: 2
-  #  BUILD_TARGERT: windows_mingw
-  #  RABBIT_TOOLCHAIN_VERSION: 492
-  #  QT_ROOT: C:/Qt/5.6/mingw49_32
+  - RABBIT_NUMBER: 2
+    BUILD_TARGERT: windows_mingw
+    RABBIT_TOOLCHAIN_VERSION: 492
+    QT_ROOT: C:/Qt/5.6/mingw49_32
   
   ##### vs2017 #####
   - RABBIT_NUMBER: 0
@@ -166,7 +166,7 @@ init:
   - if "%RABBIT_ARCH%" == "x86" if "%BUILD_TARGERT%" == "windows_msvc" if %RABBIT_TOOLCHAIN_VERSION% == 15 set RABBIT_USE_REPOSITORIES="TRUE"
   - if "%RABBIT_ARCH%" == "x64" set varch=amd64
   - if "%BUILD_TARGERT%" == "windows_msvc" if %RABBIT_TOOLCHAIN_VERSION% LSS 15 (call "C:\Program Files (x86)\Microsoft Visual Studio %RABBIT_TOOLCHAIN_VERSION%.0\VC\vcvarsall.bat" %varch%) else (call "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Auxiliary\Build\vcvarsall.bat" %varch%)
-  #- if "%BUILD_TARGERT%" == "windows_mingw" set MSYSTEM=MINGW32  #设置编译系统为MINGW32
+  - if "%BUILD_TARGERT%" == "windows_mingw" set MSYSTEM=MINGW32  #设置编译系统为MINGW32
   - if "%RABBIT_ARCH%" == "x64" if "%BUILD_TARGERT%" == "android" set RABBIT_ARCH=arm
   - if "%RABBIT_ARCH%" == "x64" if "%BUILD_TARGERT%" == "windows_msvc" if NOT "%QT_ROOT%" == "NO" set QT_ROOT=%QT_ROOT%_64
   - if NOT "%QT_ROOT%" == "NO" for /f "delims=" %%i in ('%QT_ROOT%/bin/qmake -query QT_VERSION') do (set QT_VERSION=%%i)
