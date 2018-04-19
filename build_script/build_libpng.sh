@@ -41,6 +41,8 @@ if [ ! -d ${RABBIT_BUILD_SOURCE_CODE} ]; then
     if [ "TRUE" = "${RABBIT_USE_REPOSITORIES}" ]; then
         echo "git clone -q --branch=v${VERSION} https://github.com/glennrp/libpng.git ${RABBIT_BUILD_SOURCE_CODE}"
         git clone -q --branch=v$VERSION https://github.com/glennrp/libpng.git ${RABBIT_BUILD_SOURCE_CODE}
+        #echo "git clone -q --branch=v$VERSION https://git.code.sf.net/p/libpng/code ${RABBIT_BUILD_SOURCE_CODE}"
+        #git clone -q --branch=v$VERSION https://git.code.sf.net/p/libpng/code ${RABBIT_BUILD_SOURCE_CODE}
     else
         mkdir -p ${RABBIT_BUILD_SOURCE_CODE}
         cd ${RABBIT_BUILD_SOURCE_CODE}
@@ -128,7 +130,7 @@ case ${RABBIT_BUILD_TARGERT} in
 esac
 
 CONFIG_PARA="${CONFIG_PARA} --with-zlib-prefix=$RABBIT_BUILD_PREFIX "
-CONFIG_PARA="${CONFIG_PARA} --prefix=$RABBIT_BUILD_PREFIX"
+CONFIG_PARA="${CONFIG_PARA} --prefix=$RABBIT_BUILD_PREFIX "
 echo "../configure ${CONFIG_PARA} CFLAGS=\"${CFLAGS=}\" CPPFLAGS=\"${CPPFLAGS}\" CXXFLAGS=\"${CPPFLAGS}\" LDFLAGS=\"${LDFLAGS}\""
 ../configure ${CONFIG_PARA} \
     CFLAGS="${CFLAGS}" \
@@ -137,7 +139,7 @@ echo "../configure ${CONFIG_PARA} CFLAGS=\"${CFLAGS=}\" CPPFLAGS=\"${CPPFLAGS}\"
     LDFLAGS="${LDFLAGS}"
     
 echo "make install"
-make ${RABBIT_MAKE_JOB_PARA} V=1
+make V=1 ${RABBIT_MAKE_JOB_PARA} 
 make install
 
 cd $CUR_DIR
