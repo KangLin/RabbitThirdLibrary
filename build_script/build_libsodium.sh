@@ -37,12 +37,12 @@ CUR_DIR=`pwd`
 
 #下载源码:
 if [ ! -d ${RABBIT_BUILD_SOURCE_CODE} ]; then
-    LIBSODIUM_VERSION=b862bf026765f69e83b962f85e93da89035b07bb #1.0.16
+    LIBSODIUM_VERSION=06ee95c3f1241e666d1720e640221eb14cc2c899 #1.0.16
     if [ "TRUE" = "${RABBIT_USE_REPOSITORIES}" ]; then
-        #echo "git clone -q https://github.com/jedisct1/libsodium.git ${RABBIT_BUILD_SOURCE_CODE}"
-        #git clone -q https://github.com/jedisct1/libsodium.git ${RABBIT_BUILD_SOURCE_CODE}
-        echo "git clone -q https://github.com/KangLin/libsodium.git ${RABBIT_BUILD_SOURCE_CODE}"
-        git clone -q https://github.com/KangLin/libsodium.git ${RABBIT_BUILD_SOURCE_CODE}
+        echo "git clone -q https://github.com/jedisct1/libsodium.git ${RABBIT_BUILD_SOURCE_CODE}"
+        git clone -q https://github.com/jedisct1/libsodium.git ${RABBIT_BUILD_SOURCE_CODE}
+        #echo "git clone -q https://github.com/KangLin/libsodium.git ${RABBIT_BUILD_SOURCE_CODE}"
+        #git clone -q https://github.com/KangLin/libsodium.git ${RABBIT_BUILD_SOURCE_CODE}
         cd ${RABBIT_BUILD_SOURCE_CODE}
         if [ "$LIBSODIUM_VERSION" != "master" ]; then
             git checkout -b $LIBSODIUM_VERSION $LIBSODIUM_VERSION
@@ -50,10 +50,10 @@ if [ ! -d ${RABBIT_BUILD_SOURCE_CODE} ]; then
     else
         mkdir -p ${RABBIT_BUILD_SOURCE_CODE}
         cd ${RABBIT_BUILD_SOURCE_CODE}
-        #echo "wget -q https://github.com/jedisct1/libsodium/archive/${LIBSODIUM_VERSION}.zip"
-        #wget -c -q https://github.com/jedisct1/libsodium/archive/${LIBSODIUM_VERSION}.zip
-        echo "wget -c -q https://github.com/KangLin/libsodium/archive/${LIBSODIUM_VERSION}.zip"
-        wget -c -q https://github.com/KangLin/libsodium/archive/${LIBSODIUM_VERSION}.zip
+        echo "wget -q https://github.com/jedisct1/libsodium/archive/${LIBSODIUM_VERSION}.zip"
+        wget -c -q https://github.com/jedisct1/libsodium/archive/${LIBSODIUM_VERSION}.zip
+        #echo "wget -c -q https://github.com/KangLin/libsodium/archive/${LIBSODIUM_VERSION}.zip"
+        #wget -c -q https://github.com/KangLin/libsodium/archive/${LIBSODIUM_VERSION}.zip
         unzip -q ${LIBSODIUM_VERSION}.zip
         mv libsodium-${LIBSODIUM_VERSION} ..
         rm -fr *
@@ -104,14 +104,14 @@ else
     CONFIG_PARA="--disable-static --enable-shared"
 fi
 case ${RABBIT_BUILD_TARGERT} in
-    android|windows_mingw)
-        #export CC=${RABBIT_BUILD_CROSS_PREFIX}gcc 
-        #export CXX=${RABBIT_BUILD_CROSS_PREFIX}g++
-        #export AR=${RABBIT_BUILD_CROSS_PREFIX}ar
-        #export LD=${RABBIT_BUILD_CROSS_PREFIX}ld
-        #export AS=${RABBIT_BUILD_CROSS_PREFIX}as
-        #export STRIP=${RABBIT_BUILD_CROSS_PREFIX}strip
-        #export NM=${RABBIT_BUILD_CROSS_PREFIX}nm
+    android)
+        export CC=${RABBIT_BUILD_CROSS_PREFIX}gcc 
+        export CXX=${RABBIT_BUILD_CROSS_PREFIX}g++
+        export AR=${RABBIT_BUILD_CROSS_PREFIX}gcc-ar
+        export LD=${RABBIT_BUILD_CROSS_PREFIX}ld
+        export AS=${RABBIT_BUILD_CROSS_PREFIX}as
+        export STRIP=${RABBIT_BUILD_CROSS_PREFIX}strip
+        export NM=${RABBIT_BUILD_CROSS_PREFIX}nm
         #CONFIG_PARA="CC=${RABBIT_BUILD_CROSS_PREFIX}gcc LD=${RABBIT_BUILD_CROSS_PREFIX}ld"
         CONFIG_PARA="${CONFIG_PARA} --host=$RABBIT_BUILD_CROSS_HOST"
         #CONFIG_PARA="${CONFIG_PARA} --with-sysroot=${RABBIT_BUILD_CROSS_SYSROOT}"
@@ -120,6 +120,13 @@ case ${RABBIT_BUILD_TARGERT} in
         LDFLAGS="${RABBIT_LDFLAGS}"
     ;;
     unix)
+        ;;
+    windows_mingw)
+        CONFIG_PARA="${CONFIG_PARA} --host=$RABBIT_BUILD_CROSS_HOST"
+        #CONFIG_PARA="${CONFIG_PARA} --with-sysroot=${RABBIT_BUILD_CROSS_SYSROOT}"
+        CFLAGS="${RABBIT_CFLAGS}"
+        CPPFLAGS="${RABBIT_CPPFLAGS}"
+        LDFLAGS="${RABBIT_LDFLAGS}"
         ;;
     windows_msvc)
         cd ${RABBIT_BUILD_SOURCE_CODE}
@@ -179,6 +186,7 @@ case ${RABBIT_BUILD_TARGERT} in
 esac
 
 CONFIG_PARA="${CONFIG_PARA} --prefix=$RABBIT_BUILD_PREFIX"
+CONFIG_PARA="${CONFIG_PARA} --disable-soname-versions"
 echo "../configure ${CONFIG_PARA} CFLAGS=\"${CFLAGS=}\" CPPFLAGS=\"${CPPFLAGS}\" CXXFLAGS=\"${CPPFLAGS}\" LDFLAGS=\"${LDFLAGS}\""
 ../configure ${CONFIG_PARA} \
     CFLAGS="${CFLAGS}" \
@@ -187,7 +195,7 @@ echo "../configure ${CONFIG_PARA} CFLAGS=\"${CFLAGS=}\" CPPFLAGS=\"${CPPFLAGS}\"
     LDFLAGS="${LDFLAGS}"
 
 echo "make install"
-make ${RABBIT_MAKE_JOB_PARA} VERBOSE=1 
+make VERBOSE=1 ${RABBIT_MAKE_JOB_PARA} 
 make install
 
 cd $CUR_DIR

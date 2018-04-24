@@ -60,8 +60,8 @@ case $TARGET_OS in
 
 if [ -n "$DIR" ]; then
     ./build_zlib.sh ${RABBIT_BUILD_TARGERT} $DIR/zlib 
-    ./build_minizip.sh ${RABBIT_BUILD_TARGERT} $DIR/minizip
-    ./build_expat.sh ${RABBIT_BUILD_TARGERT} $DIR/expat
+    #./build_minizip.sh ${RABBIT_BUILD_TARGERT} $DIR/minizip
+    #./build_expat.sh ${RABBIT_BUILD_TARGERT} $DIR/expat
     ./build_openssl.sh ${RABBIT_BUILD_TARGERT} $DIR/openssl 
     ./build_libsodium.sh ${RABBIT_BUILD_TARGERT} $DIR/libsodium
     #./build_boost.sh ${RABBIT_BUILD_TARGERT} $DIR/boost

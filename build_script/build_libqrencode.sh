@@ -105,7 +105,7 @@ case ${RABBIT_BUILD_TARGERT} in
     android)
         #export CC=${RABBIT_BUILD_CROSS_PREFIX}gcc 
         #export CXX=${RABBIT_BUILD_CROSS_PREFIX}g++
-        #export AR=${RABBIT_BUILD_CROSS_PREFIX}ar
+        #export AR=${RABBIT_BUILD_CROSS_PREFIX}gcc-ar
         #export LD=${RABBIT_BUILD_CROSS_PREFIX}ld
         #export AS=${RABBIT_BUILD_CROSS_PREFIX}as
         #export STRIP=${RABBIT_BUILD_CROSS_PREFIX}strip

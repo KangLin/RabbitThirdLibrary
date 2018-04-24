@@ -128,11 +128,15 @@ for v in ${RABBIT_LIBRARYS[$RABBIT_NUMBER]}
 do
     if [ "$v" = "rabbitim" ]; then
         bash ./build_$v.sh ${BUILD_TARGERT} # > /dev/null
-    else
-        if [ "$APPVEYOR" = "True" ]; then
-            bash ./build_$v.sh ${BUILD_TARGERT} ${SOURCE_DIR}/$v
+    else 
+        if [ "$v" = "libpng" -a "${BUILD_TARGERT}" = "windows_mingw" ]; then
+            echo "Don't build libpng in windows_mingw"
         else
-            bash ./build_$v.sh ${BUILD_TARGERT} ${SOURCE_DIR}/$v > /dev/null
+            if [ "$APPVEYOR" = "True" ]; then
+                bash ./build_$v.sh ${BUILD_TARGERT} ${SOURCE_DIR}/$v
+            else
+                bash ./build_$v.sh ${BUILD_TARGERT} ${SOURCE_DIR}/$v > /dev/null
+            fi
         fi
     fi
 done

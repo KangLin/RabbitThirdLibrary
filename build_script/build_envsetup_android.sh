@@ -41,7 +41,7 @@ if [ -z "$ANDROID_NDK_ROOT" -o -z "$ANDROID_NDK" -o -z "$ANDROID_SDK" -o -z "$AN
 fi
 
 if [ -z "${RABBIT_ARCH}" ]; then
-    RABBIT_ARCH=arm #armv7,arm64,mips,mips64,x86,x86_64
+    RABBIT_ARCH=x86 #arm #armv7,arm64,mips,mips64,x86,x86_64
 fi
 
 #需要设置下面变量：
