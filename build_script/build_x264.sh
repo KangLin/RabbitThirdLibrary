@@ -67,9 +67,9 @@ fi
 
 echo "configure ..."
 if [ "$RABBIT_BUILD_STATIC" = "static" ]; then
-    CONFIG_PARA="--enable-static"
+    CONFIG_PARA="--enable-static --disable-shared"
 else
-    CONFIG_PARA="--enable-shared"
+    CONFIG_PARA="--enable-shared --disable-static"
 fi
 case ${RABBIT_BUILD_TARGERT} in
     android)
@@ -77,12 +77,15 @@ case ${RABBIT_BUILD_TARGERT} in
         export CXX=${RABBIT_BUILD_CROSS_PREFIX}g++
         export AR=${RABBIT_BUILD_CROSS_PREFIX}gcc-ar
         export LD=${RABBIT_BUILD_CROSS_PREFIX}ld
-        #export AS=${RABBIT_BUILD_CROSS_PREFIX}as
+        export AS=${RABBIT_BUILD_CROSS_PREFIX}as
         export STRIP=${RABBIT_BUILD_CROSS_PREFIX}strip
         export NM=${RABBIT_BUILD_CROSS_PREFIX}nm
-        #export RANLIB=${RABBIT_BUILD_CROSS_PREFIX}ranlib
+        export RANLIB=${RABBIT_BUILD_CROSS_PREFIX}ranlib
         CONFIG_PARA="--cross-prefix=${RABBIT_BUILD_CROSS_PREFIX} --enable-static --host=$RABBIT_BUILD_CROSS_HOST"
         CONFIG_PARA="${CONFIG_PARA} --sysroot=${RABBIT_BUILD_CROSS_SYSROOT}"
+        if [ "x86" = "${RABBIT_ARCH}" -o "x86_64" = "${RABBIT_ARCH}" ]; then
+            CONFIG_PARA="${CONFIG_PARA} --disable-asm"
+        fi
         CFLAGS="${RABBIT_CFLAGS}"
         CPPFLAGS="${RABBIT_CPPFLAGS}"
         ASFLAGS="${RABBIT_CFLAGS}"

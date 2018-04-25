@@ -77,9 +77,9 @@ python setup_links.py --force
 
 echo "configure ..."
 if [ "$RABBIT_BUILD_STATIC" = "static" ]; then
-    CONFIG_PARA="--enable-static"
+    CONFIG_PARA="--enable-static --disable-shared"
 else
-    CONFIG_PARA="--enable-shared"
+    CONFIG_PARA="--enable-shared --disable-static"
 fi
 sed -i "s/self.target.binary, 'alink_thin', link_deps/self.target.binary, 'alink', link_deps/g" ${RABBIT_BUILD_SOURCE_CODE}/chromium/src/tools/gyp/pylib/gyp/generator/ninja.py
 

@@ -44,7 +44,7 @@ fi
 
 #下载ANT
 #wget -c -nv http://apache.fayea.com/ant/binaries/apache-ant-1.10.1-bin.tar.gz
-ANT_VERSION=1.10.2
+ANT_VERSION=1.10.3
 wget -c -nv https://www.apache.org/dist/ant/binaries/apache-ant-${ANT_VERSION}-bin.tar.gz
 tar xzf apache-ant-${ANT_VERSION}-bin.tar.gz
 rm -f apache-ant-${ANT_VERSION}-bin.tar.gz

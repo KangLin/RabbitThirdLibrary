@@ -94,7 +94,7 @@ else
 fi
 MAKE_PARA="-- ${RABBIT_MAKE_JOB_PARA} VERBOSE=1"
 case ${RABBIT_BUILD_TARGERT} in
-    android)
+    android)      
         CMAKE_PARA="-DBUILD_SHARED_LIBS=OFF -DDYNAMIC_OPENTHREADS=OFF"
         CMAKE_PARA="${CMAKE_PARA} -DDYNAMIC_OPENSCENEGRAPH=OFF"
         CMAKE_PARA="${CMAKE_PARA} -DCMAKE_TOOLCHAIN_FILE=$RABBIT_BUILD_PREFIX/../build_script/cmake/platforms/toolchain-android.cmake"
