@@ -125,6 +125,6 @@ if [ "$RABBIT_BUILD_TARGERT" = "android"  ]; then
 fi
 echo "$QMAKE ${RELEASE_PARA}"
 $QMAKE ${RELEASE_PARA} ../qxmpp.pro
-${MAKE} -f Makefile install ${MAKE_PARA}
+${MAKE} -f Makefile install ${MAKE_PARA} ${RABBIT_MAKE_JOB_PARA} 
 
 cd $CUR_DIR
