@@ -48,7 +48,7 @@ case $TARGET_OS in
             windows_msvc)
                 export PATH=/mingw32/bin:$PATH #因为msys2下的工具不识别winodws路径，所以用mingw32下的工具
                 ;;
-            windows_mingw)
+            windows_mingw|android)
                 export PATH=/usr/bin:$PATH
                 ;;
         esac
