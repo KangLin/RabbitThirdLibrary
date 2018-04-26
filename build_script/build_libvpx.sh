@@ -76,7 +76,7 @@ case ${RABBIT_BUILD_TARGERT} in
         #export STRIP=${RABBIT_BUILD_CROSS_PREFIX}strip
         #export NM=${RABBIT_BUILD_CROSS_PREFIX}nm
         export CROSS=${RABBIT_BUILD_CROSS_PREFIX}
-        #CONFIG_PARA="--sdk-path=${ANDROID_NDK_ROOT}"
+        CONFIG_PARA="--sdk-path=${ANDROID_NDK_ROOT}"
         case ${RABBIT_ARCH} in 
             arm)
                 CONFIG_PARA="${CONFIG_PARA} --target=armv7-android-gcc"
