@@ -48,7 +48,7 @@ CUR_DIR=`pwd`
 
 #下载源码:
 if [ ! -d ${RABBIT_BUILD_SOURCE_CODE} ]; then
-    FFMPEG_VERSION=n3.4
+    FFMPEG_VERSION=n4.0
     if [ "TRUE" = "${RABBIT_USE_REPOSITORIES}" ]; then
         echo "git clone git://source.ffmpeg.org/ffmpeg.git ${RABBIT_BUILD_SOURCE_CODE}"
         #git clone -q -b ${FFMPEG_VERSION} git://source.ffmpeg.org/ffmpeg.git ${RABBIT_BUILD_SOURCE_CODE}
@@ -108,7 +108,7 @@ case ${RABBIT_BUILD_TARGERT} in
         CONFIG_PARA="${CONFIG_PARA} --sysroot=${RABBIT_BUILD_CROSS_SYSROOT}"
         #CONFIG_PARA="${CONFIG_PARA} --pkg-config="${PKG_CONFIG}"
         CONFIG_PARA="${CONFIG_PARA} --pkgconfigdir=${RABBIT_BUILD_PREFIX}/lib/pkgconfig"
-        CONFIG_PARA="${CONFIG_PARA} ${THIRD_LIB}"
+        #CONFIG_PARA="${CONFIG_PARA} ${THIRD_LIB}"
 
         CONFIG_PARA="${CONFIG_PARA} --target-os=android"
         CONFIG_PARA="${CONFIG_PARA} --arch=$RABBIT_ARCH"
@@ -164,7 +164,7 @@ esac
 
 CONFIG_PARA="${CONFIG_PARA} --prefix=$RABBIT_BUILD_PREFIX --enable-gpl --enable-pic --disable-doc --disable-htmlpages"
 CONFIG_PARA="${CONFIG_PARA} --disable-manpages --disable-podpages --disable-txtpages  --disable-ffprobe"
-CONFIG_PARA="${CONFIG_PARA} --disable-ffserver --disable-ffplay --disable-programs"
+CONFIG_PARA="${CONFIG_PARA} --disable-ffplay --disable-programs"
 CONFIG_PARA="${CONFIG_PARA} --enable-runtime-cpudetect"
 #CONFIG_PARA="${CONFIG_PARA} --enable-avresample"
 if [ "Debug" = "$RABBIT_CONFIG" ]; then
