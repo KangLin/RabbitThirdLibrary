@@ -88,6 +88,7 @@ fi
 if [ "$BUILD_TARGERT" = "android" ]; then
     export ANDROID_SDK_ROOT=${SCRIPT_DIR}/../Tools/android-sdk
     export ANDROID_NDK_ROOT=${SCRIPT_DIR}/../Tools/android-ndk
+    export RABBIT_TOOL_CHAIN_ROOT=${SCRIPT_DIR}/../Tools/android-ndk/android-toolchain-${RABBIT_ARCH}
     if [ -z "$APPVEYOR" ]; then
         export JAVA_HOME="/C/Program Files (x86)/Java/jdk1.8.0"
     fi

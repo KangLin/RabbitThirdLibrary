@@ -63,7 +63,7 @@ ubuntu下交叉编译
 * 下载:
 
     cd /home
-    wget http://dl.google.com/android/ndk/android-ndk-r10e-linux-x86_64.bin
+    wget https://dl.google.com/android/repository/android-ndk-r17-linux-x86_64.zip
     ./android-ndk-r10e-linux-x86_64.bin
     mv android-ndk-r10e android-ndk
 
@@ -75,11 +75,11 @@ ubuntu下交叉编译
 
 
 #### 1.3. android sdk 
-* 平台版本：15
+* 平台版本：24
 * 下载：
 
     cd /home
-    wget https://dl.google.com/android/android-sdk_r23.0.2-linux.tgz    
+    wget https://dl.google.com/android/android-sdk_r24.4.1-linux.tgz
     tar xzf android-sdk.tar.gz
     mv sdk android-sdk
 
@@ -263,18 +263,18 @@ make: fork: Resource temporarily unavailable
 注意：在msys2下需要注意路径符号,用unix型路径："/"
 
 #### 2.2. android ndk
-* 工具链版本：4.8
+* 工具链版本：4.9
 * 下载:
 
     cd /home
-    wget http://dl.google.com/android/ndk/android-ndk-r10e-windows-x86.exe
-    android-ndk-r10e-windows-x86.exe
-    mv android-ndk-r10e android-ndk
+    wget https://dl.google.com/android/repository/android-ndk-r17-windows-x86_64.zip
+    unzip android-ndk-r17-windows-x86_64.zip
+    mv android-ndk-r17 android-ndk
 
 * 设置环境变量
 
     vim ~/.bashrc
-    export ANDROID_NDK=/D/software/android-ndk-r10e
+    export ANDROID_NDK=/D/software/android-ndk
     export ANDROID_NDK_ROOT=$ANDROID_NDK
     export PATH=$ANDROID_SDK/platform-tools:$PATH
 

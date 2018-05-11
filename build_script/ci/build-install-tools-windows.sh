@@ -57,15 +57,27 @@ if [ ! -d "${TOOLS_DIR}/android-sdk" ]; then
     mv android-sdk-windows android-sdk
     rm android-sdk_r24.4.1-windows.zip
     (sleep 5 ; while true ; do sleep 1 ; printf 'y\r\n' ; done ) \
-    | android-sdk/tools/android.bat update sdk -u -t tool,android-18,extra,platform,platform-tools #,build-tools-24.0.3
+    | android-sdk/tools/android.bat update sdk -u -t tool,android-18,extra,platform,platform-tools,build-tools
 fi
 
 #下载android ndk  
 if [ ! -d "${TOOLS_DIR}/android-ndk" ]; then
-    wget -c -nv http://dl.google.com/android/ndk/android-ndk-r10e-windows-x86.exe
-    ./android-ndk-r10e-windows-x86.exe > /dev/null
-    mv android-ndk-r10e android-ndk
-    rm android-ndk-r10e-windows-x86.exe
+    wget -c -nv https://dl.google.com/android/repository/android-ndk-r17-windows-x86_64.zip
+    unzip -q android-ndk-r17-windows-x86_64.zip
+    mv android-ndk-r17 android-ndk
+    rm android-ndk-r17-windows-x86_64.zip
+    #使用WINDOWS下的PYTHON
+    cd android-ndk/build/tools
+    if [ -z "${ANDROID_NATIVE_API_LEVEL}" ]; then
+        ./make_standalone_toolchain.py \
+            --arch ${RABBIT_ARCH} \
+            --install-dir ${TOOLS_DIR}/android-ndk/android-toolchain-${RABBIT_ARCH}
+    else
+        ./make_standalone_toolchain.py \
+            --arch ${RABBIT_ARCH} \
+            --api ${ANDROID_NATIVE_API_LEVEL} \
+            --install-dir ${TOOLS_DIR}/android-ndk/android-toolchain-${RABBIT_ARCH}
+    fi
 fi
 
 cd ${SOURCE_DIR}

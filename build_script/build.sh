@@ -59,15 +59,15 @@ case $TARGET_OS in
 ./change_prefix.sh
 
 if [ -n "$DIR" ]; then
-    ./build_zlib.sh ${RABBIT_BUILD_TARGERT} $DIR/zlib 
+    ./build_zlib.sh ${RABBIT_BUILD_TARGERT} $DIR/zlib
     #./build_minizip.sh ${RABBIT_BUILD_TARGERT} $DIR/minizip
     #./build_expat.sh ${RABBIT_BUILD_TARGERT} $DIR/expat
-    ./build_openssl.sh ${RABBIT_BUILD_TARGERT} $DIR/openssl 
+    ./build_openssl.sh ${RABBIT_BUILD_TARGERT} $DIR/openssl
     ./build_libsodium.sh ${RABBIT_BUILD_TARGERT} $DIR/libsodium
     #./build_boost.sh ${RABBIT_BUILD_TARGERT} $DIR/boost
     #./build_protobuf.sh ${RABBIT_BUILD_TARGERT} $DIR/protobuf
     #./build_berkeleydb.sh ${RABBIT_BUILD_TARGERT} $DIR/berkeleydb
-    ./build_libcurl.sh ${RABBIT_BUILD_TARGERT} $DIR/curl 
+    ./build_libcurl.sh ${RABBIT_BUILD_TARGERT} $DIR/curl
     ./build_libpng.sh ${RABBIT_BUILD_TARGERT} $DIR/libpng
     ./build_jpeg.sh ${RABBIT_BUILD_TARGERT} $DIR/libjpeg
     ./build_libgif.sh ${RABBIT_BUILD_TARGERT} $DIR/libgif
