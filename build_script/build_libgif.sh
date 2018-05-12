@@ -77,7 +77,13 @@ echo ""
 
 if [ ! -f configure -a "windows_msvc" != "${RABBIT_BUILD_TARGERT}" ]; then
     echo "sh autogen.sh"
-    sh autogen.sh
+    aclocal
+    autoheader
+    case `uname` in Darwin*) glibtoolize --automake ;;
+      *) libtoolize --automake ;; esac
+    automake --add-missing
+    autoconf
+    automake
     make distclean
 fi
 

@@ -78,7 +78,7 @@ if [ -n "$DIR" ]; then
     ./build_libyuv.sh ${RABBIT_BUILD_TARGERT} $DIR/libyuv
     ./build_libvpx.sh ${RABBIT_BUILD_TARGERT} $DIR/libvpx
     ./build_ffmpeg.sh ${RABBIT_BUILD_TARGERT} $DIR/ffmpeg 
-    ./build_libopus.sh ${RABBIT_BUILD_TARGERT} $DIR/libopus 
+    #./build_libopus.sh ${RABBIT_BUILD_TARGERT} $DIR/libopus 
     ./build_opencv.sh ${RABBIT_BUILD_TARGERT} $DIR/opencv
     ./build_geos.sh ${RABBIT_BUILD_TARGERT} $DIR/geos
     ./build_gdal.sh ${RABBIT_BUILD_TARGERT} $DIR/gdal
