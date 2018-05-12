@@ -74,9 +74,9 @@ if [ -n "$DIR" ]; then
     ./build_libtiff.sh ${RABBIT_BUILD_TARGERT} $DIR/libtiff
     ./build_freetype.sh ${RABBIT_BUILD_TARGERT} $DIR/freetype
     ./build_libqrencode.sh ${RABBIT_BUILD_TARGERT} $DIR/libqrencode
-    ./build_x264.sh ${RABBIT_BUILD_TARGERT} $DIR/x264 
-    ./build_libyuv.sh ${RABBIT_BUILD_TARGERT} $DIR/libyuv 
-    ./build_libvpx.sh ${RABBIT_BUILD_TARGERT} $DIR/libvpx 
+    ./build_x264.sh ${RABBIT_BUILD_TARGERT} $DIR/x264
+    ./build_libyuv.sh ${RABBIT_BUILD_TARGERT} $DIR/libyuv
+    ./build_libvpx.sh ${RABBIT_BUILD_TARGERT} $DIR/libvpx
     ./build_ffmpeg.sh ${RABBIT_BUILD_TARGERT} $DIR/ffmpeg 
     ./build_libopus.sh ${RABBIT_BUILD_TARGERT} $DIR/libopus 
     ./build_opencv.sh ${RABBIT_BUILD_TARGERT} $DIR/opencv
