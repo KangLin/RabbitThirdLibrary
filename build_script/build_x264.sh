@@ -81,7 +81,7 @@ case ${RABBIT_BUILD_TARGERT} in
         export STRIP=${RABBIT_BUILD_CROSS_PREFIX}strip
         export NM=${RABBIT_BUILD_CROSS_PREFIX}nm
         #export RANLIB=${RABBIT_BUILD_CROSS_PREFIX}ranlib
-        CONFIG_PARA="--cross-prefix=${RABBIT_BUILD_CROSS_PREFIX} --enable-static --host=$RABBIT_BUILD_CROSS_HOST"
+        CONFIG_PARA="${CONFIG_PARA} --cross-prefix=${RABBIT_BUILD_CROSS_PREFIX} --enable-static --host=$RABBIT_BUILD_CROSS_HOST"
         CONFIG_PARA="${CONFIG_PARA} --sysroot=${RABBIT_BUILD_CROSS_SYSROOT}"
         if [ "x86" = "${RABBIT_ARCH}" -o "x86_64" = "${RABBIT_ARCH}" ]; then
             CONFIG_PARA="${CONFIG_PARA} --disable-asm"

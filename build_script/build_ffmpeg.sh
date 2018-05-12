@@ -94,7 +94,7 @@ fi
 
 echo "configure ..."
 if [ "$RABBIT_BUILD_STATIC" = "static" ]; then
-    CONFIG_PARA="--enable-static --disable-shared"
+    CONFIG_PARA="--disable-shared"
     LDFLAGS="-static"
 else
     CONFIG_PARA="--disable-static --enable-shared"
@@ -102,7 +102,7 @@ fi
 THIRD_LIB="--enable-libx264"
 case ${RABBIT_BUILD_TARGERT} in
     android)
-        CONFIG_PARA="--enable-cross-compile"
+        CONFIG_PARA="${CONFIG_PARA} --enable-cross-compile"
         CONFIG_PARA="${CONFIG_PARA} --disable-w32threads"
         CONFIG_PARA="${CONFIG_PARA} --cross-prefix=${RABBIT_BUILD_CROSS_PREFIX}"
         CONFIG_PARA="${CONFIG_PARA} --sysroot=${RABBIT_BUILD_CROSS_SYSROOT}"

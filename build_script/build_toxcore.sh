@@ -96,7 +96,7 @@ case ${RABBIT_BUILD_TARGERT} in
         export AS=${RABBIT_BUILD_CROSS_PREFIX}as
         export STRIP=${RABBIT_BUILD_CROSS_PREFIX}strip
         export NM=${RABBIT_BUILD_CROSS_PREFIX}nm
-        CONFIG_PARA="CC=${RABBIT_BUILD_CROSS_PREFIX}gcc --disable-shared -enable-static --host=$RABBIT_BUILD_CROSS_HOST"
+        CONFIG_PARA="${CONFIG_PARA} CC=${RABBIT_BUILD_CROSS_PREFIX}gcc --disable-shared -enable-static --host=$RABBIT_BUILD_CROSS_HOST"
         CONFIG_PARA="${CONFIG_PARA} --with-sysroot=${RABBIT_BUILD_CROSS_SYSROOT}"
         #CONFIG_PARA="${CONFIG_PARA} --disable-epoll"
         CFLAGS="-march=armv7-a -mfpu=neon --sysroot=${RABBIT_BUILD_CROSS_SYSROOT}"
