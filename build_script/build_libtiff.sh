@@ -86,7 +86,7 @@ case ${RABBIT_BUILD_TARGERT} in
         fi
         CMAKE_PARA="${CMAKE_PARA} -DCMAKE_TOOLCHAIN_FILE=$RABBIT_BUILD_PREFIX/../build_script/cmake/platforms/toolchain-android.cmake"
         CMAKE_PARA="${CMAKE_PARA} -DANDROID_NATIVE_API_LEVEL=${ANDROID_NATIVE_API_LEVEL}"
-        #CMAKE_PARA="${CMAKE_PARA} -DANDROID_ABI=${ANDROID_ABI}"  
+        CMAKE_PARA="${CMAKE_PARA} -DCMAKE_C_FLAGS=${RABBIT_CMAKE_CFLAGS}"
         ;;
     unix)
         CONFIG_PARA="${CONFIG_PARA} --with-gnu-ld --enable-sse "
@@ -116,8 +116,5 @@ cmake .. \
     -G"${RABBITIM_GENERATORS}" ${CMAKE_PARA} -Dlzma=OFF
 
 cmake --build . --target install --config ${RABBIT_CONFIG} ${MAKE_PARA}
-
-mkdir -p $RABBIT_BUILD_PREFIX/lib/pkgconfig
-cp $RABBIT_BUILD_PREFIX/share/pkgconfig/* $RABBIT_BUILD_PREFIX/lib/pkgconfig/.
 
 cd $CUR_DIR
