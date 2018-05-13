@@ -84,7 +84,6 @@ if [ ! -f configure -a "windows_msvc" != "${RABBIT_BUILD_TARGERT}" ]; then
     automake --add-missing
     autoconf
     automake
-    make distclean
 fi
 
 mkdir -p build_${RABBIT_BUILD_TARGERT}
