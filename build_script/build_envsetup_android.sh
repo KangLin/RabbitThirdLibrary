@@ -176,6 +176,8 @@ fi
 export PKG_CONFIG_PATH=${RABBIT_BUILD_PREFIX}/lib/pkgconfig
 export PKG_CONFIG_LIBDIR=${PKG_CONFIG_PATH}
 export PKG_CONFIG_SYSROOT_DIR=${RABBIT_BUILD_PREFIX}
+#设置ndk。32位的是windows；64位的是windows-x86_64
+export ANDROID_NDK_HOST=windows-x86_64
 
 echo "---------------------------------------------------------------------------"
 echo "ANDROID_SDK:$ANDROID_SDK"

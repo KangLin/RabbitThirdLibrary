@@ -80,7 +80,7 @@ echo ""
 
 case $RABBIT_BUILD_TARGERT in
     android)
-        PARA="-r -spec android-g++"
+        #PARA="-r -spec android-g++"
         case $TARGET_OS in
             MINGW* | CYGWIN* | MSYS*)
                 MAKE="$ANDROID_NDK/prebuilt/${RABBIT_BUILD_HOST}/bin/make ${RABBIT_MAKE_JOB_PARA} VERBOSE=1" #在windows下编译
