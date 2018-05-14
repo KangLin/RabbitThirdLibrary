@@ -36,7 +36,7 @@ fi
 
 #下载源码:
 if [ ! -d ${RABBIT_BUILD_SOURCE_CODE} ]; then
-    VERSION=3.5.0.1
+    VERSION=v3.5.2
     if [ "TRUE" = "${RABBIT_USE_REPOSITORIES}" ]; then
         echo "git clone -q --branch=v${VERSION} https://github.com/google/protobuf.git ${RABBIT_BUILD_SOURCE_CODE}"
         git clone -q --branch=v${VERSION} https://github.com/google/protobuf.git ${RABBIT_BUILD_SOURCE_CODE}
@@ -74,6 +74,11 @@ echo "RABBIT_BUILD_CROSS_PREFIX:$RABBIT_BUILD_CROSS_PREFIX"
 echo "RABBIT_BUILD_CROSS_SYSROOT:$RABBIT_BUILD_CROSS_SYSROOT"
 echo ""
 
+if [ "$RABBIT_BUILD_STATIC" = "static" ]; then
+    CMAKE_PARA="-Dprotobuf_BUILD_SHARED_LIBS=OFF"
+else
+    CMAKE_PARA="-Dprotobuf_BUILD_SHARED_LIBS=ON"
+fi
 
 MAKE_PARA="-- ${RABBIT_MAKE_JOB_PARA}"
 case ${RABBIT_BUILD_TARGERT} in
@@ -107,11 +112,12 @@ case ${RABBIT_BUILD_TARGERT} in
     ;;
 esac
 
+CMAKE_PARA="${CMAKE_PARA} -Dprotobuf_BUILD_TESTS=OFF"
 echo "cmake .. -DCMAKE_INSTALL_PREFIX=$RABBIT_BUILD_PREFIX -DCMAKE_BUILD_TYPE=Release -G\"${RABBITIM_GENERATORS}\" ${CMAKE_PARA}"
 cmake .. \
     -DCMAKE_INSTALL_PREFIX="$RABBIT_BUILD_PREFIX" \
-    -G"${RABBITIM_GENERATORS}" ${CMAKE_PARA} \
-    -Dprotobuf_BUILD_TESTS=OFF
+    -G"${RABBITIM_GENERATORS}" ${CMAKE_PARA} 
+    
 
 cmake --build . --target install --config ${RABBIT_CONFIG} ${MAKE_PARA}
 
