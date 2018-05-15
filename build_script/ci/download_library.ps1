@@ -1,3 +1,4 @@
+if($env:BUILD_TARGERT -eq "android") {return 0}
 if($env:BUILD_EXIT -eq "TRUE") {return 0}
 if($env:RABBIT_NUMBER -eq 0) {return 0}
  

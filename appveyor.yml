@@ -29,19 +29,47 @@ environment:
   - RABBIT_NUMBER: 0
     BUILD_TARGERT: android
     RABBIT_TOOLCHAIN_VERSION: 4.9
+    ANDROID_NATIVE_API_LEVEL: 18
+    RABBIT_ARCH: arm
     QT_ROOT: NO
   
   - RABBIT_NUMBER: 1
     BUILD_TARGERT: android
     RABBIT_TOOLCHAIN_VERSION: 4.9
+    ANDROID_NATIVE_API_LEVEL: 18
+    RABBIT_ARCH: arm
     QT_ROOT: NO
   
   - RABBIT_NUMBER: 2
     BUILD_TARGERT: android
     RABBIT_TOOLCHAIN_VERSION: 4.9
+    ANDROID_NATIVE_API_LEVEL: 18
+    RABBIT_ARCH: arm
     QT_VERSION: 5.9.4
     QT_VERSION_DIR: 5.9
   
+  - RABBIT_NUMBER: 0
+    BUILD_TARGERT: android
+    RABBIT_TOOLCHAIN_VERSION: 4.9
+    ANDROID_NATIVE_API_LEVEL: 18
+    RABBIT_ARCH: x86
+    QT_ROOT: NO
+  
+  - RABBIT_NUMBER: 1
+    BUILD_TARGERT: android
+    RABBIT_TOOLCHAIN_VERSION: 4.9
+    ANDROID_NATIVE_API_LEVEL: 18
+    RABBIT_ARCH: x86
+    QT_ROOT: NO
+  
+  - RABBIT_NUMBER: 2
+    BUILD_TARGERT: android
+    RABBIT_TOOLCHAIN_VERSION: 4.9
+    ANDROID_NATIVE_API_LEVEL: 18
+    RABBIT_ARCH: x86
+    QT_VERSION: 5.9.4
+    QT_VERSION_DIR: 5.9
+    
   ##### mingw #####
   - RABBIT_NUMBER: 0
     BUILD_TARGERT: windows_mingw
@@ -191,6 +219,7 @@ install:
   
 before_build:
   - cd %APPVEYOR_BUILD_FOLDER%
+  - ps: build_script\ci\download_library_android.ps1
   - ps: build_script\ci\download_library.ps1
   - if "%BUILD_TARGERT%" == "android" C:\msys64\usr\bin\bash.exe %APPVEYOR_BUILD_FOLDER%\build_script\ci\build-install-tools-windows.sh
       
