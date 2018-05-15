@@ -44,11 +44,13 @@ fi
 
 #下载ANT
 #wget -c -nv http://apache.fayea.com/ant/binaries/apache-ant-1.10.1-bin.tar.gz
-ANT_VERSION=1.10.3
-wget -c -nv https://www.apache.org/dist/ant/binaries/apache-ant-${ANT_VERSION}-bin.tar.gz
-tar xzf apache-ant-${ANT_VERSION}-bin.tar.gz
-rm -f apache-ant-${ANT_VERSION}-bin.tar.gz
-mv apache-ant-${ANT_VERSION} apache-ant
+if [ ! -d "${TOOLS_DIR}/apache-ant" ];
+    ANT_VERSION=1.10.3
+    wget -c -nv https://www.apache.org/dist/ant/binaries/apache-ant-${ANT_VERSION}-bin.tar.gz
+    tar xzf apache-ant-${ANT_VERSION}-bin.tar.gz
+    rm -f apache-ant-${ANT_VERSION}-bin.tar.gz
+    mv apache-ant-${ANT_VERSION} apache-ant
+fi
 
 #Download android sdk  
 if [ ! -d "${TOOLS_DIR}/android-sdk" ]; then
