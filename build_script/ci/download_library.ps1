@@ -1,6 +1,6 @@
- if($env:BUILD_EXIT -eq "TRUE") {return 0}
- if($env:RABBIT_NUMBER -eq 0) {return 0}
-      
+if($env:BUILD_EXIT -eq "TRUE") {return 0}
+if($env:RABBIT_NUMBER -eq 0) {return 0}
+ 
  $JOB_QT_VERSION = "NO"
  $RABBIT_JOB_NAME = "Environment: "
  $number = ${env:RABBIT_NUMBER} - 1
