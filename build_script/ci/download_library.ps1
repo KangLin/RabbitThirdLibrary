@@ -24,7 +24,7 @@ if($env:RABBIT_NUMBER -eq 0) {return 0}
  }
 
  #$RABBIT_JOB_NAME = $RABBIT_JOB_NAME + "; Configuration: ${env:RABBIT_CONFIG}"
- $RABBIT_JOB_NAME = $RABBIT_JOB_NAME + "; Platform: ${env:RABBIT_ARCH}"
+ $RABBIT_JOB_NAME = $RABBIT_JOB_NAME + "; Platform: ${env:PLATFORM}"
       
  write-host "Waiting for job `"$RABBIT_JOB_NAME`" to complete"
     

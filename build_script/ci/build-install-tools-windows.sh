@@ -9,6 +9,10 @@ TOOLS_DIR=${SOURCE_DIR}/Tools
 if [ -d "${SOURCE_DIR}/ThirdLibrary" ]; then
     TOOLS_DIR=${SOURCE_DIR}/ThirdLibrary/Tools
 fi
+PKG_DIR=${SOURCE_DIR}/Packages
+if [ -d "${SOURCE_DIR}/ThirdLibrary" ]; then
+    PKG_DIR=${SOURCE_DIR}/ThirdLibrary/Packages
+fi
 echo ${TOOLS_DIR}
 SCRIPT_DIR=${SOURCE_DIR}/build_script
 if [ -d ${SOURCE_DIR}/ThirdLibrary/build_script ]; then
@@ -26,6 +30,9 @@ fi
 if [ ! -d "${TOOLS_DIR}" ]; then
     mkdir ${TOOLS_DIR}
 fi
+if [ ! -d "${PKG_DIR}" ];then
+    mkdir ${PKG_DIR}
+fi
 
 cd ${TOOLS_DIR}
 
@@ -36,9 +43,12 @@ if [ "NO" != "${QT_VERSION}" ]; then
         QT_DIR=C:/projects/rabbitim/ThirdLibrary/Tools/Qt/${QT_VERSION}
     fi
     if [ ! -d "${QT_DIR}" ]; then
-        wget -c --no-check-certificate -nv http://download.qt.io/official_releases/qt/${QT_VERSION_DIR}/${QT_VERSION}/qt-opensource-windows-x86-android-${QT_VERSION}.exe
-        bash ${SCRIPT_DIR}/ci/qt-installer.sh qt-opensource-windows-x86-android-${QT_VERSION}.exe ${QT_DIR}
-        rm qt-opensource-windows-x86-android-${QT_VERSION}.exe
+        if [ ! -f ${PKG_DIR}/qt-opensource-windows-x86-android-${QT_VERSION}.exe ]; then
+            cd ${PKG_DIR}
+            wget -c --no-check-certificate -nv http://download.qt.io/official_releases/qt/${QT_VERSION_DIR}/${QT_VERSION}/qt-opensource-windows-x86-android-${QT_VERSION}.exe
+            cd ${TOOLS_DIR}
+        fi
+        bash ${SCRIPT_DIR}/ci/qt-installer.sh ${PKG_DIR}/qt-opensource-windows-x86-android-${QT_VERSION}.exe ${QT_DIR}
     fi
 fi
 
@@ -46,28 +56,37 @@ fi
 #wget -c -nv http://apache.fayea.com/ant/binaries/apache-ant-1.10.1-bin.tar.gz
 if [ ! -d "${TOOLS_DIR}/apache-ant" ]; then
     ANT_VERSION=1.10.3
-    wget -c -nv https://www.apache.org/dist/ant/binaries/apache-ant-${ANT_VERSION}-bin.tar.gz
-    tar xzf apache-ant-${ANT_VERSION}-bin.tar.gz
-    rm -f apache-ant-${ANT_VERSION}-bin.tar.gz
+    if [ ! -f ${PKG_DIR}/apache-ant-${ANT_VERSION}-bin.tar.gz ]; then
+        cd ${PKG_DIR}
+        wget -c -nv https://www.apache.org/dist/ant/binaries/apache-ant-${ANT_VERSION}-bin.tar.gz
+        cd ${TOOLS_DIR}
+    fi
+    tar xzf ${PKG_DIR}/apache-ant-${ANT_VERSION}-bin.tar.gz
     mv apache-ant-${ANT_VERSION} apache-ant
 fi
 
 #Download android sdk  
 if [ ! -d "${TOOLS_DIR}/android-sdk" ]; then
-    wget -c -nv https://dl.google.com/android/android-sdk_r24.4.1-windows.zip
-    unzip -q android-sdk_r24.4.1-windows.zip
+    if [ ! -f ${PKG_DIR}/android-sdk_r24.4.1-windows.zip ]; then
+        cd ${PKG_DIR}
+        wget -c -nv https://dl.google.com/android/android-sdk_r24.4.1-windows.zip
+        cd ${TOOLS_DIR}
+    fi
+    unzip -q ${PKG_DIR}/android-sdk_r24.4.1-windows.zip
     mv android-sdk-windows android-sdk
-    rm android-sdk_r24.4.1-windows.zip
     (sleep 5 ; while true ; do sleep 1 ; printf 'y\r\n' ; done ) \
-    | android-sdk/tools/android.bat update sdk -u -t tool,android-18,extra,platform,platform-tools,build-tools
+    | android-sdk/tools/android.bat update sdk -u -t tool,android-18,android-24,extra,platform-tools,build-tools #platforms
 fi
 
 #下载android ndk  
 if [ ! -d "${TOOLS_DIR}/android-ndk" ]; then
-    wget -c -nv https://dl.google.com/android/repository/android-ndk-r17-windows-x86_64.zip
-    unzip -q android-ndk-r17-windows-x86_64.zip
+    if [ ! -f ${PKG_DIR}/android-ndk-r17-windows-x86_64.zip ]; then
+        cd ${PKG_DIR}
+        wget -c -nv https://dl.google.com/android/repository/android-ndk-r17-windows-x86_64.zip
+        cd ${TOOLS_DIR}
+    fi
+    unzip -q ${PKG_DIR}/android-ndk-r17-windows-x86_64.zip
     mv android-ndk-r17 android-ndk
-    rm android-ndk-r17-windows-x86_64.zip
     #使用WINDOWS下的PYTHON
     cd android-ndk/build/tools
     if [ -z "${ANDROID_NATIVE_API_LEVEL}" ]; then

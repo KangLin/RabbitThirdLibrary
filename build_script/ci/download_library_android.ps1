@@ -1,7 +1,6 @@
 if($env:BUILD_TARGERT -ne "android") {return 0}
 if($env:BUILD_EXIT -eq "TRUE") {return 0}
 if($env:RABBIT_NUMBER -eq 0) {return 0}
-if($env:PLATFORM -eq "x64") {return 0}
 
  $JOB_QT_VERSION = "NO"
  $RABBIT_JOB_NAME = "Environment: "
@@ -25,7 +24,7 @@ if($env:PLATFORM -eq "x64") {return 0}
  }
 
  #$RABBIT_JOB_NAME = $RABBIT_JOB_NAME + "; Configuration: ${env:RABBIT_CONFIG}"
- $RABBIT_JOB_NAME = $RABBIT_JOB_NAME + "; Platform: ${env:RABBIT_ARCH}"
+ $RABBIT_JOB_NAME = $RABBIT_JOB_NAME + "; Platform: ${env:PLATFORM}"
       
  write-host "Waiting for job `"$RABBIT_JOB_NAME`" to complete"
     

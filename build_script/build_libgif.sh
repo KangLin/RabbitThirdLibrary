@@ -39,8 +39,8 @@ CUR_DIR=`pwd`
 if [ ! -d ${RABBIT_BUILD_SOURCE_CODE} ]; then
     VERSION=master
     if [ "TRUE" = "${RABBIT_USE_REPOSITORIES}" ]; then
-        #echo "git clone -q --branch=${VERSION} git://git.code.sf.net/u/kl222/giflib ${RABBIT_BUILD_SOURCE_CODE}"
-        #git clone -q --branch=$VERSION git://git.code.sf.net/u/kl222/giflib ${RABBIT_BUILD_SOURCE_CODE}
+        #echo "git clone -q --branch=${VERSION} https://git.code.sf.net/p/giflib/code ${RABBIT_BUILD_SOURCE_CODE}"
+        #git clone -q --branch=$VERSION https://git.code.sf.net/p/giflib/code ${RABBIT_BUILD_SOURCE_CODE}
         echo "git clone -q https://github.com/KangLin/giflib.git ${RABBIT_BUILD_SOURCE_CODE}"
         git clone -q https://github.com/KangLin/giflib.git ${RABBIT_BUILD_SOURCE_CODE}
         if [ "$VERSION" != "master" ]; then
