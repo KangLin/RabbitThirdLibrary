@@ -219,12 +219,11 @@ install:
   - del C:\msys64\usr\bin\link.exe
   
 before_build:
-  - if "%BUILD_EXIT%" == "TRUE" exit 0
   - cd %APPVEYOR_BUILD_FOLDER%
   - ps: build_script\ci\download_library_android.ps1
   - ps: build_script\ci\download_library.ps1
-  - if "%BUILD_TARGERT%" == "android" C:\msys64\usr\bin\bash.exe %APPVEYOR_BUILD_FOLDER%\build_script\ci\build-install-tools-windows.sh
-      
+  - if "%BUILD_TARGERT%" == "android" if NOT "%BUILD_EXIT%" == "TRUE" C:\msys64\usr\bin\bash.exe %APPVEYOR_BUILD_FOLDER%\build_script\ci\build-install-tools-windows.sh
+
 build_script:
   - cd %APPVEYOR_BUILD_FOLDER%
   - if NOT "%BUILD_EXIT%" == "TRUE" C:\msys64\usr\bin\bash.exe %APPVEYOR_BUILD_FOLDER%\build_script\ci\build.sh
