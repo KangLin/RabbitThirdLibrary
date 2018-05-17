@@ -115,17 +115,14 @@ case ${RABBIT_BUILD_TARGERT} in
         #CMAKE_PARA="${CMAKE_PARA} -DANDROID_ABI=${ANDROID_ABI}"  
         ;;
     unix)
-        CMAKE_PARA="${CMAKE_PARA} -DBUILD_FAT_JAVA_LIB=OFF -DBUILD_opencv_java=OFF"
         ;;
     windows_msvc)
         #RABBITIM_GENERATORS="Visual Studio 12 2013"
         MAKE_PARA=""
-        CMAKE_PARA="${CMAKE_PARA} -DBUILD_FAT_JAVA_LIB=OFF -DBUILD_opencv_java=OFF"
         ;;
     windows_mingw)
         CMAKE_PARA="${CMAKE_PARA} -DCMAKE_TOOLCHAIN_FILE=$RABBIT_BUILD_PREFIX/../build_script/cmake/platforms/toolchain-mingw.cmake"
         CMAKE_PARA="${CMAKE_PARA} -DBUILD_opencv_videoio=OFF"
-        CMAKE_PARA="${CMAKE_PARA} -DBUILD_FAT_JAVA_LIB=OFF -DBUILD_opencv_java=OFF"
         ;;
     *)
     echo "${HELP_STRING}"
@@ -134,6 +131,7 @@ case ${RABBIT_BUILD_TARGERT} in
     ;;
 esac
 
+CMAKE_PARA="${CMAKE_PARA} -DBUILD_JAVA=OFF -DBUILD_FAT_JAVA_LIB=OFF -DBUILD_opencv_java=OFF"
 CMAKE_PARA="${CMAKE_PARA} -DBUILD_DOCS=OFF -DBUILD_opencv_apps=OFF -DBUILD_EXAMPLES=OFF -DBUILD_ANDROID_EXAMPLES=OFF"
 CMAKE_PARA="${CMAKE_PARA} -DBUILD_TESTS=OFF -DBUILD_PERF_TESTS=OFF" # -DBUILD_JASPER=OFF"
 CMAKE_PARA="${CMAKE_PARA} -DWITH_PROTOBUF=OFF"
