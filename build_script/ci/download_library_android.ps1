@@ -49,5 +49,5 @@ if (!$jobToWaitId) {throw "Unable t get JobId for the job `"$RABBIT_JOB_NAME`""}
   
 $url = "https://ci.appveyor.com/api/buildjobs/$jobToWaitId/artifacts/RABBIT_${env:BUILD_TARGERT}${env:RABBIT_TOOLCHAIN_VERSION}_${env:RABBIT_ARCH}_qt${JOB_QT_VERSION}_${env:RABBIT_CONFIG}_${env:BUILD_VERSION}.zip"
 echo $url
-Start-FileDownload $url -FileName ./${env:BUILD_TARGERT}.zip
+Start-FileDownload $url -FileName ${env:APPVEYOR_BUILD_FOLDER}/${env:BUILD_TARGERT}.zip
 if(!$?){return -1}

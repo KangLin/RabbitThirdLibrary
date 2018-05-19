@@ -70,6 +70,7 @@ cd ${RABBIT_BUILD_PREFIX}
 export RABBIT_BUILD_PREFIX=`pwd`
 cd ${SCRIPT_DIR}
 if [ -f ${SCRIPT_DIR}/../${BUILD_TARGERT}.zip ]; then
+    echo "unzip -q -d ${RABBIT_BUILD_PREFIX} ${SCRIPT_DIR}/../${BUILD_TARGERT}.zip"
     unzip -q -d ${RABBIT_BUILD_PREFIX} ${SCRIPT_DIR}/../${BUILD_TARGERT}.zip
     if [ "$PROJECT_NAME" != "RabbitThirdLibrary" \
         -a "$BUILD_TARGERT" != "windows_msvc" \
