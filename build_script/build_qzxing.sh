@@ -41,10 +41,12 @@ CUR_DIR=`pwd`
 
 #下载源码:
 if [ ! -d ${RABBIT_BUILD_SOURCE_CODE} ]; then
-    VERSION=master 
+    VERSION=d61f2ac9821a1f52655092c588c498ca8db1f2c9 
     if [ "TRUE" = "${RABBIT_USE_REPOSITORIES}" ]; then
         echo "git clone -q https://github.com/ftylitak/qzxing.git ${RABBIT_BUILD_SOURCE_CODE}"
-        git clone -q https://github.com/KangLin/qzxing.git ${RABBIT_BUILD_SOURCE_CODE}
+        git clone -q https://github.com/ftylitak/qzxing.git ${RABBIT_BUILD_SOURCE_CODE}
+        echo "git clone -q https://github.com/KangLin/qzxing.git ${RABBIT_BUILD_SOURCE_CODE}"
+        #git clone -q https://github.com/KangLin/qzxing.git ${RABBIT_BUILD_SOURCE_CODE}
         cd ${RABBIT_BUILD_SOURCE_CODE}
         if [ "$VERSION" != "master" ]; then
             git checkout -b ${VERSION} ${VERSION}
@@ -52,10 +54,10 @@ if [ ! -d ${RABBIT_BUILD_SOURCE_CODE} ]; then
     else
         mkdir -p ${RABBIT_BUILD_SOURCE_CODE}
         cd ${RABBIT_BUILD_SOURCE_CODE}
-        #echo "wget -q -c -nv -O qzxing.zip https://github.com/ftylitak/qzxing/archive/${VERSION}.zip"
-        #wget -q -c -nv -O qzxing.zip https://github.com/ftylitak/qzxing/archive/${VERSION}.zip
-        echo "wget -q -c -nv -O qzxing.zip https://github.com/KangLin/qzxing/archive/${VERSION}.zip"
-        wget -q -c -nv -O qzxing.zip https://github.com/KangLin/qzxing/archive/${VERSION}.zip
+        echo "wget -q -c -nv -O qzxing.zip https://github.com/ftylitak/qzxing/archive/${VERSION}.zip"
+        wget -q -c -nv -O qzxing.zip https://github.com/ftylitak/qzxing/archive/${VERSION}.zip
+        #echo "wget -q -c -nv -O qzxing.zip https://github.com/KangLin/qzxing/archive/${VERSION}.zip"
+        #wget -q -c -nv -O qzxing.zip https://github.com/KangLin/qzxing/archive/${VERSION}.zip
         unzip -q qzxing.zip
         mv qzxing-${VERSION} ..
         rm -fr *
@@ -116,6 +118,9 @@ case $RABBIT_BUILD_TARGERT in
         ;;
 esac
 
+if [ "$RABBIT_BUILD_STATIC" = "static" -o "$RABBIT_BUILD_TARGERT" = "android" ]; then
+    RELEASE_PARA="${RELEASE_PARA} CONFIG+=static"
+fi
 PARA="${PARA} -o Makefile INCLUDEPATH+=${RABBIT_BUILD_PREFIX}/include"
 PARA="${PARA} LIBS+=-L${RABBIT_BUILD_PREFIX}/lib"
 if [ "$RABBIT_BUILD_TARGERT" != "android"  ]; then
@@ -125,9 +130,6 @@ if [ "${RABBIT_CONFIG}" = "Debug" -o "${RABBIT_CONFIG}" = "debug" ]; then
     RELEASE_PARA="${PARA} CONFIG-=release CONFIG+=debug"
 else
     RELEASE_PARA="${PARA} CONFIG-=debug CONFIG+=release"
-fi
-if [ "$RABBIT_BUILD_STATIC" = "static" -o "$RABBIT_BUILD_TARGERT" = "android" ]; then
-    RELEASE_PARA="${RELEASE_PARA} CONFIG+=static"
 fi
 if [ "$RABBIT_BUILD_TARGERT" = "android"  ]; then
     MAKE_PARA=" INSTALL_ROOT=\"${RABBIT_BUILD_PREFIX}\""
