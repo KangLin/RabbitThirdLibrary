@@ -67,8 +67,8 @@ environment:
     RABBIT_TOOLCHAIN_VERSION: 4.9
     ANDROID_NATIVE_API_LEVEL: 18
     RABBIT_ARCH: x86
-    QT_VERSION: 5.9.4
-    QT_VERSION_DIR: 5.9
+    QT_VERSION: 5.6.3
+    QT_VERSION_DIR: 5.6
     
   ##### mingw #####
   - RABBIT_NUMBER: 0
@@ -91,10 +91,10 @@ environment:
     RABBIT_TOOLCHAIN_VERSION: 530
     QT_ROOT: C:/Qt/5.9/mingw53_32
   
-  - RABBIT_NUMBER: 2
-    BUILD_TARGERT: windows_mingw
-    RABBIT_TOOLCHAIN_VERSION: 530
-    QT_ROOT: C:/Qt/5.8/mingw53_32
+  #- RABBIT_NUMBER: 2
+  #  BUILD_TARGERT: windows_mingw
+  #  RABBIT_TOOLCHAIN_VERSION: 530
+  #  QT_ROOT: C:/Qt/5.8/mingw53_32
   
   - RABBIT_NUMBER: 0
     BUILD_TARGERT: windows_mingw
@@ -157,10 +157,10 @@ environment:
     RABBIT_TOOLCHAIN_VERSION: 14
     QT_ROOT: C:/Qt/5.9/msvc2015
     
-  - RABBIT_NUMBER: 2
-    BUILD_TARGERT: windows_msvc
-    RABBIT_TOOLCHAIN_VERSION: 14
-    QT_ROOT: C:/Qt/5.8/msvc2015
+  #- RABBIT_NUMBER: 2
+  #  BUILD_TARGERT: windows_msvc
+  #  RABBIT_TOOLCHAIN_VERSION: 14
+  #  QT_ROOT: C:/Qt/5.8/msvc2015
   
   - RABBIT_NUMBER: 2
     BUILD_TARGERT: windows_msvc
@@ -178,10 +178,10 @@ environment:
     RABBIT_TOOLCHAIN_VERSION: 12
     QT_ROOT: NO
 
-  - RABBIT_NUMBER: 2
-    BUILD_TARGERT: windows_msvc
-    RABBIT_TOOLCHAIN_VERSION: 12
-    QT_ROOT: C:/Qt/5.8/msvc2013
+  #- RABBIT_NUMBER: 2
+  #  BUILD_TARGERT: windows_msvc
+  #  RABBIT_TOOLCHAIN_VERSION: 12
+  #  QT_ROOT: C:/Qt/5.8/msvc2013
     
   - RABBIT_NUMBER: 2
     BUILD_TARGERT: windows_msvc

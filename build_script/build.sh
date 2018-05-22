@@ -77,15 +77,15 @@ if [ -n "$DIR" ]; then
     ./build_x264.sh ${RABBIT_BUILD_TARGERT} $DIR/x264
     ./build_libyuv.sh ${RABBIT_BUILD_TARGERT} $DIR/libyuv
     ./build_libvpx.sh ${RABBIT_BUILD_TARGERT} $DIR/libvpx
-    ./build_ffmpeg.sh ${RABBIT_BUILD_TARGERT} $DIR/ffmpeg 
-    #./build_libopus.sh ${RABBIT_BUILD_TARGERT} $DIR/libopus 
+    ./build_ffmpeg.sh ${RABBIT_BUILD_TARGERT} $DIR/ffmpeg
+    #./build_libopus.sh ${RABBIT_BUILD_TARGERT} $DIR/libopus
     ./build_opencv.sh ${RABBIT_BUILD_TARGERT} $DIR/opencv
     ./build_geos.sh ${RABBIT_BUILD_TARGERT} $DIR/geos
     ./build_gdal.sh ${RABBIT_BUILD_TARGERT} $DIR/gdal
     ./build_osg.sh ${RABBIT_BUILD_TARGERT} $DIR/osg
     ./build_OsgQt.sh ${RABBIT_BUILD_TARGERT} $DIR/osgQt
     ./build_osgearth.sh ${RABBIT_BUILD_TARGERT} $DIR/osgearth
-    #./build_qt.sh ${RABBIT_BUILD_TARGERT} $DIR/qt5 
+    #./build_qt.sh ${RABBIT_BUILD_TARGERT} $DIR/qt5
     ./build_qxmpp.sh ${RABBIT_BUILD_TARGERT} $DIR/qxmpp 
     ./build_qzxing.sh ${RABBIT_BUILD_TARGERT} $DIR/qzxing
 else
