@@ -95,8 +95,8 @@ case ${RABBIT_BUILD_TARGERT} in
         export LDFLAGS="${RABBIT_LDFLAGS}"
 
         #编译 cpufeatures
-        echo "${RABBIT_BUILD_CROSS_PREFIX}gcc -I${RABBIT_BUILD_CROSS_SYSROOT}/usr/include -c ${ANDROID_NDK_ROOT}/sources/android/cpufeatures/cpu-features.c"
-        ${RABBIT_BUILD_CROSS_PREFIX}gcc -I${RABBIT_BUILD_CROSS_SYSROOT}/usr/include -c ${ANDROID_NDK_ROOT}/sources/android/cpufeatures/cpu-features.c
+        echo "${RABBIT_BUILD_CROSS_PREFIX}gcc -I${ANDROID_NDK_ROOT}/sysroot/usr/include/${RABBIT_BUILD_CROSS_HOST} -c ${ANDROID_NDK_ROOT}/sources/android/cpufeatures/cpu-features.c"
+        ${RABBIT_BUILD_CROSS_PREFIX}gcc -I${ANDROID_NDK_ROOT}/sysroot/usr/include/${RABBIT_BUILD_CROSS_HOST} -c ${ANDROID_NDK_ROOT}/sources/android/cpufeatures/cpu-features.c
         ${RABBIT_BUILD_CROSS_PREFIX}ar rcs  libcpu-features.a cpu-features.o
         cp libcpu-features.a ${RABBIT_BUILD_PREFIX}/lib/.
         ;;
