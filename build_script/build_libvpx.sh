@@ -68,13 +68,13 @@ echo ""
 echo "configure ..."
 case ${RABBIT_BUILD_TARGERT} in
     android)
-        #export CC=${RABBIT_BUILD_CROSS_PREFIX}gcc 
-        #export CXX=${RABBIT_BUILD_CROSS_PREFIX}g++
-        #export AR=${RABBIT_BUILD_CROSS_PREFIX}gcc-ar
-        #export LD=${RABBIT_BUILD_CROSS_PREFIX}ld
-        #export AS=${RABBIT_BUILD_CROSS_PREFIX}as
-        #export STRIP=${RABBIT_BUILD_CROSS_PREFIX}strip
-        #export NM=${RABBIT_BUILD_CROSS_PREFIX}nm
+        export CC=${RABBIT_BUILD_CROSS_PREFIX}gcc
+        export CXX=${RABBIT_BUILD_CROSS_PREFIX}g++
+        export AR=${RABBIT_BUILD_CROSS_PREFIX}gcc-ar
+        export LD=${RABBIT_BUILD_CROSS_PREFIX}ld
+        export AS=${RABBIT_BUILD_CROSS_PREFIX}as
+        export STRIP=${RABBIT_BUILD_CROSS_PREFIX}strip
+        export NM=${RABBIT_BUILD_CROSS_PREFIX}nm
         export CROSS=${RABBIT_BUILD_CROSS_PREFIX}
         CONFIG_PARA="--sdk-path=${ANDROID_NDK_ROOT}"
         case ${RABBIT_ARCH} in 
@@ -82,7 +82,7 @@ case ${RABBIT_BUILD_TARGERT} in
                 CONFIG_PARA="${CONFIG_PARA} --target=armv7-android-gcc"
                 ;;
             x86*|arm64*)
-                CONFIG_PARA="${CONFIG_PARA} --target=${RABBIT_ARCH}-android-gcc"
+                CONFIG_PARA="${CONFIG_PARA} --as=auto --target=${RABBIT_ARCH}-android-gcc"
                 ;;
             *)
                 echo "Don't support target ${RABBIT_ARCH}"
