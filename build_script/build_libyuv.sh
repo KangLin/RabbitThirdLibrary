@@ -34,7 +34,7 @@ if [ -z "$RABBIT_BUILD_SOURCE_CODE" ]; then
 fi
 
 #下载源码:
-VERSION=2e9f3e5
+VERSION=2e9f3e5cf5f3c71a4a34893ceb20c5d69689390f
 if [ ! -d ${RABBIT_BUILD_SOURCE_CODE} ]; then
     echo "git clone -q -b $VERSION https://chromium.googlesource.com/external/libyuv  ${RABBIT_BUILD_SOURCE_CODE}"
     #git clone -q --branch=416c48d https://chromium.googlesource.com/external/libyuv ${RABBIT_BUILD_SOURCE_CODE}
