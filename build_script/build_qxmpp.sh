@@ -128,4 +128,10 @@ echo "$QMAKE ${RELEASE_PARA}"
 $QMAKE ${RELEASE_PARA} ../qxmpp.pro
 ${MAKE} -f Makefile install ${MAKE_PARA} ${RABBIT_MAKE_JOB_PARA} 
 
+if [ "$RABBIT_BUILD_TARGERT" = "android" ];then
+    mv -f ${RABBIT_BUILD_PREFIX}/usr/local/include/qxmpp ${RABBIT_BUILD_PREFIX}/include/.
+    #mv -f ${RABBIT_BUILD_PREFIX}/usr/local/lib/pkgconfig/qxmpp.pc ${RABBIT_BUILD_PREFIX}/lib/pkgconfig
+    #cp -f ${RABBIT_BUILD_PREFIX}/usr/local/lib/libqxmpp.a ${RABBIT_BUILD_PREFIX}/lib/.
+fi
+
 cd $CUR_DIR
