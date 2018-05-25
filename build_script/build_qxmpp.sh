@@ -104,7 +104,7 @@ case $RABBIT_BUILD_TARGERT in
         ;;
 esac
 
-if [ "$RABBIT_BUILD_STATIC" = "static" -o "$RABBIT_BUILD_TARGERT" = "android" ]; then
+if [ "$RABBIT_BUILD_STATIC" = "static" ]; then
     PARA="${PARA} QXMPP_LIBRARY_TYPE=staticlib" #静态库
     PARA="${PARA} CONFIG*=static"
 fi
@@ -112,26 +112,17 @@ fi
 PARA="${PARA} -o Makefile INCLUDEPATH+=${RABBIT_BUILD_PREFIX}/include"
 PARA="${PARA} LIBS+=-L${RABBIT_BUILD_PREFIX}/lib QXMPP_USE_VPX=1"
 PARA="${PARA} QXMPP_NO_TESTS=1 QXMPP_NO_EXAMPLES=1"
-if [ "$RABBIT_BUILD_TARGERT" != "android"  ]; then
-    PARA="${PARA} PREFIX=${RABBIT_BUILD_PREFIX}"
-fi
+
+PARA="${PARA} PREFIX=${RABBIT_BUILD_PREFIX}"
 
 if [ "${RABBIT_CONFIG}" = "Debug" -o "${RABBIT_CONFIG}" = "debug" ]; then
     RELEASE_PARA="${PARA} CONFIG-=release CONFIG+=debug"
 else
     RELEASE_PARA="${PARA} CONFIG-=debug CONFIG+=release"
 fi
-if [ "$RABBIT_BUILD_TARGERT" = "android"  ]; then
-    MAKE_PARA=" INSTALL_ROOT=\"${RABBIT_BUILD_PREFIX}\""
-fi
+
 echo "$QMAKE ${RELEASE_PARA}"
 $QMAKE ${RELEASE_PARA} ../qxmpp.pro
-${MAKE} -f Makefile install ${MAKE_PARA} ${RABBIT_MAKE_JOB_PARA} 
-
-if [ "$RABBIT_BUILD_TARGERT" = "android" ];then
-    mv -f ${RABBIT_BUILD_PREFIX}/usr/local/include/qxmpp ${RABBIT_BUILD_PREFIX}/include/.
-    #mv -f ${RABBIT_BUILD_PREFIX}/usr/local/lib/pkgconfig/qxmpp.pc ${RABBIT_BUILD_PREFIX}/lib/pkgconfig
-    #cp -f ${RABBIT_BUILD_PREFIX}/usr/local/lib/libqxmpp.a ${RABBIT_BUILD_PREFIX}/lib/.
-fi
+${MAKE} -f Makefile install ${RABBIT_MAKE_JOB_PARA}
 
 cd $CUR_DIR

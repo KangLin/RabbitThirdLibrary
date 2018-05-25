@@ -24,7 +24,7 @@ export ANDROID_SDK=$ANDROID_SDK_ROOT
 if [ -z "$RABBIT_CLEAN" ]; then
     RABBIT_CLEAN=TRUE #编译前清理  
 fi
-RABBIT_BUILD_STATIC="static" #设置编译静态库，注释掉，则为编译动态库  
+RABBIT_BUILD_STATIC="static" #设置编译静态库，注释掉，则为编译动态库
 #RABBIT_USE_REPOSITORIES="TRUE" #下载指定的压缩包。省略，则下载开发库。  
 #RABBIT_BUILD_TOOLCHAIN_VERSION=4.8   #工具链版本号,默认 4.9  
 #ANDROID_NATIVE_API_LEVEL=18   #android ndk api (平台)版本号,默认 18

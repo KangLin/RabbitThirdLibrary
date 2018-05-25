@@ -118,25 +118,23 @@ case $RABBIT_BUILD_TARGERT in
         ;;
 esac
 
-if [ "$RABBIT_BUILD_STATIC" = "static" -o "$RABBIT_BUILD_TARGERT" = "android" ]; then
-    RELEASE_PARA="${RELEASE_PARA} CONFIG+=static"
-fi
 PARA="${PARA} -o Makefile INCLUDEPATH+=${RABBIT_BUILD_PREFIX}/include"
 PARA="${PARA} LIBS+=-L${RABBIT_BUILD_PREFIX}/lib"
-if [ "$RABBIT_BUILD_TARGERT" != "android"  ]; then
-    PARA="${PARA} PREFIX=${RABBIT_BUILD_PREFIX}"
-fi
+PARA="${PARA} PREFIX=${RABBIT_BUILD_PREFIX}"
+
 if [ "${RABBIT_CONFIG}" = "Debug" -o "${RABBIT_CONFIG}" = "debug" ]; then
     RELEASE_PARA="${PARA} CONFIG-=release CONFIG+=debug"
 else
     RELEASE_PARA="${PARA} CONFIG-=debug CONFIG+=release"
 fi
-if [ "$RABBIT_BUILD_TARGERT" = "android"  ]; then
-    MAKE_PARA=" INSTALL_ROOT=\"${RABBIT_BUILD_PREFIX}\""
+
+if [ "$RABBIT_BUILD_STATIC" = "static" ]; then
+    RELEASE_PARA="${RELEASE_PARA} CONFIG+=staticlib"
 fi
+
 echo "$QMAKE ${RELEASE_PARA}"
 $QMAKE ${RELEASE_PARA} ..
-${MAKE} -f Makefile install ${MAKE_PARA} ${RABBIT_MAKE_JOB_PARA} 
+${MAKE} -f Makefile install ${RABBIT_MAKE_JOB_PARA}
 
 
 cd $CUR_DIR
