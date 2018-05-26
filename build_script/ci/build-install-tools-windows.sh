@@ -50,6 +50,7 @@ if [ "NO" != "${QT_VERSION}" ]; then
         fi
         echo "bash ${SCRIPT_DIR}/ci/qt-installer.sh ${PKG_DIR}/qt-opensource-windows-x86-android-${QT_VERSION}.exe ${QT_DIR}"
         bash ${SCRIPT_DIR}/ci/qt-installer.sh ${PKG_DIR}/qt-opensource-windows-x86-android-${QT_VERSION}.exe ${QT_DIR}
+        ls ${QT_DIR}
     fi
 fi
 

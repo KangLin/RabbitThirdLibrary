@@ -19,6 +19,9 @@
 export ANDROID_NDK=$ANDROID_NDK_ROOT            #指定 android ndk 根目录  
 export ANDROID_SDK=$ANDROID_SDK_ROOT
 
+#设置ndk。32位的是windows；64位的是windows-x86_64
+export ANDROID_NDK_HOST=windows-x86_64
+
 #ANT=/usr/bin/ant         #ant 程序  
 
 if [ -z "$RABBIT_CLEAN" ]; then
@@ -100,7 +103,6 @@ case $TARGET_OS in
     ;;
 esac
 
-
 if [ -z "${RABBIT_BUILD_TOOLCHAIN_VERSION}" ]; then
     RABBIT_BUILD_TOOLCHAIN_VERSION=4.9  #工具链版本号  
 fi
@@ -125,15 +127,6 @@ fi
 
 if [ "${RABBIT_ARCH}" = "x86" -o "${RABBIT_ARCH}" = "x86_64" ]; then
     export ANDROID_TOOLCHAIN_NAME=${RABBIT_ARCH}-${RABBIT_BUILD_TOOLCHAIN_VERSION}
-    #交叉编译前缀
-    if [ "${RABBIT_ARCH}" = "x86_64" ]; then
-        export ANDROID_ABI="x86_64"
-        RABBIT_BUILD_CROSS_PREFIX=${RABBIT_TOOL_CHAIN_ROOT}/bin/x86_64-linux-android-
-    else
-        export ANDROID_ABI="x86"
-        RABBIT_BUILD_CROSS_PREFIX=${RABBIT_TOOL_CHAIN_ROOT}/bin/i686-linux-android-
-    fi
-    ANDROID_NDK_ABI_NAME=${ANDROID_ABI}
     if [ -z "${RABBIT_BUILD_CROSS_HOST}" ]; then
         if [ "${RABBIT_ARCH}" = "x86_64" ]; then
             RABBIT_BUILD_CROSS_HOST=x86_64-linux-android
@@ -141,16 +134,25 @@ if [ "${RABBIT_ARCH}" = "x86" -o "${RABBIT_ARCH}" = "x86_64" ]; then
             RABBIT_BUILD_CROSS_HOST=i686-linux-android
         fi
     fi
+    #交叉编译前缀
+    if [ "${RABBIT_ARCH}" = "x86_64" ]; then
+        export ANDROID_ABI="x86_64"
+    else
+        export ANDROID_ABI="x86"
+    fi
+    RABBIT_BUILD_CROSS_PREFIX=${RABBIT_TOOL_CHAIN_ROOT}/bin/${RABBIT_BUILD_CROSS_HOST}-
+    ANDROID_NDK_ABI_NAME=${ANDROID_ABI}
+
 elif [ "${RABBIT_ARCH}" = "arm" ]; then
     export ANDROID_ABI="armeabi-v7a with NEON"
     RABBIT_CFLAGS="-march=armv7-a -mfloat-abi=softfp -mfpu=neon"
     ANDROID_NDK_ABI_NAME="armeabi-v7a"
-    export ANDROID_TOOLCHAIN_NAME=arm-linux-androideabi-${RABBIT_BUILD_TOOLCHAIN_VERSION}
-    #交叉编译前缀
-    RABBIT_BUILD_CROSS_PREFIX=${RABBIT_TOOL_CHAIN_ROOT}/bin/arm-linux-androideabi-
     if [ -z "${RABBIT_BUILD_CROSS_HOST}" ]; then
         RABBIT_BUILD_CROSS_HOST=arm-linux-androideabi
     fi
+    export ANDROID_TOOLCHAIN_NAME=${RABBIT_BUILD_CROSS_HOST}-${RABBIT_BUILD_TOOLCHAIN_VERSION}
+    #交叉编译前缀
+    RABBIT_BUILD_CROSS_PREFIX=${RABBIT_TOOL_CHAIN_ROOT}/bin/${RABBIT_BUILD_CROSS_HOST}-
 fi
 #交叉编译平台的 sysroot
 RABBIT_BUILD_CROSS_SYSROOT=$RABBIT_TOOL_CHAIN_ROOT/sysroot
@@ -165,7 +167,7 @@ if [ $ANDROID_NATIVE_API_LEVEL -lt 21 ]; then
     RABBIT_CFLAGS="$RABBIT_CFLAGS -D_FILE_OFFSET_BITS=32"
 fi
 RABBIT_CFLAGS="$RABBIT_CFLAGS -DANDROID -D__ANDROID_API__=${ANDROID_NATIVE_API_LEVEL} -I${RABBIT_BUILD_PREFIX}/include"
-RABBIT_CFLAGS="$RABBIT_CFLAGS --sysroot=${RABBIT_BUILD_CROSS_SYSROOT}"
+RABBIT_CFLAGS="$RABBIT_CFLAGS --sysroot=${RABBIT_BUILD_CROSS_SYSROOT} -I${RABBIT_BUILD_CROSS_SYSROOT}/usr/include/${RABBIT_BUILD_CROSS_HOST}"
 RABBIT_CPPFLAGS="$RABBIT_CFLAGS $RABBIT_BUILD_CROSS_STL_INCLUDE_FLAGS"
 RABBIT_LDFLAGS="--sysroot=${RABBIT_BUILD_CROSS_SYSROOT} -L${RABBIT_BUILD_CROSS_STL_LIBS} -L${RABBIT_BUILD_PREFIX}/lib"
 
@@ -180,8 +182,6 @@ fi
 export PKG_CONFIG_PATH=${RABBIT_BUILD_PREFIX}/lib/pkgconfig
 export PKG_CONFIG_LIBDIR=${PKG_CONFIG_PATH}
 export PKG_CONFIG_SYSROOT_DIR=${RABBIT_BUILD_PREFIX}
-#设置ndk。32位的是windows；64位的是windows-x86_64
-export ANDROID_NDK_HOST=windows-x86_64
 
 echo "---------------------------------------------------------------------------"
 echo "ANDROID_SDK:$ANDROID_SDK"
