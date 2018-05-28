@@ -61,9 +61,16 @@ if [ -z "$RABBIT_CONFIG" ]; then
     RABBIT_CONFIG=Release
 fi
 
+if [ -z "${RABBIT_BUILD_TOOLCHAIN_VERSION}" ]; then
+    RABBIT_BUILD_TOOLCHAIN_VERSION=4.9  #工具链版本号
+fi
+if [ -z "${ANDROID_NATIVE_API_LEVEL}" ]; then
+    ANDROID_NATIVE_API_LEVEL=18    #android ndk api (平台)版本号, Qt5.9 支持最小平台版本
+fi
+
 if [ -z "${RABBIT_BUILD_PREFIX}" ]; then
     RABBIT_BUILD_PREFIX=`pwd`/../${RABBIT_BUILD_TARGERT}    #修改这里为安装前缀  
-    RABBIT_BUILD_PREFIX=${RABBIT_BUILD_PREFIX}${RABBIT_TOOLCHAIN_VERSION}_${RABBIT_ARCH}_qt${QT_VERSION}_${RABBIT_CONFIG}
+    RABBIT_BUILD_PREFIX=${RABBIT_BUILD_PREFIX}${ANDROID_NATIVE_API_LEVEL}_${RABBIT_ARCH}_qt${QT_VERSION}_${RABBIT_CONFIG}
 fi
 if [ ! -d ${RABBIT_BUILD_PREFIX} ]; then
     mkdir -p ${RABBIT_BUILD_PREFIX}
@@ -102,13 +109,6 @@ case $TARGET_OS in
     return 2
     ;;
 esac
-
-if [ -z "${RABBIT_BUILD_TOOLCHAIN_VERSION}" ]; then
-    RABBIT_BUILD_TOOLCHAIN_VERSION=4.9  #工具链版本号  
-fi
-if [ -z "${ANDROID_NATIVE_API_LEVEL}" ]; then
-    ANDROID_NATIVE_API_LEVEL=18    #android ndk api (平台)版本号, Qt5.9 支持最小平台版本
-fi
 
 if [ -z "$RABBIT_TOOL_CHAIN_ROOT" ]; then
     RABBIT_TOOL_CHAIN_ROOT=${RABBIT_BUILD_PREFIX}/../android-toolchains-${RABBIT_ARCH}-api${ANDROID_NATIVE_API_LEVEL}
