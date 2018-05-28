@@ -34,6 +34,7 @@ Controller.prototype.CredentialsPageCallback = function() {
 Controller.prototype.ComponentSelectionPageCallback = function() {
     var widget = gui.currentPageWidget();
 
+    widget.selectAll();
     // widget.deselectAll();
 
     gui.clickButton(buttons.NextButton);
