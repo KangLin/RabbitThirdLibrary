@@ -36,8 +36,8 @@ function function_unix()
     sudo apt-get install -y -qq doxygen 
     
     # 依赖库  
-    if [ "$RABBIT_BUILD_THIRDLIBRARY" = "TRUE" ]; then
-        sudo apt-get install -y -qq libvpx-dev \
+    if [ "$RABBIT_BUILD_THIRDLIBRARY" != "TRUE" ]; then
+        sudo apt-get install -y -qq libvpx-dev libqxmpp-dev\
             libavcodec-dev libavformat-dev libavutil-dev libswscale-dev \
             libqrencode-dev \
             libssl-dev \
@@ -45,13 +45,13 @@ function function_unix()
     fi
     #Libxcb
     sudo apt-get install -y -qq "^libxcb.*" libx11-xcb-dev libxrender-dev libxi-dev
-    #QT 需要===============================
+    #编译 QT 需要===============================
     #opengl
     sudo apt-get install -y -qq mesa-common-dev libglu1-mesa-dev
     # libasound2、libgstreamer
     sudo apt-get install -y -qq libasound2-dev
     sudo apt-get install -y -qq libgstreamer0.10-dev libgstreamer-plugins-base0.10-dev
-    #QT 需要===============================
+    #编译 QT 需要===============================
 
     #安装工具
     sudo apt-get install -y -qq dh-make debhelper
