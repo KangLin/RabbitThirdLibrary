@@ -24,10 +24,17 @@ if [ "${BUILD_TARGERT}" = "android" ]; then
     export ANDROID_SDK=$ANDROID_SDK_ROOT
 
     QT_DIR=`pwd`/Qt/${QT_VERSION}
-    export QT_ROOT=${QT_DIR}/${QT_VERSION_DIR}/android_armv7
-    if [ "${QT_VERSION}" = "5.2.1" ]; then
-        export QT_ROOT=${QT_DIR}/${QT_VERSION}/android_armv7
-    fi
+    case $RABBIT_ARCH in
+        arm*)
+            export QT_ROOT=${QT_DIR}/${QT_VERSION_DIR}/android_armv7
+            ;;
+        x86*)
+            export QT_ROOT=${QT_DIR}/${QT_VERSION_DIR}/android_$RABBIT_ARCH
+            ;;
+           *)
+           echo "Don't arch $RABBIT_ARCH"
+           ;;
+    esac
 fi
 
 
