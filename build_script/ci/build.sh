@@ -1,5 +1,5 @@
 #!/bin/bash
-set -ev
+set -e
 
 RABBIT_LIBRARYS[0]="change_prefix zlib expat libgpx openssl libsodium libcurl libpng jpeg libgif libtiff freetype libyuv libvpx libqrencode libopus x264 ffmpeg"
 RABBIT_LIBRARYS[1]="opencv" # geos gdal"
@@ -121,7 +121,7 @@ echo "--------------------------------------------------------------------------
 
 cd ${SCRIPT_DIR}
 
-if [ "$PROJECT_NAME" = "rabbitim" ]; then
+if [ "$PROJECT_NAME" = "RabbitIm" ]; then
     echo "bash ./build_rabbitim.sh ${BUILD_TARGERT} $PROJECT_DIR $CMAKE"
     bash ./build_rabbitim.sh ${BUILD_TARGERT} $PROJECT_DIR $CMAKE
     exit 0
