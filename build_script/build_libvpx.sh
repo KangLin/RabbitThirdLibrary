@@ -141,11 +141,11 @@ case ${RABBIT_BUILD_TARGERT} in
         exit 2
         ;;
 esac
-if [ "$RABBIT_BUILD_STATIC" = "static" ]; then
-    CONFIG_PARA="${CONFIG_PARA} --enable-static --disable-shared"
-else
-    CONFIG_PARA="${CONFIG_PARA} --disable-static --enable-shared"
-fi
+#if [ "$RABBIT_BUILD_STATIC" = "static" ]; then
+#    CONFIG_PARA="${CONFIG_PARA} --enable-static --disable-shared"
+#else
+#    CONFIG_PARA="${CONFIG_PARA} --disable-static --enable-shared"
+#fi
 CONFIG_PARA="${CONFIG_PARA} --enable-libs --prefix=$RABBIT_BUILD_PREFIX"
 CONFIG_PARA="${CONFIG_PARA} --disable-docs --disable-examples --disable-install-docs --disable-tools "
 CONFIG_PARA="${CONFIG_PARA} --disable-install-bins --enable-install-libs"
