@@ -93,10 +93,18 @@ if [ "$BUILD_TARGERT" = "android" ]; then
     if [ -z "$APPVEYOR" ]; then
         export JAVA_HOME="/C/Program Files (x86)/Java/jdk1.8.0"
     fi
-    export QT_ROOT=${SCRIPT_DIR}/../Tools/Qt/${QT_VERSION}/${QT_VERSION_DIR}/android_armv7
-    if [ "${QT_VERSION}" = "5.2.1" ]; then
-        export QT_ROOT=${SCRIPT_DIR}/../Tools/Qt/${QT_VERSION}/android_armv7
-    fi
+    QT_DIR=`pwd`/Qt/Qt${QT_VERSION}/${QT_VERSION}
+    case $RABBIT_ARCH in
+        arm*)
+            export QT_ROOT=${QT_DIR}/android_armv7
+            ;;
+        x86*)
+            export QT_ROOT=${QT_DIR}/android_$RABBIT_ARCH
+            ;;
+           *)
+           echo "Don't arch $RABBIT_ARCH"
+           ;;
+    esac
     export PATH=${SCRIPT_DIR}/../Tools/apache-ant/bin:$JAVA_HOME:$PATH
 fi
 if [ "$BUILD_TARGERT" != "windows_msvc" ]; then
