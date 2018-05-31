@@ -2,6 +2,8 @@
 
 #http://stackoverflow.com/questions/25105269/silent-install-qt-run-installer-on-ubuntu-server
 #http://doc.qt.io/qtinstallerframework/noninteractive.html
+#参考：https://github.com/mjscosta/qt-silent-installer
+
 set -e #quit on error
 
 if [ $# -lt 2 ];
@@ -15,6 +17,7 @@ export WORKDIR=$PWD
 INSTALLER=$1
 OUTPUT=$2
 SCRIPT="$(mktemp /tmp/tmp.XXXXXXXXX)"
+selectedPackages=
 
 cat <<EOF > $SCRIPT
 function Controller() {
@@ -22,6 +25,12 @@ function Controller() {
     installer.installationFinished.connect(function() {
         gui.clickButton(buttons.NextButton);
     });
+}
+
+function log() {
+    var msg = ["QTCI: "].concat([].slice.call(arguments));
+
+    console.log(msg.join(" "));
 }
 
 Controller.prototype.WelcomePageCallback = function() {
@@ -33,10 +42,31 @@ Controller.prototype.CredentialsPageCallback = function() {
 }
 
 Controller.prototype.ComponentSelectionPageCallback = function() {
-    var widget = gui.currentPageWidget();
+    //var widget = gui.currentPageWidget();
+    //widget.selectAll();
+    //widget.deselectAll();
 
-    widget.selectAll();
-    // widget.deselectAll();
+    var components = installer.components();
+    log("Available components: " + components.length);
+    for (var i = 0 ; i < components.length ;i++) {
+        log(components[i].name);
+    }
+    log("Select components");
+    function trim(str) {
+        return str.replace(/^ +/,"").replace(/ *$/,"");
+    }
+    var widget = gui.currentPageWidget();
+    var packages = trim("$selectedPackages").split(",");
+    if (packages.length > 0 && packages[0] !== "") {
+        widget.deselectAll();
+        for (var i in packages) {
+            var pkg = trim(packages[i]);
+            log("Select " + pkg);
+            widget.selectComponent(pkg);
+        }
+    } else {
+        log("Use default component list");
+    }
 
     gui.clickButton(buttons.NextButton);
 }
