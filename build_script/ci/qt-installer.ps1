@@ -1,3 +1,5 @@
+#参考：https://github.com/mjscosta/qt-silent-installer
+
 # source https://download.qt.io/archive/qt/5.9/5.9.2/qt-opensource-windows-x86-5.9.2.exe.mirrorlist
 
 $packageName = 'qt-opensource-windows'

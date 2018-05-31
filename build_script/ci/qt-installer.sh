@@ -17,7 +17,16 @@ export WORKDIR=$PWD
 INSTALLER=$1
 OUTPUT=$2
 SCRIPT="$(mktemp /tmp/tmp.XXXXXXXXX)"
-selectedPackages=
+case $RABBIT_ARCH in
+    arm*)
+        SELECTEDPACKAGES=android_armv7
+        ;;
+     x86)
+        SELECTEDPACKAGES=android_x86
+        ;;
+       *)
+       echo "Aach[$RABBIT_ARCH] don't suppoert"
+esac
 
 cat <<EOF > $SCRIPT
 function Controller() {
@@ -56,13 +65,18 @@ Controller.prototype.ComponentSelectionPageCallback = function() {
         return str.replace(/^ +/,"").replace(/ *$/,"");
     }
     var widget = gui.currentPageWidget();
-    var packages = trim("$selectedPackages").split(",");
+    var packages = trim("$SELECTEDPACKAGES").split(",");
     if (packages.length > 0 && packages[0] !== "") {
         widget.deselectAll();
         for (var i in packages) {
             var pkg = trim(packages[i]);
-            log("Select " + pkg);
-            widget.selectComponent(pkg);
+            for (var i = 0 ; i < components.length ;i++) {
+                if(components[i].name.indexOf(pkg) != -1)
+                {
+                    log("Select " + components[i].name);
+                    widget.selectComponent(trim(components[i].name));
+                }
+            }
         }
     } else {
         log("Use default component list");
@@ -113,4 +127,4 @@ Controller.prototype.FinishedPageCallback = function() {
 EOF
 
 chmod u+x $1
-$1 --script $SCRIPT
+$1 -v --script $SCRIPT

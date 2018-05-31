@@ -125,7 +125,8 @@ case ${RABBIT_BUILD_TARGERT} in
         CONFIG_PARA="${CONFIG_PARA} --host-os=$RABBIT_BUILD_CROSS_HOST"
         CFLAGS="${RABBIT_CFLAGS}"
         CPPFLAGS="${RABBIT_CPPFLAGS}"
-        LDFLAGS="${RABBIT_LDFLAGS} -lcpu-features"
+        #有 libvpx 才使用
+        #LDFLAGS="${RABBIT_LDFLAGS} -lcpu-features"
         ;;
     unix)
         CONFIG_PARA="${CONFIG_PARA} ${THIRD_LIB}"
