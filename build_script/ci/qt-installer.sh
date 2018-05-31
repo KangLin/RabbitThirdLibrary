@@ -6,7 +6,7 @@ set -e #quit on error
 
 if [ $# -lt 2 ];
 then
-    echo qt-installer.sh qt-installer output_path
+    echo qt-installer.sh qt-installer-file output_path
     exit -1
 fi
 
@@ -18,13 +18,14 @@ SCRIPT="$(mktemp /tmp/tmp.XXXXXXXXX)"
 
 cat <<EOF > $SCRIPT
 function Controller() {
+    installer.autoRejectMessageBoxes();
     installer.installationFinished.connect(function() {
         gui.clickButton(buttons.NextButton);
     });
 }
 
 Controller.prototype.WelcomePageCallback = function() {
-    gui.clickButton(buttons.NextButton);
+    gui.clickButton(buttons.NextButton, 3000);
 }
 
 Controller.prototype.CredentialsPageCallback = function() {

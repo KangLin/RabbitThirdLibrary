@@ -121,7 +121,7 @@ echo "--------------------------------------------------------------------------
 
 cd ${SCRIPT_DIR}
 
-if [ "$PROJECT_NAME" = "RabbitIm" ]; then
+if [ "$PROJECT_NAME" = "rabbitim" ]; then
     echo "bash ./build_rabbitim.sh ${BUILD_TARGERT} $PROJECT_DIR $CMAKE"
     bash ./build_rabbitim.sh ${BUILD_TARGERT} $PROJECT_DIR $CMAKE
     exit 0

@@ -91,7 +91,7 @@ if [ -n "${QT_ROOT}" ]; then
                             #这里设置的是自动编译时的配置，你需要修改为你本地qt编译环境的配置.
 fi
 
-MAKE="make ${RABBIT_MAKE_JOB_PARA}"
+MAKE="make" # ${RABBIT_MAKE_JOB_PARA}"
 #自动判断主机类型，目前只做了linux、windows判断
 TARGET_OS=`uname -s`
 case $TARGET_OS in
