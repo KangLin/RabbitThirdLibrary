@@ -2,7 +2,8 @@
 
 #http://stackoverflow.com/questions/25105269/silent-install-qt-run-installer-on-ubuntu-server
 #http://doc.qt.io/qtinstallerframework/noninteractive.html
-#参考：https://github.com/mjscosta/qt-silent-installer
+#参考：https://github.com/benlau/qtci
+#     https://github.com/mjscosta/qt-silent-installer
 
 set -e #quit on error
 
@@ -51,10 +52,6 @@ Controller.prototype.CredentialsPageCallback = function() {
 }
 
 Controller.prototype.ComponentSelectionPageCallback = function() {
-    //var widget = gui.currentPageWidget();
-    //widget.selectAll();
-    //widget.deselectAll();
-
     var components = installer.components();
     log("Available components: " + components.length);
     for (var i = 0 ; i < components.length ;i++) {
@@ -65,9 +62,10 @@ Controller.prototype.ComponentSelectionPageCallback = function() {
         return str.replace(/^ +/,"").replace(/ *$/,"");
     }
     var widget = gui.currentPageWidget();
+    widget.deselectAll();
     var packages = trim("$SELECTEDPACKAGES").split(",");
     if (packages.length > 0 && packages[0] !== "") {
-        widget.deselectAll();
+        
         for (var i in packages) {
             var pkg = trim(packages[i]);
             for (var i = 0 ; i < components.length ;i++) {
@@ -127,4 +125,7 @@ Controller.prototype.FinishedPageCallback = function() {
 EOF
 
 chmod u+x $1
+#显示log
 $1 -v --script $SCRIPT
+#不显示log
+#$1 --script $SCRIPT

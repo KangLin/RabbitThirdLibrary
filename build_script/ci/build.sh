@@ -93,7 +93,7 @@ if [ "$BUILD_TARGERT" = "android" ]; then
     if [ -z "$APPVEYOR" ]; then
         export JAVA_HOME="/C/Program Files (x86)/Java/jdk1.8.0"
     fi
-    QT_DIR=`pwd`/Qt/Qt${QT_VERSION}/${QT_VERSION}
+    QT_DIR=${SCRIPT_DIR}/../Tools/Qt/Qt${QT_VERSION}/${QT_VERSION}
     case $RABBIT_ARCH in
         arm*)
             export QT_ROOT=${QT_DIR}/android_armv7

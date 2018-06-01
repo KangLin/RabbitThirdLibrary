@@ -36,25 +36,6 @@ fi
 
 cd ${TOOLS_DIR}
 
-# Qt qt安装参见：https://github.com/benlau/qtci  
-if [ "NO" != "${QT_VERSION}" ]; then
-    QT_DIR=C:/projects/rabbitthirdlibrary/Tools/Qt/Qt${QT_VERSION}
-    if [ -d "C:/projects/rabbitim/ThirdLibrary/Tools" ]; then
-        QT_DIR=C:/projects/rabbitim/ThirdLibrary/Tools/Qt/Qt${QT_VERSION}
-    fi
-    QT_INSTALL_FILE_NAME=qt-opensource-windows-x86-${QT_VERSION}.exe
-    if [ ! -d "${QT_DIR}" ]; then
-        if [ ! -f ${PKG_DIR}/$QT_INSTALL_FILE_NAME ]; then
-            cd ${PKG_DIR}
-            wget -c --no-check-certificate -nv http://download.qt.io/official_releases/qt/${QT_VERSION_DIR}/${QT_VERSION}/${QT_INSTALL_FILE_NAME}
-            cd ${TOOLS_DIR}
-        fi
-        echo "bash ${SCRIPT_DIR}/ci/qt-installer.sh ${PKG_DIR}/${QT_INSTALL_FILE_NAME} ${QT_DIR}"
-        bash ${SCRIPT_DIR}/ci/qt-installer.sh ${PKG_DIR}/${QT_INSTALL_FILE_NAME} ${QT_DIR}
-        ls ${QT_DIR}
-    fi
-fi
-
 #下载ANT
 #wget -c -nv http://apache.fayea.com/ant/binaries/apache-ant-1.10.1-bin.tar.gz
 if [ ! -d "${TOOLS_DIR}/apache-ant" ]; then
@@ -101,6 +82,25 @@ if [ ! -d "${TOOLS_DIR}/android-ndk" ]; then
             --arch ${RABBIT_ARCH} \
             --api ${ANDROID_NATIVE_API_LEVEL} \
             --install-dir ${TOOLS_DIR}/android-ndk/android-toolchain-${RABBIT_ARCH}
+    fi
+fi
+
+# Qt qt安装参见：https://github.com/benlau/qtci  
+if [ "NO" != "${QT_VERSION}" ]; then
+    QT_DIR=C:/projects/rabbitthirdlibrary/Tools/Qt/Qt${QT_VERSION}
+    if [ -d "C:/projects/rabbitim/ThirdLibrary/Tools" ]; then
+        QT_DIR=C:/projects/rabbitim/ThirdLibrary/Tools/Qt/Qt${QT_VERSION}
+    fi
+    QT_INSTALL_FILE_NAME=qt-opensource-windows-x86-${QT_VERSION}.exe
+    if [ ! -d "${QT_DIR}" ]; then
+        if [ ! -f ${PKG_DIR}/$QT_INSTALL_FILE_NAME ]; then
+            cd ${PKG_DIR}
+            wget -c --no-check-certificate -nv http://download.qt.io/official_releases/qt/${QT_VERSION_DIR}/${QT_VERSION}/${QT_INSTALL_FILE_NAME}
+            cd ${TOOLS_DIR}
+        fi
+        echo "bash ${SCRIPT_DIR}/ci/qt-installer.sh ${PKG_DIR}/${QT_INSTALL_FILE_NAME} ${QT_DIR}"
+        bash ${SCRIPT_DIR}/ci/qt-installer.sh ${PKG_DIR}/${QT_INSTALL_FILE_NAME} ${QT_DIR}
+        ls ${QT_DIR}
     fi
 fi
 

@@ -36,5 +36,3 @@ if [ "${BUILD_TARGERT}" = "android" ]; then
            ;;
     esac
 fi
-
-
