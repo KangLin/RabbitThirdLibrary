@@ -31,6 +31,9 @@ if [ "${BUILD_TARGERT}" = "android" ]; then
         x86*)
             export QT_ROOT=${QT_DIR}/android_$RABBIT_ARCH
             ;;
+        unix)
+            export QT_ROOT=${QT_DIR}/gcc_64
+            ;;
            *)
            echo "Don't arch $RABBIT_ARCH"
            ;;

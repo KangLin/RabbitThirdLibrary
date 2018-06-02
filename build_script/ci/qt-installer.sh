@@ -25,6 +25,9 @@ case $RABBIT_ARCH in
      x86)
         SELECTEDPACKAGES=android_x86
         ;;
+     unix)
+        SELECTEDPACKAGES=gcc_64
+        ;;
        *)
        echo "Aach[$RABBIT_ARCH] don't suppoert"
 esac
