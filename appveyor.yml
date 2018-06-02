@@ -199,15 +199,15 @@ environment:
   #  RABBIT_TOOLCHAIN_VERSION: 12
   #  QT_ROOT: C:/Qt/5.8/msvc2013
   
-  - RABBIT_NUMBER: 2
-    BUILD_TARGERT: windows_msvc
-    RABBIT_TOOLCHAIN_VERSION: 12
-    QT_ROOT: C:/Qt/5.10/msvc2013
+  #- RABBIT_NUMBER: 2
+  #  BUILD_TARGERT: windows_msvc
+  #  RABBIT_TOOLCHAIN_VERSION: 12
+  #  QT_ROOT: C:/Qt/5.10/msvc2013
   
-  - RABBIT_NUMBER: 2
-    BUILD_TARGERT: windows_msvc
-    RABBIT_TOOLCHAIN_VERSION: 12
-    QT_ROOT: C:/Qt/5.9/msvc2013
+  #- RABBIT_NUMBER: 2
+  #   BUILD_TARGERT: windows_msvc
+  #   RABBIT_TOOLCHAIN_VERSION: 12
+  #   QT_ROOT: C:/Qt/5.9/msvc2013
     
   - RABBIT_NUMBER: 2
     BUILD_TARGERT: windows_msvc

@@ -119,7 +119,7 @@ else #qmake编译
 
     case $1 in
         android)
-            export ANDROID_NDK_PLATFORM=$ANDROID_NATIVE_API_LEVEL
+            export ANDROID_NDK_PLATFORM=android-$ANDROID_NATIVE_API_LEVEL
             export CPPFLAGS=$RABBIT_CPPFLAGS
             export CFLAGS=$RABBIT_CFLAGS
             export LDFLAGS=$RABBIT_LDFLAGS
