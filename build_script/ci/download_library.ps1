@@ -2,29 +2,39 @@ if($env:BUILD_TARGERT -eq "android") {return 0}
 if($env:BUILD_EXIT -eq "TRUE") {return 0}
 if($env:RABBIT_NUMBER -eq 0) {return 0}
  
- $JOB_QT_VERSION = "NO"
- $RABBIT_JOB_NAME = "Environment: "
- $number = ${env:RABBIT_NUMBER} - 1
- $RABBIT_JOB_NAME = $RABBIT_JOB_NAME + "RABBIT_NUMBER=$number"
- if ($env:APPVEYOR_BUILD_WORKER_IMAGE -eq "Visual Studio 2017")
- {
-     $RABBIT_JOB_NAME = $RABBIT_JOB_NAME + ", APPVEYOR_BUILD_WORKER_IMAGE=$env:APPVEYOR_BUILD_WORKER_IMAGE"
- }
- $RABBIT_JOB_NAME = $RABBIT_JOB_NAME + ", BUILD_TARGERT=${env:BUILD_TARGERT}, RABBIT_TOOLCHAIN_VERSION=${env:RABBIT_TOOLCHAIN_VERSION}"
-      
- if($env:RABBIT_NUMBER -lt 3)
- {
-     $RABBIT_JOB_NAME = $RABBIT_JOB_NAME+ ", QT_ROOT=NO"
-     $JOB_QT_VERSION = "NO"
- }
- else
- {
-     $RABBIT_JOB_NAME = $RABBIT_JOB_NAME+ ", QT_ROOT=${env:QT_ROOT}" 
-     $JOB_QT_VERSION = ${env:QT_VERSION}
- }
+$JOB_QT_VERSION = "NO"
+$RABBIT_JOB_NAME = "Environment: "
+$number = ${env:RABBIT_NUMBER} - 1
+$RABBIT_JOB_NAME = $RABBIT_JOB_NAME + "RABBIT_NUMBER=$number"
+if ($env:APPVEYOR_BUILD_WORKER_IMAGE -eq "Visual Studio 2017")
+{
+    $RABBIT_JOB_NAME = $RABBIT_JOB_NAME + ", APPVEYOR_BUILD_WORKER_IMAGE=$env:APPVEYOR_BUILD_WORKER_IMAGE"
+}
 
- #$RABBIT_JOB_NAME = $RABBIT_JOB_NAME + "; Configuration: ${env:RABBIT_CONFIG}"
- $RABBIT_JOB_NAME = $RABBIT_JOB_NAME + "; Platform: ${env:PLATFORM}"
+$RABBIT_JOB_NAME = $RABBIT_JOB_NAME + ", BUILD_TARGERT=${env:BUILD_TARGERT}, RABBIT_TOOLCHAIN_VERSION=${env:RABBIT_TOOLCHAIN_VERSION}"
+
+if (${env:RABBIT_ARCH})
+{
+    $RABBIT_JOB_NAME = $RABBIT_JOB_NAME + ", RABBIT_ARCH=${env:RABBIT_ARCH}"
+}
+else
+{
+    ${env:RABBIT_ARCH} = "x64"
+}
+if (${env:RABBIT_CONFIG})
+{
+    $RABBIT_JOB_NAME = $RABBIT_JOB_NAME + ", RABBIT_CONFIG=${env:RABBIT_CONFIG}"
+}
+else
+{
+   ${env:RABBIT_CONFIG} = "Release"
+}
+
+if($env:RABBIT_NUMBER -gt 2)
+{
+    $RABBIT_JOB_NAME = $RABBIT_JOB_NAME + ", QT_ROOT=${env:QT_ROOT}" 
+    $JOB_QT_VERSION = ${env:QT_VERSION}
+}
       
  write-host "Waiting for job `"$RABBIT_JOB_NAME`" to complete"
     
