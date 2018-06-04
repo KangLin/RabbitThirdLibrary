@@ -45,7 +45,7 @@ function function_common()
     
     # Qt qt安装参见：https://github.com/benlau/qtci  
     if [ -n "${QT_VERSION}" ]; then
-        QT_DIR=`pwd`/Qt/${QT_VERSION}
+        QT_DIR=`pwd`/Qt/Qt${QT_VERSION}
         if [ ! -d "${QT_DIR}" ]; then
             wget -c --no-check-certificate -nv http://download.qt.io/official_releases/qt/${QT_VERSION_DIR}/${QT_VERSION}/qt-opensource-linux-x64-${QT_VERSION}.run
             bash ${SCRIPT_DIR}/ci/qt-installer.sh qt-opensource-linux-x64-${QT_VERSION}.run ${QT_DIR}
