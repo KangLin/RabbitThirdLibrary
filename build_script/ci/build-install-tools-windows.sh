@@ -100,7 +100,6 @@ if [ "NO" != "${QT_VERSION}" ]; then
         fi
         echo "bash ${SCRIPT_DIR}/ci/qt-installer.sh ${PKG_DIR}/${QT_INSTALL_FILE_NAME} ${QT_DIR}"
         bash ${SCRIPT_DIR}/ci/qt-installer.sh ${PKG_DIR}/${QT_INSTALL_FILE_NAME} ${QT_DIR}
-        ls ${QT_DIR}
     fi
 fi
 

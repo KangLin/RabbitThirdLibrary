@@ -242,14 +242,14 @@ environment:
   - RABBIT_NUMBER: 1
     BUILD_TARGERT: windows_msvc
     RABBIT_TOOLCHAIN_VERSION: 14
-    RABBIT_ARCH:: x86
+    RABBIT_ARCH: x86
     RABBIT_CONFIG: Debug
     
   - RABBIT_NUMBER: 2
     BUILD_TARGERT: windows_msvc
     RABBIT_TOOLCHAIN_VERSION: 14
     QT_ROOT: C:/Qt/5.10/msvc2015
-    RABBIT_ARCH:: x86
+    RABBIT_ARCH: x86
     RABBIT_CONFIG: Debug
     
   ##### vs2013 x64 Relase #####
