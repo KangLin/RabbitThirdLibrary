@@ -304,6 +304,7 @@ build_script:
   - cd %APPVEYOR_BUILD_FOLDER%
   - if NOT "%BUILD_EXIT%" == "TRUE" C:\msys64\usr\bin\bash.exe %APPVEYOR_BUILD_FOLDER%\build_script\ci\build.sh
   #- C:\msys64\usr\bin\bash.exe %APPVEYOR_BUILD_FOLDER%\build_script\ci\Deploy.sh
+  - if "%BUILD_TARGERT%" == "android"  set RABBIT_TOOLCHAIN_VERSION=%ANDROID_NATIVE_API_LEVEL%
   
 after_build:
   - cd %APPVEYOR_BUILD_FOLDER%
@@ -313,7 +314,7 @@ artifacts:
   - path: build #$(BUILD_TARGERT)$(RABBIT_TOOLCHAIN_VERSION)_$(RABBIT_ARCH)_qt$(QT_VERSION)_$(RABBIT_CONFIG)
     name: RABBIT_$(BUILD_TARGERT)$(RABBIT_TOOLCHAIN_VERSION)_$(RABBIT_ARCH)_qt$(QT_VERSION)_$(RABBIT_CONFIG)_$(BUILD_VERSION)
     type: zip
-
+   
 test: off
 
 #deploy:

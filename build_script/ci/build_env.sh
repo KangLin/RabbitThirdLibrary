@@ -21,8 +21,10 @@ if [ "${BUILD_TARGERT}" = "android" ]; then
     export ANDROID_NDK=$ANDROID_NDK_ROOT
 
     export ANDROID_SDK_ROOT=`pwd`/android-sdk
-    export ANDROID_SDK=$ANDROID_SDK_ROOT
+    export ANDROID_SDK=$ANDROID_SDK_ROOT    
+fi
 
+if [ "${BUILD_TARGERT}" = "android" -o "${BUILD_TARGERT}" = "unix" ]; then
     QT_DIR=`pwd`/Qt/Qt${QT_VERSION}/${QT_VERSION}
     case $RABBIT_ARCH in
         arm*)
