@@ -329,8 +329,6 @@ init:
   - if "%varch%" == "x64" set varch=amd64
   - if "%BUILD_TARGERT%" == "windows_msvc" if %RABBIT_TOOLCHAIN_VERSION% LSS 15 (call "C:\Program Files (x86)\Microsoft Visual Studio %RABBIT_TOOLCHAIN_VERSION%.0\VC\vcvarsall.bat" %varch%) else (call "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Auxiliary\Build\vcvarsall.bat" %varch%)
   - if "%BUILD_TARGERT%" == "windows_mingw" set MSYSTEM=MINGW32  #设置编译系统为MINGW32
-  - if "%varch%" == "x64" if "%BUILD_TARGERT%" == "android" set RABBIT_ARCH=arm
-  - if "%varch%" == "x64" if "%BUILD_TARGERT%" == "windows_msvc" if NOT "%QT_ROOT%" == "NO" set QT_ROOT=%QT_ROOT%_64
   - if "%QT_VERSION%" == "" set QT_VERSION=NO
   - if NOT "%QT_ROOT%" == "NO" for /f "delims=" %%i in ('%QT_ROOT%/bin/qmake -query QT_VERSION') do (set QT_VERSION=%%i)
   - echo QT_VERSION=%QT_VERSION%
@@ -340,11 +338,11 @@ install:
   - for /f "delims=" %%i in ('git describe --tags') do (set BUILD_VERSION=%%i)
   - if "%BUILD_VERSION%" == "" for /f "delims=" %%i in ('git rev-parse HEAD') do (set BUILD_VERSION=%%i) 
   - echo BUILD_VERSION=%BUILD_VERSION%
-  - if not "%BUILD_TARGERT%" == "android" C:\msys64\usr\bin\pacman.exe --noconfirm -Syu
-  - if not "%BUILD_TARGERT%" == "android" C:\msys64\usr\bin\pacman.exe -S --noconfirm nasm yasm 
+  - C:\msys64\usr\bin\pacman.exe --noconfirm -Syu
+  - C:\msys64\usr\bin\pacman.exe -S --noconfirm nasm yasm 
   - C:\msys64\usr\bin\pacman.exe -S --noconfirm unzip #expect zip curl
   - C:\msys64\autorebase.bat
-  - if not "%BUILD_TARGERT%" == "android" wget -q http://www.nasm.us/pub/nasm/releasebuilds/2.13.03/win32/nasm-2.13.03-win32.zip && C:\msys64\usr\bin\unzip.exe -q nasm-2.13.03-win32.zip && copy nasm-2.13.03\nasm.exe C:\msys64\usr\bin
+  #- if not "%BUILD_TARGERT%" == "android" wget -q http://www.nasm.us/pub/nasm/releasebuilds/2.13.03/win32/nasm-2.13.03-win32.zip && C:\msys64\usr\bin\unzip.exe -q nasm-2.13.03-win32.zip && copy nasm-2.13.03\nasm.exe C:\msys64\usr\bin
   - del C:\msys64\usr\bin\link.exe
   - cd %APPVEYOR_BUILD_FOLDER%
   - ps: build_script\ci\download_library_android.ps1
@@ -360,7 +358,7 @@ build_script:
   - cd %APPVEYOR_BUILD_FOLDER%
   - if NOT "%BUILD_EXIT%" == "TRUE" C:\msys64\usr\bin\bash.exe %APPVEYOR_BUILD_FOLDER%\build_script\ci\build.sh
   #- C:\msys64\usr\bin\bash.exe %APPVEYOR_BUILD_FOLDER%\build_script\ci\Deploy.sh
-  - if "%BUILD_TARGERT%" == "android"  set RABBIT_TOOLCHAIN_VERSION=%ANDROID_NATIVE_API_LEVEL%
+  - if "%BUILD_TARGERT%" == "android" set RABBIT_TOOLCHAIN_VERSION=%ANDROID_NATIVE_API_LEVEL%
   
 after_build:
   - cd %APPVEYOR_BUILD_FOLDER%
