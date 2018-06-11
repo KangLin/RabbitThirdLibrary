@@ -107,7 +107,7 @@ make: fork: Resource temporarily unavailable
 最好在 pacman -Su 后就做 autorebase.bat
 
 #### 2.3. 编译工具: msvc
-主页：http://msdn.microsoft.com/zh-cn/vstudio  
+主页：https://www.visualstudio.com/
 
 |当前使用版本|vc编译器版本号|
 |:--:|:--:|
