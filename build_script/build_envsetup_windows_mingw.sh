@@ -13,7 +13,7 @@
 #   注意这种用法，script.sh开头一行必须包含 #!/bin/sh  
 
 #需要设置下面变量：
-if [ -z "$QT_ROOT" ]; then
+if [ -z "$QT_ROOT" -a -z "$APPVEYOR" ]; then
     QT_VERSION=5.10.1
     QT_ROOT=/c/Qt/Qt${QT_VERSION}/${QT_VERSION}/mingw53_32 #QT 安装根目录,默认为:${RABBITRoot}/ThirdLibrary/windows_mingw/qt
     RABBIT_TOOLCHAIN_VERSION=530    

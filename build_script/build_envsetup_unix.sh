@@ -108,5 +108,5 @@ else
     #如果用系统的库,就用下面  
     export PKG_CONFIG_PATH=${RABBIT_BUILD_PREFIX}/lib/pkgconfig:${PKG_CONFIG_PATH}
 fi
-export PATH=${QT_BIN}:$PATH
+#export PATH=${QT_BIN}:$PATH
 

@@ -68,7 +68,7 @@ if [ -z "${RABBIT_ARCH}" ]; then
 fi
 
 #需要设置下面变量：
-if [ -z "$QT_ROOT" ]; then
+if [ -z "$QT_ROOT" -a -z "$APPVEYOR" ]; then
     QT_VERSION=5.10.1
     QT_ROOT=/c/Qt/Qt${QT_VERSION}/${QT_VERSION}/${MSVC_NAME} #QT 安装根目录,默认为:${RABBITRoot}/ThirdLibrary/windows_msvc/qt
 fi
@@ -140,7 +140,7 @@ if [ "$RABBIT_TOOLCHAIN_VERSION" = "15" ]; then
    MSVC_VER=2000
 fi
 
-export PATH=${RABBIT_BUILD_PREFIX}/bin:${RABBIT_BUILD_PREFIX}/lib:${QT_BIN}:$PATH
+#export PATH=${RABBIT_BUILD_PREFIX}/bin:${RABBIT_BUILD_PREFIX}/lib:${QT_BIN}:$PATH
 if [ -z "$PKG_CONFIG" ]; then
     export PKG_CONFIG=pkg-config 
 fi

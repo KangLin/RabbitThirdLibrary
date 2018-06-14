@@ -99,8 +99,8 @@ else
     CONFIG_PARA="--disable-static --enable-shared"
 fi
 case ${RABBIT_BUILD_TARGERT} in
-    android|windows_mingw)
-        export CC=${RABBIT_BUILD_CROSS_PREFIX}gcc 
+    android)
+        export CC=${RABBIT_BUILD_CROSS_PREFIX}gcc
         export CXX=${RABBIT_BUILD_CROSS_PREFIX}g++
         export AR=${RABBIT_BUILD_CROSS_PREFIX}gcc-ar
         export LD=${RABBIT_BUILD_CROSS_PREFIX}ld

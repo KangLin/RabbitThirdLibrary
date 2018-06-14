@@ -127,4 +127,7 @@ echo "$QMAKE ${RELEASE_PARA}"
 $QMAKE ${RELEASE_PARA} ../qxmpp.pro
 ${MAKE} -f Makefile install ${RABBIT_MAKE_JOB_PARA}
 
+if [ "$RABBIT_BUILD_TARGERT" = "windows_mingw" ]; then
+    cp src/pkgconfig/qxmpp.pc ${RABBIT_BUILD_PREFIX}/lib/pkgconfig/.
+fi
 cd $CUR_DIR

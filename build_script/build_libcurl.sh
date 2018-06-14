@@ -119,7 +119,7 @@ case ${RABBIT_BUILD_TARGERT} in
         #export STRIP=${RABBIT_BUILD_CROSS_PREFIX}strip
         #export NM=${RABBIT_BUILD_CROSS_PREFIX}nm
         #CONFIG_PARA="CC=${RABBIT_BUILD_CROSS_PREFIX}gcc LD=${RABBIT_BUILD_CROSS_PREFIX}ld"
-        CONFIG_PARA="--enable-static --enable-shared"
+        CONFIG_PARA="--enable-static --disable-shared"
         CONFIG_PARA="${CONFIG_PARA} --host=$RABBIT_BUILD_CROSS_HOST --target=$RABBIT_BUILD_CROSS_HOST"
         #CONFIG_PARA="${CONFIG_PARA} --with-sysroot=${RABBIT_BUILD_CROSS_SYSROOT}"
         CONFIG_PARA="${CONFIG_PARA} --with-gnu-ld "

@@ -58,19 +58,21 @@ if [ ! -d "${TOOLS_DIR}/android-sdk" ]; then
     fi
     unzip -q ${PKG_DIR}/android-sdk_r24.4.1-windows.zip
     mv android-sdk-windows android-sdk
+    #https://developer.android.google.cn/studio/command-line/sdkmanager
     (sleep 5 ; while true ; do sleep 1 ; printf 'y\r\n' ; done ) \
     | android-sdk/tools/android.bat update sdk -u -t tool,android-18,android-24,extra,platform-tools,build-tools #platforms
 fi
 
 #下载android ndk  
 if [ ! -d "${TOOLS_DIR}/android-ndk" ]; then
-    if [ ! -f ${PKG_DIR}/android-ndk-r17-windows-x86_64.zip ]; then
+    NDK_VERSOIN=r17b
+    if [ ! -f ${PKG_DIR}/android-ndk-${NDK_VERSOIN}-windows-x86_64.zip ]; then
         cd ${PKG_DIR}
-        wget -c -nv https://dl.google.com/android/repository/android-ndk-r17-windows-x86_64.zip
+        wget -c -nv https://dl.google.com/android/repository/android-ndk-${NDK_VERSOIN}-windows-x86_64.zip
         cd ${TOOLS_DIR}
     fi
-    unzip -q ${PKG_DIR}/android-ndk-r17-windows-x86_64.zip
-    mv android-ndk-r17 android-ndk
+    unzip -q ${PKG_DIR}/android-ndk-${NDK_VERSOIN}-windows-x86_64.zip
+    mv android-ndk-${NDK_VERSOIN} android-ndk
     #使用WINDOWS下的PYTHON
     cd android-ndk/build/tools
     if [ -z "${ANDROID_NATIVE_API_LEVEL}" ]; then

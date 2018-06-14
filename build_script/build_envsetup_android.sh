@@ -48,7 +48,7 @@ if [ -z "${RABBIT_ARCH}" ]; then
 fi
 
 #需要设置下面变量：
-if [ -z "$QT_ROOT" ]; then
+if [ -z "$QT_ROOT" -a -z "$APPVEYOR" ]; then
     QT_VERSION=5.10.1
     if [ "${RABBIT_ARCH}" = "arm" ]; then
         QT_ROOT=/c/Qt/Qt${QT_VERSION}/${QT_VERSION}/android_armv7 #QT 安装根目录,默认为:${RABBITRoot}/ThirdLibrary/android/qt
@@ -177,7 +177,7 @@ RABBIT_CFLAGS="$RABBIT_CFLAGS --sysroot=${RABBIT_BUILD_CROSS_SYSROOT} -I$RABBIT_
 RABBIT_CPPFLAGS="$RABBIT_CFLAGS $RABBIT_BUILD_CROSS_STL_INCLUDE_FLAGS"
 RABBIT_LDFLAGS="--sysroot=${RABBIT_BUILD_CROSS_SYSROOT_LIB} -L${RABBIT_BUILD_CROSS_STL_LIBS} -L${RABBIT_BUILD_PREFIX}/lib -L$RABBIT_BUILD_CROSS_SYSROOT_LIB"
 
-export PATH=${RABBIT_BUILD_CROSS_ROOT}/bin:${QT_BIN}:$PATH
+#export PATH=${RABBIT_BUILD_CROSS_ROOT}/bin:${QT_BIN}:$PATH
 #pkg-config帮助文档：http://linux.die.net/man/1/pkg-config
 if [ -z "$PKG_CONFIG" ]; then
     export PKG_CONFIG=pkg-config 

@@ -15,28 +15,33 @@
   
   |平台|编译器|版本号|架构|Qt 版本|
   |:--:|:--:|:--:|:--:|:--:|
+  |windows_msvc|VS2017|15|x64|qt5.11|
   |windows_msvc|VS2017|15|x64|qt5.10|
   |windows_msvc|VS2017|15|x64|qt5.9|
+  |windows_msvc|VS2017|14|x86|qt5.11|
+  |windows_msvc|VS2017|14|x64|qt5.11|
   |windows_msvc|VS2017|14|x86|qt5.10|
   |windows_msvc|VS2017|14|x64|qt5.10|
   |windows_msvc|VS2015|14|x86|qt5.9|
   |windows_msvc|VS2015|14|x64|qt5.9|
-  |windows_msvc|VS2015|14|x86|qt5.8|
-  |windows_msvc|VS2015|14|x64|qt5.8|
   |windows_msvc|VS2015|14|x86|qt5.6|
   |windows_msvc|VS2015|14|x64|qt5.6|
-  |windows_msvc|VS2013|12|x86|qt5.8|
-  |windows_msvc|VS2013|12|x64|qt5.8|
+  |windows_msvc|VS2013|12|x86|qt5.11|
+  |windows_msvc|VS2013|12|x64|qt5.11|
+  |windows_msvc|VS2013|12|x86|qt5.10|
+  |windows_msvc|VS2013|12|x64|qt5.10|  
   |windows_msvc|VS2013|12|x86|qt5.6|
   |windows_msvc|VS2013|12|x64|qt5.6|
+  |windows_mingw|gcc 5.3.0|530|x86|qt5.11|
+  |windows_mingw|gcc 5.3.0|530|x86|qt5.10|
   |windows_mingw|gcc 5.3.0|530|x86|qt5.9|
-  |windows_mingw|gcc 5.3.0|530|x86|qt5.8|
   |unix|gcc 5.3.0|530|x86|qt5.8.0|
   |unix|gcc 5.3.0|530|x86|qt5.7.1|
   |unix|gcc 5.3.0|530|x86_64|qt5.8.0|
   |unix|gcc 5.3.0|530|x86_64|qt5.7.1|
-  |android|gcc 4.8|4.8|arm|qt5.8.0|
-  |android|gcc 4.8|4.8|arm|qt5.7.1|
-  |android|gcc 4.8|4.8|x86|qt5.8.0|
-  |android|gcc 4.8|4.8|x86|qt5.7.1|
-
+  |android|gcc 4.8|4.8|arm|qt5.11.0|
+  |android|gcc 4.8|4.8|arm|qt5.10.1|
+  |android|gcc 4.8|4.8|arm|qt5.9.4|
+  |android|gcc 4.8|4.8|x86|qt5.11.0|
+  |android|gcc 4.8|4.8|x86|qt5.10.0|
+  |android|gcc 4.8|4.8|x86|qt5.9.4|

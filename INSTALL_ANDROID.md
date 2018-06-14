@@ -64,8 +64,8 @@ ubuntu下交叉编译
 
     cd /home
     wget https://dl.google.com/android/repository/android-ndk-r17-linux-x86_64.zip
-    ./android-ndk-r10e-linux-x86_64.bin
-    mv android-ndk-r10e android-ndk
+    unzip android-ndk-r17-linux-x86_64.zip
+    mv android-ndk-r17 android-ndk
 
 
 * 设置环境变量
@@ -80,8 +80,8 @@ ubuntu下交叉编译
 
     cd /home
     wget https://dl.google.com/android/android-sdk_r24.4.1-linux.tgz
-    tar xzf android-sdk.tar.gz
-    mv sdk android-sdk
+    tar xvf android-sdk_r24.4.1-linux.tgz
+    mv android-sdk-linux android-sdk
 
 * 设置环境变量
 
@@ -267,9 +267,9 @@ make: fork: Resource temporarily unavailable
 * 下载:
 
     cd /home
-    wget https://dl.google.com/android/repository/android-ndk-r17-windows-x86_64.zip
-    unzip android-ndk-r17-windows-x86_64.zip
-    mv android-ndk-r17 android-ndk
+    wget https://dl.google.com/android/repository/android-ndk-r17b-windows-x86_64.zip
+    unzip android-ndk-r17b-windows-x86_64.zip
+    mv android-ndk-r17b android-ndk
 
 * 设置环境变量
 
@@ -284,18 +284,18 @@ make: fork: Resource temporarily unavailable
 构建->构建环境变量:设置 ANDROID_NDK_PLATFORM 到 android-18
 
 #### 2.3. android sdk 
-* 平台版本：21
+* 平台版本：24.4.1
 * 下载：
 
     wget https://dl.google.com/android/android-sdk_r24.4.1-windows.zip
     unzip android-sdk_r24.4.1-windows.zip
     mv android-sdk-windows android-sdk
-    rm android-sdk_r24.4.1-linux.tgz
+    rm android-sdk_r24.4.1-windows.zip
 
 * 设置环境变量
 
     vim ~/.bashrc
-    export ANDROID_SDK=/D/software/android-sdk-windows
+    export ANDROID_SDK=/D/software/android-sdk
     export ANDROID_SDK_ROOT=$ANDROID_SDK
 
 注意：
@@ -400,6 +400,12 @@ https://github.com/ruby/ruby
     export PKG_CONFIG_SYSROOT_DIR=${RabbitThirdLibraryRoot}/${PLATFORM} #可选
     ```
 
+  设置 GIT
+  
+  ```sh
+  export GIT=${MSYS2_ROOT}/bin/git.exe
+  ```
+  
 ### 4. 调试
 下载 ministro  
 https://necessitas.kde.org/necessitas/ministro.php
