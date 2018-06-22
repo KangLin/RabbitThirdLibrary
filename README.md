@@ -41,7 +41,7 @@
   |unix|gcc 5.3.0|530|x86_64|qt5.7.1|
   |android|gcc 4.8|4.8|arm|qt5.11.0|
   |android|gcc 4.8|4.8|arm|qt5.10.1|
-  |android|gcc 4.8|4.8|arm|qt5.9.4|
+  |android|gcc 4.8|4.8|arm|qt5.9.5|
   |android|gcc 4.8|4.8|x86|qt5.11.0|
   |android|gcc 4.8|4.8|x86|qt5.10.0|
-  |android|gcc 4.8|4.8|x86|qt5.9.4|
+  |android|gcc 4.8|4.8|x86|qt5.9.5|
