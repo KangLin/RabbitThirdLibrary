@@ -39,7 +39,7 @@ cd ${TOOLS_DIR}
 #下载ANT
 #wget -c -nv http://apache.fayea.com/ant/binaries/apache-ant-1.10.1-bin.tar.gz
 if [ ! -d "${TOOLS_DIR}/apache-ant" ]; then
-    ANT_VERSION=1.10.3
+    ANT_VERSION=1.10.4
     if [ ! -f ${PKG_DIR}/apache-ant-${ANT_VERSION}-bin.tar.gz ]; then
         cd ${PKG_DIR}
         wget -c -nv https://www.apache.org/dist/ant/binaries/apache-ant-${ANT_VERSION}-bin.tar.gz

@@ -31,29 +31,28 @@ echo ". `pwd`/build_envsetup_${RABBIT_BUILD_TARGERT}.sh"
 . `pwd`/build_envsetup_${RABBIT_BUILD_TARGERT}.sh
 
 if [ -z "$RABBIT_BUILD_SOURCE_CODE" ]; then
-    RABBIT_BUILD_SOURCE_CODE=${RABBIT_BUILD_PREFIX}/../src/speex
+    RABBIT_BUILD_SOURCE_CODE=${RABBIT_BUILD_PREFIX}/../src/ogg
 fi
 
 CUR_DIR=`pwd`
 
 #下载源码:
 if [ ! -d ${RABBIT_BUILD_SOURCE_CODE} ]; then
-    SPEEX_VERSION=1.2.0
+    VERSION=1.3.3
     if [ "TRUE" = "${RABBIT_USE_REPOSITORIES}" ]; then
-        echo "git clone -q -b Speex-${SPEEX_VERSION} http://git.xiph.org/speex.git ${RABBIT_BUILD_SOURCE_CODE}"
-        #git clone -q -b 6aab25c http://git.xiph.org/speex.git ${RABBIT_BUILD_SOURCE_CODE}
-        git clone -q --branch=Speex-${SPEEX_VERSION} http://git.xiph.org/speex.git ${RABBIT_BUILD_SOURCE_CODE}
+        echo "git clone -q -b v${VERSION} http://git.xiph.org/ogg.git ${RABBIT_BUILD_SOURCE_CODE}"
+        git clone -q --branch=v${VERSION} http://git.xiph.org/ogg.git ${RABBIT_BUILD_SOURCE_CODE}
     else
-        echo "wget -q http://downloads.xiph.org/releases/speex/speex-${SPEEX_VERSION}.tar.gz"
+        echo "wget -q http://downloads.xiph.org/releases/ogg/libogg-${VERSION}.tar.gz"
         mkdir -p ${RABBIT_BUILD_SOURCE_CODE}
         cd ${RABBIT_BUILD_SOURCE_CODE}
-        wget -q -c http://downloads.xiph.org/releases/speex/speex-${SPEEX_VERSION}.tar.gz
-        tar xzf speex-${SPEEX_VERSION}.tar.gz
-        mv speex-${SPEEX_VERSION} ..
+        wget -q -c http://downloads.xiph.org/releases/ogg/libogg-${VERSION}.tar.gz
+        tar xzf libogg-${VERSION}.tar.gz
+        mv libogg-${VERSION} ..
         rm -fr *
         cd ..
         rm -fr ${RABBIT_BUILD_SOURCE_CODE}
-        mv -f speex-${SPEEX_VERSION} ${RABBIT_BUILD_SOURCE_CODE}
+        mv -f libogg-${VERSION} ${RABBIT_BUILD_SOURCE_CODE}
     fi
 fi
 
@@ -111,7 +110,7 @@ case ${RABBIT_BUILD_TARGERT} in
         CONFIG_PARA="${CONFIG_PARA} --with-gnu-ld --enable-sse "
         ;;
     windows_msvc)
-        echo "build_speex.sh don't support windows_msvc. please manually use msvc ide complie"
+        echo "build_ogg.sh don't support windows_msvc. please manually use msvc ide complie"
         cd $CUR_DIR
         exit 0
         ;;
@@ -120,7 +119,7 @@ case ${RABBIT_BUILD_TARGERT} in
         #CONFIG_PARA="${CONFIG_PARA} --with-sysroot=${RABBIT_BUILD_CROSS_SYSROOT}"
         CFLAGS="${RABBIT_CFLAGS}"
         CPPFLAGS="${RABBIT_CPPFLAGS}"
-        LDFLAGS="${RABBIT_LDFLAGS} -lWinmm"
+        LDFLAGS="${RABBIT_LDFLAGS}"
         CONFIG_PARA="${CONFIG_PARA} --with-gnu-ld --enable-sse"
         ;;
     *)
@@ -130,8 +129,6 @@ case ${RABBIT_BUILD_TARGERT} in
     ;;
 esac
 
-#CONFIG_PARA="${CONFIG_PARA} SPEEXDSP_CFLAGS=-I${RABBIT_BUILD_PREFIX}/include"
-#CONFIG_PARA="${CONFIG_PARA} SPEEXDSP_LIBS=-L${RABBIT_BUILD_PREFIX}/lib"
 CONFIG_PARA="${CONFIG_PARA} --prefix=$RABBIT_BUILD_PREFIX"
 echo "../configure ${CONFIG_PARA} CFLAGS=\"${CFLAGS=}\" CPPFLAGS=\"${CPPFLAGS}\" CXXFLAGS=\"${CPPFLAGS}\" LDFLAGS=\"${LDFLAGS}\""
 ../configure ${CONFIG_PARA} \
@@ -141,7 +138,7 @@ echo "../configure ${CONFIG_PARA} CFLAGS=\"${CFLAGS=}\" CPPFLAGS=\"${CPPFLAGS}\"
     LDFLAGS="${LDFLAGS}"
     
 echo "make install"
-make ${RABBIT_MAKE_JOB_PARA} V=1
+make ${RABBIT_MAKE_JOB_PARA} 
 make install
 
 cd $CUR_DIR
