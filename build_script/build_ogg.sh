@@ -175,6 +175,7 @@ case ${RABBIT_BUILD_TARGERT} in
                 cp win32/VS2015/Win32/$RABBIT_CONFIG/*.lib $RABBIT_BUILD_PREFIX/lib
             fi
         fi
+        cd $CUR_DIR
         exit 0
         ;;
     windows_mingw)

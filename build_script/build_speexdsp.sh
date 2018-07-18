@@ -38,17 +38,23 @@ CUR_DIR=`pwd`
 
 #下载源码:
 if [ ! -d ${RABBIT_BUILD_SOURCE_CODE} ]; then
-    SPEEXDSP_VERSION=1.2rc3
+    SPEEXDSP_VERSION=master
     if [ "TRUE" = "${RABBIT_USE_REPOSITORIES}" ]; then
-        echo "git clone --branch=SpeexDSP-${SPEEXDSP_VERSION} http://git.xiph.org/speexdsp.git  ${RABBIT_BUILD_SOURCE_CODE}"
+        #echo "git clone --branch=SpeexDSP-${SPEEXDSP_VERSION} http://git.xiph.org/speexdsp.git  ${RABBIT_BUILD_SOURCE_CODE}"
         #git clone -q --branch=SpeexDSP-${SPEEXDSP_VERSION} http://git.xiph.org/speexdsp.git ${RABBIT_BUILD_SOURCE_CODE}
-        git clone -q --branch=SpeexDSP-${SPEEXDSP_VERSION} http://git.xiph.org/speexdsp.git ${RABBIT_BUILD_SOURCE_CODE}
+        echo "git clone https://github.com/KangLin/speexdsp.git"
+        git clone -q https://github.com/KangLin/speexdsp.git
     else
-        echo "wget -q http://downloads.xiph.org/releases/speex/speexdsp-${SPEEXDSP_VERSION}.tar.gz"
         mkdir -p ${RABBIT_BUILD_SOURCE_CODE}
         cd ${RABBIT_BUILD_SOURCE_CODE}
-        wget -q -c http://downloads.xiph.org/releases/speex/speexdsp-${SPEEXDSP_VERSION}.tar.gz
-        tar xzf speexdsp-${SPEEXDSP_VERSION}.tar.gz
+        echo "wget -q https://github.com/KangLin/speexdsp/archive/master.zip"
+        wget -q https://github.com/KangLin/speexdsp/archive/master.tar.gz
+        tar xzf master.tar.gz
+        
+        #echo "wget -q http://downloads.xiph.org/releases/speex/speexdsp-${SPEEXDSP_VERSION}.tar.gz"
+        #wget -q -c http://downloads.xiph.org/releases/speex/speexdsp-${SPEEXDSP_VERSION}.tar.gz
+        #tar xzf speexdsp-${SPEEXDSP_VERSION}.tar.gz
+        
         mv speexdsp-${SPEEXDSP_VERSION} ..
         rm -fr *
         cd ..
@@ -59,7 +65,7 @@ fi
 
 cd ${RABBIT_BUILD_SOURCE_CODE}
 
-if [ ! -f configure ]; then
+if [ ! -f configure -a "${RABBIT_BUILD_TARGERT}" != "windows_msvc" ]; then
     echo "sh autogen.sh"
     sh autogen.sh
 fi
@@ -109,7 +115,41 @@ case ${RABBIT_BUILD_TARGERT} in
         CONFIG_PARA="${CONFIG_PARA} --enable-vbr --enable-sse"
         ;;
     windows_msvc)
-        echo "build_speex.sh don't support windows_msvc. please manually use msvc ide complie"
+        cd ${RABBIT_BUILD_SOURCE_CODE}
+        if [ -d ".git" ]; then
+            git clean -xdf
+        fi
+        
+        if [ "Debug" = "$RABBIT_CONFIG" ]; then
+            Configuration=Debug
+        else
+            Configuration=Release
+        fi
+        if [  "$RABBIT_TOOLCHAIN_VERSION" = "15" ]; then
+    
+            if [ "$RABBIT_ARCH" = "x64" ]; then
+                msbuild.exe -m -v:n -p:Configuration=${Configuration} -p:Platform=x64 win32/VS2008/libspeexdsp.sln
+            else
+                msbuild.exe -m -v:n -p:Configuration=${Configuration} -p:Platform=Win32 win32/VS2008/libspeexdsp.sln
+            fi
+        fi
+        
+        if [  "$RABBIT_TOOLCHAIN_VERSION" = "12" ]; then
+            if [ "$RABBIT_ARCH" = "x64" ]; then
+                msbuild.exe -m -v:n -p:Configuration=${Configuration} -p:Platform=x64 win32/VS2008/libspeexdsp.sln
+            else
+                msbuild.exe -m -v:n -p:Configuration=${Configuration} -p:Platform=Win32 win32/VS2008/libspeexdsp.sln
+            fi
+        fi
+        
+        if [  "$RABBIT_TOOLCHAIN_VERSION" = "14" ]; then
+            if [ "$RABBIT_ARCH" = "x64" ]; then
+                msbuild.exe -m -v:n -p:Configuration=${Configuration} -p:Platform=x64 win32/VS2008/libspeexdsp.sln
+            else
+                msbuild.exe -m -v:n -p:Configuration=${Configuration} -p:Platform=Win32 win32/VS2008/libspeexdsp.sln
+            fi
+        fi
+        cp lib/libspeexdsp.lib $RABBIT_BUILD_PREFIX/lib/libspeexdsp.lib
         cd $CUR_DIR
         exit 0
         ;;

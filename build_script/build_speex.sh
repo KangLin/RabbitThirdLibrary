@@ -111,7 +111,40 @@ case ${RABBIT_BUILD_TARGERT} in
         CONFIG_PARA="${CONFIG_PARA} --with-gnu-ld --enable-sse "
         ;;
     windows_msvc)
-        echo "build_speex.sh don't support windows_msvc. please manually use msvc ide complie"
+        cd ${RABBIT_BUILD_SOURCE_CODE}
+        if [ -d ".git" ]; then
+            git clean -xdf
+        fi
+        
+        if [ "Debug" = "$RABBIT_CONFIG" ]; then
+            Configuration=Debug
+        else
+            Configuration=Release
+        fi
+        if [  "$RABBIT_TOOLCHAIN_VERSION" = "15" ]; then
+
+            if [ "$RABBIT_ARCH" = "x64" ]; then
+                msbuild.exe -m -v:n -p:Configuration=${Configuration} -p:Platform=x64 win32/VS2008/libspeex.sln
+            else
+                msbuild.exe -m -v:n -p:Configuration=${Configuration} -p:Platform=Win32 win32/VS2008/libspeex.sln
+            fi
+        fi
+        
+        if [  "$RABBIT_TOOLCHAIN_VERSION" = "12" ]; then
+            if [ "$RABBIT_ARCH" = "x64" ]; then
+                msbuild.exe -m -v:n -p:Configuration=${Configuration} -p:Platform=x64 win32/VS2008/libspeex.sln
+            else
+                msbuild.exe -m -v:n -p:Configuration=${Configuration} -p:Platform=Win32 win32/VS2008/libspeex.sln
+            fi
+        fi
+        
+        if [  "$RABBIT_TOOLCHAIN_VERSION" = "14" ]; then
+            if [ "$RABBIT_ARCH" = "x64" ]; then
+                msbuild.exe -m -v:n -p:Configuration=${Configuration} -p:Platform=x64 win32/VS2008/libspeex.sln
+            else
+                msbuild.exe -m -v:n -p:Configuration=${Configuration} -p:Platform=Win32 win32/VS2008/libspeex.sln
+            fi    
+        fi
         cd $CUR_DIR
         exit 0
         ;;
