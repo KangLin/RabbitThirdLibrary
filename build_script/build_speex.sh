@@ -38,17 +38,23 @@ CUR_DIR=`pwd`
 
 #下载源码:
 if [ ! -d ${RABBIT_BUILD_SOURCE_CODE} ]; then
-    SPEEX_VERSION=1.2.0
+    SPEEX_VERSION=master
     if [ "TRUE" = "${RABBIT_USE_REPOSITORIES}" ]; then
-        echo "git clone -q -b Speex-${SPEEX_VERSION} http://git.xiph.org/speex.git ${RABBIT_BUILD_SOURCE_CODE}"
-        #git clone -q -b 6aab25c http://git.xiph.org/speex.git ${RABBIT_BUILD_SOURCE_CODE}
-        git clone -q --branch=Speex-${SPEEX_VERSION} http://git.xiph.org/speex.git ${RABBIT_BUILD_SOURCE_CODE}
+        #echo "git clone -q -b Speex-${SPEEX_VERSION} http://git.xiph.org/speex.git ${RABBIT_BUILD_SOURCE_CODE}"
+        #git clone -q --branch=Speex-${SPEEX_VERSION} http://git.xiph.org/speex.git ${RABBIT_BUILD_SOURCE_CODE}
+        echo "git clone -q https://github.com/KangLin/speex.git"
+        git clone -q https://github.com/KangLin/speex.git
     else
-        echo "wget -q http://downloads.xiph.org/releases/speex/speex-${SPEEX_VERSION}.tar.gz"
+        #echo "wget -q http://downloads.xiph.org/releases/speex/speex-${SPEEX_VERSION}.tar.gz"
         mkdir -p ${RABBIT_BUILD_SOURCE_CODE}
         cd ${RABBIT_BUILD_SOURCE_CODE}
-        wget -q -c http://downloads.xiph.org/releases/speex/speex-${SPEEX_VERSION}.tar.gz
-        tar xzf speex-${SPEEX_VERSION}.tar.gz
+        #wget -q -c http://downloads.xiph.org/releases/speex/speex-${SPEEX_VERSION}.tar.gz
+        #tar xzf speex-${SPEEX_VERSION}.tar.gz
+        
+        echo "wget -q https://github.com/KangLin/speex/archive/master.tar.gz"
+        wget -q https://github.com/KangLin/speex/archive/master.tar.gz
+        tar xzf master.tar.gz
+
         mv speex-${SPEEX_VERSION} ..
         rm -fr *
         cd ..
@@ -59,7 +65,7 @@ fi
 
 cd ${RABBIT_BUILD_SOURCE_CODE}
 
-if [ ! -f configure ]; then
+if [ ! -f configure -a "${RABBIT_BUILD_TARGERT}" != "windows_msvc" ]; then
     echo "sh autogen.sh"
     sh autogen.sh
 fi
@@ -144,6 +150,11 @@ case ${RABBIT_BUILD_TARGERT} in
             else
                 msbuild.exe -m -v:n -p:Configuration=${Configuration} -p:Platform=Win32 win32/VS2008/libspeex.sln
             fi    
+        fi
+        if [ "$RABBIT_ARCH" = "x64" ]; then
+            cp win32/VS2008/x64/$RABBIT_CONFIG/*.lib $RABBIT_BUILD_PREFIX/lib
+        else
+            cp win32/VS2008/$RABBIT_CONFIG/*.lib $RABBIT_BUILD_PREFIX/lib
         fi
         cd $CUR_DIR
         exit 0

@@ -138,7 +138,7 @@ environment:
     RABBIT_TOOLCHAIN_VERSION: 4.9
     ANDROID_NATIVE_API_LEVEL: 18
     RABBIT_ARCH: arm
-    QT_VERSION: 5.11.0
+    QT_VERSION: 5.11.1
     QT_VERSION_DIR: 5.11
 
   - RABBIT_NUMBER: 0
@@ -174,7 +174,7 @@ environment:
     RABBIT_TOOLCHAIN_VERSION: 4.9
     ANDROID_NATIVE_API_LEVEL: 24
     RABBIT_ARCH: arm
-    QT_VERSION: 5.11.0
+    QT_VERSION: 5.11.1
     QT_VERSION_DIR: 5.11
 
   - RABBIT_NUMBER: 0
@@ -210,7 +210,7 @@ environment:
     RABBIT_TOOLCHAIN_VERSION: 4.9
     ANDROID_NATIVE_API_LEVEL: 18
     RABBIT_ARCH: x86
-    QT_VERSION: 5.11.0
+    QT_VERSION: 5.11.1
     QT_VERSION_DIR: 5.11
    
   ##### vs2017 x64 Release #####
@@ -262,7 +262,7 @@ environment:
     QT_ROOT: C:/Qt/5.10/msvc2017_64
     RABBIT_CONFIG: Debug
     
-  ##### vs2015 x64 Release#####
+  ##### vs2015 x64 Release #####
   - RABBIT_NUMBER: 0
     BUILD_TARGERT: windows_msvc
     RABBIT_TOOLCHAIN_VERSION: 14
