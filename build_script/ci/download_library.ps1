@@ -30,7 +30,7 @@ else
    ${env:RABBIT_CONFIG} = "Release"
 }
 
-if($env:RABBIT_NUMBER -gt 2)
+if($env:RABBIT_NUMBER -gt $env:RABBIT_QT_NUMBER)
 {
     $RABBIT_JOB_NAME = $RABBIT_JOB_NAME + ", QT_ROOT=${env:QT_ROOT}" 
     $JOB_QT_VERSION = ${env:QT_VERSION}
