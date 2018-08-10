@@ -37,7 +37,7 @@ CUR_DIR=`pwd`
 
 #下载源码:
 if [ ! -d ${RABBIT_BUILD_SOURCE_CODE} ]; then
-    VERSION=3.6.2
+    VERSION=3.6.3
     if [ "TRUE" = "${RABBIT_USE_REPOSITORIES}" ]; then
         echo "git clone -q https://github.com/OSGeo/geos.git ${RABBIT_BUILD_SOURCE_CODE}"
         git clone -q https://github.com/OSGeo/geos.git ${RABBIT_BUILD_SOURCE_CODE}
