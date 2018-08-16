@@ -42,8 +42,8 @@ if [ ! -d ${RABBIT_BUILD_SOURCE_CODE} ]; then
     if [ "TRUE" = "${RABBIT_USE_REPOSITORIES}" ]; then
         #echo "git clone --branch=SpeexDSP-${SPEEXDSP_VERSION} http://git.xiph.org/speexdsp.git  ${RABBIT_BUILD_SOURCE_CODE}"
         #git clone -q --branch=SpeexDSP-${SPEEXDSP_VERSION} http://git.xiph.org/speexdsp.git ${RABBIT_BUILD_SOURCE_CODE}
-        echo "git clone https://github.com/KangLin/speexdsp.git"
-        git clone -q https://github.com/KangLin/speexdsp.git
+        echo "git clone https://github.com/KangLin/speexdsp.git ${RABBIT_BUILD_SOURCE_CODE}"
+        git clone -q https://github.com/KangLin/speexdsp.git ${RABBIT_BUILD_SOURCE_CODE}
     else
         mkdir -p ${RABBIT_BUILD_SOURCE_CODE}
         cd ${RABBIT_BUILD_SOURCE_CODE}
