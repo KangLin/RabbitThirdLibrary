@@ -38,7 +38,7 @@ CUR_DIR=`pwd`
 
 #下载源码:
 if [ ! -d ${RABBIT_BUILD_SOURCE_CODE} ]; then
-	CURL_FILE=curl-7_59_0
+	CURL_FILE=curl-7_61_0
     if [ "TRUE" = "${RABBIT_USE_REPOSITORIES}" ]; then
         echo "git clone -q  git://github.com/bagder/curl.git ${RABBIT_BUILD_SOURCE_CODE}"
         #git clone -q --branch=$CURL_FILE git://github.com/bagder/curl.git ${RABBIT_BUILD_SOURCE_CODE}
