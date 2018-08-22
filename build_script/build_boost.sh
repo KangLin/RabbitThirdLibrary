@@ -37,10 +37,11 @@ CUR_DIR=`pwd`
 
 #下载源码:
 if [ ! -d ${RABBIT_BUILD_SOURCE_CODE} ]; then
-    VERSION=1.66.0
-    FILE_VERSION=1_66_0
+    VERSION=1.68.0
+    FILE_VERSION=1_68_0
     if [ "TRUE" = "${RABBIT_USE_REPOSITORIES}" ]; then
         git clone -q https://github.com/boostorg/boost.git ${RABBIT_BUILD_SOURCE_CODE}
+        cd ${RABBIT_BUILD_SOURCE_CODE}
 	    git submodule update --init --recursive
 	    git checkout -b boost-${VERSION} boost-${VERSION} 
     else

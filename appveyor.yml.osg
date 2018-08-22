@@ -1,0 +1,613 @@
+#TODO:版本变更时，修改成相应的版本
+version: 'v0.0.5.{build}'
+
+image: Visual Studio 2015
+
+#platform:
+#  - x64
+#  - x86
+
+#configuration:
+#  - Release
+  #- Debug
+  
+#matrix:
+#  fast_finish: true  
+  
+#max_jobs: 4
+
+#cache:
+#  - Packages
+  
+environment:
+  TimeOutMins: 2
+  ApiKey:
+    secure: qex0da587ygmywf4315g
+    
+  matrix:
+  ##### vs2017 x64 Release #####
+  - RABBIT_NUMBER: 0
+    APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
+    BUILD_TARGERT: windows_msvc
+    RABBIT_TOOLCHAIN_VERSION: 15
+        
+  - RABBIT_NUMBER: 1
+    APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
+    BUILD_TARGERT: windows_msvc
+    RABBIT_TOOLCHAIN_VERSION: 15
+  
+  - RABBIT_NUMBER: 2
+    APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
+    BUILD_TARGERT: windows_msvc
+    RABBIT_TOOLCHAIN_VERSION: 15
+    
+  - RABBIT_NUMBER: 3
+    APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
+    BUILD_TARGERT: windows_msvc
+    RABBIT_TOOLCHAIN_VERSION: 15
+    QT_ROOT: C:/Qt/5.11/msvc2017_64
+    
+  - RABBIT_NUMBER: 3
+    APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
+    BUILD_TARGERT: windows_msvc
+    RABBIT_TOOLCHAIN_VERSION: 15
+    QT_ROOT: C:/Qt/5.10/msvc2017_64
+    
+  - RABBIT_NUMBER: 3
+    APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
+    BUILD_TARGERT: windows_msvc
+    RABBIT_TOOLCHAIN_VERSION: 15
+    QT_ROOT: C:/Qt/5.9/msvc2017_64
+  
+  - RABBIT_NUMBER: 4
+    APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
+    BUILD_TARGERT: windows_msvc
+    RABBIT_TOOLCHAIN_VERSION: 15
+    QT_ROOT: C:/Qt/5.11/msvc2017_64
+    
+  - RABBIT_NUMBER: 4
+    APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
+    BUILD_TARGERT: windows_msvc
+    RABBIT_TOOLCHAIN_VERSION: 15
+    QT_ROOT: C:/Qt/5.10/msvc2017_64
+    
+  - RABBIT_NUMBER: 4
+    APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
+    BUILD_TARGERT: windows_msvc
+    RABBIT_TOOLCHAIN_VERSION: 15
+    QT_ROOT: C:/Qt/5.9/msvc2017_64
+    
+  ##### vs2017 x64 Debug #####
+  - RABBIT_NUMBER: 0
+    APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
+    BUILD_TARGERT: windows_msvc
+    RABBIT_TOOLCHAIN_VERSION: 15
+    RABBIT_CONFIG: Debug
+    
+  - RABBIT_NUMBER: 1
+    APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
+    BUILD_TARGERT: windows_msvc
+    RABBIT_TOOLCHAIN_VERSION: 15
+    RABBIT_CONFIG: Debug
+  
+  - RABBIT_NUMBER: 2
+    APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
+    BUILD_TARGERT: windows_msvc
+    RABBIT_TOOLCHAIN_VERSION: 15
+    RABBIT_CONFIG: Debug
+  
+  - RABBIT_NUMBER: 3
+    APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
+    BUILD_TARGERT: windows_msvc
+    RABBIT_TOOLCHAIN_VERSION: 15
+    QT_ROOT: C:/Qt/5.10/msvc2017_64
+    RABBIT_CONFIG: Debug
+  
+  - RABBIT_NUMBER: 4
+    APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
+    BUILD_TARGERT: windows_msvc
+    RABBIT_TOOLCHAIN_VERSION: 15
+    QT_ROOT: C:/Qt/5.10/msvc2017_64
+    RABBIT_CONFIG: Debug
+    
+  ##### vs2015 x64 Release #####
+  - RABBIT_NUMBER: 0
+    BUILD_TARGERT: windows_msvc
+    RABBIT_TOOLCHAIN_VERSION: 14
+    
+  - RABBIT_NUMBER: 1
+    BUILD_TARGERT: windows_msvc
+    RABBIT_TOOLCHAIN_VERSION: 14
+  
+  - RABBIT_NUMBER: 2
+    BUILD_TARGERT: windows_msvc
+    RABBIT_TOOLCHAIN_VERSION: 14
+    
+  - RABBIT_NUMBER: 3
+    BUILD_TARGERT: windows_msvc
+    RABBIT_TOOLCHAIN_VERSION: 14
+    QT_ROOT: C:/Qt/5.11/msvc2015_64
+  
+  - RABBIT_NUMBER: 3
+    BUILD_TARGERT: windows_msvc
+    RABBIT_TOOLCHAIN_VERSION: 14
+    QT_ROOT: C:/Qt/5.10/msvc2015_64
+  
+  - RABBIT_NUMBER: 3
+    BUILD_TARGERT: windows_msvc
+    RABBIT_TOOLCHAIN_VERSION: 14
+    QT_ROOT: C:/Qt/5.9/msvc2015_64
+  
+  - RABBIT_NUMBER: 3
+    BUILD_TARGERT: windows_msvc
+    RABBIT_TOOLCHAIN_VERSION: 14
+    QT_ROOT: C:/Qt/5.6/msvc2015_64
+  
+  - RABBIT_NUMBER: 4
+    BUILD_TARGERT: windows_msvc
+    RABBIT_TOOLCHAIN_VERSION: 14
+    QT_ROOT: C:/Qt/5.11/msvc2015_64
+  
+  - RABBIT_NUMBER: 4
+    BUILD_TARGERT: windows_msvc
+    RABBIT_TOOLCHAIN_VERSION: 14
+    QT_ROOT: C:/Qt/5.10/msvc2015_64
+  
+  - RABBIT_NUMBER: 4
+    BUILD_TARGERT: windows_msvc
+    RABBIT_TOOLCHAIN_VERSION: 14
+    QT_ROOT: C:/Qt/5.9/msvc2015_64
+  
+  - RABBIT_NUMBER: 4
+    BUILD_TARGERT: windows_msvc
+    RABBIT_TOOLCHAIN_VERSION: 14
+    QT_ROOT: C:/Qt/5.6/msvc2015_64
+    
+  ##### vs2015 x86 Release #####
+  - RABBIT_NUMBER: 0
+    BUILD_TARGERT: windows_msvc
+    RABBIT_TOOLCHAIN_VERSION: 14
+    RABBIT_ARCH: x86
+    
+  - RABBIT_NUMBER: 1
+    BUILD_TARGERT: windows_msvc
+    RABBIT_TOOLCHAIN_VERSION: 14
+    RABBIT_ARCH: x86
+  
+  - RABBIT_NUMBER: 2
+    BUILD_TARGERT: windows_msvc
+    RABBIT_TOOLCHAIN_VERSION: 14
+    RABBIT_ARCH: x86
+    
+  - RABBIT_NUMBER: 3
+    BUILD_TARGERT: windows_msvc
+    RABBIT_TOOLCHAIN_VERSION: 14
+    QT_ROOT: C:/Qt/5.11/msvc2015
+    RABBIT_ARCH: x86
+    
+  - RABBIT_NUMBER: 3
+    BUILD_TARGERT: windows_msvc
+    RABBIT_TOOLCHAIN_VERSION: 14
+    QT_ROOT: C:/Qt/5.10/msvc2015
+    RABBIT_ARCH: x86
+    
+  - RABBIT_NUMBER: 3
+    BUILD_TARGERT: windows_msvc
+    RABBIT_TOOLCHAIN_VERSION: 14
+    QT_ROOT: C:/Qt/5.9/msvc2015
+    RABBIT_ARCH: x86
+      
+  - RABBIT_NUMBER: 3
+    BUILD_TARGERT: windows_msvc
+    RABBIT_TOOLCHAIN_VERSION: 14
+    QT_ROOT: C:/Qt/5.6/msvc2015
+    RABBIT_ARCH: x86
+  
+  - RABBIT_NUMBER: 4
+    BUILD_TARGERT: windows_msvc
+    RABBIT_TOOLCHAIN_VERSION: 14
+    QT_ROOT: C:/Qt/5.11/msvc2015
+    RABBIT_ARCH: x86
+    
+  - RABBIT_NUMBER: 4
+    BUILD_TARGERT: windows_msvc
+    RABBIT_TOOLCHAIN_VERSION: 14
+    QT_ROOT: C:/Qt/5.10/msvc2015
+    RABBIT_ARCH: x86
+    
+  - RABBIT_NUMBER: 4
+    BUILD_TARGERT: windows_msvc
+    RABBIT_TOOLCHAIN_VERSION: 14
+    QT_ROOT: C:/Qt/5.9/msvc2015
+    RABBIT_ARCH: x86
+      
+  - RABBIT_NUMBER: 4
+    BUILD_TARGERT: windows_msvc
+    RABBIT_TOOLCHAIN_VERSION: 14
+    QT_ROOT: C:/Qt/5.6/msvc2015
+    RABBIT_ARCH: x86
+    
+  ##### vs2015 x86 Debug #####
+  - RABBIT_NUMBER: 0
+    BUILD_TARGERT: windows_msvc
+    RABBIT_TOOLCHAIN_VERSION: 14
+    RABBIT_ARCH: x86
+    RABBIT_CONFIG: Debug
+    
+  - RABBIT_NUMBER: 1
+    BUILD_TARGERT: windows_msvc
+    RABBIT_TOOLCHAIN_VERSION: 14
+    RABBIT_ARCH: x86
+    RABBIT_CONFIG: Debug
+  
+  - RABBIT_NUMBER: 2
+    BUILD_TARGERT: windows_msvc
+    RABBIT_TOOLCHAIN_VERSION: 14
+    RABBIT_ARCH: x86
+    RABBIT_CONFIG: Debug
+    
+  - RABBIT_NUMBER: 3
+    BUILD_TARGERT: windows_msvc
+    RABBIT_TOOLCHAIN_VERSION: 14
+    QT_ROOT: C:/Qt/5.10/msvc2015
+    RABBIT_ARCH: x86
+    RABBIT_CONFIG: Debug
+
+  - RABBIT_NUMBER: 4
+    BUILD_TARGERT: windows_msvc
+    RABBIT_TOOLCHAIN_VERSION: 14
+    QT_ROOT: C:/Qt/5.10/msvc2015
+    RABBIT_ARCH: x86
+    RABBIT_CONFIG: Debug
+  
+  ##### vs2013 x64 Relase #####
+  - RABBIT_NUMBER: 0
+    BUILD_TARGERT: windows_msvc
+    RABBIT_TOOLCHAIN_VERSION: 12
+      
+  - RABBIT_NUMBER: 1
+    BUILD_TARGERT: windows_msvc
+    RABBIT_TOOLCHAIN_VERSION: 12
+  
+  - RABBIT_NUMBER: 2
+    BUILD_TARGERT: windows_msvc
+    RABBIT_TOOLCHAIN_VERSION: 12
+  
+  - RABBIT_NUMBER: 3
+    BUILD_TARGERT: windows_msvc
+    RABBIT_TOOLCHAIN_VERSION: 12
+    QT_ROOT: C:/Qt/5.6/msvc2013_64
+  
+  - RABBIT_NUMBER: 4
+    BUILD_TARGERT: windows_msvc
+    RABBIT_TOOLCHAIN_VERSION: 12
+    QT_ROOT: C:/Qt/5.6/msvc2013_64
+  
+  ##### mingw #####
+  - RABBIT_NUMBER: 0
+    BUILD_TARGERT: windows_mingw
+    RABBIT_TOOLCHAIN_VERSION: 530
+    RABBIT_ARCH: x86
+
+  - RABBIT_NUMBER: 1
+    BUILD_TARGERT: windows_mingw
+    RABBIT_TOOLCHAIN_VERSION: 530
+    RABBIT_ARCH: x86
+
+  - RABBIT_NUMBER: 2
+    BUILD_TARGERT: windows_mingw
+    RABBIT_TOOLCHAIN_VERSION: 530
+    RABBIT_ARCH: x86
+
+  - RABBIT_NUMBER: 3
+    BUILD_TARGERT: windows_mingw
+    RABBIT_TOOLCHAIN_VERSION: 530
+    QT_ROOT: C:/Qt/5.11/mingw53_32
+    RABBIT_ARCH: x86
+    
+  - RABBIT_NUMBER: 3
+    BUILD_TARGERT: windows_mingw
+    RABBIT_TOOLCHAIN_VERSION: 530
+    QT_ROOT: C:/Qt/5.10/mingw53_32
+    RABBIT_ARCH: x86
+
+  - RABBIT_NUMBER: 3
+    BUILD_TARGERT: windows_mingw
+    RABBIT_TOOLCHAIN_VERSION: 530
+    QT_ROOT: C:/Qt/5.9/mingw53_32
+    RABBIT_ARCH: x86
+  
+  - RABBIT_NUMBER: 4
+    BUILD_TARGERT: windows_mingw
+    RABBIT_TOOLCHAIN_VERSION: 530
+    QT_ROOT: C:/Qt/5.11/mingw53_32
+    RABBIT_ARCH: x86
+    
+  - RABBIT_NUMBER: 4
+    BUILD_TARGERT: windows_mingw
+    RABBIT_TOOLCHAIN_VERSION: 530
+    QT_ROOT: C:/Qt/5.10/mingw53_32
+    RABBIT_ARCH: x86
+
+  - RABBIT_NUMBER: 4
+    BUILD_TARGERT: windows_mingw
+    RABBIT_TOOLCHAIN_VERSION: 530
+    QT_ROOT: C:/Qt/5.9/mingw53_32
+    RABBIT_ARCH: x86
+
+  ##### android ####  
+  - RABBIT_NUMBER: 0
+    BUILD_TARGERT: android
+    RABBIT_TOOLCHAIN_VERSION: 4.9
+    ANDROID_NATIVE_API_LEVEL: 18
+    RABBIT_ARCH: arm
+      
+  - RABBIT_NUMBER: 1
+    BUILD_TARGERT: android
+    RABBIT_TOOLCHAIN_VERSION: 4.9
+    ANDROID_NATIVE_API_LEVEL: 18
+    RABBIT_ARCH: arm
+  
+  - RABBIT_NUMBER: 2
+    BUILD_TARGERT: android
+    RABBIT_TOOLCHAIN_VERSION: 4.9
+    ANDROID_NATIVE_API_LEVEL: 18
+    RABBIT_ARCH: arm
+    
+  - RABBIT_NUMBER: 3
+    BUILD_TARGERT: android
+    RABBIT_TOOLCHAIN_VERSION: 4.9
+    ANDROID_NATIVE_API_LEVEL: 18
+    RABBIT_ARCH: arm
+    QT_VERSION: 5.9.5
+    QT_VERSION_DIR: 5.9
+
+  - RABBIT_NUMBER: 3
+    BUILD_TARGERT: android
+    RABBIT_TOOLCHAIN_VERSION: 4.9
+    ANDROID_NATIVE_API_LEVEL: 18
+    RABBIT_ARCH: arm
+    QT_VERSION: 5.10.1
+    QT_VERSION_DIR: 5.10
+
+  - RABBIT_NUMBER: 3
+    BUILD_TARGERT: android
+    RABBIT_TOOLCHAIN_VERSION: 4.9
+    ANDROID_NATIVE_API_LEVEL: 18
+    RABBIT_ARCH: arm
+    QT_VERSION: 5.11.1
+    QT_VERSION_DIR: 5.11
+  
+  - RABBIT_NUMBER: 4
+    BUILD_TARGERT: android
+    RABBIT_TOOLCHAIN_VERSION: 4.9
+    ANDROID_NATIVE_API_LEVEL: 18
+    RABBIT_ARCH: arm
+    QT_VERSION: 5.9.5
+    QT_VERSION_DIR: 5.9
+
+  - RABBIT_NUMBER: 4
+    BUILD_TARGERT: android
+    RABBIT_TOOLCHAIN_VERSION: 4.9
+    ANDROID_NATIVE_API_LEVEL: 18
+    RABBIT_ARCH: arm
+    QT_VERSION: 5.10.1
+    QT_VERSION_DIR: 5.10
+
+  - RABBIT_NUMBER: 4
+    BUILD_TARGERT: android
+    RABBIT_TOOLCHAIN_VERSION: 4.9
+    ANDROID_NATIVE_API_LEVEL: 18
+    RABBIT_ARCH: arm
+    QT_VERSION: 5.11.1
+    QT_VERSION_DIR: 5.11
+    
+  - RABBIT_NUMBER: 0
+    BUILD_TARGERT: android
+    RABBIT_TOOLCHAIN_VERSION: 4.9
+    ANDROID_NATIVE_API_LEVEL: 24
+    RABBIT_ARCH: arm
+      
+  - RABBIT_NUMBER: 1
+    BUILD_TARGERT: android
+    RABBIT_TOOLCHAIN_VERSION: 4.9
+    ANDROID_NATIVE_API_LEVEL: 24
+    RABBIT_ARCH: arm
+  
+  - RABBIT_NUMBER: 2
+    BUILD_TARGERT: android
+    RABBIT_TOOLCHAIN_VERSION: 4.9
+    ANDROID_NATIVE_API_LEVEL: 24
+    RABBIT_ARCH: arm
+    
+  - RABBIT_NUMBER: 3
+    BUILD_TARGERT: android
+    RABBIT_TOOLCHAIN_VERSION: 4.9
+    ANDROID_NATIVE_API_LEVEL: 24
+    RABBIT_ARCH: arm
+    QT_VERSION: 5.9.5
+    QT_VERSION_DIR: 5.9
+
+  - RABBIT_NUMBER: 3
+    BUILD_TARGERT: android
+    RABBIT_TOOLCHAIN_VERSION: 4.9
+    ANDROID_NATIVE_API_LEVEL: 24
+    RABBIT_ARCH: arm
+    QT_VERSION: 5.10.1
+    QT_VERSION_DIR: 5.10
+
+  - RABBIT_NUMBER: 3
+    BUILD_TARGERT: android
+    RABBIT_TOOLCHAIN_VERSION: 4.9
+    ANDROID_NATIVE_API_LEVEL: 24
+    RABBIT_ARCH: arm
+    QT_VERSION: 5.11.1
+    QT_VERSION_DIR: 5.11
+
+  - RABBIT_NUMBER: 4
+    BUILD_TARGERT: android
+    RABBIT_TOOLCHAIN_VERSION: 4.9
+    ANDROID_NATIVE_API_LEVEL: 24
+    RABBIT_ARCH: arm
+    QT_VERSION: 5.9.5
+    QT_VERSION_DIR: 5.9
+
+  - RABBIT_NUMBER: 4
+    BUILD_TARGERT: android
+    RABBIT_TOOLCHAIN_VERSION: 4.9
+    ANDROID_NATIVE_API_LEVEL: 24
+    RABBIT_ARCH: arm
+    QT_VERSION: 5.10.1
+    QT_VERSION_DIR: 5.10
+
+  - RABBIT_NUMBER: 4
+    BUILD_TARGERT: android
+    RABBIT_TOOLCHAIN_VERSION: 4.9
+    ANDROID_NATIVE_API_LEVEL: 24
+    RABBIT_ARCH: arm
+    QT_VERSION: 5.11.1
+    QT_VERSION_DIR: 5.11
+    
+  - RABBIT_NUMBER: 0
+    BUILD_TARGERT: android
+    RABBIT_TOOLCHAIN_VERSION: 4.9
+    ANDROID_NATIVE_API_LEVEL: 18
+    RABBIT_ARCH: x86
+      
+  - RABBIT_NUMBER: 1
+    BUILD_TARGERT: android
+    RABBIT_TOOLCHAIN_VERSION: 4.9
+    ANDROID_NATIVE_API_LEVEL: 18
+    RABBIT_ARCH: x86
+  
+  - RABBIT_NUMBER: 2
+    BUILD_TARGERT: android
+    RABBIT_TOOLCHAIN_VERSION: 4.9
+    ANDROID_NATIVE_API_LEVEL: 18
+    RABBIT_ARCH: x86
+    
+  - RABBIT_NUMBER: 3
+    BUILD_TARGERT: android
+    RABBIT_TOOLCHAIN_VERSION: 4.9
+    ANDROID_NATIVE_API_LEVEL: 18
+    RABBIT_ARCH: x86
+    QT_VERSION: 5.9.5
+    QT_VERSION_DIR: 5.9
+
+  - RABBIT_NUMBER: 3
+    BUILD_TARGERT: android
+    RABBIT_TOOLCHAIN_VERSION: 4.9
+    ANDROID_NATIVE_API_LEVEL: 18
+    RABBIT_ARCH: x86
+    QT_VERSION: 5.10.1
+    QT_VERSION_DIR: 5.10
+
+  - RABBIT_NUMBER: 3
+    BUILD_TARGERT: android
+    RABBIT_TOOLCHAIN_VERSION: 4.9
+    ANDROID_NATIVE_API_LEVEL: 18
+    RABBIT_ARCH: x86
+    QT_VERSION: 5.11.1
+    QT_VERSION_DIR: 5.11
+  
+  - RABBIT_NUMBER: 4
+    BUILD_TARGERT: android
+    RABBIT_TOOLCHAIN_VERSION: 4.9
+    ANDROID_NATIVE_API_LEVEL: 18
+    RABBIT_ARCH: x86
+    QT_VERSION: 5.9.5
+    QT_VERSION_DIR: 5.9
+
+  - RABBIT_NUMBER: 4
+    BUILD_TARGERT: android
+    RABBIT_TOOLCHAIN_VERSION: 4.9
+    ANDROID_NATIVE_API_LEVEL: 18
+    RABBIT_ARCH: x86
+    QT_VERSION: 5.10.1
+    QT_VERSION_DIR: 5.10
+
+  - RABBIT_NUMBER: 4
+    BUILD_TARGERT: android
+    RABBIT_TOOLCHAIN_VERSION: 4.9
+    ANDROID_NATIVE_API_LEVEL: 18
+    RABBIT_ARCH: x86
+    QT_VERSION: 5.11.1
+    QT_VERSION_DIR: 5.11
+  
+init:
+  - if "%RABBIT_ARCH%" == "" (set varch=x64) else (set varch=%RABBIT_ARCH%)
+  - set PROJECT_NAME=%APPVEYOR_PROJECT_NAME%
+  - if "%varch%" == "x86" if "%BUILD_TARGERT%" == "windows_msvc" if %RABBIT_TOOLCHAIN_VERSION% == 15 set RABBIT_USE_REPOSITORIES="TRUE"
+  - if "%varch%" == "x64" set varch=amd64
+  - if "%BUILD_TARGERT%" == "windows_msvc" if %RABBIT_TOOLCHAIN_VERSION% LSS 15 (call "C:\Program Files (x86)\Microsoft Visual Studio %RABBIT_TOOLCHAIN_VERSION%.0\VC\vcvarsall.bat" %varch%) else (call "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Auxiliary\Build\vcvarsall.bat" %varch%)
+  - if "%BUILD_TARGERT%" == "windows_mingw" set MSYSTEM=MINGW32  #设置编译系统为MINGW32
+  - if "%QT_VERSION%" == "" set QT_VERSION=NO
+  - if NOT "%QT_ROOT%" == "NO" for /f "delims=" %%i in ('%QT_ROOT%/bin/qmake -query QT_VERSION') do (set QT_VERSION=%%i)
+  - set RABBIT_QT_NUMBER=3   #TODO:修改为qt在编译数组中的索引  
+  - echo QT_VERSION=%QT_VERSION%
+  - echo QT_ROOT=%QT_ROOT%
+  
+install:
+  - for /f "delims=" %%i in ('git describe --tags') do (set BUILD_VERSION=%%i)
+  - if "%BUILD_VERSION%" == "" for /f "delims=" %%i in ('git rev-parse HEAD') do (set BUILD_VERSION=%%i) 
+  - echo BUILD_VERSION=%BUILD_VERSION%
+  #- if "%BUILD_TARGERT%" == "windows_mingw" C:\msys64\usr\bin\pacman.exe --noconfirm -Syu
+  #- if "%BUILD_TARGERT%" == "windows_mingw" C:\msys64\autorebase.bat
+  - C:\msys64\usr\bin\pacman.exe -S --noconfirm nasm yasm unzip #expect zip curl
+  - C:\msys64\autorebase.bat
+  #- if not "%BUILD_TARGERT%" == "android" wget -q http://www.nasm.us/pub/nasm/releasebuilds/2.13.03/win32/nasm-2.13.03-win32.zip && C:\msys64\usr\bin\unzip.exe -q nasm-2.13.03-win32.zip && copy nasm-2.13.03\nasm.exe C:\msys64\usr\bin
+  - del C:\msys64\usr\bin\link.exe
+  - cd %APPVEYOR_BUILD_FOLDER%
+  - ps: build_script\ci\download_library_android.ps1
+  - ps: build_script\ci\download_library.ps1
+  - if "%RABBIT_CONFIG%" == "" set RABBIT_CONFIG=Release
+  - if "%RABBIT_ARCH%" == "" set RABBIT_ARCH=x64
+  - if "%varch%" == "x64" if "%BUILD_TARGERT%" == "windows_mingw" set BUILD_EXIT=TRUE
+
+before_build:
+  - cd %APPVEYOR_BUILD_FOLDER%
+  - if "%BUILD_TARGERT%" == "android" if NOT "%BUILD_EXIT%" == "TRUE" C:\msys64\usr\bin\bash.exe %APPVEYOR_BUILD_FOLDER%\build_script\ci\build-install-tools-windows.sh
+
+build_script:
+  - cd %APPVEYOR_BUILD_FOLDER%
+  - if NOT "%BUILD_EXIT%" == "TRUE" C:\msys64\usr\bin\bash.exe %APPVEYOR_BUILD_FOLDER%\build_script\ci\build.sh
+  #- C:\msys64\usr\bin\bash.exe %APPVEYOR_BUILD_FOLDER%\build_script\ci\Deploy.sh
+  - if "%BUILD_TARGERT%" == "android" set RABBIT_TOOLCHAIN_VERSION=%ANDROID_NATIVE_API_LEVEL%
+  
+after_build:
+  - cd %APPVEYOR_BUILD_FOLDER%
+  
+  
+artifacts:
+  - path: build #$(BUILD_TARGERT)$(RABBIT_TOOLCHAIN_VERSION)_$(RABBIT_ARCH)_qt$(QT_VERSION)_$(RABBIT_CONFIG)
+    name: RABBIT_$(BUILD_TARGERT)$(RABBIT_TOOLCHAIN_VERSION)_$(RABBIT_ARCH)_qt$(QT_VERSION)_$(RABBIT_CONFIG)_$(BUILD_VERSION)
+    type: zip
+   
+test: off
+
+#deploy:
+  #http://www.appveyor.com/docs/deployment/ftp
+#  provider: FTP
+  #https://sourceforge.net/p/forge/documentation/SFTP/
+#  protocol: sftp
+#  host: frs.sourceforge.net
+#  username: kl222,rabbitthirdlibrary
+  #密码用这个加密 https://ci.appveyor.com/tools/encrypt
+#  PASSWORD:
+#    secure: 2WEtOQrdty3V3g0aEVvS3Q==
+  #link pfs to  /home/frs/project/r/ra/rabbitthirdlibrary
+#  folder: pfs/Release
+#  active_mode: false
+
+
+#See:https://www.appveyor.com/docs/deployment/github/
+deploy:
+  provider: GitHub
+  #token 在这个地址产生 https://github.com/settings/tokens 用这个加密 https://ci.appveyor.com/tools/encrypt
+  auth_token:
+    secure: xgIFN2iAfgj1gsWabdHrmFXvj0rce/ZWtKUwm3aDUNfLGu+kO/q94MYD8a46AbDL
+#  draft: false
+#  prerelease: false
+  on:
+    appveyor_repo_tag: true        # deploy on tag push only
+    RABBIT_NUMBER: 2
