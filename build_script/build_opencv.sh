@@ -39,7 +39,7 @@ CUR_DIR=`pwd`
 if [ ! -d ${RABBIT_BUILD_SOURCE_CODE} ]; then
     OPENCV_VERSION=3.4.2
     if [ "TRUE" = "${RABBIT_USE_REPOSITORIES}" ]; then
-        echo "git clone -q  https://github.com/opencv/opencv.git ${RABBIT_BUILD_SOURCE_CODE}"
+        echo "git clone -q https://github.com/opencv/opencv.git ${RABBIT_BUILD_SOURCE_CODE}"
         git clone -q https://github.com/opencv/opencv.git ${RABBIT_BUILD_SOURCE_CODE}
         if [ "$OPENCV_VERSION" != "master" ]; then
             git checkout -b $OPENCV_VERSION $OPENCV_VERSION
@@ -110,9 +110,9 @@ case ${RABBIT_BUILD_TARGERT} in
         if [ -n "$RABBIT_CMAKE_MAKE_PROGRAM" ]; then
             CMAKE_PARA="${CMAKE_PARA} -DCMAKE_MAKE_PROGRAM=$RABBIT_CMAKE_MAKE_PROGRAM" 
         fi
-        CMAKE_PARA="${CMAKE_PARA} -DCMAKE_TOOLCHAIN_FILE=$RABBIT_BUILD_PREFIX/../build_script/cmake/platforms/toolchain-android.cmake"
+        CMAKE_PARA="${CMAKE_PARA} -DCMAKE_TOOLCHAIN_FILE=${RABBIT_BUILD_SOURCE_CODE}/platforms/android/android.toolchain.cmake"
         CMAKE_PARA="${CMAKE_PARA} -DANDROID_NATIVE_API_LEVEL=${ANDROID_NATIVE_API_LEVEL}"
-        #CMAKE_PARA="${CMAKE_PARA} -DANDROID_ABI=${ANDROID_ABI}"  
+        #CMAKE_PARA="${CMAKE_PARA} -DANDROID_ABI=\"${ANDROID_ABI}\""
         CMAKE_PARA="${CMAKE_PARA} -DBUILD_ANDROID_PROJECTS=OFF"
         ;;
     unix)
@@ -155,11 +155,17 @@ CMAKE_PARA="${CMAKE_PARA} -DOPENCV_EXTRA_MODULES_PATH=${RABBIT_BUILD_CONTRIB_SOU
 #CMAKE_PARA="${CMAKE_PARA} -DBUILD_opencv_xfeatures2d=OFF"
 
 echo "cmake .. -DCMAKE_INSTALL_PREFIX=$RABBIT_BUILD_PREFIX -DCMAKE_BUILD_TYPE=${RABBIT_CONFIG} -G\"${RABBITIM_GENERATORS}\" ${CMAKE_PARA}"
-cmake .. \
-    -DCMAKE_INSTALL_PREFIX="$RABBIT_BUILD_PREFIX" \
-    -DCMAKE_VERBOSE=ON -DCMAKE_BUILD_TYPE=${RABBIT_CONFIG} \
-    -G"${RABBITIM_GENERATORS}" ${CMAKE_PARA}
-
+if [ "${RABBIT_BUILD_TARGERT}" = "android" ]; then
+    cmake .. \
+        -DCMAKE_INSTALL_PREFIX="$RABBIT_BUILD_PREFIX" \
+        -DCMAKE_VERBOSE=ON -DCMAKE_BUILD_TYPE=${RABBIT_CONFIG} \
+        -G"${RABBITIM_GENERATORS}" ${CMAKE_PARA} -DANDROID_ABI="${ANDROID_ABI}"
+else
+    cmake .. \
+        -DCMAKE_INSTALL_PREFIX="$RABBIT_BUILD_PREFIX" \
+        -DCMAKE_VERBOSE=ON -DCMAKE_BUILD_TYPE=${RABBIT_CONFIG} \
+        -G"${RABBITIM_GENERATORS}" ${CMAKE_PARA} 
+fi
 cmake --build . --target install --config ${RABBIT_CONFIG} ${MAKE_PARA}
 
 cd $CUR_DIR

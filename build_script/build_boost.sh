@@ -116,7 +116,7 @@ case ${RABBIT_BUILD_TARGERT} in
         if [  "$RABBIT_TOOLCHAIN_VERSION" = "12" ]; then
             toolset=msvc-12.0
         fi
-        BOOTSTRAP="bootstrap.bat"
+        cmd /C bootstrap.bat --with-toolset=${toolset}
         ;;
     windows_mingw)
         

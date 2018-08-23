@@ -92,7 +92,8 @@ case ${RABBIT_BUILD_TARGERT} in
         export CFLAGS="${RABBIT_CFLAGS}"
         export CPPFLAGS="${RABBIT_CPPFLAGS}"
         export LDFLAGS="${RABBIT_LDFLAGS}"
-
+        export ANDROID_ABI="${ANDROID_ABI}"
+        
         #编译 cpufeatures
         echo "${RABBIT_BUILD_CROSS_PREFIX}gcc ${RABBIT_CFLAGS} -c ${ANDROID_NDK_ROOT}/sources/android/cpufeatures/cpu-features.c"
         ${RABBIT_BUILD_CROSS_PREFIX}gcc ${RABBIT_CFLAGS} -c ${ANDROID_NDK_ROOT}/sources/android/cpufeatures/cpu-features.c
