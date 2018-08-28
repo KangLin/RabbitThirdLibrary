@@ -24,7 +24,7 @@ environment:
   ApiKey:
     secure: qex0da587ygmywf4315g
     
-  matrix:
+  matrix:  
   ##### mingw #####
   - RABBIT_NUMBER: 0
     BUILD_TARGERT: windows_mingw
@@ -162,7 +162,7 @@ environment:
     RABBIT_ARCH: x86
     QT_VERSION: 5.11.1
     QT_VERSION_DIR: 5.11
-      
+   
   ##### vs2017 x64 Release #####
   - RABBIT_NUMBER: 0
     APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
@@ -333,7 +333,7 @@ environment:
     BUILD_TARGERT: windows_msvc
     RABBIT_TOOLCHAIN_VERSION: 12
     QT_ROOT: C:/Qt/5.6/msvc2013_64
-  
+    
 init:
   - if "%RABBIT_ARCH%" == "" (set varch=x64) else (set varch=%RABBIT_ARCH%)
   - set PROJECT_NAME=%APPVEYOR_PROJECT_NAME%

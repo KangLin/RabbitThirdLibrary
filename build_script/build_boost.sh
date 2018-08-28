@@ -96,17 +96,10 @@ case ${RABBIT_BUILD_TARGERT} in
        ;;
     unix)
         MAKE_PARA="${MAKE_PARA} CFLAGS=-fPIC"
-        if [ "$RABBIT_ARCH" = "x64" ]; then
-            MAKE_PARA="${MAKE_PARA} address-model=64"
-        fi
         ;;
-    windows_msvc)
-        if [ "$RABBIT_ARCH" = "x64" ]; then
-            MAKE_PARA=" address-model=64"
-        fi
-        
+    windows_msvc)      
         if [  "$RABBIT_TOOLCHAIN_VERSION" = "15" ]; then
-            toolset=msvc-15.0
+            toolset=msvc-14.1
         fi
 
         if [  "$RABBIT_TOOLCHAIN_VERSION" = "14" ]; then
@@ -116,13 +109,9 @@ case ${RABBIT_BUILD_TARGERT} in
         if [  "$RABBIT_TOOLCHAIN_VERSION" = "12" ]; then
             toolset=msvc-12.0
         fi
-        cmd /C bootstrap.bat --with-toolset=${toolset}
+        ./bootstrap.bat --with-toolset=${toolset}
         ;;
     windows_mingw)
-        
-        if [ "$RABBIT_ARCH" = "x64" ]; then
-            MAKE_PARA="${MAKE_PARA} address-model=64 "
-        fi
         ;;
     *)
         echo "${HELP_STRING}"
@@ -130,6 +119,12 @@ case ${RABBIT_BUILD_TARGERT} in
         exit 3
         ;;
 esac
+
+if [ "$RABBIT_ARCH" = "x64" ]; then
+    MAKE_PARA=" address-model=64 "
+else
+    MAKE_PARA=" address-model=32 "
+fi
 
 if [ "${RABBIT_CLEAN}" = "TRUE" ]; then
     if [ -f "b2" ]; then
@@ -141,12 +136,24 @@ if [ ! -f "b2" ]; then
     bash ${BOOTSTRAP} --with-toolset=${toolset}
 fi
 
+echo "./b2 --prefix=${RABBIT_BUILD_PREFIX} \
+        --build-type=minimal \
+        --layout=system \
+        --without-python \
+        toolset=${toolset} ${MAKE_PARA} \
+        variant=${variant} \
+        link=${link} \
+        runtime-link=${link} \
+        install  
+        "
 ./b2 --prefix=${RABBIT_BUILD_PREFIX} \
     --build-type=minimal \
     --layout=system \
+    --without-python \
     toolset=${toolset} ${MAKE_PARA} \
     variant=${variant} \
-    --without-python \
+    link=${link} \
+    runtime-link=${link} \
     install  
     
 cd $CUR_DIR
