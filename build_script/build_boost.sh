@@ -93,6 +93,7 @@ BOOTSTRAP="bootstrap.sh"
 toolset=gcc
 case ${RABBIT_BUILD_TARGERT} in
     android)
+       MAKE_PARA="${MAKE_PARA} architecture=${ANDROID_ABI} "
        ;;
     unix)
         MAKE_PARA="${MAKE_PARA} CFLAGS=-fPIC"
