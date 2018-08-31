@@ -30,7 +30,7 @@ fi
 RABBIT_BUILD_STATIC="static" #设置编译静态库，注释掉，则为编译动态库
 #RABBIT_USE_REPOSITORIES="TRUE" #下载指定的压缩包。省略，则下载开发库。  
 #RABBIT_BUILD_TOOLCHAIN_VERSION=4.8   #工具链版本号,默认 4.9  
-#ANDROID_NATIVE_API_LEVEL=18   #android ndk api (平台)版本号,默认 18
+#ANDROID_NATIVE_API_LEVEL=24   #android ndk api (平台)版本号,默认 18
 if [ -z "${RABBIT_MAKE_JOB_PARA}" ]; then
     RABBIT_MAKE_JOB_PARA="-j`cat /proc/cpuinfo |grep 'cpu cores' |wc -l`"  #make 同时工作进程参数
     if [ "$RABBIT_MAKE_JOB_PARA" = "-j1" ];then
@@ -96,20 +96,25 @@ MAKE="make" # ${RABBIT_MAKE_JOB_PARA}"
 TARGET_OS=`uname -s`
 case $TARGET_OS in
     MINGW* | CYGWIN* | MSYS*)
-        RABBIT_BUILD_HOST="windows-`uname -m`"
-        #RABBIT_CMAKE_MAKE_PROGRAM=$ANDROID_NDK/prebuilt/${RABBIT_BUILD_HOST}/bin/make #这个用不着，只有在windows命令行下才有用 
-        RABBITIM_GENERATORS="MSYS Makefiles"
+        #ANDROID_NDK_HOST="windows-`uname -m`"
+        ANDROID_NDK_HOST=windows-x86_64 
+        if [ ! -d $ANDROID_NDK/prebuilt/${ANDROID_NDK_HOST} ]; then
+            ANDROID_NDK_HOST=windows
+        fi
+        #RABBIT_CMAKE_MAKE_PROGRAM=$ANDROID_NDK/prebuilt/${ANDROID_NDK_HOST}/bin/make #这个用不着，只有在windows命令行下才有用 
+        RABBITIM_GENERATORS="Unix Makefiles"
         ;;
     Linux* | Unix*)
-        RABBIT_BUILD_HOST="linux-`uname -m`"    #windows、linux-x86_64
+        ANDROID_NDK_HOST="linux-`uname -m`"    #windows、linux-x86_64
         RABBITIM_GENERATORS="Unix Makefiles" 
         ;;
     *)
-    echo "Please set RABBIT_BUILD_HOST. see build_envsetup_android.sh"
+    echo "Please set ANDROID_NDK_HOST. see build_envsetup_android.sh"
     return 2
     ;;
 esac
 
+export PATH=$ANDROID_NDK/prebuilt/${ANDROID_NDK_HOST}/bin:$PATH
 if [ -z "$RABBIT_TOOL_CHAIN_ROOT" ]; then
     RABBIT_TOOL_CHAIN_ROOT=${RABBIT_BUILD_PREFIX}/../android-toolchains-${RABBIT_ARCH}-api${ANDROID_NATIVE_API_LEVEL}
 fi
@@ -177,7 +182,7 @@ RABBIT_CFLAGS="$RABBIT_CFLAGS --sysroot=${RABBIT_BUILD_CROSS_SYSROOT} -I$RABBIT_
 RABBIT_CPPFLAGS="$RABBIT_CFLAGS $RABBIT_BUILD_CROSS_STL_INCLUDE_FLAGS"
 RABBIT_LDFLAGS="--sysroot=${RABBIT_BUILD_CROSS_SYSROOT_LIB} -L${RABBIT_BUILD_CROSS_STL_LIBS} -L${RABBIT_BUILD_PREFIX}/lib -L$RABBIT_BUILD_CROSS_SYSROOT_LIB"
 
-#export PATH=${RABBIT_BUILD_CROSS_ROOT}/bin:${QT_BIN}:$PATH
+export PATH=${RABBIT_TOOL_CHAIN_ROOT}/bin:${QT_BIN}:$PATH
 #pkg-config帮助文档：http://linux.die.net/man/1/pkg-config
 if [ -z "$PKG_CONFIG" ]; then
     export PKG_CONFIG=pkg-config 
@@ -195,6 +200,7 @@ echo "ANDROID_SDK_ROOT:$ANDROID_SDK_ROOT"
 echo "ANDROID_NDK:$ANDROID_NDK"
 echo "ANDROID_NDK_ROOT:$ANDROID_NDK_ROOT"
 echo "ANDROID_ABI:$ANDROID_ABI"
+echo "RABBIT_TOOL_CHAIN_ROOT:$RABBIT_TOOL_CHAIN_ROOT"
 echo "ANDROID_TOOLCHAIN_NAME:$ANDROID_TOOLCHAIN_NAME"
 echo "ANDROID_NATIVE_API_LEVEL:$ANDROID_NATIVE_API_LEVEL"
 echo "ANDROID_STL:$ANDROID_STL"

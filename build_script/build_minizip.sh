@@ -37,7 +37,7 @@ CUR_DIR=`pwd`
 
 #下载源码:
 if [ ! -d ${RABBIT_BUILD_SOURCE_CODE} ]; then
-    VERSION=2.5.2
+    VERSION=master
     if [ "TRUE" = "${RABBIT_USE_REPOSITORIES}" ]; then
         echo "git clone -q --branch=${VERSION} https://github.com/nmoinvaz/minizip.git ${RABBIT_BUILD_SOURCE_CODE}"
         git clone -q https://github.com/nmoinvaz/minizip.git ${RABBIT_BUILD_SOURCE_CODE}
