@@ -38,15 +38,19 @@ CUR_DIR=`pwd`
 
 #下载源码:
 if [ ! -d ${RABBIT_BUILD_SOURCE_CODE} ]; then
-	VERSION=uriparser-0.8.6
+	VERSION=master #uriparser-0.8.6
     if [ "TRUE" = "${RABBIT_USE_REPOSITORIES}" ]; then
-        echo "git clone -q https://github.com/uriparser/uriparser.git ${RABBIT_BUILD_SOURCE_CODE}"
-        git clone -q --branch=$VERSION https://github.com/uriparser/uriparser.git ${RABBIT_BUILD_SOURCE_CODE}
+        #echo "git clone -q https://github.com/uriparser/uriparser.git ${RABBIT_BUILD_SOURCE_CODE}"
+        #git clone -q --branch=$VERSION https://github.com/uriparser/uriparser.git ${RABBIT_BUILD_SOURCE_CODE}
+        echo "git clone -q --branch=$VERSION https://github.com/KangLin/uriparser.git ${RABBIT_BUILD_SOURCE_CODE}"
+        git clone -q --branch=$VERSION https://github.com/KangLin/uriparser.git ${RABBIT_BUILD_SOURCE_CODE}
     else
-        echo "wget -q https://github.com/uriparser/uriparser/archive/$VERSION.zip"
         mkdir -p ${RABBIT_BUILD_SOURCE_CODE}
         cd ${RABBIT_BUILD_SOURCE_CODE}
-        wget -c -q https://github.com/uriparser/uriparser/archive/$VERSION.zip
+        #echo "wget -q https://github.com/uriparser/uriparser/archive/$VERSION.zip"
+        #wget -c -q https://github.com/uriparser/uriparser/archive/$VERSION.zip
+        echo "wget -c -q https://github.com/KangLin/uriparser/archive/$VERSION.zip"
+        wget -c -q https://github.com/KangLin/uriparser/archive/$VERSION.zip
         unzip -q $VERSION.zip
         mv uriparser-$VERSION ..
         rm -fr *
