@@ -352,7 +352,7 @@ install:
   - if "%BUILD_VERSION%" == "" for /f "delims=" %%i in ('git rev-parse HEAD') do (set BUILD_VERSION=%%i) 
   - echo BUILD_VERSION=%BUILD_VERSION%
   - if "%BUILD_TARGERT%" == "windows_mingw" C:\msys64\usr\bin\pacman.exe --noconfirm -Syu
-  - if "%BUILD_TARGERT%" == "windows_mingw" C:\msys64\autorebase.bat
+  #- if "%BUILD_TARGERT%" == "windows_mingw" C:\msys64\autorebase.bat
   - if "%BUILD_TARGERT%" == "windows_mingw"  C:\msys64\usr\bin\pacman.exe -S --noconfirm awk
   - C:\msys64\usr\bin\pacman.exe -S --noconfirm nasm yasm unzip #expect zip curl
   - C:\msys64\autorebase.bat
