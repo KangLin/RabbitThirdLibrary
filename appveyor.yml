@@ -324,7 +324,7 @@ environment:
   - RABBIT_NUMBER: 0
     BUILD_TARGERT: windows_msvc
     RABBIT_TOOLCHAIN_VERSION: 12
-      
+    
   - RABBIT_NUMBER: 1
     BUILD_TARGERT: windows_msvc
     RABBIT_TOOLCHAIN_VERSION: 12
@@ -351,11 +351,11 @@ install:
   - for /f "delims=" %%i in ('git describe --tags') do (set BUILD_VERSION=%%i)
   - if "%BUILD_VERSION%" == "" for /f "delims=" %%i in ('git rev-parse HEAD') do (set BUILD_VERSION=%%i) 
   - echo BUILD_VERSION=%BUILD_VERSION%
-  - C:\msys64\usr\bin\pacman.exe --noconfirm -Syu
-  - C:\msys64\autorebase.bat
-  - if "%BUILD_TARGERT%" == "windows_mingw"  C:\msys64\usr\bin\pacman.exe -S --noconfirm awk
+  #- C:\msys64\usr\bin\pacman.exe --noconfirm -Syu
+  #- C:\msys64\autorebase.bat
+  #- if "%BUILD_TARGERT%" == "windows_mingw"  C:\msys64\usr\bin\pacman.exe -S --noconfirm awk
   - C:\msys64\usr\bin\pacman.exe -S --noconfirm nasm yasm unzip #expect zip curl
-  - C:\msys64\autorebase.bat
+  #- C:\msys64\autorebase.bat
   #- if not "%BUILD_TARGERT%" == "android" wget -q http://www.nasm.us/pub/nasm/releasebuilds/2.13.03/win32/nasm-2.13.03-win32.zip && C:\msys64\usr\bin\unzip.exe -q nasm-2.13.03-win32.zip && copy nasm-2.13.03\nasm.exe C:\msys64\usr\bin
   - del C:\msys64\usr\bin\link.exe
   - cd %APPVEYOR_BUILD_FOLDER%
