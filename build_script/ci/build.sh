@@ -22,6 +22,7 @@ function urlencode()
     echo $content;
 }
 
+export PATH=/usr/bin:$PATH
 if [ "$BUILD_TARGERT" = "windows_mingw" \
     -a -n "$APPVEYOR" ]; then
     export RABBIT_TOOLCHAIN_ROOT=/C/Qt/Tools/mingw${RABBIT_TOOLCHAIN_VERSION}_32
