@@ -37,7 +37,7 @@ CUR_DIR=`pwd`
 
 #下载源码:
 if [ ! -d ${RABBIT_BUILD_SOURCE_CODE} ]; then
-    VERSION=eb923e7d2b5abf3b3a03bc4bb13655eca77ce810
+    VERSION=2.5.3 #eb923e7d2b5abf3b3a03bc4bb13655eca77ce810
     if [ "TRUE" = "${RABBIT_USE_REPOSITORIES}" ]; then
         echo "git clone -q --branch=${VERSION} https://github.com/nmoinvaz/minizip.git ${RABBIT_BUILD_SOURCE_CODE}"
         git clone -q https://github.com/nmoinvaz/minizip.git ${RABBIT_BUILD_SOURCE_CODE}
@@ -128,5 +128,25 @@ else
         -G"${RABBITIM_GENERATORS}" ${CMAKE_PARA} 
 fi
 cmake --build . --target install --config ${RABBIT_CONFIG} ${MAKE_PARA}
-
+case ${RABBIT_BUILD_TARGERT} in
+    android)
+    ;;
+    unix)
+        ;;
+    windows_msvc)
+        MAKE_PARA=""
+        cd $RABBIT_BUILD_PREFIX/lib
+        if [ -f libminizip.lib ]; then
+            cp libminizip.lib minizip.lib
+        fi
+        ;;
+    windows_mingw)
+        cd $RABBIT_BUILD_PREFIX/lib
+        if [ -f minizip.lib ]; then
+            cp minizip.lib libminizip.lib
+        fi
+        ;;
+    *)
+    ;;
+esac
 cd $CUR_DIR
