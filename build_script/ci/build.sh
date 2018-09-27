@@ -2,25 +2,11 @@
 set -e
 
 #TODO:修改数组，修改完后，再修改appveyor.yml中的RABBIT_QT_NUMBER为QT开始的数组索引  
-RABBIT_LIBRARYS[0]="change_prefix zlib minizip expat libgpx openssl libsodium libcurl uriparser libpng jpeg libgif libtiff freetype ogg speex libyuv libvpx libqrencode libopus x264 ffmpeg"
-RABBIT_LIBRARYS[1]="boost opencv libkml" # geos gdal"
+RABBIT_LIBRARYS[0]="change_prefix zlib expat libgpx openssl libsodium libcurl libpng jpeg libgif libtiff freetype ogg speex libyuv libvpx libqrencode libopus x264 ffmpeg"
+RABBIT_LIBRARYS[1]="boost opencv" # geos gdal"
 #RABBIT_LIBRARYS[2]="osg"
 #RABBIT_LIBRARYS[3]="OsgQt osgearth "
 RABBIT_LIBRARYS[2]="qxmpp qzxing"
-
-#urlendcode
-function urlencode()
-{
-    content=$1
-    x=”
-    content=`echo -n "$content" | od -An -tx1 | tr ' ' %`
-    for i in $content
-    do
-              x=$x$i;
-    done
-    content=$x
-    echo $content;
-}
 
 export PATH=/usr/bin:$PATH
 if [ "$BUILD_TARGERT" = "windows_mingw" \
