@@ -93,7 +93,7 @@ if [ "$BUILD_TARGERT" = "android" ]; then
            echo "Don't arch $RABBIT_ARCH"
            ;;
     esac
-    export PATH=${SCRIPT_DIR}/../Tools/apache-ant/bin:$JAVA_HOME:$PATH
+    export PATH=$PATH:${SCRIPT_DIR}/../Tools/apache-ant/bin:$JAVA_HOME
 fi
 if [ "$BUILD_TARGERT" != "windows_msvc" ]; then
     RABBIT_MAKE_JOB_PARA="-j`cat /proc/cpuinfo |grep 'cpu cores' |wc -l`"  #make 同时工作进程参数
