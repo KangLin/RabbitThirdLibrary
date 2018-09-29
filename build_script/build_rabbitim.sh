@@ -68,8 +68,6 @@ echo ""
 
 if [ "$3" = "cmake" ]; then
 
-    CMAKE_PARA="--target package"
-    PARA="-DCMAKE_BUILD_TYPE=Release -DQt5_DIR=${QT_ROOT}/lib/cmake/Qt5 -DCMAKE_VERBOSE_MAKEFILE=TRUE"
   #  if [ "${RABBIT_BUILD_STATIC}" = "static" ]; then
   #      PARA="${PARA} -DOPTION_RABBIT_USE_STATIC=ON"
   #  fi
@@ -77,27 +75,19 @@ if [ "$3" = "cmake" ]; then
     case $1 in
         android)
             CMAKE_PARA="${CMAKE_PARA} -DCMAKE_TOOLCHAIN_FILE=$RABBIT_BUILD_PREFIX/../build_script/cmake/platforms/toolchain-android.cmake"
-            PARA="${PARA} -DLIBRARY_OUTPUT_PATH:PATH=`pwd`"
-            PARA="${PARA} -DOPTION_RABBIT_USE_OPENCV=OFF"
-            #PARA="${PARA} -DOPTION_RABBIT_USE_LIBCURL=OFF -DOPTION_RABBIT_USE_OPENSSL=OFF"
-            PARA="${PARA} -DANT=${ANT}"
-            CMAKE_PARA=""
+            CMAKE_PARA="${CMAKE_PARA} -DLIBRARY_OUTPUT_PATH:PATH=`pwd`"
+            #CMAKE_PARA="${CMAKE_PARA} -DOPTION_RABBIT_USE_LIBCURL=OFF -DOPTION_RABBIT_USE_OPENSSL=OFF"
+            CMAKE_PARA="${CMAKE_PARA} -DANT=${ANT}"
             ;;
         unix)
-            PARA="${PARA} -DCMAKE_INSTALL_PREFIX=/usr/local/RABBIT"  #设置打包的安装路径
             ;;
         windows_msvc)
-            #因为用Visual Studio 2013生成的目标路径与配置有关，这影响到安装文件的生成，所以用nmake生成
-            RABBITIM_GENERATORS="NMake Makefiles" #RABBITIM_GENERATORS="Visual Studio 12 2013"
-            #PARA="${PARA} -DOPTION_RABBIT_USE_LIBCURL=OFF -DOPTION_RABBIT_USE_OPENSSL=OFF"
-            PARA="${PARA} -DOPTION_RABBIT_USE_OPENCV=OFF"
             MAKE_PARA=""
             ;;
         windows_mingw)
             case `uname -s` in
                 Linux*|Unix*|CYGWIN*)
-                    PARA="${PARA} -DCMAKE_TOOLCHAIN_FILE=${RABBIT_BUILD_SOURCE_CODE}/cmake/platforms/toolchain-mingw.cmake"
-                    CMAKE_PARA=""
+                    CMAKE_PARA="${CMAKE_PARA} -DCMAKE_TOOLCHAIN_FILE=${RABBIT_BUILD_SOURCE_CODE}/cmake/platforms/toolchain-mingw.cmake"
                     ;;
                 *)
                 ;;
@@ -110,8 +100,18 @@ if [ "$3" = "cmake" ]; then
             ;;
     esac
 
-    echo "cmake .. -G\"${RABBITIM_GENERATORS}\" $PARA"
-    cmake .. -G"${RABBITIM_GENERATORS}" $PARA # --debug-output
+    CMAKE_PARA="${CMAKE_PARA} -DQt5_DIR=${QT_ROOT}/lib/cmake/Qt5 -DCMAKE_VERBOSE_MAKEFILE=TRUE"
+    if [ "${RABBIT_BUILD_TARGERT}" = "android" ]; then
+        cmake .. \
+            -DCMAKE_INSTALL_PREFIX="$RABBIT_BUILD_PREFIX" \
+            -DCMAKE_BUILD_TYPE=${RABBIT_CONFIG} \
+            -G"${RABBITIM_GENERATORS}" ${CMAKE_PARA} -DANDROID_ABI="${ANDROID_ABI}" 
+    else
+        cmake .. \
+            -DCMAKE_INSTALL_PREFIX="$RABBIT_BUILD_PREFIX" \
+            -DCMAKE_BUILD_TYPE=${RABBIT_CONFIG} \
+            -G"${RABBITIM_GENERATORS}" ${CMAKE_PARA} -DCMAKE_VERBOSE_MAKEFILE=TRUE 
+    fi
     echo "cmake --build . --target install --config ${RABBIT_CONFIG} ${MAKE_PARA}"
     cmake --build . --target install --config ${RABBIT_CONFIG} ${MAKE_PARA}
 
