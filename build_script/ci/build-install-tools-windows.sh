@@ -22,7 +22,7 @@ if [ "$BUILD_TARGERT" = "android" ]; then
     export ANDROID_SDK_ROOT=${TOOLS_DIR}/android-sdk
     export ANDROID_NDK_ROOT=${TOOLS_DIR}/android-ndk
     export JAVA_HOME="/C/Program Files (x86)/Java/jdk1.8.0"
-    export PATH=${TOOLS_DIR}/apache-ant/bin:$JAVA_HOME:$PATH
+    export PATH=/usr/bin:${TOOLS_DIR}/apache-ant/bin:$JAVA_HOME:$PATH
 else
     exit 0
 fi

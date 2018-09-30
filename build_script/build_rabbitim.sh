@@ -101,6 +101,7 @@ if [ "$3" = "cmake" ]; then
     esac
 
     CMAKE_PARA="${CMAKE_PARA} -DQt5_DIR=${QT_ROOT}/lib/cmake/Qt5 -DCMAKE_VERBOSE_MAKEFILE=TRUE"
+    CMAKE_PARA="${CMAKE_PARA} -DRABBITIM_THIRD_PACKAGE_DIR=$RABBIT_BUILD_PREFIX"
     if [ "${RABBIT_BUILD_TARGERT}" = "android" ]; then
         cmake .. \
             -DCMAKE_INSTALL_PREFIX="$RABBIT_BUILD_PREFIX" \
