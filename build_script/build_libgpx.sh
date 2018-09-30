@@ -37,6 +37,8 @@ fi
 if [ ! -d ${RABBIT_BUILD_SOURCE_CODE} ]; then
     echo "git clone -q https://github.com/KangLin/gpxlib.git ${RABBIT_BUILD_SOURCE_CODE}"
     git clone -q https://github.com/KangLin/gpxlib.git ${RABBIT_BUILD_SOURCE_CODE}
+    #echo "git clone -q https://github.com/irdvo/gpxlib.git ${RABBIT_BUILD_SOURCE_CODE}"
+    #git clone -q https://github.com/irdvo/gpxlib.git ${RABBIT_BUILD_SOURCE_CODE}
 fi
 
 CUR_DIR=`pwd`
