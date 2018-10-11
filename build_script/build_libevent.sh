@@ -25,10 +25,11 @@ case $1 in
     ;;
 esac
 
+RABBIT_BUILD_SOURCE_CODE=$2
+
 echo ". `pwd`/build_envsetup_${RABBIT_BUILD_TARGERT}.sh"
 . `pwd`/build_envsetup_${RABBIT_BUILD_TARGERT}.sh
 
-RABBIT_BUILD_SOURCE_CODE=$2
 if [ -z "$RABBIT_BUILD_SOURCE_CODE" ]; then
     RABBIT_BUILD_SOURCE_CODE=${RABBIT_BUILD_PREFIX}/../src/libevent
 fi
