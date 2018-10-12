@@ -127,6 +127,9 @@ case ${RABBIT_BUILD_TARGERT} in
             -G"${RABBITIM_GENERATORS}" -DCMAKE_BUILD_TYPE=${RABBIT_CONFIG} ${CMAKE_PARA} 
         
         cmake --build . --target install --config ${RABBIT_CONFIG} #{MAKE_PARA}
+        if [ "${RABBIT_CONFIG}" = "Debug" ]; then
+            cp $RABBIT_BUILD_PREFIX/lib/expatd.lib $RABBIT_BUILD_PREFIX/lib/expat.lib
+        fi
         exit 0
         ;;
     *)
