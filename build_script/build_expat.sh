@@ -38,15 +38,19 @@ CUR_DIR=`pwd`
 
 #下载源码:
 if [ ! -d ${RABBIT_BUILD_SOURCE_CODE} ]; then
-    VERSION=R_2_2_6
+    VERSION=master #R_2_2_6
     if [ "TRUE" = "${RABBIT_USE_REPOSITORIES}" ]; then
-        echo "git clone -q --branch=${VERSION} https://github.com/libexpat/libexpat.git ${RABBIT_BUILD_SOURCE_CODE}"
-        git clone --branch=${VERSION} https://github.com/libexpat/libexpat.git ${RABBIT_BUILD_SOURCE_CODE}
+        #echo "git clone -q --branch=${VERSION} https://github.com/libexpat/libexpat.git ${RABBIT_BUILD_SOURCE_CODE}"
+        #git clone --branch=${VERSION} https://github.com/libexpat/libexpat.git ${RABBIT_BUILD_SOURCE_CODE}
+        echo "git clone git@github.com:KangLin/libexpat.git ${RABBIT_BUILD_SOURCE_CODE}"
+        git clone git@github.com:KangLin/libexpat.git ${RABBIT_BUILD_SOURCE_CODE}
     else
-        echo "wget -c -nv https://github.com/libexpat/libexpat/archive/${VERSION}.zip"
         mkdir -p ${RABBIT_BUILD_SOURCE_CODE}
         cd ${RABBIT_BUILD_SOURCE_CODE}
-        wget -q -c -nv https://github.com/libexpat/libexpat/archive/${VERSION}.zip
+        echo "wget -c -nv https://github.com/libexpat/libexpat/archive/${VERSION}.zip"
+        #wget -q -c -nv https://github.com/libexpat/libexpat/archive/${VERSION}.zip
+        echo "wget -q -c -nv https://github.com/KangLin/libexpat/archive/${VERSION}.zip"
+        wget -q -c -nv https://github.com/KangLin/libexpat/archive/${VERSION}.zip
         unzip -q ${VERSION}.zip
         mv libexpat-${VERSION} ..
         rm -fr *
@@ -106,6 +110,7 @@ case ${RABBIT_BUILD_TARGERT} in
         export NM=${RABBIT_BUILD_CROSS_PREFIX}nm
         CONFIG_PARA="${CONFIG_PARA} CC=${RABBIT_BUILD_CROSS_PREFIX}gcc LD=${RABBIT_BUILD_CROSS_PREFIX}ld"
         CONFIG_PARA="${CONFIG_PARA} --host=$RABBIT_BUILD_CROSS_HOST"
+        CONFIG_PARA="${CONFIG_PARA} --disable-dependency-tracking"
         #CONFIG_PARA="${CONFIG_PARA} --with-sysroot=${RABBIT_BUILD_CROSS_SYSROOT}"
         CFLAGS="${RABBIT_CFLAGS}"
         CPPFLAGS="${RABBIT_CPPFLAGS}"
@@ -139,7 +144,7 @@ case ${RABBIT_BUILD_TARGERT} in
     ;;
 esac
 
-CONFIG_PARA="${CONFIG_PARA} --without-xmlwf --without-docbook"
+CONFIG_PARA="${CONFIG_PARA} --without-xmlwf --without-docbook --without-examples --without-tests"
 CONFIG_PARA="${CONFIG_PARA} --prefix=$RABBIT_BUILD_PREFIX"
 echo "../configure ${CONFIG_PARA} CFLAGS=\"${CFLAGS=}\" CPPFLAGS=\"${CPPFLAGS}\" CXXFLAGS=\"${CPPFLAGS}\" LDFLAGS=\"${LDFLAGS}\""
 ../configure ${CONFIG_PARA} \
