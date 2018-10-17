@@ -78,6 +78,7 @@ if [ "$3" = "cmake" ]; then
             CMAKE_PARA="${CMAKE_PARA} -DLIBRARY_OUTPUT_PATH:PATH=`pwd`"
             #CMAKE_PARA="${CMAKE_PARA} -DOPTION_RABBIT_USE_LIBCURL=OFF -DOPTION_RABBIT_USE_OPENSSL=OFF"
             CMAKE_PARA="${CMAKE_PARA} -DANT=${ANT}"
+            export ANDROID_ABI="${ANDROID_ABI}" 
             ;;
         unix)
             ;;
@@ -102,17 +103,12 @@ if [ "$3" = "cmake" ]; then
 
     CMAKE_PARA="${CMAKE_PARA} -DQt5_DIR=${QT_ROOT}/lib/cmake/Qt5 -DCMAKE_VERBOSE_MAKEFILE=TRUE"
     CMAKE_PARA="${CMAKE_PARA} -DTHIRD_LIBRARY_PATH=$RABBIT_BUILD_PREFIX"
-    if [ "${RABBIT_BUILD_TARGERT}" = "android" ]; then
-        cmake .. \
-            -DCMAKE_INSTALL_PREFIX="$RABBIT_BUILD_PREFIX" \
-            -DCMAKE_BUILD_TYPE=${RABBIT_CONFIG} \
-            -G"${RABBITIM_GENERATORS}" ${CMAKE_PARA} -DANDROID_ABI="${ANDROID_ABI}" 
-    else
-        cmake .. \
-            -DCMAKE_INSTALL_PREFIX="$RABBIT_BUILD_PREFIX" \
-            -DCMAKE_BUILD_TYPE=${RABBIT_CONFIG} \
-            -G"${RABBITIM_GENERATORS}" ${CMAKE_PARA} -DCMAKE_VERBOSE_MAKEFILE=TRUE 
-    fi
+
+    cmake .. \
+        -DCMAKE_INSTALL_PREFIX="$RABBIT_BUILD_PREFIX" \
+        -DCMAKE_BUILD_TYPE=${RABBIT_CONFIG} \
+        -G"${RABBITIM_GENERATORS}" ${CMAKE_PARA} -DCMAKE_VERBOSE_MAKEFILE=TRUE 
+
     echo "cmake --build . --target install --config ${RABBIT_CONFIG} ${MAKE_PARA}"
     cmake --build . --target install --config ${RABBIT_CONFIG} ${MAKE_PARA}
 
@@ -153,8 +149,10 @@ else #qmake编译
     PARA="${PARA} -o Makefile"
     if [ "${RABBIT_CONFIG}" = "Debug" -o "${RABBIT_CONFIG}" = "debug" ]; then
         PARA="${PARA} CONFIG-=release CONFIG+=debug"
+        #MAKE_PARA="${MAKE_PARA} debug"
     else
         PARA="${PARA} CONFIG-=debug CONFIG+=release"
+        #MAKE_PARA="${MAKE_PARA} release"
     fi
     PARA="${PARA} THIRD_LIBRARY_PATH=$RABBIT_BUILD_PREFIX"
     PARA="${PARA} QXMPP_USE_VPX=1"
@@ -165,12 +163,12 @@ else #qmake编译
     $QMAKE $PARA ../RabbitIm.pro 
     echo "$MAKE ...."
     if [ "$1" == "android" ]; then
-        $MAKE -f Makefile install INSTALL_ROOT="`pwd`/android-build"
+        $MAKE -f Makefile install ${MAKE_PARA} INSTALL_ROOT="`pwd`/android-build"
         ${QT_BIN}/androiddeployqt --input "`pwd`/android-libRABBITApp.so-deployment-settings.json" --output "`pwd`/android-build" --verbose
     else
         $MAKE -f Makefile
         echo "$MAKE install ...."
-        $MAKE install
+        $MAKE install ${MAKE_PARA}
     fi
 fi
 
