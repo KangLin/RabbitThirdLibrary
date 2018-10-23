@@ -119,7 +119,7 @@ cd ${SCRIPT_DIR}
 
 if [ "$PROJECT_NAME" = "rabbitim" ]; then
     echo "bash ./build_rabbitim.sh ${BUILD_TARGERT} $PROJECT_DIR $CMAKE"
-    bash ./build_rabbitim.sh ${BUILD_TARGERT} $PROJECT_DIR $CMAKE
+    bash ./build_rabbitim.sh ${BUILD_TARGERT} $CMAKE $PROJECT_DIR
     exit 0
 fi
 

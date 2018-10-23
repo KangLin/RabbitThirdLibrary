@@ -13,11 +13,12 @@
 #   RABBIT_BUILD_CROSS_SYSROOT  #交叉编译平台的 sysroot
 
 set -e
-HELP_STRING="Usage $0 PLATFORM(android|windows_msvc|windows_mingw|unix) [SOURCE_CODE_ROOT_DIRECTORY] [qmake]"
+HELP_STRING="Usage $0 PLATFORM(android|windows_msvc|windows_mingw|unix) [qmake] [SOURCE_CODE_ROOT_DIRECTORY] "
 
-case $1 in
+BUILD_TARGET=$1
+case $BUILD_TARGET in
     android|windows_msvc|windows_mingw|unix)
-    RABBIT_BUILD_TARGERT=$1
+        RABBIT_BUILD_TARGERT=$1
     ;;
     *)
     echo "${HELP_STRING}"
@@ -25,7 +26,7 @@ case $1 in
     ;;
 esac
 
-RABBIT_BUILD_SOURCE_CODE=$2
+RABBIT_BUILD_SOURCE_CODE=$3
 
 echo ". `pwd`/build_envsetup_${RABBIT_BUILD_TARGERT}.sh"
 . `pwd`/build_envsetup_${RABBIT_BUILD_TARGERT}.sh
@@ -66,13 +67,13 @@ fi
 echo "CUR_DIR:`pwd`"
 echo ""
 
-if [ "$3" = "cmake" ]; then
+if [ "$2" = "cmake" ]; then
 
   #  if [ "${RABBIT_BUILD_STATIC}" = "static" ]; then
   #      PARA="${PARA} -DOPTION_RABBIT_USE_STATIC=ON"
   #  fi
     MAKE_PARA="-- ${RABBIT_MAKE_JOB_PARA} VERBOSE=1"
-    case $1 in
+    case $BUILD_TARGET in
         android)
             CMAKE_PARA="${CMAKE_PARA} -DCMAKE_TOOLCHAIN_FILE=$RABBIT_BUILD_PREFIX/../build_script/cmake/platforms/toolchain-android.cmake"
             CMAKE_PARA="${CMAKE_PARA} -DLIBRARY_OUTPUT_PATH:PATH=`pwd`"
@@ -114,7 +115,7 @@ if [ "$3" = "cmake" ]; then
 
 else #qmake编译
 
-    case $1 in
+    case $BUILD_TARGET in
         android)
             export ANDROID_NDK_PLATFORM=android-$ANDROID_NATIVE_API_LEVEL
             export CPPFLAGS=$RABBIT_CPPFLAGS
