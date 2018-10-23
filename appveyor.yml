@@ -151,6 +151,13 @@ environment:
     APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
     BUILD_TARGERT: windows_msvc
     RABBIT_TOOLCHAIN_VERSION: 15
+    QT_ROOT: C:/Qt/5.11/msvc2017_64
+    RABBIT_CONFIG: Debug
+    
+  - RABBIT_NUMBER: 2
+    APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
+    BUILD_TARGERT: windows_msvc
+    RABBIT_TOOLCHAIN_VERSION: 15
     QT_ROOT: C:/Qt/5.10/msvc2017_64
     RABBIT_CONFIG: Debug
     
