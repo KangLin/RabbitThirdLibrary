@@ -59,35 +59,10 @@ fi
 
 cd ${RABBIT_BUILD_SOURCE_CODE}
 
-if [ "$RABBIT_CLEAN" = "TRUE" ]; then
-    if [ -d ".git" ]; then
-        echo "git clean -xdf"
-        git clean -xdf
-        git reset --hard HEAD
-    else
-        if [ "${RABBIT_BUILD_TARGERT}" != "windows_msvc" -a -f Makefile ]; then
-            make distclean
-        fi
-    fi
-fi
-
-if [ ! -f configure ]; then
-    echo "sh buildconf"
-    if [ "${RABBIT_BUILD_TARGERT}" != "windows_msvc" ]; then
-        ./buildconf
-    fi
-fi
-
-if [ "${RABBIT_BUILD_TARGERT}" = "windows_msvc" ]; then
-    if [ -n "$RABBIT_CLEAN" ]; then
-        rm -fr builds
-    fi
-else
-    mkdir -p build_${RABBIT_BUILD_TARGERT}
-    cd build_${RABBIT_BUILD_TARGERT}
-    if [ -n "$RABBIT_CLEAN" ]; then
-        rm -fr *
-    fi
+mkdir -p build_${RABBIT_BUILD_TARGERT}
+cd build_${RABBIT_BUILD_TARGERT}
+if [ -n "$RABBIT_CLEAN" ]; then
+    rm -fr *
 fi
 
 echo ""
@@ -102,100 +77,46 @@ echo "RABBIT_BUILD_CROSS_SYSROOT:$RABBIT_BUILD_CROSS_SYSROOT"
 echo "RABBIT_BUILD_STATIC:$RABBIT_BUILD_STATIC"
 echo ""
 
-echo "configure ..."
 if [ "$RABBIT_BUILD_STATIC" = "static" ]; then
-    CONFIG_PARA="--enable-static --disable-shared"
+    CMAKE_PARA="-DBUILD_SHARED_LIBS=OFF"
 else
-    CONFIG_PARA="--disable-static --enable-shared"
+    CMAKE_PARA="-DBUILD_SHARED_LIBS=ON"
 fi
-
+MAKE_PARA="-- ${RABBIT_MAKE_JOB_PARA} VERBOSE=1"
 case ${RABBIT_BUILD_TARGERT} in
-    windows_mingw)
-        #export CC=${RABBIT_BUILD_CROSS_PREFIX}gcc
-        #export CXX=${RABBIT_BUILD_CROSS_PREFIX}g++
-        #export AR=${RABBIT_BUILD_CROSS_PREFIX}gcc-ar
-        #export LD=${RABBIT_BUILD_CROSS_PREFIX}ld
-        #export AS=${RABBIT_BUILD_CROSS_PREFIX}as
-        #export STRIP=${RABBIT_BUILD_CROSS_PREFIX}strip
-        #export NM=${RABBIT_BUILD_CROSS_PREFIX}nm
-        #CONFIG_PARA="CC=${RABBIT_BUILD_CROSS_PREFIX}gcc LD=${RABBIT_BUILD_CROSS_PREFIX}ld"
-        CONFIG_PARA="--enable-static --disable-shared"
-        CONFIG_PARA="${CONFIG_PARA} --host=$RABBIT_BUILD_CROSS_HOST --target=$RABBIT_BUILD_CROSS_HOST"
-        #CONFIG_PARA="${CONFIG_PARA} --with-sysroot=${RABBIT_BUILD_CROSS_SYSROOT}"
-        CONFIG_PARA="${CONFIG_PARA} --with-gnu-ld "
-        CFLAGS="${RABBIT_CFLAGS}"
-        CPPFLAGS="${RABBIT_CPPFLAGS}"
-        ;;
-    android) 
-        export CC=${RABBIT_BUILD_CROSS_PREFIX}gcc 
-        export CXX=${RABBIT_BUILD_CROSS_PREFIX}g++
-        export AR=${RABBIT_BUILD_CROSS_PREFIX}gcc-ar
-        export LD=${RABBIT_BUILD_CROSS_PREFIX}ld
-        export AS=${RABBIT_BUILD_CROSS_PREFIX}as
-        export STRIP=${RABBIT_BUILD_CROSS_PREFIX}strip
-        export NM=${RABBIT_BUILD_CROSS_PREFIX}nm
-        CONFIG_PARA="${CONFIG_PARA} CC=${RABBIT_BUILD_CROSS_PREFIX}gcc LD=${RABBIT_BUILD_CROSS_PREFIX}ld"
-        CONFIG_PARA="${CONFIG_PARA} --host=$RABBIT_BUILD_CROSS_HOST --target=$RABBIT_BUILD_CROSS_HOST"
-        #CONFIG_PARA="${CONFIG_PARA} --with-sysroot=${RABBIT_BUILD_CROSS_SYSROOT}"
-        CONFIG_PARA="${CONFIG_PARA} --with-gnu-ld "
-        CFLAGS="${RABBIT_CFLAGS}"
-        CPPFLAGS="${RABBIT_CPPFLAGS}"
-        LDFLAGS="${RABBIT_LDFLAGS}"
+    android)
+        if [ -n "$RABBIT_CMAKE_MAKE_PROGRAM" ]; then
+            CMAKE_PARA="${CMAKE_PARA} -DCMAKE_MAKE_PROGRAM=$RABBIT_CMAKE_MAKE_PROGRAM" 
+        fi
+        CMAKE_PARA="${CMAKE_PARA} -DCMAKE_TOOLCHAIN_FILE=${RABBIT_BUILD_SOURCE_CODE}/platforms/android/android.toolchain.cmake"
+        CMAKE_PARA="${CMAKE_PARA} -DANDROID_NATIVE_API_LEVEL=${ANDROID_NATIVE_API_LEVEL}"
+        #CMAKE_PARA="${CMAKE_PARA} -DANDROID_ABI=\"${ANDROID_ABI}\""
+        CMAKE_PARA="${CMAKE_PARA} -DBUILD_ANDROID_PROJECTS=OFF"
+        export ANDROID_ABI="${ANDROID_ABI}"
         ;;
     unix)
-        CONFIG_PARA="${CONFIG_PARA} --with-gnu-ld --enable-sse"
         ;;
     windows_msvc)
-        #cmake .. -G"Visual Studio 12 2013" \
-        #    -DCMAKE_INSTALL_PREFIX="$RABBIT_BUILD_PREFIX" \
-        #    -DCMAKE_BUILD_TYPE="Release" \
-        #    -DBUILD_CURL_TESTS=OFF \
-        #    -DCURL_STATICLIB=OFF
-        #;;
-        cd ${RABBIT_BUILD_SOURCE_CODE}
-        ./buildconf.bat
-        cd winbuild
-        if [ "$RABBIT_BUILD_STATIC" = "static" ]; then
-            MODE=static
-        else
-            MODE=dll
-        fi
-        if [ "$Debug" = "$RABBIT_CONFIG" ]; then
-            DEBUG=yes
-        else
-            DEBUG=no
-        fi
-        nmake -f Makefile.vc mode=$MODE VC=${VC_TOOLCHAIN} WITH_DEVEL=$RABBIT_BUILD_PREFIX \
-            MACHINE=$RABBIT_ARCH MACHINE=${RABBIT_ARCH} DEBUG=${DEBUG} 
-        cp -fr ${RABBIT_BUILD_SOURCE_CODE}/builds/libcurl-vc${VC_TOOLCHAIN}-$RABBIT_ARCH-release-${MODE}-ipv6-sspi-winssl/* ${RABBIT_BUILD_PREFIX}
-        cd $CUR_DIR
-        exit 0
+        #RABBITIM_GENERATORS="Visual Studio 12 2013"
+        MAKE_PARA=""
+        ;;
+    windows_mingw)
+        CMAKE_PARA="${CMAKE_PARA} -DCMAKE_TOOLCHAIN_FILE=$RABBIT_BUILD_PREFIX/../build_script/cmake/platforms/toolchain-mingw.cmake"
         ;;
     *)
-        echo "${HELP_STRING}"
-        cd $CUR_DIR
-        exit 3
-        ;;
+    echo "${HELP_STRING}"
+    cd $CUR_DIR
+    exit 2
+    ;;
 esac
 
-echo "make install"
-echo "pwd:`pwd`"
-CONFIG_PARA="${CONFIG_PARA} --disable-manual --enable-verbose"
-#CONFIG_PARA="${CONFIG_PARA} --enable-libgcc  "
-CONFIG_PARA="${CONFIG_PARA} --with-ssl=${RABBIT_BUILD_PREFIX} --with-zlib=${RABBIT_BUILD_PREFIX}"
-#CONFIG_PARA="${CONFIG_PARA} --with-gnutls=${RABBIT_BUILD_PREFIX} --with-nss=${RABBIT_BUILD_PREFIX}"
-#CONFIG_PARA="${CONFIG_PARA} --with-libssh2=${RABBIT_BUILD_PREFIX} --with-libidn=${RABBIT_BUILD_PREFIX}"
-#CONFIG_PARA="${CONFIG_PARA} --with-winidn=${RABBIT_BUILD_PREFIX} --with-libidn=${RABBIT_BUILD_PREFIX}"
-#CONFIG_PARA="${CONFIG_PARA} --with-nghttp2=${RABBIT_BUILD_PREFIX} --with-librtmp=${RABBIT_BUILD_PREFIX}"  #--with-sysroot=${RABBIT_BUILD_PREFIX}"
-CONFIG_PARA="${CONFIG_PARA} --prefix=$RABBIT_BUILD_PREFIX"
-echo "../configure ${CONFIG_PARA} CFLAGS=\"${CFLAGS=}\" CPPFLAGS=\"${CPPFLAGS}\" CXXFLAGS=\"${CPPFLAGS}\" LDFLAGS=\"${LDFLAGS}\""
-../configure ${CONFIG_PARA} \
-    CFLAGS="${CFLAGS}" \
-    CPPFLAGS="${CPPFLAGS}" \
-    CXXFLAGS="${CPPFLAGS}" \
-    LDFLAGS="${LDFLAGS}"
+CMAKE_PARA="${CMAKE_PARA} -DCMAKE_USE_OPENSSL=ON -DOPENSSL_ROOT_DIR=$RABBIT_BUILD_PREFIX"
+echo "cmake .. -DCMAKE_INSTALL_PREFIX=$RABBIT_BUILD_PREFIX -DCMAKE_BUILD_TYPE=${RABBIT_CONFIG} -G\"${RABBITIM_GENERATORS}\" ${CMAKE_PARA}"
+cmake .. \
+    -DCMAKE_INSTALL_PREFIX="$RABBIT_BUILD_PREFIX" \
+    -DCMAKE_VERBOSE=ON -DCMAKE_BUILD_TYPE=${RABBIT_CONFIG} \
+    -G"${RABBITIM_GENERATORS}" ${CMAKE_PARA} 
 
-${MAKE} V=1 
-${MAKE} install
+cmake --build . --target install --config ${RABBIT_CONFIG} ${MAKE_PARA}
 
 cd $CUR_DIR
