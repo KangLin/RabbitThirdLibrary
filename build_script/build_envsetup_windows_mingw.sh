@@ -106,7 +106,7 @@ case $TARGET_OS in
         export PKG_CONFIG_PATH=${RABBIT_BUILD_PREFIX}/lib/pkgconfig
         export PKG_CONFIG_LIBDIR=${PKG_CONFIG_PATH}
         export PKG_CONFIG_SYSROOT_DIR=${RABBIT_BUILD_PREFIX}
-        RABBITIM_GENERATORS="Unix Makefiles" 
+        RABBITIM_GENERATORS="Unix Makefiles"
         ;;
     *)
     echo "Please set RABBIT_BUILD_HOST. see build_envsetup_windows_mingw.sh"

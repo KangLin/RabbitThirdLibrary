@@ -102,7 +102,7 @@ case $TARGET_OS in
             ANDROID_NDK_HOST=windows
         fi
         #RABBIT_CMAKE_MAKE_PROGRAM=$ANDROID_NDK/prebuilt/${ANDROID_NDK_HOST}/bin/make #这个用不着，只有在windows命令行下才有用 
-        RABBITIM_GENERATORS="Unix Makefiles"
+        RABBITIM_GENERATORS="MSYS Makefiles"
         ;;
     Linux* | Unix*)
         ANDROID_NDK_HOST="linux-`uname -m`"    #windows、linux-x86_64
