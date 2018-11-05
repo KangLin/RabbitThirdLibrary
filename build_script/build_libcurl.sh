@@ -38,11 +38,10 @@ CUR_DIR=`pwd`
 
 #下载源码:
 if [ ! -d ${RABBIT_BUILD_SOURCE_CODE} ]; then
-	CURL_FILE=curl-7_61_1
+	CURL_FILE=curl-7_62_0
     if [ "TRUE" = "${RABBIT_USE_REPOSITORIES}" ]; then
-        echo "git clone -q  git://github.com/bagder/curl.git ${RABBIT_BUILD_SOURCE_CODE}"
-        #git clone -q --branch=$CURL_FILE git://github.com/bagder/curl.git ${RABBIT_BUILD_SOURCE_CODE}
-        git clone -q --branch=$CURL_FILE git://github.com/bagder/curl.git ${RABBIT_BUILD_SOURCE_CODE}
+        echo "git clone -q https://github.com/curl/curl.git ${RABBIT_BUILD_SOURCE_CODE}"
+        git clone -q --branch=$CURL_FILE https://github.com/curl/curl.git ${RABBIT_BUILD_SOURCE_CODE}
     else
         echo "wget  -q https://github.com/bagder/curl/archive/${CURL_FILE}.zip"
         mkdir -p ${RABBIT_BUILD_SOURCE_CODE}
@@ -110,7 +109,7 @@ case ${RABBIT_BUILD_TARGERT} in
     ;;
 esac
 
-CMAKE_PARA="${CMAKE_PARA} -DCMAKE_USE_OPENSSL=OFF -DOPENSSL_ROOT_DIR=$RABBIT_BUILD_PREFIX"
+CMAKE_PARA="${CMAKE_PARA} -DCMAKE_USE_OPENSSL=ON -DOPENSSL_ROOT_DIR=$RABBIT_BUILD_PREFIX"
 echo "cmake .. -DCMAKE_INSTALL_PREFIX=$RABBIT_BUILD_PREFIX -DCMAKE_BUILD_TYPE=${RABBIT_CONFIG} -G\"${RABBITIM_GENERATORS}\" ${CMAKE_PARA}"
 cmake .. \
     -DCMAKE_INSTALL_PREFIX="$RABBIT_BUILD_PREFIX" \
