@@ -37,7 +37,7 @@ CUR_DIR=`pwd`
 
 #下载源码:
 if [ ! -d ${RABBIT_BUILD_SOURCE_CODE} ]; then
-    OPENSLL_BRANCH=OpenSSL_1_1_0i
+    OPENSLL_BRANCH=OpenSSL_1_1_1
     if [ "TRUE" = "${RABBIT_USE_REPOSITORIES}" ]; then
         echo "git clone -q --branch=${OPENSLL_BRANCH} https://github.com/openssl/openssl ${RABBIT_BUILD_SOURCE_CODE}"
         git clone -q --branch=${OPENSLL_BRANCH} https://github.com/openssl/openssl ${RABBIT_BUILD_SOURCE_CODE}
@@ -102,8 +102,8 @@ fi
 echo "configure ..."
 case ${RABBIT_BUILD_TARGERT} in
     android)
-        export CROSS_SYSROOT=${RABBIT_BUILD_CROSS_SYSROOT}
-        export CROSS_COMPILE=${RABBIT_BUILD_CROSS_HOST}
+        #export CROSS_SYSROOT=${RABBIT_BUILD_CROSS_SYSROOT}
+        #export CROSS_COMPILE=${RABBIT_BUILD_CROSS_HOST}
         case ${RABBIT_ARCH} in
             arm)
                 COMPILE=android-armeabi
@@ -118,7 +118,8 @@ case ${RABBIT_BUILD_TARGERT} in
                 COMPILE=android64-${RABBIT_ARCH}
             ;;
         esac
-        perl Configure --cross-compile-prefix=${RABBIT_BUILD_CROSS_PREFIX} \
+        #perl Configure --cross-compile-prefix=${RABBIT_BUILD_CROSS_PREFIX} \
+        perl Configure \
                 --prefix=${RABBIT_BUILD_PREFIX} \
                 --openssldir=${RABBIT_BUILD_PREFIX} \
                 no-threads \
