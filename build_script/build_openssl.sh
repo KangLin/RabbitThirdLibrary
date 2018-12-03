@@ -109,13 +109,13 @@ case ${RABBIT_BUILD_TARGERT} in
                 COMPILE=android-armeabi
             ;;
             arm64)
-                COMPILE=android64
+                COMPILE=android-arm64
             ;;
             x86|mips)
                 COMPILE=android-${RABBIT_ARCH}
             ;;
             x86_64|mips64)
-                COMPILE=android64-${RABBIT_ARCH}
+                COMPILE=android-${RABBIT_ARCH}
             ;;
         esac
         #perl Configure --cross-compile-prefix=${RABBIT_BUILD_CROSS_PREFIX} \
