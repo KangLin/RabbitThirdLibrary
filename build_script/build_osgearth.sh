@@ -38,7 +38,7 @@ CUR_DIR=`pwd`
 
 #下载源码:
 if [ ! -d ${RABBIT_BUILD_SOURCE_CODE} ]; then
-    OSG_VERSION=osgearth-2.9
+    OSG_VERSION=osgearth-2.10
     if [ "TRUE" = "${RABBIT_USE_REPOSITORIES}" ]; then
         echo "git clone -q --branch=${OSG_VERSION} https://github.com/gwaldron/osgearth.git ${RABBIT_BUILD_SOURCE_CODE}"
         git clone -q https://github.com/gwaldron/osgearth.git ${RABBIT_BUILD_SOURCE_CODE}
