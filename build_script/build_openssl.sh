@@ -37,7 +37,7 @@ CUR_DIR=`pwd`
 
 #下载源码:
 if [ ! -d ${RABBIT_BUILD_SOURCE_CODE} ]; then
-    OPENSLL_BRANCH=OpenSSL_1_1_1
+    OPENSLL_BRANCH=OpenSSL_1_1_1b
     if [ "TRUE" = "${RABBIT_USE_REPOSITORIES}" ]; then
         echo "git clone -q --branch=${OPENSLL_BRANCH} https://github.com/openssl/openssl ${RABBIT_BUILD_SOURCE_CODE}"
         git clone -q --branch=${OPENSLL_BRANCH} https://github.com/openssl/openssl ${RABBIT_BUILD_SOURCE_CODE}
@@ -124,7 +124,8 @@ case ${RABBIT_BUILD_TARGERT} in
                 --openssldir=${RABBIT_BUILD_PREFIX} \
                 no-threads \
                 $MODE \
-                ${COMPILE} ${RABBIT_CFLAGS}
+                ${COMPILE} -D__ANDROID_API__=${ANDROID_NATIVE_API_LEVEL}
+                #${RABBIT_CFLAGS}
         ;;
     unix)
         ./config --prefix=${RABBIT_BUILD_PREFIX} --openssldir=${RABBIT_BUILD_PREFIX} $MODE

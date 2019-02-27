@@ -14,7 +14,7 @@
 
 #需要设置下面变量：
 if [ -z "$QT_ROOT" -a -z "$APPVEYOR" ]; then
-    QT_VERSION=5.11.1
+    QT_VERSION=5.12.1
     QT_ROOT=/c/Qt/Qt${QT_VERSION}/${QT_VERSION}/mingw53_32 #QT 安装根目录,默认为:${RABBITRoot}/ThirdLibrary/windows_mingw/qt
     RABBIT_TOOLCHAIN_VERSION=530    
     set MSYSTEM=MINGW32
