@@ -2,7 +2,7 @@
 set -e
 
 #TODO:修改数组，修改完后，再修改appveyor.yml中的 RABBIT_QT_NUMBER 为QT开始的数组索引  
-RABBIT_LIBRARYS[0]="change_prefix zlib expat libgpx openssl libsodium libcurl   "
+RABBIT_LIBRARYS[0]="change_prefix zlib expat libgpx openssl libsodium libcurl dlib "
 RABBIT_LIBRARYS[1]="boost"
 RABBIT_LIBRARYS[2]="libpng jpeg libgif libtiff freetype libqrencode ogg speex libyuv libvpx libopus x264 ffmpeg"
 RABBIT_LIBRARYS[3]="opencv" # geos gdal"

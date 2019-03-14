@@ -37,7 +37,7 @@ CUR_DIR=`pwd`
 
 #下载源码:
 if [ ! -d ${RABBIT_BUILD_SOURCE_CODE} ]; then
-    OPENCV_VERSION=3.4.2
+    OPENCV_VERSION=3.4.5
     if [ "TRUE" = "${RABBIT_USE_REPOSITORIES}" ]; then
         echo "git clone -q https://github.com/opencv/opencv.git ${RABBIT_BUILD_SOURCE_CODE}"
         git clone -q https://github.com/opencv/opencv.git ${RABBIT_BUILD_SOURCE_CODE}
@@ -60,7 +60,7 @@ fi
 #opencv versoin > 3.0
 RABBIT_BUILD_CONTRIB_SOURCE_CODE=${RABBIT_BUILD_SOURCE_CODE}/../opencv_contrib
 if [ ! -d ${RABBIT_BUILD_CONTRIB_SOURCE_CODE} ]; then
-    CONTRIB_VERSION=3.4.2
+    CONTRIB_VERSION=3.4.5
     if [ "TRUE" = "${RABBIT_USE_REPOSITORIES}" ]; then
         echo "git clone -q https://github.com/opencv/opencv_contrib.git ${RABBIT_BUILD_CONTRIB_SOURCE_CODE}"
         git clone -q --branch=${CONTRIB_VERSION} https://github.com/opencv/opencv_contrib.git ${RABBIT_BUILD_CONTRIB_SOURCE_CODE}
