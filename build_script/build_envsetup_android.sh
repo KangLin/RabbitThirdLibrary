@@ -30,6 +30,7 @@ if [ -n "$ANDROID_NDK" -a -z "$ANDROID_NDK_ROOT" ]; then
 fi
 export ANDROID_NDK=$ANDROID_NDK_ROOT            #指定 android ndk 根目录  
 export ANDROID_SDK=$ANDROID_SDK_ROOT
+export ANDROID_NDK_HOME=$ANDROID_NDK        #openssl需要  
 
 if [ -z "$JAVA_HOME" ]; then
     export JAVA_HOME=/C/android-studio/jre
@@ -131,20 +132,20 @@ case $TARGET_OS in
 esac
 
 export PATH=$ANDROID_NDK/prebuilt/${ANDROID_NDK_HOST}/bin:$PATH
-if [ -z "$RABBIT_TOOL_CHAIN_ROOT" ]; then
-    RABBIT_TOOL_CHAIN_ROOT=${RABBIT_BUILD_PREFIX}/../android-toolchains-${RABBIT_ARCH}-api${ANDROID_NATIVE_API_LEVEL}
-fi
-#安装工具链
-if [ ! -d $RABBIT_TOOL_CHAIN_ROOT ]; then
-    python ${ANDROID_NDK_ROOT}/build/tools/make_standalone_toolchain.py \
-        --arch ${RABBIT_ARCH} \
-        --api ${ANDROID_NATIVE_API_LEVEL} \
-        --install-dir ${RABBIT_TOOL_CHAIN_ROOT}
-    if [ ! $? = 0 ]; then
-        echo "Set windows's python to PATH in windows"
-        exit $?
-    fi
-fi
+#if [ -z "$RABBIT_TOOL_CHAIN_ROOT" ]; then
+#    RABBIT_TOOL_CHAIN_ROOT=${RABBIT_BUILD_PREFIX}/../android-toolchains-${RABBIT_ARCH}-api${ANDROID_NATIVE_API_LEVEL}
+#fi
+##安装工具链
+#if [ ! -d $RABBIT_TOOL_CHAIN_ROOT ]; then
+#    python ${ANDROID_NDK_ROOT}/build/tools/make_standalone_toolchain.py \
+#        --arch ${RABBIT_ARCH} \
+#        --api ${ANDROID_NATIVE_API_LEVEL} \
+#        --install-dir ${RABBIT_TOOL_CHAIN_ROOT}
+#    if [ ! $? = 0 ]; then
+#        echo "Set windows's python to PATH in windows"
+#        exit $?
+#    fi
+#fi
 
 if [ "${RABBIT_ARCH}" = "x86" -o "${RABBIT_ARCH}" = "x86_64" ]; then
     export ANDROID_TOOLCHAIN_NAME=${RABBIT_ARCH}-${RABBIT_TOOLCHAIN_VERSION}
@@ -174,8 +175,9 @@ elif [ "${RABBIT_ARCH}" = "arm" ]; then
 fi
 
 #交叉编译前缀
-export RABBIT_BUILD_CROSS_PREFIX=${RABBIT_TOOL_CHAIN_ROOT}/bin/${RABBIT_BUILD_CROSS_HOST}-
-#export RABBIT_BUILD_CROSS_PREFIX=$ANDROID_NDK/toolchains/$ANDROID_TOOLCHAIN_NAME/prebuilt/$ANDROID_NDK_HOST/bin/${RABBIT_BUILD_CROSS_HOST}-
+#export RABBIT_BUILD_CROSS_PREFIX=${RABBIT_TOOL_CHAIN_ROOT}/bin/${RABBIT_BUILD_CROSS_HOST}-
+export RABBIT_BUILD_CROSS_PREFIX=$ANDROID_NDK/toolchains/$ANDROID_TOOLCHAIN_NAME/prebuilt/$ANDROID_NDK_HOST/bin/${RABBIT_BUILD_CROSS_HOST}-
+export RABBIT_TOOL_CHAIN_ROOT=$ANDROID_NDK/toolchains/$ANDROID_TOOLCHAIN_NAME/prebuilt/$ANDROID_NDK_HOST
 
 #交叉编译平台的 sysroot
 RABBIT_BUILD_CROSS_SYSROOT=$RABBIT_TOOL_CHAIN_ROOT/sysroot
