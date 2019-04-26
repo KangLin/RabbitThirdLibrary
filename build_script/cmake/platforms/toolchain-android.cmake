@@ -58,8 +58,7 @@
 #      Can be set as environment variable. Can be set only at first cmake run.
 #
 #    ANDROID_ABI=armeabi-v7a - specifies the target Application Binary
-#      Interface (ABI). Can be set as environment variable.
-#      This option nearly matches to the APP_ABI variable
+#      Interface (ABI). This option nearly matches to the APP_ABI variable
 #      used by ndk-build tool from Android NDK.
 #
 #      Possible targets are:
@@ -158,7 +157,7 @@
 #                          Silently degrades to gnustl_static if not available.
 #        c++_static     -> Use the LLVM libc++ runtime as a static library.
 #                          Implies -frtti -fexceptions.
-#        c++_shared     -> Use the LLVM libc++ runtime as a static library.
+#        c++_shared     -> Use the LLVM libc++ runtime as a shared library.
 #                          Implies -frtti -fno-exceptions.
 #
 #    ANDROID_STL_FORCE_FEATURES=ON - turn rtti and exceptions support based on
@@ -173,8 +172,6 @@
 #      ANDROID_STANDALONE_TOOLCHAIN - environment variable
 #      ANDROID_NDK - default locations
 #      ANDROID_STANDALONE_TOOLCHAIN - default locations
-#      ANDROID_ABI - cmake parameter
-#      ANDROID_ABI - environment variable
 #
 #    Make sure to do the following in your scripts:
 #      SET( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${my_cxx_flags}" )
@@ -646,7 +643,6 @@ if( NOT ANDROID_SUPPORTED_ABIS )
 endif()
 
 # choose target ABI
-__INIT_VARIABLE( ANDROID_ABI ENV_ANDROID_ABI )
 __INIT_VARIABLE( ANDROID_ABI VALUES ${ANDROID_SUPPORTED_ABIS} )
 # verify that target ABI is supported
 list( FIND ANDROID_SUPPORTED_ABIS "${ANDROID_ABI}" __androidAbiIdx )
