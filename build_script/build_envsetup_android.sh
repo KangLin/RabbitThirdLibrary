@@ -16,8 +16,24 @@
 #export JAVA_HOME="/C/Program Files/Java/jdk1.7.0_51"             #指定 jdk 根目录  
 #export ANDROID_SDK_ROOT=/D/software/android-sdk-windows     #指定 android sdk 根目录,在msys2下需要注意路径符号："/"  
 #export ANDROID_NDK_ROOT=/D/software/android-ndk-r10e   #指定 android ndk 根目录  
+if [ -z "$ANDROID_NDK_ROOT" -a -z "$ANDROID_NDK" ]; then
+    export ANDROID_NDK_ROOT=/d/software/android-sdk/ndk-bundle
+fi
+if [ -z "$ANDROID_SDK_ROOT" -a -z "$ANDROID_SDK" ]; then
+    export ANDROID_SDK_ROOT=/d/software/android-sdk
+fi
+if [ -n "$ANDROID_SDK" -a -z "$ANDROID_SDK_ROOT" ]; then
+    export ANDROID_SDK_ROOT=$ANDROID_SDK
+fi
+if [ -n "$ANDROID_NDK" -a -z "$ANDROID_NDK_ROOT" ]; then
+    export ANDROID_NDK_ROOT=$ANDROID_NDK
+fi
 export ANDROID_NDK=$ANDROID_NDK_ROOT            #指定 android ndk 根目录  
 export ANDROID_SDK=$ANDROID_SDK_ROOT
+
+if [ -z "$JAVA_HOME" ]; then
+    export JAVA_HOME=/C/android-studio/jre
+fi
 
 #设置ndk。32位的是windows；64位的是windows-x86_64
 export ANDROID_NDK_HOST=windows-x86_64
@@ -49,7 +65,7 @@ fi
 
 #需要设置下面变量：
 if [ -z "$QT_ROOT" -a -z "$APPVEYOR" ]; then
-    QT_VERSION=5.12.1
+    QT_VERSION=5.9.7
     if [ "${RABBIT_ARCH}" = "arm" ]; then
         QT_ROOT=/c/Qt/Qt${QT_VERSION}/${QT_VERSION}/android_armv7 #QT 安装根目录,默认为:${RABBITRoot}/ThirdLibrary/android/qt
     else
