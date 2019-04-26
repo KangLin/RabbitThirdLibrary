@@ -106,7 +106,7 @@ case ${RABBIT_BUILD_TARGERT} in
         #export CROSS_COMPILE=${RABBIT_BUILD_CROSS_HOST}
         case ${RABBIT_ARCH} in
             arm)
-                COMPILE=android-armeabi
+                COMPILE=android-arm
             ;;
             arm64)
                 COMPILE=android-arm64
