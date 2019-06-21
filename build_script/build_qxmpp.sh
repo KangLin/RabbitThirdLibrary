@@ -37,7 +37,7 @@ fi
 CUR_DIR=`pwd`
 #下载源码:
 if [ ! -d ${RABBIT_BUILD_SOURCE_CODE} ]; then
-    VERSION=0.9.3
+    VERSION=1.0.0
     if [ "TRUE" = "${RABBIT_USE_REPOSITORIES}" ]; then
         echo "git clone -q https://github.com/qxmpp-project/qxmpp.git ${RABBIT_BUILD_SOURCE_CODE}"
         git clone -q -b v${VERSION} https://github.com/qxmpp-project/qxmpp.git ${RABBIT_BUILD_SOURCE_CODE}
@@ -104,30 +104,46 @@ case $RABBIT_BUILD_TARGERT in
         ;;
 esac
 
+
 if [ "$RABBIT_BUILD_STATIC" = "static" ]; then
-    PARA="${PARA} QXMPP_LIBRARY_TYPE=staticlib" #静态库
-    PARA="${PARA} CONFIG*=static"
-fi
-
-PARA="${PARA} -o Makefile INCLUDEPATH+=${RABBIT_BUILD_PREFIX}/include"
-if [ "$RABBIT_BUILD_TARGERT" != "android" -a "$RABBIT_ARCH" != "x86" ]; then
-    PARA="${PARA} LIBS+=-L${RABBIT_BUILD_PREFIX}/lib QXMPP_USE_VPX=1"
-fi
-PARA="${PARA} QXMPP_NO_TESTS=1 QXMPP_NO_EXAMPLES=1"
-
-PARA="${PARA} PREFIX=${RABBIT_BUILD_PREFIX}"
-
-if [ "${RABBIT_CONFIG}" = "Debug" -o "${RABBIT_CONFIG}" = "debug" ]; then
-    RELEASE_PARA="${PARA} CONFIG-=release CONFIG+=debug"
+    CMAKE_PARA="-DBUILD_SHARED=OFF" 
 else
-    RELEASE_PARA="${PARA} CONFIG-=debug CONFIG+=release"
+    CMAKE_PARA="-DBUILD_SHARED=ON"
 fi
+MAKE_PARA="-- ${RABBIT_MAKE_JOB_PARA} VERBOSE=1"
+case ${RABBIT_BUILD_TARGERT} in
+    android)
+        CMAKE_PARA="${CMAKE_PARA} -DBUILD_SHARED=OFF"
+        CMAKE_PARA="${CMAKE_PARA} -DCMAKE_TOOLCHAIN_FILE=$RABBIT_BUILD_PREFIX/../build_script/cmake/platforms/toolchain-android.cmake"
+        
+        if [ -n "$RABBIT_CMAKE_MAKE_PROGRAM" ]; then
+            CMAKE_PARA="${CMAKE_PARA} -DCMAKE_MAKE_PROGRAM=$RABBIT_CMAKE_MAKE_PROGRAM" 
+        fi
+        CMAKE_PARA="${CMAKE_PARA} -DCMAKE_TOOLCHAIN_FILE=$RABBIT_BUILD_PREFIX/../build_script/cmake/platforms/toolchain-android.cmake"
+        CMAKE_PARA="${CMAKE_PARA} -DANDROID_NATIVE_API_LEVEL=${ANDROID_NATIVE_API_LEVEL}"
+        #CMAKE_PARA="${CMAKE_PARA} -DANDROID_ABI=${ANDROID_ABI}"  
+        ;;
+    unix)
+        ;;
+    windows_msvc)        
+        MAKE_PARA=""
+        #CMAKE_PARA="${CMAKE_PARA} -DWIN32_USE_DYNAMICBASE=ON"
+        ;;
+    windows_mingw)
+        CMAKE_PARA="${CMAKE_PARA} -DOPENTHREADS_ATOMIC_USE_MUTEX=ON -DCMAKE_TOOLCHAIN_FILE=$RABBIT_BUILD_PREFIX/../build_script/cmake/platforms/toolchain-mingw.cmake"
+        ;;
+    *)
+    echo "${HELP_STRING}"
+    cd $CUR_DIR
+    exit 2
+    ;;
+esac
 
-echo "$QMAKE ${RELEASE_PARA}"
-$QMAKE ${RELEASE_PARA} ../qxmpp.pro
-${MAKE} -f Makefile install ${RABBIT_MAKE_JOB_PARA}
+echo "cmake .. -DCMAKE_INSTALL_PREFIX=$RABBIT_BUILD_PREFIX -DCMAKE_BUILD_TYPE=Release -G\"${RABBITIM_GENERATORS}\" ${CMAKE_PARA}"
+cmake .. \
+    -DCMAKE_INSTALL_PREFIX="$RABBIT_BUILD_PREFIX" \
+    -G"${RABBITIM_GENERATORS}" ${CMAKE_PARA}
+    
+cmake --build . --target install --config ${RABBIT_CONFIG} ${MAKE_PARA}
 
-if [ "$RABBIT_BUILD_TARGERT" = "windows_mingw" ]; then
-    cp src/pkgconfig/qxmpp.pc ${RABBIT_BUILD_PREFIX}/lib/pkgconfig/.
-fi
 cd $CUR_DIR
