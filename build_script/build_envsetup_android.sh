@@ -16,8 +16,25 @@
 #export JAVA_HOME="/C/Program Files/Java/jdk1.7.0_51"             #指定 jdk 根目录  
 #export ANDROID_SDK_ROOT=/D/software/android-sdk-windows     #指定 android sdk 根目录,在msys2下需要注意路径符号："/"  
 #export ANDROID_NDK_ROOT=/D/software/android-ndk-r10e   #指定 android ndk 根目录  
+if [ -z "$ANDROID_NDK_ROOT" -a -z "$ANDROID_NDK" ]; then
+    export ANDROID_NDK_ROOT=/d/software/android-sdk/ndk-bundle
+fi
+if [ -z "$ANDROID_SDK_ROOT" -a -z "$ANDROID_SDK" ]; then
+    export ANDROID_SDK_ROOT=/d/software/android-sdk
+fi
+if [ -n "$ANDROID_SDK" -a -z "$ANDROID_SDK_ROOT" ]; then
+    export ANDROID_SDK_ROOT=$ANDROID_SDK
+fi
+if [ -n "$ANDROID_NDK" -a -z "$ANDROID_NDK_ROOT" ]; then
+    export ANDROID_NDK_ROOT=$ANDROID_NDK
+fi
 export ANDROID_NDK=$ANDROID_NDK_ROOT            #指定 android ndk 根目录  
 export ANDROID_SDK=$ANDROID_SDK_ROOT
+export ANDROID_NDK_HOME=$ANDROID_NDK        #openssl需要  
+
+if [ -z "$JAVA_HOME" ]; then
+    export JAVA_HOME=/C/android-studio/jre
+fi
 
 #设置ndk。32位的是windows；64位的是windows-x86_64
 export ANDROID_NDK_HOST=windows-x86_64
@@ -27,7 +44,7 @@ export ANDROID_NDK_HOST=windows-x86_64
 if [ -z "$RABBIT_CLEAN" ]; then
     RABBIT_CLEAN=TRUE #编译前清理  
 fi
-RABBIT_BUILD_STATIC="static" #设置编译静态库，注释掉，则为编译动态库
+#RABBIT_BUILD_STATIC="static" #设置编译静态库，注释掉，则为编译动态库
 #RABBIT_USE_REPOSITORIES="TRUE" #下载指定的压缩包。省略，则下载开发库。  
 #RABBIT_TOOLCHAIN_VERSION=4.8   #工具链版本号,默认 4.9  
 #ANDROID_NATIVE_API_LEVEL=24   #android ndk api (平台)版本号,默认 18
@@ -49,7 +66,7 @@ fi
 
 #需要设置下面变量：
 if [ -z "$QT_ROOT" -a -z "$APPVEYOR" ]; then
-    QT_VERSION=5.12.1
+    QT_VERSION=5.9.7
     if [ "${RABBIT_ARCH}" = "arm" ]; then
         QT_ROOT=/c/Qt/Qt${QT_VERSION}/${QT_VERSION}/android_armv7 #QT 安装根目录,默认为:${RABBITRoot}/ThirdLibrary/android/qt
     else
@@ -115,20 +132,20 @@ case $TARGET_OS in
 esac
 
 export PATH=$ANDROID_NDK/prebuilt/${ANDROID_NDK_HOST}/bin:$PATH
-if [ -z "$RABBIT_TOOL_CHAIN_ROOT" ]; then
-    RABBIT_TOOL_CHAIN_ROOT=${RABBIT_BUILD_PREFIX}/../android-toolchains-${RABBIT_ARCH}-api${ANDROID_NATIVE_API_LEVEL}
-fi
-#安装工具链
-if [ ! -d $RABBIT_TOOL_CHAIN_ROOT ]; then
-    python ${ANDROID_NDK_ROOT}/build/tools/make_standalone_toolchain.py \
-        --arch ${RABBIT_ARCH} \
-        --api ${ANDROID_NATIVE_API_LEVEL} \
-        --install-dir ${RABBIT_TOOL_CHAIN_ROOT}
-    if [ ! $? = 0 ]; then
-        echo "Set windows's python to PATH in windows"
-        exit $?
-    fi
-fi
+#if [ -z "$RABBIT_TOOL_CHAIN_ROOT" ]; then
+#    RABBIT_TOOL_CHAIN_ROOT=${RABBIT_BUILD_PREFIX}/../android-toolchains-${RABBIT_ARCH}-api${ANDROID_NATIVE_API_LEVEL}
+#fi
+##安装工具链
+#if [ ! -d $RABBIT_TOOL_CHAIN_ROOT ]; then
+#    python ${ANDROID_NDK_ROOT}/build/tools/make_standalone_toolchain.py \
+#        --arch ${RABBIT_ARCH} \
+#        --api ${ANDROID_NATIVE_API_LEVEL} \
+#        --install-dir ${RABBIT_TOOL_CHAIN_ROOT}
+#    if [ ! $? = 0 ]; then
+#        echo "Set windows's python to PATH in windows"
+#        exit $?
+#    fi
+#fi
 
 if [ "${RABBIT_ARCH}" = "x86" -o "${RABBIT_ARCH}" = "x86_64" ]; then
     export ANDROID_TOOLCHAIN_NAME=${RABBIT_ARCH}-${RABBIT_TOOLCHAIN_VERSION}
@@ -158,8 +175,9 @@ elif [ "${RABBIT_ARCH}" = "arm" ]; then
 fi
 
 #交叉编译前缀
-export RABBIT_BUILD_CROSS_PREFIX=${RABBIT_TOOL_CHAIN_ROOT}/bin/${RABBIT_BUILD_CROSS_HOST}-
-#export RABBIT_BUILD_CROSS_PREFIX=$ANDROID_NDK/toolchains/$ANDROID_TOOLCHAIN_NAME/prebuilt/$ANDROID_NDK_HOST/bin/${RABBIT_BUILD_CROSS_HOST}-
+#export RABBIT_BUILD_CROSS_PREFIX=${RABBIT_TOOL_CHAIN_ROOT}/bin/${RABBIT_BUILD_CROSS_HOST}-
+export RABBIT_BUILD_CROSS_PREFIX=$ANDROID_NDK/toolchains/$ANDROID_TOOLCHAIN_NAME/prebuilt/$ANDROID_NDK_HOST/bin/${RABBIT_BUILD_CROSS_HOST}-
+export RABBIT_TOOL_CHAIN_ROOT=$ANDROID_NDK/toolchains/$ANDROID_TOOLCHAIN_NAME/prebuilt/$ANDROID_NDK_HOST
 
 #交叉编译平台的 sysroot
 RABBIT_BUILD_CROSS_SYSROOT=$RABBIT_TOOL_CHAIN_ROOT/sysroot
