@@ -66,7 +66,7 @@ fi
 
 #需要设置下面变量：
 if [ -z "$QT_ROOT" -a -z "$APPVEYOR" ]; then
-    QT_VERSION=5.9.7
+    QT_VERSION=5.12.4
     if [ "${RABBIT_ARCH}" = "arm" ]; then
         QT_ROOT=/c/Qt/Qt${QT_VERSION}/${QT_VERSION}/android_armv7 #QT 安装根目录,默认为:${RABBITRoot}/ThirdLibrary/android/qt
     else

@@ -37,16 +37,17 @@ CUR_DIR=`pwd`
 
 #下载源码:
 if [ ! -d ${RABBIT_BUILD_SOURCE_CODE} ]; then
-    LIBOPUS_VERSION=1.2.1
+    LIBOPUS_VERSION=1.3.1
     if [ "TRUE" = "${RABBIT_USE_REPOSITORIES}" ]; then
-        echo "git clone -q -b v${LIBOPUS_VERSION} git://git.opus-codec.org/opus.git ${RABBIT_BUILD_SOURCE_CODE}"
-        git clone  -q -b v${LIBOPUS_VERSION} git://git.opus-codec.org/opus.git ${RABBIT_BUILD_SOURCE_CODE}
+        echo "git clone -q -b v${LIBOPUS_VERSION} https://git.xiph.org/opus.git ${RABBIT_BUILD_SOURCE_CODE}"
+        git clone  -q -b v${LIBOPUS_VERSION} https://git.xiph.org/opus.git ${RABBIT_BUILD_SOURCE_CODE}
     else
-        echo "wget -q  https://archive.mozilla.org/pub/opus/opus-${LIBOPUS_VERSION}.tar.gz"
+        echo "wget -q https://github.com/xiph/opus/archive/v${LIBOPUS_VERSION}.tar.gz"
         mkdir -p ${RABBIT_BUILD_SOURCE_CODE}
         cd ${RABBIT_BUILD_SOURCE_CODE}
-        wget -q -c https://archive.mozilla.org/pub/opus/opus-${LIBOPUS_VERSION}.tar.gz
-        tar xzf opus-${LIBOPUS_VERSION}.tar.gz
+        #wget -q -c https://archive.mozilla.org/pub/opus/opus-${LIBOPUS_VERSION}.tar.gz
+        wget -q -c https://github.com/xiph/opus/archive/v${LIBOPUS_VERSION}.tar.gz
+        tar xzf v${LIBOPUS_VERSION}.tar.gz
         mv opus-${LIBOPUS_VERSION} ..
         rm -fr *
         cd ..
@@ -57,17 +58,12 @@ fi
 
 cd ${RABBIT_BUILD_SOURCE_CODE}
 
-if [ "${RABBIT_BUILD_TARGERT}" != "windows_msvc" ]; then
-    if [ ! -f configure ]; then
-        echo "sh autogen.sh"
-        sh autogen.sh
-    fi
-    
+if [ ! -d build_${RABBIT_BUILD_TARGERT} ]; then
     mkdir -p build_${RABBIT_BUILD_TARGERT}
-    cd build_${RABBIT_BUILD_TARGERT}
-    if [ "$RABBIT_CLEAN" = "TRUE" ]; then
-        rm -fr *
-    fi
+fi
+cd build_${RABBIT_BUILD_TARGERT}
+if [ "$RABBIT_CLEAN" = "TRUE" ]; then
+    rm -fr *
 fi
 
 echo ""
@@ -83,68 +79,43 @@ echo "RABBIT_BUILD_STATIC:$RABBIT_BUILD_STATIC"
 echo ""
 
 echo "configure ..."
-
 if [ "$RABBIT_BUILD_STATIC" = "static" ]; then
-    CONFIG_PARA="--enable-static --disable-shared"
+    CMAKE_PARA="-DBUILD_SHARED_LIBS=OFF"
 else
-    CONFIG_PARA="--disable-static --enable-shared"
+    CMAKE_PARA="-DBUILD_SHARED_LIBS=ON"
 fi
+MAKE_PARA="-- ${RABBIT_MAKE_JOB_PARA} VERBOSE=1"
 case ${RABBIT_BUILD_TARGERT} in
     android)
-        #export CC=${RABBIT_BUILD_CROSS_PREFIX}gcc 
-        #export CXX=${RABBIT_BUILD_CROSS_PREFIX}g++
-        #export AR=${RABBIT_BUILD_CROSS_PREFIX}gcc-ar
-        #export LD=${RABBIT_BUILD_CROSS_PREFIX}ld
-        #export AS=${RABBIT_BUILD_CROSS_PREFIX}as
-        #export STRIP=${RABBIT_BUILD_CROSS_PREFIX}strip
-        #export NM=${RABBIT_BUILD_CROSS_PREFIX}nm
-        CONFIG_PARA="${CONFIG_PARA} CC=${RABBIT_BUILD_CROSS_PREFIX}gcc LD=${RABBIT_BUILD_CROSS_PREFIX}ld"
-        CONFIG_PARA="${CONFIG_PARA} --host=$RABBIT_BUILD_CROSS_HOST"
-        #CONFIG_PARA="${CONFIG_PARA} --with-sysroot=${RABBIT_BUILD_CROSS_SYSROOT}"
-        CFLAGS="${RABBIT_CFLAGS}"
-        CPPFLAGS="${RABBIT_CPPFLAGS}"
-        LDFLAGS="${RABBIT_LDFLAGS}"
-    ;;
+        if [ -n "$RABBIT_CMAKE_MAKE_PROGRAM" ]; then
+            CMAKE_PARA="${CMAKE_PARA} -DCMAKE_MAKE_PROGRAM=$RABBIT_CMAKE_MAKE_PROGRAM" 
+        fi
+        CMAKE_PARA="${CMAKE_PARA} -DCMAKE_TOOLCHAIN_FILE=${RABBIT_BUILD_SOURCE_CODE}/platforms/android/android.toolchain.cmake"
+        CMAKE_PARA="${CMAKE_PARA} -DANDROID_NATIVE_API_LEVEL=${ANDROID_NATIVE_API_LEVEL}"
+        CMAKE_PARA="${CMAKE_PARA} -DANDROID_ABI=\"${ANDROID_ABI}\""
+        ;;
     unix)
         ;;
-    windows_mingw)
-        CONFIG_PARA="${CONFIG_PARA} --host=$RABBIT_BUILD_CROSS_HOST"
-        #CONFIG_PARA="${CONFIG_PARA} --with-sysroot=${RABBIT_BUILD_CROSS_SYSROOT}"
-        CFLAGS="${RABBIT_CFLAGS}"
-        CPPFLAGS="${RABBIT_CPPFLAGS}"
-        LDFLAGS="${RABBIT_LDFLAGS}"
-        ;;
     windows_msvc)
-        if [  "$RABBIT_TOOLCHAIN_VERSION" -ge "14" ]; then
-            if [ "$RABBIT_ARCH" = "x64" ]; then
-                ARCH=x64
-            else
-                ARCH=Win32
-            fi
-            msbuild.exe -m -v:n -p:Configuration=Release -p:Platform=$ARCH win32/VS2015/opus.sln
-            cp win32/VS2015/$ARCH/Release/opus.lib $RABBIT_BUILD_PREFIX/lib
-        else
-            echo "Don't support $RABBITIM_GENERATORS"
-        fi
-        cp include/* $RABBIT_BUILD_PREFIX/include
-        cd $CUR_DIR
-        exit 0
+        #RABBITIM_GENERATORS="Visual Studio 12 2013"
+        MAKE_PARA=""
+        ;;
+    windows_mingw)
+        CMAKE_PARA="${CMAKE_PARA} -DOPUS_STACK_PROTECTOR=OFF -DCMAKE_TOOLCHAIN_FILE=$RABBIT_BUILD_PREFIX/../build_script/cmake/platforms/toolchain-mingw.cmake"
         ;;
     *)
     echo "${HELP_STRING}"
     cd $CUR_DIR
-    exit 3
+    exit 2
     ;;
 esac
 
-CFLAGS="${CFLAGS} -I$RABBIT_BUILD_PREFIX/include"
-LDFLAGS="${LDFLAGS} -L$RABBIT_BUILD_PREFIX/lib"
-CONFIG_PARA="${CONFIG_PARA} --prefix=$RABBIT_BUILD_PREFIX "
-echo "../configure ${CONFIG_PARA} CFLAGS=\"${CFLAGS=}\" CPPFLAGS=\"${CPPFLAGS}\" LDFLAGS=\"${LDFLAGS}\""
-../configure ${CONFIG_PARA} CFLAGS="${CFLAGS}" CPPFLAGS="${CPPFLAGS}" LDFLAGS="${LDFLAGS}"
+echo "cmake .. -DCMAKE_INSTALL_PREFIX=$RABBIT_BUILD_PREFIX -DCMAKE_BUILD_TYPE=${RABBIT_CONFIG} -G\"${RABBITIM_GENERATORS}\" ${CMAKE_PARA}"
+cmake .. \
+     -DCMAKE_INSTALL_PREFIX="$RABBIT_BUILD_PREFIX" \
+     -DCMAKE_VERBOSE=ON -DCMAKE_BUILD_TYPE=${RABBIT_CONFIG} \
+     -G"${RABBITIM_GENERATORS}" ${CMAKE_PARA} 
 
-echo "make install"
-make ${RABBIT_MAKE_JOB_PARA} VERBOSE=1 
-make install
+cmake --build . --target install --config ${RABBIT_CONFIG} ${MAKE_PARA}
 
 cd $CUR_DIR

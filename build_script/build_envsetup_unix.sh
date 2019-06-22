@@ -14,8 +14,8 @@
 
 #需要设置下面变量：
 if [ -z "$QT_ROOT" ]; then
-    QT_VERSION=5.12.1
-    QT_ROOT=/home/l/Qt${QT_VERSION}/${QT_VERSION}/gcc_64  #QT 安装根目录,默认为:${RABBITRoot}/ThirdLibrary/unix/qt
+    QT_VERSION=5.12.4
+    QT_ROOT=/opt/Qt${QT_VERSION}/${QT_VERSION}/gcc_64  #QT 安装根目录,默认为:${RABBITRoot}/ThirdLibrary/unix/qt
 fi
 
 if [ -z "$RABBIT_CLEAN" ]; then

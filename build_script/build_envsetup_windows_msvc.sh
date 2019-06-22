@@ -53,6 +53,7 @@ if [ -z "${RABBIT_TOOLCHAIN_VERSION}" ]; then
             MSVC_NAME=msvc2013
             ;;
           *)
+            echo "Please set RABBIT_TOOLCHAIN_VERSION"
             MSVC_NAME=msvc2015
             ;;
     esac
@@ -69,7 +70,7 @@ fi
 
 #需要设置下面变量：
 if [ -z "$QT_ROOT" -a -z "$APPVEYOR" ]; then
-    QT_VERSION=5.12.1
+    QT_VERSION=5.12.4
     QT_ROOT=/c/Qt/Qt${QT_VERSION}/${QT_VERSION}/${MSVC_NAME} #QT 安装根目录,默认为:${RABBITRoot}/ThirdLibrary/windows_msvc/qt
 fi
 
@@ -157,5 +158,8 @@ echo "QT_ROOT:$QT_ROOT"
 echo "QMAKE:$QMAKE"
 echo "PKG_CONFIG_PATH:$PKG_CONFIG_PATH"
 echo "PKG_CONFIG_SYSROOT_DIR:$PKG_CONFIG_SYSROOT_DIR"
+echo "RABBIT_ARCH:$RABBIT_ARCH"
+echo "RABBIT_TOOLCHAIN_VERSION:$RABBIT_TOOLCHAIN_VERSION"
+echo "RABBITIM_GENERATORS:$RABBITIM_GENERATORS"
 echo "PATH=$PATH"
 echo "---------------------------------------------------------------------------"
