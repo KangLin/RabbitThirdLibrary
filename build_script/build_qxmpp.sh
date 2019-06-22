@@ -78,33 +78,6 @@ echo "RABBIT_BUILD_CROSS_SYSROOT:$RABBIT_BUILD_CROSS_SYSROOT"
 echo "RABBIT_BUILD_STATIC:$RABBIT_BUILD_STATIC"
 echo ""
 
-case $RABBIT_BUILD_TARGERT in
-    android)
-        PARA="-r -spec android-g++"
-        case $TARGET_OS in
-            MINGW* | CYGWIN* | MSYS*)
-                MAKE="$ANDROID_NDK/prebuilt/${RABBIT_BUILD_HOST}/bin/make ${RABBIT_MAKE_JOB_PARA} VERBOSE=1" #在windows下编译
-                ;;
-            *)
-            ;;
-         esac
-         ;;
-    unix)
-        ;;
-    windows_msvc)
-        RABBIT_MAKE_JOB_PARA=""
-        ;;
-    windows_mingw)
-        #PARA="-r -spec win32-g++" # CROSS_COMPILE=${RABBIT_BUILD_CROSS_PREFIX}"
-        ;;
-    *)
-        echo "Usage $0 PLATFORM(android/windows_msvc/windows_mingw/unix) SOURCE_CODE_ROOT"
-        cd $CUR_DIR
-        exit 2
-        ;;
-esac
-
-
 if [ "$RABBIT_BUILD_STATIC" = "static" ]; then
     CMAKE_PARA="-DBUILD_SHARED=OFF" 
 else
@@ -139,11 +112,15 @@ case ${RABBIT_BUILD_TARGERT} in
     ;;
 esac
 
+CMAKE_PARA="${CMAKE_PARA} -DQt5_DIR=${QT_ROOT}/lib/cmake/Qt5"
+CMAKE_PARA="${CMAKE_PARA} -DOpus_DIR=${RABBIT_BUILD_PREFIX}/lib/cmake/Opus"
+CMAKE_PARA="${CMAKE_PARA} -DCMAKE_FIND_ROOT_PATH=${RABBIT_BUILD_PREFIX}"
+CMAKE_PARA="${CMAKE_PARA} -DCMAKE_PREFIX_PATH=${RABBIT_BUILD_PREFIX}"
 echo "cmake .. -DCMAKE_INSTALL_PREFIX=$RABBIT_BUILD_PREFIX -DCMAKE_BUILD_TYPE=Release -G\"${RABBITIM_GENERATORS}\" ${CMAKE_PARA}"
 cmake .. \
     -DCMAKE_INSTALL_PREFIX="$RABBIT_BUILD_PREFIX" \
-    -G"${RABBITIM_GENERATORS}" ${CMAKE_PARA} -DWITH_SPEEX -DWITH_VPX
+    -G"${RABBITIM_GENERATORS}" ${CMAKE_PARA} -DWITH_OPUS=ON -DWITH_VPX=ON
     
-cmake --build . --target install --config ${RABBIT_CONFIG} ${MAKE_PARA}
+cmake --build . --target install --config ${RABBIT_CONFIG} #${MAKE_PARA}
 
 cd $CUR_DIR
