@@ -59,36 +59,36 @@ case $TARGET_OS in
 ./change_prefix.sh
 
 if [ -n "$DIR" ]; then
-    ./build_zlib.sh ${RABBIT_BUILD_TARGERT} $DIR/zlib
+    #./build_zlib.sh ${RABBIT_BUILD_TARGERT} $DIR/zlib
     #./build_minizip.sh ${RABBIT_BUILD_TARGERT} $DIR/minizip
-    ./build_expat.sh ${RABBIT_BUILD_TARGERT} $DIR/expat
-    ./build_libgpx.sh ${RABBIT_BUILD_TARGERT} $DIR/libgpx
+    #./build_expat.sh ${RABBIT_BUILD_TARGERT} $DIR/expat
+    #./build_libgpx.sh ${RABBIT_BUILD_TARGERT} $DIR/libgpx
     ./build_openssl.sh ${RABBIT_BUILD_TARGERT} $DIR/openssl
-    ./build_libsodium.sh ${RABBIT_BUILD_TARGERT} $DIR/libsodium
-    ./build_boost.sh ${RABBIT_BUILD_TARGERT} $DIR/boost
+    #./build_libsodium.sh ${RABBIT_BUILD_TARGERT} $DIR/libsodium
+    #./build_boost.sh ${RABBIT_BUILD_TARGERT} $DIR/boost
     #./build_protobuf.sh ${RABBIT_BUILD_TARGERT} $DIR/protobuf
     #./build_berkeleydb.sh ${RABBIT_BUILD_TARGERT} $DIR/berkeleydb
     ./build_libcurl.sh ${RABBIT_BUILD_TARGERT} $DIR/curl
-    ./build_libpng.sh ${RABBIT_BUILD_TARGERT} $DIR/libpng
-    ./build_jpeg.sh ${RABBIT_BUILD_TARGERT} $DIR/libjpeg
-    ./build_libgif.sh ${RABBIT_BUILD_TARGERT} $DIR/libgif
-    ./build_libtiff.sh ${RABBIT_BUILD_TARGERT} $DIR/libtiff
-    ./build_freetype.sh ${RABBIT_BUILD_TARGERT} $DIR/freetype
+    #./build_libpng.sh ${RABBIT_BUILD_TARGERT} $DIR/libpng
+    #./build_jpeg.sh ${RABBIT_BUILD_TARGERT} $DIR/libjpeg
+    #./build_libgif.sh ${RABBIT_BUILD_TARGERT} $DIR/libgif
+    #./build_libtiff.sh ${RABBIT_BUILD_TARGERT} $DIR/libtiff
+    #./build_freetype.sh ${RABBIT_BUILD_TARGERT} $DIR/freetype
     ./build_libqrencode.sh ${RABBIT_BUILD_TARGERT} $DIR/libqrencode
-    ./build_ogg.sh ${RABBIT_BUILD_TARGERT} $DIR/ogg
-    ./build_speex.sh ${RABBIT_BUILD_TARGERT} $DIR/speex
-    ./build_x264.sh ${RABBIT_BUILD_TARGERT} $DIR/x264
+    #./build_ogg.sh ${RABBIT_BUILD_TARGERT} $DIR/ogg
+    #./build_speex.sh ${RABBIT_BUILD_TARGERT} $DIR/speex
+    #./build_x264.sh ${RABBIT_BUILD_TARGERT} $DIR/x264
     ./build_libyuv.sh ${RABBIT_BUILD_TARGERT} $DIR/libyuv
     ./build_libvpx.sh ${RABBIT_BUILD_TARGERT} $DIR/libvpx
     ./build_ffmpeg.sh ${RABBIT_BUILD_TARGERT} $DIR/ffmpeg
     ./build_libopus.sh ${RABBIT_BUILD_TARGERT} $DIR/libopus
-    ./build_opencv.sh ${RABBIT_BUILD_TARGERT} $DIR/opencv
-    ./build_dlib.sh ${RABBIT_BUILD_TARGERT} $DIR/dlib
-    ./build_geos.sh ${RABBIT_BUILD_TARGERT} $DIR/geos
-    ./build_gdal.sh ${RABBIT_BUILD_TARGERT} $DIR/gdal
-    ./build_osg.sh ${RABBIT_BUILD_TARGERT} $DIR/osg
-    ./build_OsgQt.sh ${RABBIT_BUILD_TARGERT} $DIR/osgQt
-    ./build_osgearth.sh ${RABBIT_BUILD_TARGERT} $DIR/osgearth
+    #./build_opencv.sh ${RABBIT_BUILD_TARGERT} $DIR/opencv
+    #./build_dlib.sh ${RABBIT_BUILD_TARGERT} $DIR/dlib
+    #./build_geos.sh ${RABBIT_BUILD_TARGERT} $DIR/geos
+    #./build_gdal.sh ${RABBIT_BUILD_TARGERT} $DIR/gdal
+    #./build_osg.sh ${RABBIT_BUILD_TARGERT} $DIR/osg
+    #./build_OsgQt.sh ${RABBIT_BUILD_TARGERT} $DIR/osgQt
+    #./build_osgearth.sh ${RABBIT_BUILD_TARGERT} $DIR/osgearth
     #./build_qt.sh ${RABBIT_BUILD_TARGERT} $DIR/qt5
     ./build_qxmpp.sh ${RABBIT_BUILD_TARGERT} $DIR/qxmpp 
     ./build_qzxing.sh ${RABBIT_BUILD_TARGERT} $DIR/qzxing
