@@ -473,7 +473,7 @@ init:
   - if "%BUILD_TARGERT%" == "windows_mingw" set MSYSTEM=MINGW32  #设置编译系统为MINGW32
   - if "%QT_VERSION%" == "" set QT_VERSION=NO
   - if NOT "%QT_ROOT%" == "NO" for /f "delims=" %%i in ('%QT_ROOT%/bin/qmake -query QT_VERSION') do (set QT_VERSION=%%i)
-  - set RABBIT_QT_NUMBER=3   #TODO:修改为qt在编译数组中的索引  
+  - set RABBIT_QT_NUMBER=4   #TODO:修改为qt在编译数组中的索引  
   - echo QT_VERSION=%QT_VERSION%
   - echo QT_ROOT=%QT_ROOT%
   

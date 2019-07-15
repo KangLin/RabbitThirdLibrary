@@ -3,12 +3,12 @@ set -e
 
 #TODO:修改数组，修改完后，再修改appveyor.yml中的 RABBIT_QT_NUMBER 为QT开始的数组索引  
 RABBIT_LIBRARYS[0]="change_prefix zlib expat libgpx openssl libsodium libcurl libqrencode " #dlib "
-#RABBIT_LIBRARYS[1]="boost"
-RABBIT_LIBRARYS[1]="libpng jpeg libgif libtiff freetype libyuv libvpx libopus x264 speex ffmpeg"
-RABBIT_LIBRARYS[2]="opencv" # geos gdal"
+RABBIT_LIBRARYS[1]="boost"
+RABBIT_LIBRARYS[2]="libpng jpeg libgif libtiff freetype libyuv libvpx libopus x264 speex ffmpeg"
+RABBIT_LIBRARYS[3]="opencv" # geos gdal"
 #RABBIT_LIBRARYS[3]="osg"
 #RABBIT_LIBRARYS[4]="OsgQt osgearth "
-RABBIT_LIBRARYS[3]="qxmpp qzxing"
+RABBIT_LIBRARYS[4]="qxmpp qzxing"
 
 export PATH=/usr/bin:$PATH
 if [ "$BUILD_TARGERT" = "windows_mingw" \
