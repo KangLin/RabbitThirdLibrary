@@ -37,7 +37,7 @@ function function_unix()
     
     # 依赖库  
     if [ "$RABBIT_BUILD_THIRDLIBRARY" != "TRUE" ]; then
-        sudo apt-get install -y -qq libvpx-dev libqxmpp-dev libx264-dev \
+        sudo apt-get install -y -qq libvpx-dev libx264-dev \
             libavcodec-dev libavformat-dev libavutil-dev libswscale-dev \
             libqrencode-dev \
             libssl-dev \
