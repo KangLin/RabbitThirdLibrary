@@ -122,10 +122,12 @@ case ${RABBIT_BUILD_TARGERT} in
     windows_msvc)
         #RABBITIM_GENERATORS="Visual Studio 12 2013"
         MAKE_PARA=""
+        CMAKE_PARA="${CMAKE_PARA} -DWITH_WIN32UI=ON -DWITH_VTK=OFF -DWITH_GTK=OFF"
         ;;
     windows_mingw)
         CMAKE_PARA="${CMAKE_PARA} -DCMAKE_TOOLCHAIN_FILE=$RABBIT_BUILD_PREFIX/../build_script/cmake/platforms/toolchain-mingw.cmake"
         CMAKE_PARA="${CMAKE_PARA} -DBUILD_opencv_videoio=OFF"
+        CMAKE_PARA="${CMAKE_PARA} -DWITH_WIN32UI=ON -DWITH_VTK=OFF -DWITH_GTK=OFF"
         ;;
     *)
     echo "${HELP_STRING}"
