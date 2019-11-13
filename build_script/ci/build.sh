@@ -2,10 +2,10 @@
 set -e
 
 #TODO:修改数组，修改完后，再修改appveyor.yml中的 RABBIT_QT_NUMBER 为QT开始的数组索引  
-RABBIT_LIBRARYS[0]="change_prefix zlib expat libgpx openssl libsodium libcurl libqrencode " #dlib "
+RABBIT_LIBRARYS[0]="change_prefix zlib expat libgpx openssl libsodium libcurl libqrencode"
 RABBIT_LIBRARYS[1]="boost"
 RABBIT_LIBRARYS[2]="libpng jpeg libgif libtiff freetype libyuv libvpx libopus x264 speex ffmpeg"
-RABBIT_LIBRARYS[3]="opencv" # geos gdal"
+RABBIT_LIBRARYS[3]="opencv dlib" # geos gdal"
 #RABBIT_LIBRARYS[3]="osg"
 #RABBIT_LIBRARYS[4]="OsgQt osgearth "
 RABBIT_LIBRARYS[4]="qxmpp qzxing"
@@ -16,6 +16,7 @@ if [ "$BUILD_TARGERT" = "windows_mingw" \
     export RABBIT_TOOLCHAIN_ROOT=/C/Qt/Tools/mingw${RABBIT_TOOLCHAIN_VERSION}
     export PATH="${RABBIT_TOOLCHAIN_ROOT}/bin:/usr/bin:/c/Tools/curl/bin:/c/Program Files (x86)/CMake/bin"
 fi
+
 TARGET_OS=`uname -s`
 case $TARGET_OS in
     MINGW* | CYGWIN* | MSYS*)
@@ -51,7 +52,7 @@ fi
 if [ -n "$DOWNLOAD_URL" ]; then
     wget -c -q -O ${SCRIPT_DIR}/../${BUILD_TARGERT}.zip ${DOWNLOAD_URL}
 fi
-    
+
 export RABBIT_BUILD_PREFIX=${SCRIPT_DIR}/../build #${BUILD_TARGERT}${RABBIT_TOOLCHAIN_VERSION}_${RABBIT_ARCH}_qt${QT_VERSION}_${RABBIT_CONFIG}
 if [ ! -d ${RABBIT_BUILD_PREFIX} ]; then
     mkdir -p ${RABBIT_BUILD_PREFIX}
@@ -76,33 +77,49 @@ if [ -f ${SCRIPT_DIR}/../${BUILD_TARGERT}.zip ]; then
     fi
 fi
 
+TOOLS_DIR=${SCRIPT_DIR}/../Tools
 if [ "$BUILD_TARGERT" = "android" ]; then
-    export ANDROID_SDK_ROOT=${SCRIPT_DIR}/../Tools/android-sdk
-    export ANDROID_NDK_ROOT=${SCRIPT_DIR}/../Tools/android-ndk
-    export RABBIT_TOOL_CHAIN_ROOT=${SCRIPT_DIR}/../Tools/android-ndk/android-toolchain-${RABBIT_ARCH}
-    if [ -z "$APPVEYOR" ]; then
+    export ANDROID_SDK_ROOT=${TOOLS_DIR}/android-sdk
+    export ANDROID_NDK_ROOT=${TOOLS_DIR}/android-ndk
+    if [ -n "$APPVEYOR" ]; then
         export JAVA_HOME="/C/Program Files (x86)/Java/jdk1.8.0"
+        export ANDROID_NDK_ROOT=${TOOLS_DIR}/android-sdk/ndk-bundle
     fi
-    QT_DIR=${SCRIPT_DIR}/../Tools/Qt/Qt${QT_VERSION}/${QT_VERSION}
-    case $RABBIT_ARCH in
+    if [ "$TRAVIS" = "true" ]; then
+        export JAVA_HOME=${TOOLS_DIR}/android-studio/jre
+        #export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
+    fi
+    case $BUILD_ARCH in
         arm*)
-            export QT_ROOT=${QT_DIR}/android_armv7
+            export QT_ROOT=${TOOLS_DIR}/Qt/${QT_VERSION}/${QT_VERSION}/android_armv7
             ;;
-        x86*)
-            export QT_ROOT=${QT_DIR}/android_$RABBIT_ARCH
-            ;;
-           *)
-           echo "Don't arch $RABBIT_ARCH"
-           ;;
+        x86)
+        export QT_ROOT=${TOOLS_DIR}/Qt/${QT_VERSION}/${QT_VERSION}/android_x86
+        ;;
     esac
-    export PATH=$PATH:${SCRIPT_DIR}/../Tools/apache-ant/bin:$JAVA_HOME
+    export PATH=${TOOLS_DIR}/apache-ant/bin:$JAVA_HOME:$PATH
+    export ANDROID_SDK=${ANDROID_SDK_ROOT}
+    export ANDROID_NDK=${ANDROID_NDK_ROOT}
 fi
+
+if [ "${BUILD_TARGERT}" = "unix" ]; then
+    if [ "$DOWNLOAD_QT" = "TRUE" ]; then
+        QT_DIR=${TOOLS_DIR}/Qt/${QT_VERSION}
+        export QT_ROOT=${QT_DIR}/${QT_VERSION}/gcc_64
+    else
+        #source /opt/qt${QT_VERSION_DIR}/bin/qt${QT_VERSION_DIR}-env.sh
+        export QT_ROOT=/opt/qt${QT_VERSION_DIR}
+    fi
+    export PATH=$QT_ROOT/bin:$PATH
+    export LD_LIBRARY_PATH=$QT_ROOT/lib/i386-linux-gnu:$QT_ROOT/lib:$LD_LIBRARY_PATH
+    export PKG_CONFIG_PATH=$QT_ROOT/lib/pkgconfig:$PKG_CONFIG_PATH
+fi
+
 if [ "$BUILD_TARGERT" != "windows_msvc" ]; then
     RABBIT_MAKE_JOB_PARA="-j`cat /proc/cpuinfo |grep 'cpu cores' |wc -l`"  #make 同时工作进程参数
     if [ "$RABBIT_MAKE_JOB_PARA" = "-j1" ];then
-            RABBIT_MAKE_JOB_PARA="-j2"
+        RABBIT_MAKE_JOB_PARA="-j2"
     fi
-    export RABBIT_MAKE_JOB_PARA
 fi
 
 echo "---------------------------------------------------------------------------"

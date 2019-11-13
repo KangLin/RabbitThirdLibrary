@@ -1,8 +1,14 @@
 sudo: required
-dist: trusty
-
+dist: xenial
 language: cpp
 
+addons:
+  apt:
+    sources:
+      github-git-lfs-bionic
+    packages:
+      git-lfs
+      
 cache:
   - apt
   - directories:
@@ -11,12 +17,19 @@ cache:
 compiler:
   - g++
 
-jdk: oraclejdk7
-
 os:
   - unix
-  - android
-  
+
+jdk:
+  #- oraclejdk8
+  #- oraclejdk9
+  - openjdk8
+
+#android:
+#  components:
+#    - build-tools-28.0.3
+#    - android-24
+    
 addons:
   ssh_known_hosts:
     - github.com
@@ -24,6 +37,7 @@ addons:
 
 env:
   global:
+    - SOURCE_DIR=$TRAVIS_BUILD_DIR
     - PROJECT_NAME="RabbitThirdLIbrary"
     - BUILD_VERSION=$TRAVIS_BUILD_NUMBER
     - RABBIT_USE_REPOSITORIES="TRUE"
@@ -31,17 +45,24 @@ env:
     - RABBIT_BUILD_THIRDLIBRARY="TRUE" 
     
   matrix:
-    - BUILD_TARGERT="unix" QT_VERSION_DIR=512 QT_VERSION=-5.12.3 BUILD_DOWNLOAD=FALSE
-    #- BUILD_TARGERT="unix" QT_VERSION_DIR=511 QT_VERSION=-5.11.1 BUILD_DOWNLOAD=FALSE
-    - BUILD_TARGERT="unix" QT_VERSION_DIR=59 QT_VERSION=597 BUILD_DOWNLOAD=FALSE STATIC=ON
+    - BUILD_TARGERT="unix" QT_VERSION_DIR=512 QT_VERSION=5.12.3 RABBIT_NUMBER=0 DOWNLOAD_QT=FALSE
+    - BUILD_TARGERT="unix" QT_VERSION_DIR=512 QT_VERSION=5.12.3 RABBIT_NUMBER=1 DOWNLOAD_QT=FALSE
+    - BUILD_TARGERT="unix" QT_VERSION_DIR=512 QT_VERSION=5.12.3 RABBIT_NUMBER=2 DOWNLOAD_QT=FALSE
+    - BUILD_TARGERT="unix" QT_VERSION_DIR=512 QT_VERSION=5.12.3 RABBIT_NUMBER=3 DOWNLOAD_QT=FALSE
+    - BUILD_TARGERT="unix" QT_VERSION_DIR=512 QT_VERSION=5.12.3 RABBIT_NUMBER=4 DOWNLOAD_QT=FALSE
     
-    - BUILD_TARGERT="unix" BUILD_ARCH="unix" QT_VERSION_DIR=5.12 QT_VERSION=5.12.4 BUILD_DOWNLOAD=TRUE GENERATORS="Unix Makefiles"
-    - BUILD_TARGERT="unix" BUILD_ARCH="unix" QT_VERSION_DIR=5.9 QT_VERSION=5.9.7 BUILD_DOWNLOAD=TRUE GENERATORS="Unix Makefiles" STATIC=ON
-    #- BUILD_TARGERT="unix" BUILD_ARCH="unix" QT_VERSION_DIR=5.6 QT_VERSION=5.6.3 BUILD_DOWNLOAD=TRUE 
+    #- BUILD_TARGERT="unix" QT_VERSION_DIR=511 QT_VERSION=5.11.3 DOWNLOAD_QT=FALSE STATIC=ON
+
+    #- BUILD_TARGERT="unix" BUILD_ARCH="unix" QT_VERSION_DIR=5.12 QT_VERSION=5.12.5 DOWNLOAD_QT=TRUE
+
+    - BUILD_TARGERT="android" RABBIT_ARCH="armeabi-v7a" QT_VERSION_DIR=5.12 QT_VERSION=5.12.5 ANDROID_API=android-24 DOWNLOAD_QT=TRUE RABBIT_NUMBER=0
+    - BUILD_TARGERT="android" RABBIT_ARCH="armeabi-v7a" QT_VERSION_DIR=5.12 QT_VERSION=5.12.5 ANDROID_API=android-24 DOWNLOAD_QT=TRUE RABBIT_NUMBER=1
+    - BUILD_TARGERT="android" RABBIT_ARCH="armeabi-v7a" QT_VERSION_DIR=5.12 QT_VERSION=5.12.5 ANDROID_API=android-24 DOWNLOAD_QT=TRUE RABBIT_NUMBER=2
+    - BUILD_TARGERT="android" RABBIT_ARCH="armeabi-v7a" QT_VERSION_DIR=5.12 QT_VERSION=5.12.5 ANDROID_API=android-24 DOWNLOAD_QT=TRUE RABBIT_NUMBER=3
+    - BUILD_TARGERT="android" RABBIT_ARCH="armeabi-v7a" QT_VERSION_DIR=5.12 QT_VERSION=5.12.5 ANDROID_API=android-24 DOWNLOAD_QT=TRUE RABBIT_NUMBER=4
     
-    - BUILD_TARGERT="android" BUILD_ARCH="armeabi-v7a" QT_VERSION_DIR=5.12 QT_VERSION=5.12.4 ANDROID_API=android-24 BUILD_DOWNLOAD=TRUE
-    - BUILD_TARGERT="android" BUILD_ARCH="armeabi-v7a" QT_VERSION_DIR=5.9 QT_VERSION=5.9.7 ANDROID_API=android-18 BUILD_DOWNLOAD=TRUE STATIC=ON
-    - BUILD_TARGERT="android" BUILD_ARCH="x86" QT_VERSION_DIR=5.9 QT_VERSION=5.9.7 ANDROID_API=android-18 BUILD_DOWNLOAD=TRUE
+    #- BUILD_TARGERT="android" RABBIT_ARCH="armeabi-v7a" QT_VERSION_DIR=5.13 QT_VERSION=5.13.2 ANDROID_API=android-24 DOWNLOAD_QT=TRUE STATIC=ON
+    #- BUILD_TARGERT="android" RABBIT_ARCH="x86" QT_VERSION_DIR=5.12 QT_VERSION=5.12.5 ANDROID_API=android-24 DOWNLOAD_QT=TRUE
 
 before_install:
   - echo "TRAVIS_OS_NAME=${TRAVIS_OS_NAME}"
@@ -49,8 +70,9 @@ before_install:
   - sudo apt-get install -y -qq xvfb xpra
   - sudo Xvfb :99 -ac &
   - export DISPLAY=:99.0
-  - bash -e /etc/init.d/xvfb start
-
+  - mkdir ${SOURCE_DIR}/Tools
+  - export VERSION="v0.0.2"
+  
 install:
   - bash build_script/ci/build-install-apt.sh > /dev/null
   - bash build_script/ci/build-install-tools.sh > /dev/null

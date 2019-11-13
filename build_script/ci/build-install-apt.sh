@@ -37,11 +37,26 @@ function function_unix()
     
     # 依赖库  
     if [ "$RABBIT_BUILD_THIRDLIBRARY" != "TRUE" ]; then
+        sudo apt-get install debhelper fakeroot -y -qq
+        sudo apt-get install -y -qq libdlib-dev libopencv-dev
+        sudo apt-get install -y -qq libavcodec-dev libavformat-dev \
+               libavfilter-dev libavdevice-dev libavresample-dev libavutil-dev 
+        sudo apt-get install -y -qq libglu1-mesa-dev \
+            libxkbcommon-x11-dev \
+            libpulse-mainloop-glib0 \
+            libgstreamer1.0-dev \
+            libgstreamer-plugins-base1.0-dev \
+            gstreamer1.0-pulseaudio \
+            libmysql-cil-dev libmysql-cil-dev libmysql-ocaml-dev \
+            libmysql++-dev libmysqld-dev libmysqlcppconn-dev \
+            libmysqlclient-dev \
+            libodbc1 
+    
         sudo apt-get install -y -qq libvpx-dev libx264-dev \
-            libavcodec-dev libavformat-dev libavutil-dev libswscale-dev \
             libqrencode-dev \
             libssl-dev \
             libcurl4-openssl-dev
+            
     fi
     #Libxcb
     sudo apt-get install -y -qq "^libxcb.*" libx11-xcb-dev libxrender-dev libxi-dev
