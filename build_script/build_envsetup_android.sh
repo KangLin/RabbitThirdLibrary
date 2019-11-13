@@ -1,6 +1,6 @@
 #注意：修改后的本文件不要上传代码库中
 
-#bash用法：  
+#bash用法:
 #   在用一sh进程中执行脚本script.sh:
 #   source script.sh
 #   . script.sh
@@ -10,12 +10,30 @@
 #   新建一个sh进程执行脚本script.sh:
 #   sh script.sh
 #   ./script.sh
-#   注意这种用法，script.sh开头一行必须包含 #!/bin/sh  
+#   注意这种用法，script.sh开头一行必须包含 #!/bin/sh
+
+#ANDROID_ABI: 可取下列值： 目标 ABI。如果未指定目标 ABI，则 CMake 默认使用 armeabi-v7a
+#有效的目标名称为：
+#    armeabi：带软件浮点运算并基于 ARMv5TE 的 CPU。
+#    armeabi-v7a：带硬件 FPU 指令 (VFPv3_D16) 并基于 ARMv7 的设备。
+#    armeabi-v7a with NEON：与 armeabi-v7a 相同，但启用 NEON 浮点指令。这相当于设置 -DANDROID_ABI=armeabi-v7a 和 -DANDROID_ARM_NEON=ON。
+#    arm64-v8a：ARMv8 AArch64 指令集。
+#    x86：IA-32 指令集。
+#    x86_64 - 用于 x86-64 架构的指令集。
+#ANDROID_PLATFORM: 如需平台名称和对应 Android 系统映像的完整列表，请参阅 Android NDK 原生 API
+#ANDROID_ARM_MODE
+#ANDROID_ARM_NEON
+#ANDROID_STL:指定 CMake 应使用的 STL。默认情况下，CMake 使用 c++_static。
+
+# ANDROID_NDK_HOST:
+# RABBIT_CLEAN:
+# RABBIT_BUILD_STATIC:
+# RABBIT_USE_REPOSITORIES:
 
 #需要设置下面变量，也可以把它们设置在环境变量中：  
-#export JAVA_HOME="/C/Program Files/Java/jdk1.7.0_51"             #指定 jdk 根目录  
+#export JAVA_HOME="/C/Program Files/Java/jdk1.7.0_51"        #指定 jdk 根目录  
 #export ANDROID_SDK_ROOT=/D/software/android-sdk-windows     #指定 android sdk 根目录,在msys2下需要注意路径符号："/"  
-#export ANDROID_NDK_ROOT=/D/software/android-ndk-r10e   #指定 android ndk 根目录  
+#export ANDROID_NDK_ROOT=/D/software/android-ndk-r10e        #指定 android ndk 根目录  
 if [ -z "$ANDROID_NDK_ROOT" -a -z "$ANDROID_NDK" ]; then
     export ANDROID_NDK_ROOT=/d/software/android-sdk/ndk-bundle
 fi
@@ -28,9 +46,9 @@ fi
 if [ -n "$ANDROID_NDK" -a -z "$ANDROID_NDK_ROOT" ]; then
     export ANDROID_NDK_ROOT=$ANDROID_NDK
 fi
-export ANDROID_NDK=$ANDROID_NDK_ROOT            #指定 android ndk 根目录  
+export ANDROID_NDK=$ANDROID_NDK_ROOT     #指定 android ndk 根目录  
 export ANDROID_SDK=$ANDROID_SDK_ROOT
-export ANDROID_NDK_HOME=$ANDROID_NDK        #openssl需要  
+export ANDROID_NDK_HOME=$ANDROID_NDK     #openssl需要  
 
 if [ -z "$JAVA_HOME" ]; then
     export JAVA_HOME=/C/android-studio/jre
@@ -47,7 +65,7 @@ fi
 #RABBIT_BUILD_STATIC="static" #设置编译静态库，注释掉，则为编译动态库
 #RABBIT_USE_REPOSITORIES="TRUE" #下载指定的压缩包。省略，则下载开发库。  
 #RABBIT_TOOLCHAIN_VERSION=4.8   #工具链版本号,默认 4.9  
-#ANDROID_NATIVE_API_LEVEL=24   #android ndk api (平台)版本号,默认 18
+#ANDROID_NATIVE_API_LEVEL=24   #android ndk api (平台)版本号,默认 24
 if [ -z "${RABBIT_MAKE_JOB_PARA}" ]; then
     RABBIT_MAKE_JOB_PARA="-j`cat /proc/cpuinfo |grep 'cpu cores' |wc -l`"  #make 同时工作进程参数
     if [ "$RABBIT_MAKE_JOB_PARA" = "-j1" ];then
@@ -82,7 +100,7 @@ if [ -z "${RABBIT_TOOLCHAIN_VERSION}" ]; then
     RABBIT_TOOLCHAIN_VERSION=4.9  #工具链版本号
 fi
 if [ -z "${ANDROID_NATIVE_API_LEVEL}" ]; then
-    ANDROID_NATIVE_API_LEVEL=18    #android ndk api (平台)版本号, Qt5.9 支持最小平台版本
+    ANDROID_NATIVE_API_LEVEL=24    #android ndk api (平台)版本号, Qt5.9 支持最小平台版本
 fi
 
 if [ -z "${RABBIT_BUILD_PREFIX}" ]; then
@@ -103,9 +121,9 @@ if [ -z "$QT_ROOT" -a -d "${RABBIT_BUILD_PREFIX}/qt" ]; then
 fi
 QMAKE=qmake
 if [ -n "${QT_ROOT}" ]; then
-    QT_BIN=${QT_ROOT}/bin       #设置用于 android 平台编译的 qt bin 目录  
-    QMAKE=${QT_BIN}/qmake       #设置用于 unix 平台编译的 QMAKE。
-                            #这里设置的是自动编译时的配置，你需要修改为你本地qt编译环境的配置.
+    QT_BIN=${QT_ROOT}/bin     #设置用于 android 平台编译的 qt bin 目录  
+    QMAKE=${QT_BIN}/qmake     #设置用于 unix 平台编译的 QMAKE。
+                              #这里设置的是自动编译时的配置，你需要修改为你本地qt编译环境的配置.
 fi
 
 MAKE="make" # ${RABBIT_MAKE_JOB_PARA}"
@@ -147,31 +165,41 @@ export PATH=$ANDROID_NDK/prebuilt/${ANDROID_NDK_HOST}/bin:$PATH
 #    fi
 #fi
 
-if [ "${RABBIT_ARCH}" = "x86" -o "${RABBIT_ARCH}" = "x86_64" ]; then
-    export ANDROID_TOOLCHAIN_NAME=${RABBIT_ARCH}-${RABBIT_TOOLCHAIN_VERSION}
-    if [ -z "${RABBIT_BUILD_CROSS_HOST}" ]; then
-        if [ "${RABBIT_ARCH}" = "x86_64" ]; then
-            RABBIT_BUILD_CROSS_HOST=x86_64-linux-android
-        else
-            RABBIT_BUILD_CROSS_HOST=i686-linux-android
+case ${RABBIT_ARCH} in
+    x86*)
+        export ANDROID_TOOLCHAIN_NAME=${RABBIT_ARCH}-${RABBIT_TOOLCHAIN_VERSION}
+        if [ -z "${RABBIT_BUILD_CROSS_HOST}" ]; then
+            if [ "${RABBIT_ARCH}" = "x86_64" ]; then
+                RABBIT_BUILD_CROSS_HOST=x86_64-linux-android
+            else
+                RABBIT_BUILD_CROSS_HOST=i686-linux-android
+            fi
         fi
-    fi
-    #交叉编译前缀
-    if [ "${RABBIT_ARCH}" = "x86_64" ]; then
-        export ANDROID_ABI="x86_64"
-    else
-        export ANDROID_ABI="x86"
-    fi
-    ANDROID_NDK_ABI_NAME=${ANDROID_ABI}
+        #交叉编译前缀
+        if [ -z "$ANDROID_ABI" ]; then
+            if [ "${RABBIT_ARCH}" = "x86_64" ]; then
+                export ANDROID_ABI="x86_64"
+            else
+                export ANDROID_ABI="x86"
+            fi
+        fi
+        ANDROID_NDK_ABI_NAME=${ANDROID_ABI}
+        ;;
+    arm*)
+        if [ -z "$ANDROID_ABI" ]; then
+            export ANDROID_ABI="armeabi-v7a with NEON"
+        fi
+        RABBIT_CFLAGS="-march=armv7-a -mfloat-abi=softfp -mfpu=neon"
+        ANDROID_NDK_ABI_NAME="armeabi-v7a"
+        if [ -z "${RABBIT_BUILD_CROSS_HOST}" ]; then
+            RABBIT_BUILD_CROSS_HOST=arm-linux-androideabi
+        fi
+        export ANDROID_TOOLCHAIN_NAME=${RABBIT_BUILD_CROSS_HOST}-${RABBIT_TOOLCHAIN_VERSION}
+        ;;
+esac
 
-elif [ "${RABBIT_ARCH}" = "arm" ]; then
-    export ANDROID_ABI="armeabi-v7a with NEON"
-    RABBIT_CFLAGS="-march=armv7-a -mfloat-abi=softfp -mfpu=neon"
-    ANDROID_NDK_ABI_NAME="armeabi-v7a"
-    if [ -z "${RABBIT_BUILD_CROSS_HOST}" ]; then
-        RABBIT_BUILD_CROSS_HOST=arm-linux-androideabi
-    fi
-    export ANDROID_TOOLCHAIN_NAME=${RABBIT_BUILD_CROSS_HOST}-${RABBIT_TOOLCHAIN_VERSION}
+if [ -z "$ANDROID_PLATFORM" ]; then
+    ANDROID_PLATFORM=android-${ANDROID_NATIVE_API_LEVEL}
 fi
 
 #交叉编译前缀

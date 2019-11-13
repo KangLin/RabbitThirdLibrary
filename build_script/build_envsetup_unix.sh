@@ -12,6 +12,19 @@
 #   ./script.sh
 #   注意这种用法，script.sh开头一行必须包含 #!/bin/sh  
 
+# QT_ROOT:
+# QT_VERSION:
+# RABBIT_ARCH:
+# RABBIT_CONFIG:
+# RABBIT_BUILD_PREFIX:
+# PKG_CONFIG:
+# RABBIT_BUILD_THIRDLIBRARY:
+# RABBIT_CLEAN:
+# RABBIT_MAKE_JOB_PARA:
+# RABBIT_USE_REPOSITORIES:
+# RABBITIM_GENERATORS:
+# RABBIT_BUILD_STATIC:
+
 #需要设置下面变量：
 if [ -z "$QT_ROOT" ]; then
     QT_VERSION=5.13.2
@@ -80,32 +93,36 @@ echo "QT_BIN:$QT_BIN"
 
 TARGET_OS=`uname -s`
 case $TARGET_OS in
-    MINGW* | CYGWIN* | MSYS*)
+    MINGW*)
+        RABBITIM_GENERATORS="MinGW Makefiles"
+        MAKE="mingw-make.exe ${RABBIT_MAKE_JOB_PARA}"
+        ;;
+    CYGWIN* | MSYS*)
         RABBITIM_GENERATORS="MSYS Makefiles"
         ;;
     Linux* | Unix*)
-        RABBITIM_GENERATORS="Unix Makefiles" 
+        RABBITIM_GENERATORS="Unix Makefiles"
         ;;
     *)
-    echo "Please set RABBIT_BUILD_HOST. see build_envsetup_windows_mingw.sh"
+    echo "Please set RABBIT_BUILD_HOST. see build_envsetup_unix.sh"
     return 2
     ;;
 esac
 
 #pkg-config帮助文档：http://linux.die.net/man/1/pkg-config
 if [ -z "$PKG_CONFIG" ]; then
-    export PKG_CONFIG=pkg-config 
+    export PKG_CONFIG=pkg-config
 fi
 if [ "$RABBIT_BUILD_STATIC" = "static" ]; then
     export PKG_CONFIG="${PKG_CONFIG} --static"
 fi
 if [ "${RABBIT_BUILD_THIRDLIBRARY}" = "TRUE" ]; then
     #不用系统的第三方库,用下面
-    export PKG_CONFIG_PATH=${RABBIT_BUILD_PREFIX}/lib/pkgconfig 
+    export PKG_CONFIG_PATH=${RABBIT_BUILD_PREFIX}/lib/pkgconfig
     export PKG_CONFIG_LIBDIR=${PKG_CONFIG_PATH}
     export PKG_CONFIG_SYSROOT_DIR=${RABBIT_BUILD_PREFIX}
 else
-    #如果用系统的库,就用下面  
+    #如果用系统的库,就用下面
     export PKG_CONFIG_PATH=${RABBIT_BUILD_PREFIX}/lib/pkgconfig:${PKG_CONFIG_PATH}
 fi
 #export PATH=${QT_BIN}:$PATH
