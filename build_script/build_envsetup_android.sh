@@ -198,6 +198,9 @@ case ${RABBIT_ARCH} in
         ;;
 esac
 
+#TODO:现在用clang，如果ndk<11，则注释下列行
+export ANDROID_TOOLCHAIN_NAME=llvm
+
 if [ -z "$ANDROID_PLATFORM" ]; then
     ANDROID_PLATFORM=android-${ANDROID_NATIVE_API_LEVEL}
 fi

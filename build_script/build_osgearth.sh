@@ -92,13 +92,14 @@ MAKE_PARA="-- ${RABBIT_MAKE_JOB_PARA} VERBOSE=1"
 
 case ${RABBIT_BUILD_TARGERT} in
     android)
-        CMAKE_PARA="-DDYNAMIC_OSGEARTH=OFF"
         if [ -n "$RABBIT_CMAKE_MAKE_PROGRAM" ]; then
             CMAKE_PARA="${CMAKE_PARA} -DCMAKE_MAKE_PROGRAM=$RABBIT_CMAKE_MAKE_PROGRAM" 
         fi
-        CMAKE_PARA="${CMAKE_PARA} -DCMAKE_TOOLCHAIN_FILE=$RABBIT_BUILD_PREFIX/../build_script/cmake/platforms/toolchain-android.cmake"
-        CMAKE_PARA="${CMAKE_PARA} -DANDROID_NATIVE_API_LEVEL=${ANDROID_NATIVE_API_LEVEL}"
-        #CMAKE_PARA="${CMAKE_PARA} -DANDROID_ABI=${ANDROID_ABI}"  
+        if [ -n "$ANDROID_ARM_NEON" ]; then
+            CMAKE_PARA="${CMAKE_PARA} -DANDROID_ARM_NEON=$ANDROID_ARM_NEON"
+        fi
+        CMAKE_PARA="${CMAKE_PARA} -DCMAKE_TOOLCHAIN_FILE=${ANDROID_NDK}/build/cmake/android.toolchain.cmake"
+        CMAKE_PARA="${CMAKE_PARA} -DANDROID_PLATFORM=${ANDROID_PLATFORM}"
         ;;
     unix)
         ;;
@@ -139,6 +140,7 @@ cmake ..  \
     -DCMAKE_INSTALL_PREFIX="$RABBIT_BUILD_PREFIX" \
     -G"${RABBITIM_GENERATORS}" ${CMAKE_PARA}
     
-cmake --build . --target install --config ${RABBIT_CONFIG} ${MAKE_PARA}
+cmake --build . --config ${RABBIT_CONFIG} ${MAKE_PARA}
+cmake --build . --config ${RABBIT_CONFIG}  --target install ${MAKE_PARA}
 
 cd $CUR_DIR

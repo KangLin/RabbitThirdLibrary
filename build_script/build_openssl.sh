@@ -37,7 +37,7 @@ CUR_DIR=`pwd`
 
 #下载源码:
 if [ ! -d ${RABBIT_BUILD_SOURCE_CODE} ]; then
-    OPENSLL_BRANCH=OpenSSL_1_1_1b
+    OPENSLL_BRANCH=OpenSSL_1_1_1d
     if [ "TRUE" = "${RABBIT_USE_REPOSITORIES}" ]; then
         echo "git clone -q --branch=${OPENSLL_BRANCH} https://github.com/openssl/openssl ${RABBIT_BUILD_SOURCE_CODE}"
         git clone -q --branch=${OPENSLL_BRANCH} https://github.com/openssl/openssl ${RABBIT_BUILD_SOURCE_CODE}
@@ -65,8 +65,7 @@ echo "CUR_DIR:`pwd`"
 echo "RABBIT_BUILD_PREFIX:$RABBIT_BUILD_PREFIX"
 echo "RABBIT_BUILD_HOST:$RABBIT_BUILD_HOST"
 echo "RABBIT_BUILD_CROSS_HOST:$RABBIT_BUILD_CROSS_HOST"
-echo "RABBIT_BUILD_CROSS_PREFIX:$RABBIT_BUILD_CROSS_PREFIX"
-echo "RABBIT_BUILD_CROSS_SYSROOT:$RABBIT_BUILD_CROSS_SYSROOT"
+echo "ANDROID_NATIVE_API_LEVEL:$ANDROID_NATIVE_API_LEVEL"
 echo "RABBIT_BUILD_STATIC:$RABBIT_BUILD_STATIC"
 echo "PATH:$PATH"
 echo ""
@@ -111,14 +110,13 @@ case ${RABBIT_BUILD_TARGERT} in
             arm64)
                 COMPILE=android-arm64
             ;;
-            x86|mips)
+            x86|mips|x86_64|mips64)
                 COMPILE=android-${RABBIT_ARCH}
             ;;
-            x86_64|mips64)
-                COMPILE=android-${RABBIT_ARCH}
+            *)
+                echo "Don't support arch ${RABBIT_ARCH}"
             ;;
         esac
-        #perl Configure --cross-compile-prefix=${RABBIT_BUILD_CROSS_PREFIX} \
         perl Configure \
                 --prefix=${RABBIT_BUILD_PREFIX} \
                 --openssldir=${RABBIT_BUILD_PREFIX} \

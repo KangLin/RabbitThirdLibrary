@@ -174,6 +174,7 @@ else
         -DCMAKE_VERBOSE=ON -DCMAKE_BUILD_TYPE=${RABBIT_CONFIG} \
         -G"${RABBITIM_GENERATORS}" ${CMAKE_PARA}
 fi
-cmake --build . --target install --config ${RABBIT_CONFIG} ${MAKE_PARA}
+cmake --build . --config ${RABBIT_CONFIG} ${MAKE_PARA}
+cmake --build . --config ${RABBIT_CONFIG}  --target install ${MAKE_PARA}
 
 cd $CUR_DIR
