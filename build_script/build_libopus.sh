@@ -90,14 +90,15 @@ case ${RABBIT_BUILD_TARGERT} in
         if [ -n "$RABBIT_CMAKE_MAKE_PROGRAM" ]; then
             CMAKE_PARA="${CMAKE_PARA} -DCMAKE_MAKE_PROGRAM=$RABBIT_CMAKE_MAKE_PROGRAM" 
         fi
-        CMAKE_PARA="${CMAKE_PARA} -DCMAKE_TOOLCHAIN_FILE=${RABBIT_BUILD_SOURCE_CODE}/platforms/android/android.toolchain.cmake"
-        CMAKE_PARA="${CMAKE_PARA} -DANDROID_NATIVE_API_LEVEL=${ANDROID_NATIVE_API_LEVEL}"
-        CMAKE_PARA="${CMAKE_PARA} -DANDROID_ABI=\"${ANDROID_ABI}\""
+        if [ -n "$ANDROID_ARM_NEON" ]; then
+            CMAKE_PARA="${CMAKE_PARA} -DANDROID_ARM_NEON=$ANDROID_ARM_NEON"
+        fi
+        CMAKE_PARA="${CMAKE_PARA} -DCMAKE_TOOLCHAIN_FILE=${ANDROID_NDK}/build/cmake/android.toolchain.cmake"
+        CMAKE_PARA="${CMAKE_PARA} -DANDROID_PLATFORM=${ANDROID_PLATFORM}"
         ;;
     unix)
         ;;
     windows_msvc)
-        #RABBITIM_GENERATORS="Visual Studio 12 2013"
         MAKE_PARA=""
         ;;
     windows_mingw)
@@ -111,11 +112,18 @@ case ${RABBIT_BUILD_TARGERT} in
 esac
 
 echo "cmake .. -DCMAKE_INSTALL_PREFIX=$RABBIT_BUILD_PREFIX -DCMAKE_BUILD_TYPE=${RABBIT_CONFIG} -G\"${RABBITIM_GENERATORS}\" ${CMAKE_PARA}"
-cmake .. \
-     -DCMAKE_INSTALL_PREFIX="$RABBIT_BUILD_PREFIX" \
-     -DCMAKE_VERBOSE=ON -DCMAKE_BUILD_TYPE=${RABBIT_CONFIG} \
-     -G"${RABBITIM_GENERATORS}" ${CMAKE_PARA} 
-
-cmake --build . --target install --config ${RABBIT_CONFIG} ${MAKE_PARA}
+if [ "${RABBIT_BUILD_TARGERT}" = "android" ]; then
+    cmake .. \
+        -DCMAKE_INSTALL_PREFIX="$RABBIT_BUILD_PREFIX" \
+        -DCMAKE_VERBOSE=ON -DCMAKE_BUILD_TYPE=${RABBIT_CONFIG} \
+        -G"${RABBITIM_GENERATORS}" ${CMAKE_PARA} -DANDROID_ABI="${ANDROID_ABI}" 
+else
+    cmake .. \
+        -DCMAKE_INSTALL_PREFIX="$RABBIT_BUILD_PREFIX" \
+        -DCMAKE_VERBOSE=ON -DCMAKE_BUILD_TYPE=${RABBIT_CONFIG} \
+        -G"${RABBITIM_GENERATORS}" ${CMAKE_PARA} 
+fi
+cmake --build . --config ${RABBIT_CONFIG} ${MAKE_PARA}
+cmake --build . --config ${RABBIT_CONFIG}  --target install ${MAKE_PARA}
 
 cd $CUR_DIR

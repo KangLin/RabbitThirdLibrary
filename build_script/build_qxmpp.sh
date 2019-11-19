@@ -37,7 +37,7 @@ fi
 CUR_DIR=`pwd`
 #下载源码:
 if [ ! -d ${RABBIT_BUILD_SOURCE_CODE} ]; then
-    VERSION=1.0.0
+    VERSION=1.1.0
     if [ "TRUE" = "${RABBIT_USE_REPOSITORIES}" ]; then
         echo "git clone -q https://github.com/qxmpp-project/qxmpp.git ${RABBIT_BUILD_SOURCE_CODE}"
         git clone -q -b v${VERSION} https://github.com/qxmpp-project/qxmpp.git ${RABBIT_BUILD_SOURCE_CODE}
@@ -86,15 +86,14 @@ fi
 MAKE_PARA="-- ${RABBIT_MAKE_JOB_PARA} VERBOSE=1"
 case ${RABBIT_BUILD_TARGERT} in
     android)
-        CMAKE_PARA="${CMAKE_PARA} -DBUILD_SHARED=OFF"
-        CMAKE_PARA="${CMAKE_PARA} -DCMAKE_TOOLCHAIN_FILE=$RABBIT_BUILD_PREFIX/../build_script/cmake/platforms/toolchain-android.cmake"
-        
         if [ -n "$RABBIT_CMAKE_MAKE_PROGRAM" ]; then
             CMAKE_PARA="${CMAKE_PARA} -DCMAKE_MAKE_PROGRAM=$RABBIT_CMAKE_MAKE_PROGRAM" 
         fi
-        CMAKE_PARA="${CMAKE_PARA} -DCMAKE_TOOLCHAIN_FILE=$RABBIT_BUILD_PREFIX/../build_script/cmake/platforms/toolchain-android.cmake"
-        CMAKE_PARA="${CMAKE_PARA} -DANDROID_NATIVE_API_LEVEL=${ANDROID_NATIVE_API_LEVEL}"
-        #CMAKE_PARA="${CMAKE_PARA} -DANDROID_ABI=${ANDROID_ABI}"  
+        if [ -n "$ANDROID_ARM_NEON" ]; then
+            CMAKE_PARA="${CMAKE_PARA} -DANDROID_ARM_NEON=$ANDROID_ARM_NEON"
+        fi
+        CMAKE_PARA="${CMAKE_PARA} -DCMAKE_TOOLCHAIN_FILE=${ANDROID_NDK}/build/cmake/android.toolchain.cmake"
+        CMAKE_PARA="${CMAKE_PARA} -DANDROID_PLATFORM=${ANDROID_PLATFORM}"
         ;;
     unix)
         ;;
@@ -116,11 +115,20 @@ CMAKE_PARA="${CMAKE_PARA} -DQt5_DIR=${QT_ROOT}/lib/cmake/Qt5"
 CMAKE_PARA="${CMAKE_PARA} -DOpus_DIR=${RABBIT_BUILD_PREFIX}/lib/cmake/Opus"
 CMAKE_PARA="${CMAKE_PARA} -DCMAKE_FIND_ROOT_PATH=${RABBIT_BUILD_PREFIX}"
 CMAKE_PARA="${CMAKE_PARA} -DCMAKE_PREFIX_PATH=${RABBIT_BUILD_PREFIX}"
-echo "cmake .. -DCMAKE_INSTALL_PREFIX=$RABBIT_BUILD_PREFIX -DCMAKE_BUILD_TYPE=Release -G\"${RABBITIM_GENERATORS}\" ${CMAKE_PARA}"
-cmake .. \
-    -DCMAKE_INSTALL_PREFIX="$RABBIT_BUILD_PREFIX" \
-    -G"${RABBITIM_GENERATORS}" ${CMAKE_PARA} -DWITH_OPUS=ON -DWITH_VPX=ON
-    
-cmake --build . --target install --config ${RABBIT_CONFIG} #${MAKE_PARA}
+CMAKE_PARA="${CMAKE_PARA} -DWITH_OPUS=ON -DWITH_VPX=ON"
+echo "cmake .. -DCMAKE_INSTALL_PREFIX=$RABBIT_BUILD_PREFIX -DCMAKE_BUILD_TYPE=${RABBIT_CONFIG} -G\"${RABBITIM_GENERATORS}\" ${CMAKE_PARA}"
+if [ "${RABBIT_BUILD_TARGERT}" = "android" ]; then
+    cmake .. \
+        -DCMAKE_INSTALL_PREFIX="$RABBIT_BUILD_PREFIX" \
+        -DCMAKE_VERBOSE=ON -DCMAKE_BUILD_TYPE=${RABBIT_CONFIG} \
+        -G"${RABBITIM_GENERATORS}" ${CMAKE_PARA} -DANDROID_ABI="${ANDROID_ABI}" 
+else
+    cmake .. \
+        -DCMAKE_INSTALL_PREFIX="$RABBIT_BUILD_PREFIX" \
+        -DCMAKE_VERBOSE=ON -DCMAKE_BUILD_TYPE=${RABBIT_CONFIG} \
+        -G"${RABBITIM_GENERATORS}" ${CMAKE_PARA} 
+fi
+cmake --build . --config ${RABBIT_CONFIG} ${MAKE_PARA}
+cmake --build . --config ${RABBIT_CONFIG}  --target install ${MAKE_PARA}
 
 cd $CUR_DIR

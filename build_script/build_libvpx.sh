@@ -36,7 +36,7 @@ fi
 #下载源码:
 if [ ! -d ${RABBIT_BUILD_SOURCE_CODE} ]; then
     #https://github.com/webmproject/libvpx
-    VERSION=v1.8.0
+    VERSION=v1.8.1
     echo "git clone -q --branch=$VERSION https://chromium.googlesource.com/webm/libvpx ${RABBIT_BUILD_SOURCE_CODE}"
     #git clone -q --branch=$VERSION https://chromium.googlesource.com/webm/libvpx ${RABBIT_BUILD_SOURCE_CODE}
     git clone -q https://chromium.googlesource.com/webm/libvpx ${RABBIT_BUILD_SOURCE_CODE}
@@ -82,7 +82,7 @@ case ${RABBIT_BUILD_TARGERT} in
             arm)
                 CONFIG_PARA="${CONFIG_PARA} --target=armv7-android-gcc"
                 ;;
-            x86*|arm64*)
+            arm64|x86*|arm64*)
                 CONFIG_PARA="${CONFIG_PARA} --target=${RABBIT_ARCH}-android-gcc"
                 ;;
             *)
@@ -154,15 +154,15 @@ CONFIG_PARA="${CONFIG_PARA} --disable-install-bins --enable-install-libs"
 CONFIG_PARA="${CONFIG_PARA} --disable-unit-tests --disable-debug --disable-debug-libs"
 echo "../configure ${CONFIG_PARA} --extra-cflags=\"${CFLAGS=}\""
 ../configure ${CONFIG_PARA} --extra-cflags="${CFLAGS}" --extra-cxxflags="${CPPFLAGS}"
-   
+
 echo "make install"
-make ${RABBIT_MAKE_JOB_PARA} 
+make ${RABBIT_MAKE_JOB_PARA}
 make install
 
 if [ "${RABBIT_BUILD_TARGERT}" = "windows_msvc" ]; then
     if [ "$RABBIT_ARCH" = "x64" ]; then
         cp ${RABBIT_BUILD_PREFIX}/lib/x64/vpxmt.lib ${RABBIT_BUILD_PREFIX}/lib/vpx.lib
-        rm -fr ${RABBIT_BUILD_PREFIX}/lib/x64    
+        rm -fr ${RABBIT_BUILD_PREFIX}/lib/x64
     else
         cp ${RABBIT_BUILD_PREFIX}/lib/Win32/vpxmt.lib ${RABBIT_BUILD_PREFIX}/lib/vpx.lib
         rm -fr ${RABBIT_BUILD_PREFIX}/lib/Win32
