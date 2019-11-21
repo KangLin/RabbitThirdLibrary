@@ -77,11 +77,11 @@ if [ "${QT_VERSION}" = "5.2.1" ]; then
     export QT_ROOT=${QT_DIR}/${QT_VERSION}/android_armv7
 fi
 
-RABBIT_MAKE_JOB_PARA="-j`cat /proc/cpuinfo |grep 'cpu cores' |wc -l`"  #make 同时工作进程参数
-if [ "$RABBIT_MAKE_JOB_PARA" = "-j1" ];then
-        RABBIT_MAKE_JOB_PARA="-j2"
+BUILD_JOB_PARA="-j`cat /proc/cpuinfo |grep 'cpu cores' |wc -l`"  #make 同时工作进程参数
+if [ "$BUILD_JOB_PARA" = "-j1" ];then
+        BUILD_JOB_PARA="-j2"
 fi
-export RABBIT_MAKE_JOB_PARA
+export BUILD_JOB_PARA
 export RABBIT_USE_REPOSITORIES="FALSE"
 
 cd ${SOURCE_DIR}/ThirdLibrary/build_script

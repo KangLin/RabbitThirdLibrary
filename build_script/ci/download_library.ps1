@@ -13,13 +13,13 @@ if ($env:APPVEYOR_BUILD_WORKER_IMAGE -eq "Visual Studio 2017")
 
 $RABBIT_JOB_NAME = $RABBIT_JOB_NAME + ", BUILD_TARGERT=${env:BUILD_TARGERT}, RABBIT_TOOLCHAIN_VERSION=${env:RABBIT_TOOLCHAIN_VERSION}"
 
-if (${env:RABBIT_ARCH})
+if (${env:BUILD_ARCH})
 {
-    $RABBIT_JOB_NAME = $RABBIT_JOB_NAME + ", RABBIT_ARCH=${env:RABBIT_ARCH}"
+    $RABBIT_JOB_NAME = $RABBIT_JOB_NAME + ", BUILD_ARCH=${env:BUILD_ARCH}"
 }
 else
 {
-    ${env:RABBIT_ARCH} = "x64"
+    ${env:BUILD_ARCH} = "x64"
 }
 if (${env:RABBIT_CONFIG})
 {
@@ -57,7 +57,7 @@ if($env:RABBIT_NUMBER -gt $env:RABBIT_QT_NUMBER)
 if (!$success) {throw "Job `"$RABBIT_JOB_NAME`" was not finished in $env:TimeOutMins minutes"}
 if (!$jobToWaitId) {throw "Unable t get JobId for the job `"$RABBIT_JOB_NAME`""}
   
-$url = "https://ci.appveyor.com/api/buildjobs/$jobToWaitId/artifacts/RABBIT_${env:BUILD_TARGERT}${env:RABBIT_TOOLCHAIN_VERSION}_${env:RABBIT_ARCH}_qt${JOB_QT_VERSION}_${env:RABBIT_CONFIG}_${env:BUILD_VERSION}.zip"
+$url = "https://ci.appveyor.com/api/buildjobs/$jobToWaitId/artifacts/RABBIT_${env:BUILD_TARGERT}${env:RABBIT_TOOLCHAIN_VERSION}_${env:BUILD_ARCH}_qt${JOB_QT_VERSION}_${env:RABBIT_CONFIG}_${env:BUILD_VERSION}.zip"
 echo $url
 Start-FileDownload $url -FileName ${env:APPVEYOR_BUILD_FOLDER}/${env:BUILD_TARGERT}.zip
 if(!$?){return -1}

@@ -6,8 +6,8 @@
 #    $2:源码的位置
 
 #运行本脚本前,先运行 build_$1_envsetup.sh 进行环境变量设置,需要先设置下面变量:
-#   RABBIT_BUILD_TARGERT   编译目标（android、windows_msvc、windows_mingw、unix)
-#   RABBIT_BUILD_PREFIX=`pwd`/../${RABBIT_BUILD_TARGERT}  #修改这里为安装前缀
+#   BUILD_TARGERT   编译目标（android、windows_msvc、windows_mingw、unix)
+#   RABBIT_BUILD_PREFIX=`pwd`/../${BUILD_TARGERT}  #修改这里为安装前缀
 #   RABBIT_BUILD_SOURCE_CODE    #源码目录
 #   RABBIT_BUILD_CROSS_PREFIX   #交叉编译前缀
 #   RABBIT_BUILD_CROSS_SYSROOT  #交叉编译平台的 sysroot
@@ -17,7 +17,7 @@ HELP_STRING="Usage $0 PLATFORM(android|windows_msvc|windows_mingw|unix) [SOURCE_
 
 case $1 in
     android|windows_msvc|windows_mingw|unix)
-    RABBIT_BUILD_TARGERT=$1
+    BUILD_TARGERT=$1
     ;;
     *)
     echo "${HELP_STRING}"
@@ -26,8 +26,8 @@ case $1 in
 esac
 
 RABBIT_BUILD_SOURCE_CODE=$2
-echo ". `pwd`/build_envsetup_${RABBIT_BUILD_TARGERT}.sh"
-. `pwd`/build_envsetup_${RABBIT_BUILD_TARGERT}.sh
+echo ". `pwd`/build_envsetup_${BUILD_TARGERT}.sh"
+. `pwd`/build_envsetup_${BUILD_TARGERT}.sh
 
 if [ -z "$RABBIT_BUILD_SOURCE_CODE" ]; then
     RABBIT_BUILD_SOURCE_CODE=${RABBIT_BUILD_PREFIX}/../src/libqrencode
@@ -65,20 +65,20 @@ if [ "$RABBIT_CLEAN" = "TRUE" ]; then
     fi
 fi
 
-if [ ! -f configure -a "windows_msvc" != "${RABBIT_BUILD_TARGERT}" ]; then
+if [ ! -f configure -a "windows_msvc" != "${BUILD_TARGERT}" ]; then
     mkdir -p m4
     echo "sh autogen.sh"
     sh autogen.sh
 fi
 
-mkdir -p build_${RABBIT_BUILD_TARGERT}
-cd build_${RABBIT_BUILD_TARGERT}
+mkdir -p build_${BUILD_TARGERT}
+cd build_${BUILD_TARGERT}
 if [ -n "$RABBIT_CLEAN" ]; then
     rm -fr *
 fi
 
 echo ""
-echo "RABBIT_BUILD_TARGERT:${RABBIT_BUILD_TARGERT}"
+echo "BUILD_TARGERT:${BUILD_TARGERT}"
 echo "RABBIT_BUILD_SOURCE_CODE:$RABBIT_BUILD_SOURCE_CODE"
 echo "CUR_DIR:`pwd`"
 echo "RABBIT_BUILD_PREFIX:$RABBIT_BUILD_PREFIX"
@@ -100,8 +100,8 @@ if [ "$RABBIT_BUILD_STATIC" = "static" ]; then
 else
     CONFIG_PARA="--disable-static --enable-shared"
 fi
-MAKE_PARA=" ${RABBIT_MAKE_JOB_PARA} "
-case ${RABBIT_BUILD_TARGERT} in
+MAKE_PARA=" ${BUILD_JOB_PARA} "
+case ${BUILD_TARGERT} in
     android)
         export CC=${RABBIT_BUILD_CROSS_PREFIX}gcc 
         export CPP=${RABBIT_BUILD_CROSS_PREFIX}cpp
@@ -166,7 +166,7 @@ echo "../configure ${CONFIG_PARA} CFLAGS=\"${CFLAGS=}\" CPPFLAGS=\"${CPPFLAGS}\"
 ${MAKE} ${MAKE_PARA}
 ${MAKE} install
 
-if [ "${RABBIT_BUILD_TARGERT}" = "windows_msvc" ]; then
+if [ "${BUILD_TARGERT}" = "windows_msvc" ]; then
     cd ${RABBIT_BUILD_PREFIX}/lib
     mv libqrencode.a qrencode.lib
 fi

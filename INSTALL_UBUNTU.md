@@ -154,7 +154,7 @@
 环境变量说明： 
 
 1. QT_ROOT=                          #qt的安装位置,默认为:${RABBITRoot}/ThirdLibrary/unix/qt
-2. RABBIT_MAKE_JOB_PARA="-j`cat /proc/cpuinfo |grep 'cpu cores' |wc -l`"  #make 同时工作进程参数,建议设置为你机器CUP个数
+2. BUILD_JOB_PARA="-j`cat /proc/cpuinfo |grep 'cpu cores' |wc -l`"  #make 同时工作进程参数,建议设置为你机器CUP个数
 3. RABBIT_BUILD_STATIC="static"    #设置编译静态库，注释掉，则为编译动态库
 4. RABBIT_USE_REPOSITORIES="FALSE" #下载指定的压缩包。省略，则下载开发库。
 5. RABBIT_CLEAN=TRUE               #编译前清理

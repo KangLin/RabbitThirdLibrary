@@ -31,10 +31,10 @@ if [ -z "$RABBIT_CLEAN" ]; then
 fi
 #RABBIT_BUILD_STATIC="static" #设置编译静态库，注释掉，则为编译动态库
 #RABBIT_USE_REPOSITORIES="TRUE" #下载开发库。省略，则下载指定的压缩包。
-if [ -z "${RABBIT_MAKE_JOB_PARA}" ]; then
-    RABBIT_MAKE_JOB_PARA="-j`cat /proc/cpuinfo |grep 'cpu cores' |wc -l`"  #make 同时工作进程参数
-    if [ "$RABBIT_MAKE_JOB_PARA" = "-j1" ];then
-        RABBIT_MAKE_JOB_PARA=
+if [ -z "${BUILD_JOB_PARA}" ]; then
+    BUILD_JOB_PARA="-j`cat /proc/cpuinfo |grep 'cpu cores' |wc -l`"  #make 同时工作进程参数
+    if [ "$BUILD_JOB_PARA" = "-j1" ];then
+        BUILD_JOB_PARA=
     fi
 fi
 
@@ -59,12 +59,12 @@ if [ -z "${RABBIT_TOOLCHAIN_VERSION}" ]; then
     esac
 fi
 
-if [ -z "${RABBIT_ARCH}" ]; then
+if [ -z "${BUILD_ARCH}" ]; then
     if [ "X64" = "${Platform}" -o "x64" = "${Platform}" ]; then
-        RABBIT_ARCH=x64
+        BUILD_ARCH=x64
         MSVC_NAME=${MSVC_NAME}_64
     else
-        RABBIT_ARCH=x86
+        BUILD_ARCH=x86
     fi
 fi
 
@@ -80,8 +80,8 @@ fi
 
 #安装前缀  
 if [ -z "${RABBIT_BUILD_PREFIX}" ]; then
-    RABBIT_BUILD_PREFIX=`pwd`/../${RABBIT_BUILD_TARGERT}    #修改这里为安装前缀  
-    RABBIT_BUILD_PREFIX=${RABBIT_BUILD_PREFIX}${RABBIT_TOOLCHAIN_VERSION}_${RABBIT_ARCH}_qt${QT_VERSION}_${RABBIT_CONFIG}
+    RABBIT_BUILD_PREFIX=`pwd`/../${BUILD_TARGERT}    #修改这里为安装前缀  
+    RABBIT_BUILD_PREFIX=${RABBIT_BUILD_PREFIX}${RABBIT_TOOLCHAIN_VERSION}_${BUILD_ARCH}_qt${QT_VERSION}_${RABBIT_CONFIG}
     if [ "$RABBIT_BUILD_STATIC" = "static" ]; then
         RABBIT_BUILD_PREFIX=${RABBIT_BUILD_PREFIX}_static
     fi
@@ -107,21 +107,21 @@ fi
 TARGET_OS=`uname -s`
 
 if [ "$RABBIT_TOOLCHAIN_VERSION" = "15" ]; then
-    if [ "${RABBIT_ARCH}" = "x64" ]; then
+    if [ "${BUILD_ARCH}" = "x64" ]; then
         RABBITIM_GENERATORS="Visual Studio 15 2017 Win64"
     else
         RABBITIM_GENERATORS="Visual Studio 15 2017"
     fi
 fi
 if [ "$RABBIT_TOOLCHAIN_VERSION" = "14" ]; then
-    if [ "${RABBIT_ARCH}" = "x64" ]; then
+    if [ "${BUILD_ARCH}" = "x64" ]; then
         RABBITIM_GENERATORS="Visual Studio 14 2015 Win64"
     else
         RABBITIM_GENERATORS="Visual Studio 14 2015"
     fi
 fi
 if [ "$RABBIT_TOOLCHAIN_VERSION" = "12" ]; then
-    if [ "${RABBIT_ARCH}" = "x64" ]; then
+    if [ "${BUILD_ARCH}" = "x64" ]; then
         RABBITIM_GENERATORS="Visual Studio 12 2013 Win64"
     else
         RABBITIM_GENERATORS="Visual Studio 12 2013"
@@ -158,7 +158,7 @@ echo "QT_ROOT:$QT_ROOT"
 echo "QMAKE:$QMAKE"
 echo "PKG_CONFIG_PATH:$PKG_CONFIG_PATH"
 echo "PKG_CONFIG_SYSROOT_DIR:$PKG_CONFIG_SYSROOT_DIR"
-echo "RABBIT_ARCH:$RABBIT_ARCH"
+echo "BUILD_ARCH:$BUILD_ARCH"
 echo "RABBIT_TOOLCHAIN_VERSION:$RABBIT_TOOLCHAIN_VERSION"
 echo "RABBITIM_GENERATORS:$RABBITIM_GENERATORS"
 echo "PATH=$PATH"

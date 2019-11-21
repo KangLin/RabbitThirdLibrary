@@ -6,8 +6,8 @@
 #    $2:源码的位置
 
 #运行本脚本前,先运行 build_$1_envsetup.sh 进行环境变量设置,需要先设置下面变量:
-#   RABBIT_BUILD_TARGERT   编译目标（android、windows_msvc、windows_mingw、unix)
-#   RABBIT_BUILD_PREFIX=`pwd`/../${RABBIT_BUILD_TARGERT}  #修改这里为安装前缀
+#   BUILD_TARGERT   编译目标（android、windows_msvc、windows_mingw、unix)
+#   RABBIT_BUILD_PREFIX=`pwd`/../${BUILD_TARGERT}  #修改这里为安装前缀
 #   RABBIT_BUILD_SOURCE_CODE    #源码目录
 #   RABBIT_BUILD_CROSS_PREFIX   #交叉编译前缀
 #   RABBIT_BUILD_CROSS_SYSROOT  #交叉编译平台的 sysroot
@@ -17,7 +17,7 @@ HELP_STRING="Usage $0 PLATFORM(android|windows_msvc|windows_mingw|unix) [SOURCE_
 
 case $1 in
     android|windows_msvc|windows_mingw|unix)
-    RABBIT_BUILD_TARGERT=$1
+    BUILD_TARGERT=$1
     ;;
     *)
     echo "${HELP_STRING}"
@@ -26,8 +26,8 @@ case $1 in
 esac
 
 RABBIT_BUILD_SOURCE_CODE=$2
-echo ". `pwd`/build_envsetup_${RABBIT_BUILD_TARGERT}.sh"
-. `pwd`/build_envsetup_${RABBIT_BUILD_TARGERT}.sh
+echo ". `pwd`/build_envsetup_${BUILD_TARGERT}.sh"
+. `pwd`/build_envsetup_${BUILD_TARGERT}.sh
 
 if [ -z "$RABBIT_BUILD_SOURCE_CODE" ]; then
     RABBIT_BUILD_SOURCE_CODE=${RABBIT_BUILD_PREFIX}/../src/minizip
@@ -59,14 +59,14 @@ if [ ! -d ${RABBIT_BUILD_SOURCE_CODE} ]; then
 fi
 
 cd ${RABBIT_BUILD_SOURCE_CODE}
-mkdir -p build_${RABBIT_BUILD_TARGERT}
-cd build_${RABBIT_BUILD_TARGERT}
+mkdir -p build_${BUILD_TARGERT}
+cd build_${BUILD_TARGERT}
 if [ "$RABBIT_CLEAN" = "TRUE" ]; then
     rm -fr *
 fi
 
 echo ""
-echo "RABBIT_BUILD_TARGERT:${RABBIT_BUILD_TARGERT}"
+echo "BUILD_TARGERT:${BUILD_TARGERT}"
 echo "RABBIT_BUILD_SOURCE_CODE:$RABBIT_BUILD_SOURCE_CODE"
 echo "CUR_DIR:`pwd`"
 echo "RABBIT_BUILD_PREFIX:$RABBIT_BUILD_PREFIX"
@@ -78,13 +78,13 @@ echo "RABBIT_BUILD_STATIC:$RABBIT_BUILD_STATIC"
 echo ""
 
 echo "configure ..."
-MAKE_PARA="-- ${RABBIT_MAKE_JOB_PARA}"
+MAKE_PARA="-- ${BUILD_JOB_PARA}"
 if [ "$RABBIT_BUILD_STATIC" = "static" ]; then
     CONFIG_PARA="--enable-static --disable-shared"
 else
     CONFIG_PARA="--disable-static --enable-shared"
 fi
-case ${RABBIT_BUILD_TARGERT} in
+case ${BUILD_TARGERT} in
     android)
         if [ -n "$RABBIT_CMAKE_MAKE_PROGRAM" ]; then
             CMAKE_PARA="${CMAKE_PARA} -DCMAKE_MAKE_PROGRAM=$RABBIT_CMAKE_MAKE_PROGRAM" 
@@ -118,7 +118,7 @@ case ${RABBIT_BUILD_TARGERT} in
 esac
 CMAKE_PARA="${CMAKE_PARA} -DZLIB_ROOT=$RABBIT_BUILD_PREFIX"
 echo "cmake .. -DCMAKE_INSTALL_PREFIX=$RABBIT_BUILD_PREFIX -DZLIB_ROOT=\"$RABBIT_BUILD_PREFIX\" -G\"${RABBITIM_GENERATORS}\" ${CMAKE_PARA}"
-if [ "${RABBIT_BUILD_TARGERT}" = "android" ]; then
+if [ "${BUILD_TARGERT}" = "android" ]; then
     cmake .. \
         -DCMAKE_INSTALL_PREFIX="$RABBIT_BUILD_PREFIX" \
         -DCMAKE_BUILD_TYPE=${RABBIT_CONFIG} \
@@ -130,7 +130,7 @@ else
         -G"${RABBITIM_GENERATORS}" ${CMAKE_PARA} 
 fi
 cmake --build . --target install --config ${RABBIT_CONFIG} ${MAKE_PARA}
-case ${RABBIT_BUILD_TARGERT} in
+case ${BUILD_TARGERT} in
     android)
     ;;
     unix)

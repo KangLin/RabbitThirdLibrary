@@ -6,8 +6,8 @@
 #    $2:源码的位置 
 
 #运行本脚本前,先运行 build_$1_envsetup.sh 进行环境变量设置,需要先设置下面变量:
-#   RABBIT_BUILD_TARGERT   编译目标（android、windows_msvc、windows_mingw、unix)
-#   RABBIT_BUILD_PREFIX=`pwd`/../${RABBIT_BUILD_TARGERT}  #修改这里为安装前缀
+#   BUILD_TARGERT   编译目标（android、windows_msvc、windows_mingw、unix)
+#   RABBIT_BUILD_PREFIX=`pwd`/../${BUILD_TARGERT}  #修改这里为安装前缀
 #   RABBIT_BUILD_SOURCE_CODE    #源码目录
 #   RABBIT_BUILD_CROSS_PREFIX   #交叉编译前缀
 #   RABBIT_BUILD_CROSS_SYSROOT  #交叉编译平台的 sysroot
@@ -17,7 +17,7 @@ HELP_STRING="Usage $0 PLATFORM(android|windows_msvc|windows_mingw|unix) [SOURCE_
 
 case $1 in
     android|windows_msvc|windows_mingw|unix)
-    RABBIT_BUILD_TARGERT=$1
+    BUILD_TARGERT=$1
     ;;
     *)
     echo "${HELP_STRING}"
@@ -26,8 +26,8 @@ case $1 in
 esac
 
 RABBIT_BUILD_SOURCE_CODE=$2
-echo ". `pwd`/build_envsetup_${RABBIT_BUILD_TARGERT}.sh"
-. `pwd`/build_envsetup_${RABBIT_BUILD_TARGERT}.sh
+echo ". `pwd`/build_envsetup_${BUILD_TARGERT}.sh"
+. `pwd`/build_envsetup_${BUILD_TARGERT}.sh
 
 if [ -z "$RABBIT_BUILD_SOURCE_CODE" ]; then
     RABBIT_BUILD_SOURCE_CODE=${RABBIT_BUILD_PREFIX}/../src/openssl
@@ -40,7 +40,7 @@ if [ ! -d ${RABBIT_BUILD_SOURCE_CODE} ]; then
     OPENSLL_BRANCH=OpenSSL_1_1_1d
     if [ "TRUE" = "${RABBIT_USE_REPOSITORIES}" ]; then
         echo "git clone -q --branch=${OPENSLL_BRANCH} https://github.com/openssl/openssl ${RABBIT_BUILD_SOURCE_CODE}"
-        git clone -q --branch=${OPENSLL_BRANCH} https://github.com/openssl/openssl ${RABBIT_BUILD_SOURCE_CODE}
+        git clone -q -b ${OPENSLL_BRANCH} https://github.com/openssl/openssl ${RABBIT_BUILD_SOURCE_CODE}
         #git clone -q https://github.com/openssl/openssl ${RABBIT_BUILD_SOURCE_CODE}
     else
         mkdir -p ${RABBIT_BUILD_SOURCE_CODE}
@@ -59,7 +59,7 @@ fi
 cd ${RABBIT_BUILD_SOURCE_CODE}
 
 echo ""
-echo "RABBIT_BUILD_TARGERT:${RABBIT_BUILD_TARGERT}"
+echo "BUILD_TARGERT:${BUILD_TARGERT}"
 echo "RABBIT_BUILD_SOURCE_CODE:$RABBIT_BUILD_SOURCE_CODE"
 echo "CUR_DIR:`pwd`"
 echo "RABBIT_BUILD_PREFIX:$RABBIT_BUILD_PREFIX"
@@ -74,7 +74,7 @@ if [ "$RABBIT_CLEAN" = "TRUE" ]; then
     if [ -d ".git" ]; then
         git clean -xdf
     else
-        if [ "${RABBIT_BUILD_TARGERT}" = "windows_msvc" ]; then
+        if [ "${BUILD_TARGERT}" = "windows_msvc" ]; then
             if [ "$RABBIT_BUILD_STATIC" = "static" ]; then
                 if [ -f ms/nt.mak ]; then
                     nmake clean
@@ -99,11 +99,9 @@ else
 fi
 
 echo "configure ..."
-case ${RABBIT_BUILD_TARGERT} in
+case ${BUILD_TARGERT} in
     android)
-        #export CROSS_SYSROOT=${RABBIT_BUILD_CROSS_SYSROOT}
-        #export CROSS_COMPILE=${RABBIT_BUILD_CROSS_HOST}
-        case ${RABBIT_ARCH} in
+        case ${BUILD_ARCH} in
             arm)
                 COMPILE=android-arm
             ;;
@@ -111,25 +109,27 @@ case ${RABBIT_BUILD_TARGERT} in
                 COMPILE=android-arm64
             ;;
             x86|mips|x86_64|mips64)
-                COMPILE=android-${RABBIT_ARCH}
+                COMPILE=android-${BUILD_ARCH}
             ;;
             *)
-                echo "Don't support arch ${RABBIT_ARCH}"
+                echo "Don't support arch ${BUILD_ARCH}"
             ;;
         esac
-        perl Configure \
-                --prefix=${RABBIT_BUILD_PREFIX} \
-                --openssldir=${RABBIT_BUILD_PREFIX} \
-                no-threads \
-                $MODE \
-                ${COMPILE} -D__ANDROID_API__=${ANDROID_NATIVE_API_LEVEL}
-                #${RABBIT_CFLAGS}
+        echo "COMPILE:$COMPILE"
+        echo "./Configure --prefix=${RABBIT_BUILD_PREFIX} --openssldir=${RABBIT_BUILD_PREFIX} no-threads $MODE ${COMPILE} -D__ANDROID_API__=${ANDROID_NATIVE_API_LEVEL}"
+        ./Configure \
+            --prefix=${RABBIT_BUILD_PREFIX} \
+            --openssldir=${RABBIT_BUILD_PREFIX} \
+            no-threads \
+            $MODE \
+            ${COMPILE} -D__ANDROID_API__=${ANDROID_NATIVE_API_LEVEL}
+        perl configdata.pm --dump 
         ;;
     unix)
         ./config --prefix=${RABBIT_BUILD_PREFIX} --openssldir=${RABBIT_BUILD_PREFIX} $MODE
         ;;
     windows_msvc)
-        if [ "$RABBIT_ARCH" = "x64" ]; then
+        if [ "$BUILD_ARCH" = "x64" ]; then
             perl Configure \
                 --prefix=${RABBIT_BUILD_PREFIX} \
                 --openssldir=${RABBIT_BUILD_PREFIX} \
@@ -142,7 +142,7 @@ case ${RABBIT_BUILD_TARGERT} in
         fi
         ;;
     windows_mingw)
-        if [ "$RABBIT_ARCH" = "x64" ]; then
+        if [ "$BUILD_ARCH" = "x64" ]; then
             ARCH=64
         fi
         case `uname -s` in
@@ -173,10 +173,10 @@ case ${RABBIT_BUILD_TARGERT} in
 esac
 
 echo "make install"
-if [ "${RABBIT_BUILD_TARGERT}" = "windows_msvc" ]; then
+if [ "${BUILD_TARGERT}" = "windows_msvc" ]; then
     ${MAKE}
 else
-    ${MAKE} ${RABBIT_MAKE_JOB_PARA}
+    ${MAKE} ${BUILD_JOB_PARA}
 fi
 ${MAKE} install
 

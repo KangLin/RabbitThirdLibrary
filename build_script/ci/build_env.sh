@@ -26,18 +26,18 @@ fi
 
 if [ "${BUILD_TARGERT}" = "android" -o "${BUILD_TARGERT}" = "unix" ]; then
     QT_DIR=`pwd`/Qt/Qt${QT_VERSION}/${QT_VERSION}
-    case $RABBIT_ARCH in
+    case $BUILD_ARCH in
         arm*)
             export QT_ROOT=${QT_DIR}/android_armv7
             ;;
         x86*)
-            export QT_ROOT=${QT_DIR}/android_$RABBIT_ARCH
+            export QT_ROOT=${QT_DIR}/android_$BUILD_ARCH
             ;;
         unix)
             export QT_ROOT=${QT_DIR}/gcc_64
             ;;
            *)
-           echo "Don't arch $RABBIT_ARCH"
+           echo "Don't arch $BUILD_ARCH"
            ;;
     esac
 fi

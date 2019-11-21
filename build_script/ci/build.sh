@@ -10,28 +10,6 @@ RABBIT_LIBRARYS[3]="opencv dlib" # geos gdal"
 #RABBIT_LIBRARYS[4]="OsgQt osgearth "
 RABBIT_LIBRARYS[4]="qxmpp qzxing"
 
-export PATH=/usr/bin:$PATH
-if [ "$BUILD_TARGERT" = "windows_mingw" \
-    -a -n "$APPVEYOR" ]; then
-    export RABBIT_TOOLCHAIN_ROOT=/C/Qt/Tools/mingw${RABBIT_TOOLCHAIN_VERSION}
-    export PATH="${RABBIT_TOOLCHAIN_ROOT}/bin:/usr/bin:/c/Tools/curl/bin:/c/Program Files (x86)/CMake/bin"
-fi
-
-TARGET_OS=`uname -s`
-case $TARGET_OS in
-    MINGW* | CYGWIN* | MSYS*)
-        export PKG_CONFIG=/c/msys64/mingw32/bin/pkg-config.exe
-        ;;
-    Linux* | Unix*)
-    ;;
-    *)
-    ;;
-esac
-if [ "$BUILD_TARGERT" = "windows_msvc" ]; then
-    export PATH=/C/Perl/bin:$PATH
-    rm -fr /usr/include
-fi
-
 PROJECT_DIR=`pwd`
 if [ -n "$1" ]; then
     PROJECT_DIR=$1
@@ -53,7 +31,7 @@ if [ -n "$DOWNLOAD_URL" ]; then
     wget -c -q -O ${SCRIPT_DIR}/../${BUILD_TARGERT}.zip ${DOWNLOAD_URL}
 fi
 
-export RABBIT_BUILD_PREFIX=${SCRIPT_DIR}/../build #${BUILD_TARGERT}${RABBIT_TOOLCHAIN_VERSION}_${RABBIT_ARCH}_qt${QT_VERSION}_${RABBIT_CONFIG}
+export RABBIT_BUILD_PREFIX=${SCRIPT_DIR}/../build #${BUILD_TARGERT}${RABBIT_TOOLCHAIN_VERSION}_${BUILD_ARCH}_qt${QT_VERSION}_${RABBIT_CONFIG}
 if [ ! -d ${RABBIT_BUILD_PREFIX} ]; then
     mkdir -p ${RABBIT_BUILD_PREFIX}
 fi
@@ -116,10 +94,32 @@ if [ "${BUILD_TARGERT}" = "unix" ]; then
 fi
 
 if [ "$BUILD_TARGERT" != "windows_msvc" ]; then
-    RABBIT_MAKE_JOB_PARA="-j`cat /proc/cpuinfo |grep 'cpu cores' |wc -l`"  #make 同时工作进程参数
-    if [ "$RABBIT_MAKE_JOB_PARA" = "-j1" ];then
-        RABBIT_MAKE_JOB_PARA="-j2"
+    BUILD_JOB_PARA="-j`cat /proc/cpuinfo |grep 'cpu cores' |wc -l`"  #make 同时工作进程参数
+    if [ "$BUILD_JOB_PARA" = "-j1" ];then
+        BUILD_JOB_PARA="-j2"
     fi
+fi
+
+export PATH=/usr/bin:$PATH
+if [ "$BUILD_TARGERT" = "windows_mingw" \
+    -a -n "$APPVEYOR" ]; then
+    export RABBIT_TOOLCHAIN_ROOT=/C/Qt/Tools/mingw${RABBIT_TOOLCHAIN_VERSION}
+    export PATH="${RABBIT_TOOLCHAIN_ROOT}/bin:/usr/bin:/c/Tools/curl/bin:/c/Program Files (x86)/CMake/bin"
+fi
+
+TARGET_OS=`uname -s`
+case $TARGET_OS in
+    MINGW* | CYGWIN* | MSYS*)
+        export PKG_CONFIG=/c/msys64/mingw32/bin/pkg-config.exe
+        ;;
+    Linux* | Unix*)
+    ;;
+    *)
+    ;;
+esac
+if [ "$BUILD_TARGERT" = "windows_msvc" ]; then
+    export PATH=/C/Perl/bin:$PATH
+    rm -fr /usr/include
 fi
 
 echo "---------------------------------------------------------------------------"

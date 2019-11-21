@@ -3,17 +3,12 @@
 
 set -e
 
-SOURCE_DIR="`pwd`"
+SOURCE_DIR=../..
+if [ -n "$1" ]; then
+    SOURCE_DIR=$1
+fi
 echo $SOURCE_DIR
 TOOLS_DIR=${SOURCE_DIR}/Tools
-if [ -d "${SOURCE_DIR}/ThirdLibrary" ]; then
-    TOOLS_DIR=${SOURCE_DIR}/ThirdLibrary/Tools
-fi
-echo ${TOOLS_DIR}
-SCRIPT_DIR=${SOURCE_DIR}/build_script
-if [ -d ${SOURCE_DIR}/ThirdLibrary/build_script ]; then
-    SCRIPT_DIR=${SOURCE_DIR}/ThirdLibrary/build_script
-fi
 
 if [ ! -f "${TOOLS_DIR}" ]; then
     mkdir -p ${TOOLS_DIR}
@@ -34,14 +29,6 @@ function function_install_yasm()
 function function_common()
 {
     cd ${TOOLS_DIR}
-    #下载最新cmake程序
-    #if [ "cmake" = "${QMAKE}" ]; then
-    #    if [ ! -d "`pwd`/cmake" ]; then
-    #        wget -nv --no-check-certificate http://www.cmake.org/files/v3.6/cmake-3.6.1-Linux-x86_64.tar.gz
-    #        tar xzf cmake-3.6.1-Linux-x86_64.tar.gz
-    #        mv cmake-3.6.1-Linux-x86_64 cmake
-    #    fi
-    #fi
     
     # Qt qt安装参见：https://github.com/benlau/qtci  
     if [ "$DOWNLOAD_QT" = "TRUE" ]; then
@@ -49,11 +36,11 @@ function function_common()
         if [ ! -d "${QT_DIR}" ]; then
             if [ "${QT_VERSION}" = "5.6.3" ]; then
                 wget -c --no-check-certificate -nv http://download.qt.io/official_releases/qt/${QT_VERSION_DIR}/${QT_VERSION}/qt-opensource-linux-x64-android-${QT_VERSION}.run
-                bash ${SOURCE_DIR}/ci/qt-installer.sh qt-opensource-linux-x64-android-${QT_VERSION}.run ${QT_DIR}
+                bash ${SOURCE_DIR}/build_script/ci/qt-installer.sh qt-opensource-linux-x64-android-${QT_VERSION}.run ${QT_DIR}
                 rm qt-opensource-linux-x64-android-${QT_VERSION}.run
             else
                 wget -c --no-check-certificate -nv http://download.qt.io/official_releases/qt/${QT_VERSION_DIR}/${QT_VERSION}/qt-opensource-linux-x64-${QT_VERSION}.run
-                bash ${SOURCE_DIR}/ci/qt-installer.sh qt-opensource-linux-x64-${QT_VERSION}.run ${QT_DIR}
+                bash ${SOURCE_DIR}/build_script/ci/qt-installer.sh qt-opensource-linux-x64-${QT_VERSION}.run ${QT_DIR}
                 rm qt-opensource-linux-x64-${QT_VERSION}.run
             fi
         fi
@@ -103,18 +90,13 @@ function function_unix()
     #汇编工具yasm
     #function_install_yasm
 
-    if [ "$DOWNLOAD_QT" != "TRUE"  ]; then
-        #See: https://launchpad.net/~beineri
-        sudo add-apt-repository ppa:beineri/opt-qt-${QT_VERSION}-`lsb_release -c|awk '{print $2}'` -y
-    fi
-
-    if [ "$DOWNLOAD_QT" != "TRUE" ]; then
-        sudo apt-get install -y -qq qt${QT_VERSION_DIR}base \
-            qt${QT_VERSION_DIR}tools \
-            qt${QT_VERSION_DIR}multimedia
-        sed -i "s/export QT_VERSION=/export QT_VERSION=${QT_VERSION}/g" ${SOURCE_DIR}/debian/preinst
-        sed -i "s/qt59/qt${QT_VERSION_DIR}/g" ${SOURCE_DIR}/debian/postinst
-    fi
+#    if [ "$DOWNLOAD_QT" != "TRUE" ]; then
+#        #See: https://launchpad.net/~beineri
+#        sudo add-apt-repository ppa:beineri/opt-qt-${QT_VERSION}-`lsb_release -c|awk '{print $2}'` -y
+#        sudo apt-get install -y -qq qt${QT_VERSION_DIR}base \
+#            qt${QT_VERSION_DIR}tools \
+#            qt${QT_VERSION_DIR}multimedia
+#    fi
     function_common
 
     cd ${SOURCE_DIR}

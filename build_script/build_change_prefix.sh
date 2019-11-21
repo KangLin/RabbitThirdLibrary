@@ -18,7 +18,7 @@
 #    $2:源码的位置 
 case $1 in
     android|windows_msvc|windows_mingw|unix)
-    RABBIT_BUILD_TARGERT=$1
+    BUILD_TARGERT=$1
     ;;
     *)
     echo "${HELP_STRING}"
@@ -26,8 +26,8 @@ case $1 in
     ;;
 esac
 
-echo ". `pwd`/build_envsetup_${RABBIT_BUILD_TARGERT}.sh"
-. `pwd`/build_envsetup_${RABBIT_BUILD_TARGERT}.sh
+echo ". `pwd`/build_envsetup_${BUILD_TARGERT}.sh"
+. `pwd`/build_envsetup_${BUILD_TARGERT}.sh
 
 #产生修改前缀脚本
 if [ ! -f ${RABBIT_BUILD_PREFIX}/change_prefix.sh ]; then

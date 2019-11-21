@@ -6,8 +6,8 @@
 #    $2:源码的位置 
 
 #运行本脚本前,先运行 build_$1_envsetup.sh 进行环境变量设置,需要先设置下面变量:
-#   RABBIT_BUILD_TARGERT   编译目标（android、windows_msvc、windows_mingw、unix）
-#   RABBIT_BUILD_PREFIX=`pwd`/../${RABBIT_BUILD_TARGERT}  #修改这里为安装前缀
+#   BUILD_TARGERT   编译目标（android、windows_msvc、windows_mingw、unix）
+#   RABBIT_BUILD_PREFIX=`pwd`/../${BUILD_TARGERT}  #修改这里为安装前缀
 #   RABBIT_BUILD_SOURCE_CODE    #源码目录
 #   RABBIT_BUILD_CROSS_PREFIX   #交叉编译前缀
 #   RABBIT_BUILD_CROSS_SYSROOT  #交叉编译平台的 sysroot
@@ -17,7 +17,7 @@ HELP_STRING="Usage $0 PLATFORM(android|windows_msvc|windows_mingw|unix) [SOURCE_
 
 case $1 in
     android|windows_msvc|windows_mingw|unix)
-    RABBIT_BUILD_TARGERT=$1
+    BUILD_TARGERT=$1
     ;;
     *)
     echo "${HELP_STRING}"
@@ -27,8 +27,8 @@ esac
 
 RABBIT_BUILD_SOURCE_CODE=$2
 
-echo ". `pwd`/build_envsetup_${RABBIT_BUILD_TARGERT}.sh"
-. `pwd`/build_envsetup_${RABBIT_BUILD_TARGERT}.sh
+echo ". `pwd`/build_envsetup_${BUILD_TARGERT}.sh"
+. `pwd`/build_envsetup_${BUILD_TARGERT}.sh
 
 if [ -z "$RABBIT_BUILD_SOURCE_CODE" ]; then
     RABBIT_BUILD_SOURCE_CODE=${RABBIT_BUILD_PREFIX}/../src/icu
@@ -57,15 +57,15 @@ if [ ! -d ${RABBIT_BUILD_SOURCE_CODE} ]; then
 fi
 
 SOURCE_DIR=${RABBIT_BUILD_SOURCE_CODE}/source     #源代码目录
-CONFIG_DIR=${RABBIT_BUILD_SOURCE_CODE}/temp_${RABBIT_BUILD_TARGERT}_Config #配置目录
-BUILD_DIR=${RABBIT_BUILD_SOURCE_CODE}/temp_${RABBIT_BUILD_TARGERT}_Build   #编译目录
+CONFIG_DIR=${RABBIT_BUILD_SOURCE_CODE}/temp_${BUILD_TARGERT}_Config #配置目录
+BUILD_DIR=${RABBIT_BUILD_SOURCE_CODE}/temp_${BUILD_TARGERT}_Build   #编译目录
 if [ "$RABBIT_CLEAN" = "TRUE" ]; then
     rm -fr ${CONFIG_DIR} ${BUILD_DIR}
     mkdir -p ${BUILD_DIR} ${CONFIG_DIR}
 fi
 
 echo ""
-echo "RABBIT_BUILD_TARGERT:${RABBIT_BUILD_TARGERT}"
+echo "BUILD_TARGERT:${BUILD_TARGERT}"
 echo "RABBIT_BUILD_SOURCE_CODE:$RABBIT_BUILD_SOURCE_CODE"
 echo "CUR_DIR:`pwd`"
 echo "RABBIT_BUILD_PREFIX:$RABBIT_BUILD_PREFIX"
@@ -84,7 +84,7 @@ else
     CONFIG_PARA="--disable-static --enable-shared"
 fi
 MAKE=make
-case ${RABBIT_BUILD_TARGERT} in
+case ${BUILD_TARGERT} in
     android)
     ;;
     unix)
@@ -115,10 +115,10 @@ case ${RABBIT_BUILD_TARGERT} in
             Linux*|Unix*|CYGWIN*)
                 cd ${CONFIG_DIR}
                 ${SOURCE_DIR}/runConfigureICU MinGW
-                make ${RABBIT_MAKE_JOB_PARA}
+                make ${BUILD_JOB_PARA}
                 cd ${BUILD_DIR}
                 ${SOURCE_DIR}/configure --host=${RABBIT_BUILD_CROSS_HOST} --with-cross_build=${CONFIG_DIR} --prefix=${RABBIT_BUILD_PREFIX} ${CONFIG_PARA}
-                ${MAKE} ${RABBIT_MAKE_JOB_PARA} 
+                ${MAKE} ${BUILD_JOB_PARA} 
                 ${MAKE} install 
                 if [ "$RABBIT_BUILD_STATIC" != "static" ]; then
                     mv ${RABBIT_BUILD_PREFIX}/lib/icu*.dll ${RABBIT_BUILD_PREFIX}/bin/.

@@ -6,8 +6,8 @@
 #    $2:源码的位置 
 
 #运行本脚本前,先运行 build_$1_envsetup.sh 进行环境变量设置,需要先设置下面变量:
-#   RABBIT_BUILD_TARGERT   编译目标（android、windows_msvc、windows_mingw、unix)
-#   RABBIT_BUILD_PREFIX=`pwd`/../${RABBIT_BUILD_TARGERT}  #修改这里为安装前缀
+#   BUILD_TARGERT   编译目标（android、windows_msvc、windows_mingw、unix)
+#   RABBIT_BUILD_PREFIX=`pwd`/../${BUILD_TARGERT}  #修改这里为安装前缀
 #   RABBIT_BUILD_SOURCE_CODE    #源码目录
 #   RABBIT_BUILD_CROSS_PREFIX   #交叉编译前缀
 #   RABBIT_BUILD_CROSS_SYSROOT  #交叉编译平台的 sysroot
@@ -17,7 +17,7 @@ HELP_STRING="Usage $0 PLATFORM(android|windows_msvc|windows_mingw|unix) [SOURCE_
 
 case $1 in
     android|windows_msvc|windows_mingw|unix)
-        RABBIT_BUILD_TARGERT=$1
+        BUILD_TARGERT=$1
         ;;
     *)
         echo "${HELP_STRING}"
@@ -26,8 +26,8 @@ case $1 in
 esac
 
 RABBIT_BUILD_SOURCE_CODE=$2
-echo ". `pwd`/build_envsetup_${RABBIT_BUILD_TARGERT}.sh"
-. `pwd`/build_envsetup_${RABBIT_BUILD_TARGERT}.sh
+echo ". `pwd`/build_envsetup_${BUILD_TARGERT}.sh"
+. `pwd`/build_envsetup_${BUILD_TARGERT}.sh
 
 if [ -z "$RABBIT_BUILD_SOURCE_CODE" ]; then
     RABBIT_BUILD_SOURCE_CODE=${RABBIT_BUILD_PREFIX}/../src/libvpx
@@ -49,14 +49,14 @@ fi
 CUR_DIR=`pwd`
 cd ${RABBIT_BUILD_SOURCE_CODE}
 
-mkdir -p build_${RABBIT_BUILD_TARGERT}
-cd build_${RABBIT_BUILD_TARGERT}
+mkdir -p build_${BUILD_TARGERT}
+cd build_${BUILD_TARGERT}
 if [ "$RABBIT_CLEAN" = "TRUE" ]; then
     rm -fr *
 fi
 
 echo ""
-echo "RABBIT_BUILD_TARGERT:${RABBIT_BUILD_TARGERT}"
+echo "BUILD_TARGERT:${BUILD_TARGERT}"
 echo "RABBIT_BUILD_SOURCE_CODE:$RABBIT_BUILD_SOURCE_CODE"
 echo "CUR_DIR:`pwd`"
 echo "RABBIT_BUILD_PREFIX:$RABBIT_BUILD_PREFIX"
@@ -67,7 +67,7 @@ echo "RABBIT_BUILD_CROSS_SYSROOT:$RABBIT_BUILD_CROSS_SYSROOT"
 echo ""
 
 echo "configure ..."
-case ${RABBIT_BUILD_TARGERT} in
+case ${BUILD_TARGERT} in
     android)
         export CC=${RABBIT_BUILD_CROSS_PREFIX}gcc
         export CXX=${RABBIT_BUILD_CROSS_PREFIX}g++
@@ -78,15 +78,15 @@ case ${RABBIT_BUILD_TARGERT} in
         export NM=${RABBIT_BUILD_CROSS_PREFIX}nm
         export CROSS=${RABBIT_BUILD_CROSS_PREFIX}
         CONFIG_PARA="--sdk-path=${ANDROID_NDK_ROOT}"
-        case ${RABBIT_ARCH} in 
+        case ${BUILD_ARCH} in 
             arm)
                 CONFIG_PARA="${CONFIG_PARA} --target=armv7-android-gcc"
                 ;;
             arm64|x86*|arm64*)
-                CONFIG_PARA="${CONFIG_PARA} --target=${RABBIT_ARCH}-android-gcc"
+                CONFIG_PARA="${CONFIG_PARA} --target=${BUILD_ARCH}-android-gcc"
                 ;;
             *)
-                echo "Don't support target ${RABBIT_ARCH}"
+                echo "Don't support target ${BUILD_ARCH}"
                 exit 0
             ;;
         esac
@@ -109,7 +109,7 @@ case ${RABBIT_BUILD_TARGERT} in
         fi
         ;;
     windows_msvc)
-        if [ "$RABBIT_ARCH" = "x64" ]; then
+        if [ "$BUILD_ARCH" = "x64" ]; then
             ARCH="x86_64-win64"
         else
             ARCH="x86-win32"
@@ -156,11 +156,11 @@ echo "../configure ${CONFIG_PARA} --extra-cflags=\"${CFLAGS=}\""
 ../configure ${CONFIG_PARA} --extra-cflags="${CFLAGS}" --extra-cxxflags="${CPPFLAGS}"
 
 echo "make install"
-make ${RABBIT_MAKE_JOB_PARA}
+make ${BUILD_JOB_PARA}
 make install
 
-if [ "${RABBIT_BUILD_TARGERT}" = "windows_msvc" ]; then
-    if [ "$RABBIT_ARCH" = "x64" ]; then
+if [ "${BUILD_TARGERT}" = "windows_msvc" ]; then
+    if [ "$BUILD_ARCH" = "x64" ]; then
         cp ${RABBIT_BUILD_PREFIX}/lib/x64/vpxmt.lib ${RABBIT_BUILD_PREFIX}/lib/vpx.lib
         rm -fr ${RABBIT_BUILD_PREFIX}/lib/x64
     else

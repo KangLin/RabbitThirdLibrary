@@ -18,19 +18,22 @@ export WORKDIR=$PWD
 INSTALLER=$1
 OUTPUT=$2
 SCRIPT="$(mktemp /tmp/tmp.XXXXXXXXX)"
-case $RABBIT_ARCH in
-    arm*)
-        SELECTEDPACKAGES=android_armv7
-        ;;
-     x86)
-        SELECTEDPACKAGES=android_x86
-        ;;
-     unix)
-        SELECTEDPACKAGES=gcc_64
-        ;;
-       *)
-       echo "Aach[$RABBIT_ARCH] don't suppoert"
-esac
+if [ "$BUILD_TARGERT" = "android" ]; then
+    case $BUILD_ARCH in
+        arm*)
+            SELECTEDPACKAGES=android_armv7
+            ;;
+         x86)
+            SELECTEDPACKAGES=android_x86
+            ;;
+           *)
+           echo "Aach[$BUILD_ARCH] don't suppoert"
+    esac
+fi
+
+if [ "$BUILD_TARGERT" = "unix" ]; then
+   SELECTEDPACKAGES=gcc_64
+fi
 
 cat <<EOF > $SCRIPT
 function Controller() {

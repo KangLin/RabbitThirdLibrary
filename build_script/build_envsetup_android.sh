@@ -26,6 +26,8 @@
 #ANDROID_STL:指定 CMake 应使用的 STL。默认情况下，CMake 使用 c++_static。
 
 # ANDROID_NDK_HOST:
+# QT_ROOT:
+# BUILD_ARCH:
 # RABBIT_CLEAN:
 # RABBIT_BUILD_STATIC:
 # RABBIT_USE_REPOSITORIES:
@@ -66,10 +68,10 @@ fi
 #RABBIT_USE_REPOSITORIES="TRUE" #下载指定的压缩包。省略，则下载开发库。  
 #RABBIT_TOOLCHAIN_VERSION=4.8   #工具链版本号,默认 4.9  
 #ANDROID_NATIVE_API_LEVEL=24   #android ndk api (平台)版本号,默认 24
-if [ -z "${RABBIT_MAKE_JOB_PARA}" ]; then
-    RABBIT_MAKE_JOB_PARA="-j`cat /proc/cpuinfo |grep 'cpu cores' |wc -l`"  #make 同时工作进程参数
-    if [ "$RABBIT_MAKE_JOB_PARA" = "-j1" ];then
-        RABBIT_MAKE_JOB_PARA=
+if [ -z "${BUILD_JOB_PARA}" ]; then
+    BUILD_JOB_PARA="-j`cat /proc/cpuinfo |grep 'cpu cores' |wc -l`"  #make 同时工作进程参数
+    if [ "$BUILD_JOB_PARA" = "-j1" ];then
+        BUILD_JOB_PARA=
     fi
 fi
 
@@ -78,17 +80,17 @@ if [ -z "$ANDROID_NDK_ROOT" -o -z "$ANDROID_NDK" -o -z "$ANDROID_SDK" -o -z "$AN
     exit 1
 fi
 
-if [ -z "${RABBIT_ARCH}" ]; then
-    RABBIT_ARCH=arm #armv7,arm64,mips,mips64,x86,x86_64
+if [ -z "${BUILD_ARCH}" ]; then
+    BUILD_ARCH=arm #armv7,arm64,mips,mips64,x86,x86_64
 fi
 
 #需要设置下面变量：
 if [ -z "$QT_ROOT" -a -z "$APPVEYOR" ]; then
     QT_VERSION=5.13.2
-    if [ "${RABBIT_ARCH}" = "arm" ]; then
+    if [ "${BUILD_ARCH}" = "arm" ]; then
         QT_ROOT=/c/Qt/Qt${QT_VERSION}/${QT_VERSION}/android_armv7 #QT 安装根目录,默认为:${RABBITRoot}/ThirdLibrary/android/qt
     else
-        QT_ROOT=/c/Qt/Qt${QT_VERSION}/${QT_VERSION}/android_${RABBIT_ARCH} #QT 安装根目录,默认为:${RABBITRoot}/ThirdLibrary/android/qt
+        QT_ROOT=/c/Qt/Qt${QT_VERSION}/${QT_VERSION}/android_${BUILD_ARCH} #QT 安装根目录,默认为:${RABBITRoot}/ThirdLibrary/android/qt
     fi
 fi
 
@@ -104,8 +106,8 @@ if [ -z "${ANDROID_NATIVE_API_LEVEL}" ]; then
 fi
 
 if [ -z "${RABBIT_BUILD_PREFIX}" ]; then
-    RABBIT_BUILD_PREFIX=`pwd`/../${RABBIT_BUILD_TARGERT}    #修改这里为安装前缀  
-    RABBIT_BUILD_PREFIX=${RABBIT_BUILD_PREFIX}${ANDROID_NATIVE_API_LEVEL}_${RABBIT_ARCH}_qt${QT_VERSION}_${RABBIT_CONFIG}
+    RABBIT_BUILD_PREFIX=`pwd`/../${BUILD_TARGERT}    #修改这里为安装前缀  
+    RABBIT_BUILD_PREFIX=${RABBIT_BUILD_PREFIX}${ANDROID_NATIVE_API_LEVEL}_${BUILD_ARCH}_qt${QT_VERSION}_${RABBIT_CONFIG}
 fi
 if [ ! -d ${RABBIT_BUILD_PREFIX} ]; then
     mkdir -p ${RABBIT_BUILD_PREFIX}
@@ -126,11 +128,14 @@ if [ -n "${QT_ROOT}" ]; then
                               #这里设置的是自动编译时的配置，你需要修改为你本地qt编译环境的配置.
 fi
 
-MAKE="make" # ${RABBIT_MAKE_JOB_PARA}"
+MAKE="make" # ${BUILD_JOB_PARA}"
 #自动判断主机类型，目前只做了linux、windows判断
 TARGET_OS=`uname -s`
 case $TARGET_OS in
     MINGW* | CYGWIN* | MSYS*)
+        if [ -z "$PKG_CONFIG" ]; then
+            export PKG_CONFIG=/c/msys64/mingw32/bin/pkg-config.exe
+        fi
         #ANDROID_NDK_HOST="windows-`uname -m`"
         ANDROID_NDK_HOST=windows-x86_64 
         if [ ! -d $ANDROID_NDK/prebuilt/${ANDROID_NDK_HOST} ]; then
@@ -151,12 +156,12 @@ esac
 
 export PATH=$ANDROID_NDK/prebuilt/${ANDROID_NDK_HOST}/bin:$PATH
 #if [ -z "$RABBIT_TOOL_CHAIN_ROOT" ]; then
-#    RABBIT_TOOL_CHAIN_ROOT=${RABBIT_BUILD_PREFIX}/../android-toolchains-${RABBIT_ARCH}-api${ANDROID_NATIVE_API_LEVEL}
+#    RABBIT_TOOL_CHAIN_ROOT=${RABBIT_BUILD_PREFIX}/../android-toolchains-${BUILD_ARCH}-api${ANDROID_NATIVE_API_LEVEL}
 #fi
 ##安装工具链
 #if [ ! -d $RABBIT_TOOL_CHAIN_ROOT ]; then
 #    python ${ANDROID_NDK_ROOT}/build/tools/make_standalone_toolchain.py \
-#        --arch ${RABBIT_ARCH} \
+#        --arch ${BUILD_ARCH} \
 #        --api ${ANDROID_NATIVE_API_LEVEL} \
 #        --install-dir ${RABBIT_TOOL_CHAIN_ROOT}
 #    if [ ! $? = 0 ]; then
@@ -165,11 +170,11 @@ export PATH=$ANDROID_NDK/prebuilt/${ANDROID_NDK_HOST}/bin:$PATH
 #    fi
 #fi
 
-case ${RABBIT_ARCH} in
+case ${BUILD_ARCH} in
     x86*)
-        export ANDROID_TOOLCHAIN_NAME=${RABBIT_ARCH}-${RABBIT_TOOLCHAIN_VERSION}
+        export ANDROID_TOOLCHAIN_NAME=${BUILD_ARCH}-${RABBIT_TOOLCHAIN_VERSION}
         if [ -z "${RABBIT_BUILD_CROSS_HOST}" ]; then
-            if [ "${RABBIT_ARCH}" = "x86_64" ]; then
+            if [ "${BUILD_ARCH}" = "x86_64" ]; then
                 RABBIT_BUILD_CROSS_HOST=x86_64-linux-android
             else
                 RABBIT_BUILD_CROSS_HOST=i686-linux-android
@@ -177,7 +182,7 @@ case ${RABBIT_ARCH} in
         fi
         #交叉编译前缀
         if [ -z "$ANDROID_ABI" ]; then
-            if [ "${RABBIT_ARCH}" = "x86_64" ]; then
+            if [ "${BUILD_ARCH}" = "x86_64" ]; then
                 export ANDROID_ABI="x86_64"
             else
                 export ANDROID_ABI="x86"
@@ -215,7 +220,7 @@ RABBIT_BUILD_CROSS_SYSROOT=$RABBIT_TOOL_CHAIN_ROOT/sysroot
 RABBIT_BUILD_CROSS_SYSROOT_LIB=$RABBIT_BUILD_CROSS_SYSROOT
 
 #RABBIT_BUILD_CROSS_SYSROOT=$ANDROID_NDK/sysroot
-#RABBIT_BUILD_CROSS_SYSROOT_LIB=$ANDROID_NDK/platforms/android-$ANDROID_NATIVE_API_LEVEL/arch-${RABBIT_ARCH}
+#RABBIT_BUILD_CROSS_SYSROOT_LIB=$ANDROID_NDK/platforms/android-$ANDROID_NATIVE_API_LEVEL/arch-${BUILD_ARCH}
 
 RABBIT_BUILD_CROSS_STL=${ANDROID_NDK_ROOT}/sources/cxx-stl/gnu-libstdc++/${RABBIT_TOOLCHAIN_VERSION}
 RABBIT_BUILD_CROSS_STL_INCLUDE=${RABBIT_BUILD_CROSS_STL}/include

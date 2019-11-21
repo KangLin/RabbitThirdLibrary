@@ -6,8 +6,8 @@
 #    $2:源码的位置 
 
 #运行本脚本前,先运行 build_$1_envsetup.sh 进行环境变量设置,需要先设置下面变量:
-#   RABBIT_BUILD_TARGERT   编译目标（android、windows_msvc、windows_mingw、unix)
-#   RABBIT_BUILD_PREFIX=`pwd`/../${RABBIT_BUILD_TARGERT}  #修改这里为安装前缀
+#   BUILD_TARGERT   编译目标（android、windows_msvc、windows_mingw、unix)
+#   RABBIT_BUILD_PREFIX=`pwd`/../${BUILD_TARGERT}  #修改这里为安装前缀
 #   RABBIT_BUILD_SOURCE_CODE    #源码目录
 #   RABBIT_BUILD_CROSS_PREFIX   #交叉编译前缀
 #   RABBIT_BUILD_CROSS_SYSROOT  #交叉编译平台的 sysroot
@@ -17,7 +17,7 @@ HELP_STRING="Usage $0 PLATFORM(android|windows_msvc|windows_mingw|unix) [SOURCE_
 
 case $1 in
     android|windows_msvc|windows_mingw|unix)
-    RABBIT_BUILD_TARGERT=$1
+    BUILD_TARGERT=$1
     ;;
     *)
     echo "${HELP_STRING}"
@@ -26,8 +26,8 @@ case $1 in
 esac
 
 RABBIT_BUILD_SOURCE_CODE=$2
-echo ". `pwd`/build_envsetup_${RABBIT_BUILD_TARGERT}.sh"
-. `pwd`/build_envsetup_${RABBIT_BUILD_TARGERT}.sh
+echo ". `pwd`/build_envsetup_${BUILD_TARGERT}.sh"
+. `pwd`/build_envsetup_${BUILD_TARGERT}.sh
 
 if [ -z "$RABBIT_BUILD_SOURCE_CODE" ]; then
     RABBIT_BUILD_SOURCE_CODE=${RABBIT_BUILD_PREFIX}/../src/opencv
@@ -40,9 +40,10 @@ if [ ! -d ${RABBIT_BUILD_SOURCE_CODE} ]; then
     OPENCV_VERSION=3.4.8
     if [ "TRUE" = "${RABBIT_USE_REPOSITORIES}" ]; then
         echo "git clone -q https://github.com/opencv/opencv.git ${RABBIT_BUILD_SOURCE_CODE}"
-        git clone -q https://github.com/opencv/opencv.git ${RABBIT_BUILD_SOURCE_CODE}
-        if [ "$OPENCV_VERSION" != "master" ]; then
-            git checkout -b $OPENCV_VERSION $OPENCV_VERSION
+        if [ "$OPENCV_VERSION" = "master" ]; then
+            git clone -q https://github.com/opencv/opencv.git ${RABBIT_BUILD_SOURCE_CODE}
+        else
+            git clone -b $OPENCV_VERSION https://github.com/opencv/opencv.git ${RABBIT_BUILD_SOURCE_CODE}
         fi
     else
         echo "wget -q -c https://github.com/opencv/opencv/archive/${OPENCV_VERSION}.zip"
@@ -79,14 +80,14 @@ if [ ! -d ${RABBIT_BUILD_CONTRIB_SOURCE_CODE} ]; then
 fi
 
 cd ${RABBIT_BUILD_SOURCE_CODE}
-mkdir -p build_${RABBIT_BUILD_TARGERT}
-cd build_${RABBIT_BUILD_TARGERT}
+mkdir -p build_${BUILD_TARGERT}
+cd build_${BUILD_TARGERT}
 if [ "$RABBIT_CLEAN" = "TRUE" ]; then
     rm -fr *
 fi
 
 echo ""
-echo "RABBIT_BUILD_TARGERT:${RABBIT_BUILD_TARGERT}"
+echo "BUILD_TARGERT:${BUILD_TARGERT}"
 echo "RABBIT_BUILD_SOURCE_CODE:$RABBIT_BUILD_SOURCE_CODE"
 echo "CUR_DIR:`pwd`"
 echo "RABBIT_BUILD_PREFIX:$RABBIT_BUILD_PREFIX"
@@ -104,8 +105,8 @@ if [ "$RABBIT_BUILD_STATIC" = "static" ]; then
 else
     CMAKE_PARA="-DBUILD_SHARED_LIBS=ON"
 fi
-MAKE_PARA="-- ${RABBIT_MAKE_JOB_PARA} VERBOSE=1"
-case ${RABBIT_BUILD_TARGERT} in
+MAKE_PARA="-- ${BUILD_JOB_PARA} VERBOSE=1"
+case ${BUILD_TARGERT} in
     android)
         if [ -n "$RABBIT_CMAKE_MAKE_PROGRAM" ]; then
             CMAKE_PARA="${CMAKE_PARA} -DCMAKE_MAKE_PROGRAM=$RABBIT_CMAKE_MAKE_PROGRAM" 
@@ -114,7 +115,6 @@ case ${RABBIT_BUILD_TARGERT} in
             CMAKE_PARA="${CMAKE_PARA} -DANDROID_ARM_NEON=$ANDROID_ARM_NEON"
         fi
         CMAKE_PARA="${CMAKE_PARA} -DCMAKE_TOOLCHAIN_FILE=${ANDROID_NDK}/build/cmake/android.toolchain.cmake"
-        #CMAKE_PARA="${CMAKE_PARA} -DANDROID_ABI=\"${ANDROID_ABI}\""
         CMAKE_PARA="${CMAKE_PARA} -DANDROID_PLATFORM=${ANDROID_PLATFORM}"
         CMAKE_PARA="${CMAKE_PARA} -DBUILD_ANDROID_PROJECTS=OFF"
         ;;
@@ -163,7 +163,7 @@ CMAKE_PARA="${CMAKE_PARA} -DWITH_IPP=OFF -DWITH_WEBP=OFF -DWITH_VTK=OFF"
 CMAKE_PARA="${CMAKE_PARA} -DBUILD_IPP_IW=OFF -DBUILD_ITT=OFF -DWITH_ITT=OFF"
 
 echo "cmake .. -DCMAKE_INSTALL_PREFIX=$RABBIT_BUILD_PREFIX -DCMAKE_BUILD_TYPE=${RABBIT_CONFIG} -G\"${RABBITIM_GENERATORS}\" ${CMAKE_PARA} -DANDROID_ABI=\"${ANDROID_ABI}\""
-if [ "${RABBIT_BUILD_TARGERT}" = "android" ]; then
+if [ "${BUILD_TARGERT}" = "android" ]; then
     cmake .. \
         -DCMAKE_INSTALL_PREFIX="$RABBIT_BUILD_PREFIX" \
         -DCMAKE_VERBOSE=ON -DCMAKE_BUILD_TYPE=${RABBIT_CONFIG} \

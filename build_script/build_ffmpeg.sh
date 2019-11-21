@@ -16,8 +16,8 @@
 #    $2:源码的位置 
 
 #运行本脚本前,先运行 build_$1_envsetup.sh 进行环境变量设置,需要先设置下面变量:
-#   RABBIT_BUILD_TARGERT   编译目标（android、windows_msvc、windows_mingw、unix）
-#   RABBIT_BUILD_PREFIX=`pwd`/../${RABBIT_BUILD_TARGERT}  #修改这里为安装前缀
+#   BUILD_TARGERT   编译目标（android、windows_msvc、windows_mingw、unix）
+#   RABBIT_BUILD_PREFIX=`pwd`/../${BUILD_TARGERT}  #修改这里为安装前缀
 #   RABBIT_BUILD_SOURCE_CODE    #源码目录
 #   RABBIT_BUILD_CROSS_PREFIX   #交叉编译前缀
 #   RABBIT_BUILD_CROSS_SYSROOT  #交叉编译平台的 sysroot
@@ -27,7 +27,7 @@ HELP_STRING="Usage $0 PLATFORM(android|windows_msvc|windows_mingw|unix) [SOURCE_
 
 case $1 in
     android|windows_msvc|windows_mingw|unix)
-    RABBIT_BUILD_TARGERT=$1
+    BUILD_TARGERT=$1
     ;;
     *)
     echo "${HELP_STRING}"
@@ -37,8 +37,8 @@ esac
 
 RABBIT_BUILD_SOURCE_CODE=$2
 
-echo ". `pwd`/build_envsetup_${RABBIT_BUILD_TARGERT}.sh"
-. `pwd`/build_envsetup_${RABBIT_BUILD_TARGERT}.sh
+echo ". `pwd`/build_envsetup_${BUILD_TARGERT}.sh"
+. `pwd`/build_envsetup_${BUILD_TARGERT}.sh
 
 if [ -z "$RABBIT_BUILD_SOURCE_CODE" ]; then
     RABBIT_BUILD_SOURCE_CODE=${RABBIT_BUILD_PREFIX}/../src/ffmpeg
@@ -71,7 +71,7 @@ fi
 cd ${RABBIT_BUILD_SOURCE_CODE}
 
 echo "----------------------------------------------------------------------------"
-echo "RABBIT_BUILD_TARGERT:${RABBIT_BUILD_TARGERT}"
+echo "BUILD_TARGERT:${BUILD_TARGERT}"
 echo "RABBIT_BUILD_SOURCE_CODE:$RABBIT_BUILD_SOURCE_CODE"
 echo "CUR_DIR:`pwd`"
 echo "RABBIT_BUILD_PREFIX:$RABBIT_BUILD_PREFIX"
@@ -100,7 +100,7 @@ else
     CONFIG_PARA="--disable-static --enable-shared"
 fi
 THIRD_LIB="--enable-libx264"
-case ${RABBIT_BUILD_TARGERT} in
+case ${BUILD_TARGERT} in
     android)
         CONFIG_PARA="${CONFIG_PARA} --enable-cross-compile"
         CONFIG_PARA="${CONFIG_PARA} --disable-w32threads"
@@ -111,9 +111,9 @@ case ${RABBIT_BUILD_TARGERT} in
         #CONFIG_PARA="${CONFIG_PARA} ${THIRD_LIB}"
 
         CONFIG_PARA="${CONFIG_PARA} --target-os=android"
-        CONFIG_PARA="${CONFIG_PARA} --arch=$RABBIT_ARCH"
+        CONFIG_PARA="${CONFIG_PARA} --arch=$BUILD_ARCH"
         
-        case $RABBIT_ARCH in
+        case $BUILD_ARCH in
             arm*)
                 CONFIG_PARA="${CONFIG_PARA} --cpu=armv7-a --enable-neon"
                 ;;
@@ -132,7 +132,7 @@ case ${RABBIT_BUILD_TARGERT} in
         CONFIG_PARA="${CONFIG_PARA} ${THIRD_LIB}"
         ;;
     windows_msvc)
-        if [ "$RABBIT_ARCH" = "x64" ]; then
+        if [ "$BUILD_ARCH" = "x64" ]; then
             CONFIG_PARA="${CONFIG_PARA} --target-os=win64 --arch=x86-64 --cpu=i686"
         else
             CONFIG_PARA="${CONFIG_PARA} --target-os=win32 --arch=i686 --cpu=i686"
@@ -177,7 +177,7 @@ CFLAGS="${CFLAGS} -I$RABBIT_BUILD_PREFIX/include"
 LDFLAGS="${LDFLAGS} -L$RABBIT_BUILD_PREFIX/lib" 
 
 
-case ${RABBIT_BUILD_TARGERT} in
+case ${BUILD_TARGERT} in
     android)
         echo "./configure ${CONFIG_PARA} --extra-cflags=\"${CFLAGS}\" --extra-ldflags=\"${LDFLAGS}\"" --pkg-config="\"${PKG_CONFIG}\""
         ./configure ${CONFIG_PARA} --extra-cflags="${CFLAGS}" --extra-ldflags="${LDFLAGS}" --pkg-config="${PKG_CONFIG}"
@@ -197,9 +197,9 @@ case ${RABBIT_BUILD_TARGERT} in
 esac
 
 echo "make install"
-make ${RABBIT_MAKE_JOB_PARA} 
+make ${BUILD_JOB_PARA} 
 make install
-if [ "${RABBIT_BUILD_TARGERT}" = "windows_msvc" ]; then
+if [ "${BUILD_TARGERT}" = "windows_msvc" ]; then
     if [ "${RABBIT_BUILD_STATIC}" = "static" ]; then
         cd ${RABBIT_BUILD_PREFIX}/lib
         mv libavcodec.a avcodec.lib
@@ -217,7 +217,7 @@ if [ "${RABBIT_BUILD_TARGERT}" = "windows_msvc" ]; then
     fi
 fi
 
-if [ "${RABBIT_BUILD_TARGERT}" = "windows_mingw" ]; then
+if [ "${BUILD_TARGERT}" = "windows_mingw" ]; then
     if [ "${RABBIT_BUILD_STATIC}" != "static" ]; then
         mv ${RABBIT_BUILD_PREFIX}/bin/*.lib ${RABBIT_BUILD_PREFIX}/lib/.
     fi

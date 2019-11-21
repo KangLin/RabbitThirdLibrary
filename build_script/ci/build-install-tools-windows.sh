@@ -3,7 +3,10 @@
 
 set -ev
 
-SOURCE_DIR="`pwd`"
+SOURCE_DIR=../..
+if [ -n "$1" ]; then
+    SOURCE_DIR=$1
+fi
 echo $SOURCE_DIR
 TOOLS_DIR=${SOURCE_DIR}/Tools
 echo ${TOOLS_DIR}

@@ -27,32 +27,32 @@ fi
 #RABBIT_BUILD_STATIC="static" #设置编译静态库，注释掉，则为编译动态库
 #RABBIT_BUILD_CROSS_HOST=i686-w64-mingw32  #编译工具链前缀,用于交叉编译
 #RABBIT_USE_REPOSITORIES="TRUE" #下载指定的压缩包。省略，则下载开发库。
-if [ -z "${RABBIT_MAKE_JOB_PARA}" ]; then
-    RABBIT_MAKE_JOB_PARA="-j`cat /proc/cpuinfo |grep 'cpu cores' |wc -l`"  #make 同时工作进程参数
-    if [ "$RABBIT_MAKE_JOB_PARA" = "-j1" ];then
-        RABBIT_MAKE_JOB_PARA=
+if [ -z "${BUILD_JOB_PARA}" ]; then
+    BUILD_JOB_PARA="-j`cat /proc/cpuinfo |grep 'cpu cores' |wc -l`"  #make 同时工作进程参数
+    if [ "$BUILD_JOB_PARA" = "-j1" ];then
+        BUILD_JOB_PARA=
     fi
 fi
 
-#   RABBIT_BUILD_PREFIX=`pwd`/../${RABBIT_BUILD_TARGERT}  #修改这里为安装前缀
+#   RABBIT_BUILD_PREFIX=`pwd`/../${BUILD_TARGERT}  #修改这里为安装前缀
 #   RABBIT_BUILD_CROSS_PREFIX     #交叉编译前缀
 #   RABBIT_BUILD_CROSS_SYSROOT  #交叉编译平台的 sysroot
-if [ -z "${RABBIT_ARCH}" ]; then
+if [ -z "${BUILD_ARCH}" ]; then
     case $MSYSTEM in
         MINGW32)
-            RABBIT_ARCH=x86
+            BUILD_ARCH=x86
             ;;
         MINGW64)
-            RABBIT_ARCH=x64
+            BUILD_ARCH=x64
             ;;
         *)
-            echo "Error RABBIT_ARCH=$MSYSTEM, set RABBIT_ARCH=x86"
-            RABBIT_ARCH=x86
+            echo "Error BUILD_ARCH=$MSYSTEM, set BUILD_ARCH=x86"
+            BUILD_ARCH=x86
             ;;
     esac
-    export RABBIT_ARCH=$RABBIT_ARCH
+    export BUILD_ARCH=$BUILD_ARCH
 fi
-case ${RABBIT_ARCH} in
+case ${BUILD_ARCH} in
     x86)
         if [ -z "${RABBIT_BUILD_CROSS_HOST}" ]; then
             RABBIT_BUILD_CROSS_HOST=i686-w64-mingw32 #编译工具链前缀
@@ -82,8 +82,8 @@ if [ -z "$RABBIT_CONFIG" ]; then
 fi
 
 if [ -z "${RABBIT_BUILD_PREFIX}" ]; then
-    RABBIT_BUILD_PREFIX=`pwd`/../${RABBIT_BUILD_TARGERT}    #修改这里为安装前缀  
-    RABBIT_BUILD_PREFIX=${RABBIT_BUILD_PREFIX}${RABBIT_TOOLCHAIN_VERSION}_${RABBIT_ARCH}_qt${QT_VERSION}_${RABBIT_CONFIG}
+    RABBIT_BUILD_PREFIX=`pwd`/../${BUILD_TARGERT}    #修改这里为安装前缀  
+    RABBIT_BUILD_PREFIX=${RABBIT_BUILD_PREFIX}${RABBIT_TOOLCHAIN_VERSION}_${BUILD_ARCH}_qt${QT_VERSION}_${RABBIT_CONFIG}
     if [ "$RABBIT_BUILD_STATIC" = "static" ]; then
         RABBIT_BUILD_PREFIX=${RABBIT_BUILD_PREFIX}_static
     fi
@@ -92,7 +92,7 @@ if [ ! -d ${RABBIT_BUILD_PREFIX} ]; then
     mkdir -p ${RABBIT_BUILD_PREFIX}
 fi
 
-MAKE="make ${RABBIT_MAKE_JOB_PARA}"
+MAKE="make ${BUILD_JOB_PARA}"
 #自动判断主机类型，目前只做了linux、windows判断
 TARGET_OS=`uname -s`
 case $TARGET_OS in
