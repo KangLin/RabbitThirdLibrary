@@ -45,8 +45,6 @@ env:
     - RABBIT_BUILD_THIRDLIBRARY="TRUE" 
     
   matrix:
-    - BUILD_TARGERT="android" BUILD_ARCH="arm" ANDROID_ARM_NEON=ON QT_VERSION_DIR=5.13 QT_VERSION=5.13.2 ANDROID_API=android-24 DOWNLOAD_QT=FALSE
-
     - BUILD_TARGERT="unix" QT_VERSION_DIR=512 QT_VERSION=5.12.3 DOWNLOAD_QT=FALSE
     - BUILD_TARGERT="unix" QT_VERSION_DIR=511 QT_VERSION=5.11.3 DOWNLOAD_QT=FALSE
 
@@ -71,7 +69,7 @@ install:
 before_script:
 
 script: 
-  - ./build_script/ci/build_linux.sh ${TRAVIS_BUILD_DIR} #> /dev/null
+  - ./build_script/ci/build_linux.sh ${TRAVIS_BUILD_DIR} > /dev/null
 
 after_script:
 

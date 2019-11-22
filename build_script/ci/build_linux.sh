@@ -1,5 +1,5 @@
 #!/bin/bash
-set -e
+set -ev
 
 SOURCE_DIR=../..
 if [ -n "$1" ]; then
@@ -56,11 +56,11 @@ echo "PATH:$PATH"
 echo "PKG_CONFIG:$PKG_CONFIG"
 cd ${SOURCE_DIR}/build_script
 
-./build_openssl.sh ${BUILD_TARGERT}
-./build_libyuv.sh ${BUILD_TARGERT}
+./build_openssl.sh ${BUILD_TARGERT} > /dev/null
+./build_libyuv.sh ${BUILD_TARGERT} > /dev/null
 #./build_libvpx.sh ${BUILD_TARGERT}
-./build_libopus.sh ${BUILD_TARGERT}
-./build_opencv.sh ${BUILD_TARGERT}
+./build_libopus.sh ${BUILD_TARGERT} > /dev/null
+./build_opencv.sh ${BUILD_TARGERT} #> /dev/null
 ./build_dlib.sh ${BUILD_TARGERT}
 #./build_qxmpp.sh ${BUILD_TARGERT}
 #./build_qzxing.sh ${BUILD_TARGERT}
