@@ -82,7 +82,7 @@ deploy:
   provider: releases
   api_key: 177ce637a8ec54e66ea8693092caf35059cf95d7
   file: 
-    - ./build_android/android-build/bin/QtApp-debug.apk
+    - ./build_android/${BUILD_TARGERT}_${BUILD_ARCH}_qt${QT_VERSION}_${RABBIT_CONFIG}.tar.gz
   skip_cleanup: true
   on:
     condition: $TRAVIS_OS_NAME = android
