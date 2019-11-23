@@ -85,6 +85,6 @@ deploy:
     - ./build_android/${BUILD_TARGERT}_${BUILD_ARCH}_qt${QT_VERSION}_${RABBIT_CONFIG}.tar.gz
   skip_cleanup: true
   on:
-    condition: $TRAVIS_OS_NAME = android
+   ＃ condition: $TRAVIS_OS_NAME = android
     repo: KangLin/RabbitThirdLibrary
-    tags: true
+    ＃tags: true
