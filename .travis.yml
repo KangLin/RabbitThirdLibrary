@@ -69,7 +69,7 @@ install:
 before_script:
 
 script: 
-  - ./build_script/ci/build_linux.sh ${TRAVIS_BUILD_DIR} > /dev/null
+  - ./build_script/ci/build_linux.sh ${TRAVIS_BUILD_DIR} #> /dev/null
 
 after_script:
 
