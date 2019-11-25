@@ -89,7 +89,8 @@ function function_unix()
 {
     #汇编工具yasm
     #function_install_yasm
-
+    sudo apt-get install -qq -y yasm
+    
 #    if [ "$DOWNLOAD_QT" != "TRUE" ]; then
 #        #See: https://launchpad.net/~beineri
 #        sudo add-apt-repository ppa:beineri/opt-qt-${QT_VERSION}-`lsb_release -c|awk '{print $2}'` -y
