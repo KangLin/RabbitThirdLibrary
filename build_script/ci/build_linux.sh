@@ -66,8 +66,10 @@ cd ${SOURCE_DIR}/build_script
 #./build_qxmpp.sh ${BUILD_TARGERT}
 #./build_qzxing.sh ${BUILD_TARGERT}
 
-. build_envsetup_${BUILD_TARGERT}.sh
-tar czf ${BUILD_TARGERT}_${BUILD_ARCH}_qt${QT_VERSION}_${RABBIT_CONFIG}.tar.gz ${RABBIT_BUILD_PREFIX}
-wget -c https://github.com/probonopd/uploadtool/raw/master/upload.sh
-chmod u+x upload.sh
-./upload.sh ${BUILD_TARGERT}_${BUILD_ARCH}_qt${QT_VERSION}_${RABBIT_CONFIG}.tar.gz
+if [ "$TRAVIS_TAG" != "" ]; then
+    . build_envsetup_${BUILD_TARGERT}.sh
+    tar czf ${BUILD_TARGERT}_${BUILD_ARCH}_qt${QT_VERSION}_${RABBIT_CONFIG}.tar.gz ${RABBIT_BUILD_PREFIX}
+    wget -c https://github.com/probonopd/uploadtool/raw/master/upload.sh
+    chmod u+x upload.sh
+    ./upload.sh ${BUILD_TARGERT}_${BUILD_ARCH}_qt${QT_VERSION}_${RABBIT_CONFIG}.tar.gz
+fi
