@@ -48,7 +48,7 @@ CUR_DIR=`pwd`
 
 #下载源码:
 if [ ! -d ${RABBIT_BUILD_SOURCE_CODE} ]; then
-    FFMPEG_VERSION=n4.0.4
+    FFMPEG_VERSION=n4.2
     if [ "TRUE" = "${RABBIT_USE_REPOSITORIES}" ]; then
         echo "git clone git://source.ffmpeg.org/ffmpeg.git ${RABBIT_BUILD_SOURCE_CODE}"
         #git clone -q -b ${FFMPEG_VERSION} git://source.ffmpeg.org/ffmpeg.git ${RABBIT_BUILD_SOURCE_CODE}
@@ -99,13 +99,14 @@ if [ "$RABBIT_BUILD_STATIC" = "static" ]; then
 else
     CONFIG_PARA="--disable-static --enable-shared"
 fi
-THIRD_LIB="--enable-libx264"
+#THIRD_LIB="--enable-libx264"
 case ${BUILD_TARGERT} in
     android)
         CONFIG_PARA="${CONFIG_PARA} --enable-cross-compile"
         CONFIG_PARA="${CONFIG_PARA} --disable-w32threads"
         CONFIG_PARA="${CONFIG_PARA} --cross-prefix=${RABBIT_BUILD_CROSS_PREFIX}"
         CONFIG_PARA="${CONFIG_PARA} --sysroot=${RABBIT_BUILD_CROSS_SYSROOT}"
+        CONFIG_PARA="${CONFIG_PARA} --cc=${CC} --cxx=${CXX}"
         #CONFIG_PARA="${CONFIG_PARA} --pkg-config="${PKG_CONFIG}"
         CONFIG_PARA="${CONFIG_PARA} --pkgconfigdir=${RABBIT_BUILD_PREFIX}/lib/pkgconfig"
         #CONFIG_PARA="${CONFIG_PARA} ${THIRD_LIB}"

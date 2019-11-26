@@ -73,14 +73,6 @@ else
 fi
 case ${BUILD_TARGERT} in
     android)
-        export CC=${RABBIT_BUILD_CROSS_PREFIX}gcc 
-        export CXX=${RABBIT_BUILD_CROSS_PREFIX}g++
-        export AR=${RABBIT_BUILD_CROSS_PREFIX}gcc-ar
-        export LD=${RABBIT_BUILD_CROSS_PREFIX}ld
-        #export AS=${RABBIT_BUILD_CROSS_PREFIX}as
-        export STRIP=${RABBIT_BUILD_CROSS_PREFIX}strip
-        export NM=${RABBIT_BUILD_CROSS_PREFIX}nm
-        #export RANLIB=${RABBIT_BUILD_CROSS_PREFIX}ranlib
         CONFIG_PARA="${CONFIG_PARA} --cross-prefix=${RABBIT_BUILD_CROSS_PREFIX} --enable-static --host=$RABBIT_BUILD_CROSS_HOST"
         CONFIG_PARA="${CONFIG_PARA} --sysroot=${RABBIT_BUILD_CROSS_SYSROOT}"
         if [ "x86" = "${BUILD_ARCH}" -o "x86_64" = "${BUILD_ARCH}" ]; then

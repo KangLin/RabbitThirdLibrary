@@ -69,15 +69,6 @@ echo ""
 echo "configure ..."
 case ${BUILD_TARGERT} in
     android)
-        export CC=${RABBIT_BUILD_CROSS_PREFIX}gcc
-        export CXX=${RABBIT_BUILD_CROSS_PREFIX}g++
-        export AR=${RABBIT_BUILD_CROSS_PREFIX}gcc-ar
-        export LD=${RABBIT_BUILD_CROSS_PREFIX}ld
-        #export AS=${RABBIT_BUILD_CROSS_PREFIX}as
-        export STRIP=${RABBIT_BUILD_CROSS_PREFIX}strip
-        export NM=${RABBIT_BUILD_CROSS_PREFIX}nm
-        export CROSS=${RABBIT_BUILD_CROSS_PREFIX}
-        CONFIG_PARA="--sdk-path=${ANDROID_NDK_ROOT}"
         case ${BUILD_ARCH} in 
             arm)
                 CONFIG_PARA="${CONFIG_PARA} --target=armv7-android-gcc"
@@ -96,9 +87,9 @@ case ${BUILD_TARGERT} in
         export ANDROID_ABI="${ANDROID_ABI}"
         
         #编译 cpufeatures
-        echo "${RABBIT_BUILD_CROSS_PREFIX}gcc ${RABBIT_CFLAGS} -c ${ANDROID_NDK_ROOT}/sources/android/cpufeatures/cpu-features.c"
-        ${RABBIT_BUILD_CROSS_PREFIX}gcc ${RABBIT_CFLAGS} -c ${ANDROID_NDK_ROOT}/sources/android/cpufeatures/cpu-features.c
-        ${RABBIT_BUILD_CROSS_PREFIX}ar rcs  libcpu-features.a cpu-features.o
+        echo "${CC} ${RABBIT_CFLAGS} -c ${ANDROID_NDK_ROOT}/sources/android/cpufeatures/cpu-features.c"
+        ${CC} ${RABBIT_CFLAGS} -c ${ANDROID_NDK_ROOT}/sources/android/cpufeatures/cpu-features.c
+        ${AR} rcs libcpu-features.a cpu-features.o
         cp libcpu-features.a ${RABBIT_BUILD_PREFIX}/lib/.
         ;;
     unix)
@@ -152,6 +143,7 @@ CONFIG_PARA="${CONFIG_PARA} --enable-libs --prefix=$RABBIT_BUILD_PREFIX"
 CONFIG_PARA="${CONFIG_PARA} --disable-docs --disable-examples --disable-install-docs --disable-tools "
 CONFIG_PARA="${CONFIG_PARA} --disable-install-bins --enable-install-libs"
 CONFIG_PARA="${CONFIG_PARA} --disable-unit-tests --disable-debug --disable-debug-libs"
+CONFIG_PARA="${CONFIG_PARA} --enable-libyuv"
 echo "../configure ${CONFIG_PARA} --extra-cflags=\"${CFLAGS=}\""
 ../configure ${CONFIG_PARA} --extra-cflags="${CFLAGS}" --extra-cxxflags="${CPPFLAGS}"
 

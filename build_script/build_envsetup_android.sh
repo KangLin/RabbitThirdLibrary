@@ -179,6 +179,7 @@ case ${BUILD_ARCH} in
             else
                 RABBIT_BUILD_CROSS_HOST=i686-linux-android
             fi
+            RABBIT_BUILD_CROSS_HOST_CC=$RABBIT_BUILD_CROSS_HOST
         fi
         #交叉编译前缀
         if [ -z "$ANDROID_ABI" ]; then
@@ -198,6 +199,7 @@ case ${BUILD_ARCH} in
         ANDROID_NDK_ABI_NAME="armeabi-v7a"
         if [ -z "${RABBIT_BUILD_CROSS_HOST}" ]; then
             RABBIT_BUILD_CROSS_HOST=arm-linux-androideabi
+            RABBIT_BUILD_CROSS_HOST_CC=armv7a-linux-androideabi
         fi
         export ANDROID_TOOLCHAIN_NAME=${RABBIT_BUILD_CROSS_HOST}-${RABBIT_TOOLCHAIN_VERSION}
         ;;
@@ -206,13 +208,20 @@ esac
 #TODO:现在用clang，如果ndk<11，则注释下列行
 export ANDROID_TOOLCHAIN_NAME=llvm
 
+export RABBIT_BUILD_CROSS_PREFIX=$ANDROID_NDK/toolchains/$ANDROID_TOOLCHAIN_NAME/prebuilt/$ANDROID_NDK_HOST/bin/${RABBIT_BUILD_CROSS_HOST}-
+export CC=$ANDROID_NDK/toolchains/$ANDROID_TOOLCHAIN_NAME/prebuilt/$ANDROID_NDK_HOST/bin/${RABBIT_BUILD_CROSS_HOST_CC}${ANDROID_NATIVE_API_LEVEL}-clang 
+export CXX=$ANDROID_NDK/toolchains/$ANDROID_TOOLCHAIN_NAME/prebuilt/$ANDROID_NDK_HOST/bin/${RABBIT_BUILD_CROSS_HOST_CC}${ANDROID_NATIVE_API_LEVEL}-clang++
+export AR=${RABBIT_BUILD_CROSS_PREFIX}ar
+export LD=${RABBIT_BUILD_CROSS_PREFIX}ld
+export AS=${RABBIT_BUILD_CROSS_PREFIX}as
+export STRIP=${RABBIT_BUILD_CROSS_PREFIX}strip
+export NM=${RABBIT_BUILD_CROSS_PREFIX}nm
 if [ -z "$ANDROID_PLATFORM" ]; then
     ANDROID_PLATFORM=android-${ANDROID_NATIVE_API_LEVEL}
 fi
 
 #交叉编译前缀
 #export RABBIT_BUILD_CROSS_PREFIX=${RABBIT_TOOL_CHAIN_ROOT}/bin/${RABBIT_BUILD_CROSS_HOST}-
-export RABBIT_BUILD_CROSS_PREFIX=$ANDROID_NDK/toolchains/$ANDROID_TOOLCHAIN_NAME/prebuilt/$ANDROID_NDK_HOST/bin/${RABBIT_BUILD_CROSS_HOST}-
 export RABBIT_TOOL_CHAIN_ROOT=$ANDROID_NDK/toolchains/$ANDROID_TOOLCHAIN_NAME/prebuilt/$ANDROID_NDK_HOST
 
 #交叉编译平台的 sysroot
