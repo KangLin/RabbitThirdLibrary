@@ -57,6 +57,10 @@ echo "PKG_CONFIG:$PKG_CONFIG"
 cd ${SOURCE_DIR}/build_script
 
 ./build_openssl.sh ${BUILD_TARGERT} > /dev/null
+./build_libpng.sh ${BUILD_TARGERT} > /dev/null
+./build_jpeg.sh ${BUILD_TARGERT} > /dev/null
+./build_libgif.sh ${BUILD_TARGERT} > /dev/null
+./build_libtiff.sh ${BUILD_TARGERT} > /dev/null
 ./build_libyuv.sh ${BUILD_TARGERT} > /dev/null
 ./build_libvpx.sh ${BUILD_TARGERT} > /dev/null
 ./build_libopus.sh ${BUILD_TARGERT} > /dev/null
@@ -68,8 +72,10 @@ cd ${SOURCE_DIR}/build_script
 
 if [ "$TRAVIS_TAG" != "" ]; then
     . build_envsetup_${BUILD_TARGERT}.sh
-    tar czf ${BUILD_TARGERT}_${BUILD_ARCH}_qt${QT_VERSION}_${RABBIT_CONFIG}.tar.gz ${RABBIT_BUILD_PREFIX}
+    TAR_FILE=$(basename ${RABBIT_BUILD_PREFIX}).tar.gz
+    cd $(dirname ${RABBIT_BUILD_PREFIX})
+    tar czf ${TAR_FILE} $(basename ${RABBIT_BUILD_PREFIX})
     wget -c https://github.com/probonopd/uploadtool/raw/master/upload.sh
     chmod u+x upload.sh
-    ./upload.sh ${BUILD_TARGERT}_${BUILD_ARCH}_qt${QT_VERSION}_${RABBIT_CONFIG}.tar.gz
+    ./upload.sh ${TAR_FILE}
 fi

@@ -26,6 +26,7 @@
 #ANDROID_STL:指定 CMake 应使用的 STL。默认情况下，CMake 使用 c++_static。
 
 # ANDROID_NDK_HOST:
+# ANDROID_NATIVE_API_LEVEL: API版本
 # QT_ROOT:
 # BUILD_ARCH:
 # RABBIT_CLEAN:
@@ -104,7 +105,9 @@ fi
 if [ -z "${ANDROID_NATIVE_API_LEVEL}" ]; then
     ANDROID_NATIVE_API_LEVEL=24    #android ndk api (平台)版本号, Qt5.9 支持最小平台版本
 fi
-
+if [ -z "${ANDROID_API}" ]; then
+    ANDROID_API=android-$ANDROID_NATIVE_API_LEVEL
+fi
 if [ -z "${RABBIT_BUILD_PREFIX}" ]; then
     RABBIT_BUILD_PREFIX=`pwd`/../${BUILD_TARGERT}    #修改这里为安装前缀  
     RABBIT_BUILD_PREFIX=${RABBIT_BUILD_PREFIX}${ANDROID_NATIVE_API_LEVEL}_${BUILD_ARCH}_qt${QT_VERSION}_${RABBIT_CONFIG}
@@ -142,11 +145,13 @@ case $TARGET_OS in
             ANDROID_NDK_HOST=windows
         fi
         #RABBIT_CMAKE_MAKE_PROGRAM=$ANDROID_NDK/prebuilt/${ANDROID_NDK_HOST}/bin/make #这个用不着，只有在windows命令行下才有用 
+        YASM=$ANDROID_NDK/prebuilt/${ANDROID_NDK_HOST}/bin/yasm.exe
         RABBITIM_GENERATORS="MSYS Makefiles"
         ;;
     Linux* | Unix*)
         ANDROID_NDK_HOST="linux-`uname -m`"    #windows、linux-x86_64
         RABBITIM_GENERATORS="Unix Makefiles" 
+        YASM=$ANDROID_NDK/prebuilt/${ANDROID_NDK_HOST}/bin/yasm
         ;;
     *)
     echo "Please set ANDROID_NDK_HOST. see build_envsetup_android.sh"
@@ -194,9 +199,10 @@ case ${BUILD_ARCH} in
     arm*)
         if [ -z "$ANDROID_ABI" ]; then
             export ANDROID_ABI="armeabi-v7a with NEON"
+            export RABBIT_CFLAGS="-march=armv7-a -mfloat-abi=softfp -mfpu=neon"
+            export ANDROID_NDK_ABI_NAME="armeabi-v7a"
+            export ANDROID_ARM_NEON=ON
         fi
-        RABBIT_CFLAGS="-march=armv7-a -mfloat-abi=softfp -mfpu=neon"
-        ANDROID_NDK_ABI_NAME="armeabi-v7a"
         if [ -z "${RABBIT_BUILD_CROSS_HOST}" ]; then
             RABBIT_BUILD_CROSS_HOST=arm-linux-androideabi
             RABBIT_BUILD_CROSS_HOST_CC=armv7a-linux-androideabi
@@ -219,6 +225,13 @@ export NM=${RABBIT_BUILD_CROSS_PREFIX}nm
 if [ -z "$ANDROID_PLATFORM" ]; then
     ANDROID_PLATFORM=android-${ANDROID_NATIVE_API_LEVEL}
 fi
+
+# get version code
+MAJOR=$(echo __GNUC__ | $CC -E -xc - | tail -n 1)
+MINOR=$(echo __GNUC_MINOR__ | $CC -E -xc - | tail -n 1)
+PATCHLEVEL=$(echo __GNUC_PATCHLEVEL__ | $CC -E -xc - | tail -n 1)
+GCC_VERSION=${MAJOR}.${MINOR}.${PATCHLEVEL}
+echo "gcc version:${GCC_VERSION}"
 
 #交叉编译前缀
 #export RABBIT_BUILD_CROSS_PREFIX=${RABBIT_TOOL_CHAIN_ROOT}/bin/${RABBIT_BUILD_CROSS_HOST}-
@@ -266,6 +279,7 @@ echo "ANDROID_ABI:$ANDROID_ABI"
 echo "RABBIT_TOOL_CHAIN_ROOT:$RABBIT_TOOL_CHAIN_ROOT"
 echo "ANDROID_TOOLCHAIN_NAME:$ANDROID_TOOLCHAIN_NAME"
 echo "ANDROID_NATIVE_API_LEVEL:$ANDROID_NATIVE_API_LEVEL"
+echo "ANDROID_API:$ANDROID_API"
 echo "ANDROID_STL:$ANDROID_STL"
 echo "RABBIT_BUILD_PREFIX:$RABBIT_BUILD_PREFIX"
 echo "RABBIT_BUILD_CROSS_HOST：$RABBIT_BUILD_CROSS_HOST"

@@ -132,7 +132,7 @@ QMAKE=qmake
 if [ -n "${QT_ROOT}" -a "${QT_ROOT}" != "NO" ]; then
     QT_BIN=${QT_ROOT}/bin       #设置用于 android 平台编译的 qt bin 目录
     QMAKE=${QT_BIN}/qmake       #设置用于 unix 平台编译的 QMAKE。
-                            #这里设置的是自动编译时的配置，你需要修改为你本地qt编译环境的配置.
+                        #这里设置的是自动编译时的配置，你需要修改为你本地qt编译环境的配置.
 fi
 
 #export PATH=${RABBIT_BUILD_PREFIX}/bin:${RABBIT_BUILD_PREFIX}/lib:${QT_BIN}:$PATH
@@ -140,8 +140,8 @@ fi
 export PKG_CONFIG_PATH=${RABBIT_BUILD_PREFIX}/lib/pkgconfig
 export PKG_CONFIG_LIBDIR=${PKG_CONFIG_PATH}
 if [ -n "$RABBIT_BUILD_CROSS_SYSROOT" ]; then
-    export RABBIT_CFLAGS="--sysroot=${RABBIT_BUILD_CROSS_SYSROOT}" 
-    export RABBIT_CPPFLAGS="--sysroot=${RABBIT_BUILD_CROSS_SYSROOT}" 
+    export RABBIT_CFLAGS="--sysroot=${RABBIT_BUILD_CROSS_SYSROOT}"
+    export RABBIT_CPPFLAGS="--sysroot=${RABBIT_BUILD_CROSS_SYSROOT}"
     export RABBIT_LDFLAGS="--sysroot=${RABBIT_BUILD_CROSS_SYSROOT}"
     
     RABBIT_BUILD_CROSS_STL=${RABBIT_BUILD_CROSS_SYSROOT}
@@ -150,6 +150,15 @@ if [ -n "$RABBIT_BUILD_CROSS_SYSROOT" ]; then
     RABBIT_BUILD_CROSS_STL_INCLUDE_FLAGS="-I${RABBIT_BUILD_CROSS_STL_INCLUDE}" # -I${RABBIT_BUILD_CROSS_STL_LIBS}/include"
     export RABBIT_CPPFLAGS="$RABBIT_CFLAGS $RABBIT_BUILD_CROSS_STL_INCLUDE_FLAGS"    
 fi
+
+# configure C compiler
+export compiler=$(which gcc)
+# get version code
+MAJOR=$(echo __GNUC__ | $compiler -E -xc - | tail -n 1)
+MINOR=$(echo __GNUC_MINOR__ | $compiler -E -xc - | tail -n 1)
+PATCHLEVEL=$(echo __GNUC_PATCHLEVEL__ | $compiler -E -xc - | tail -n 1)
+GCC_VERSION=${MAJOR}.${MINOR}.${PATCHLEVEL}
+echo "gcc version:${GCC_VERSION}"
 
 echo "---------------------------------------------------------------------------"
 echo "RABBIT_BUILD_PREFIX:$RABBIT_BUILD_PREFIX"
