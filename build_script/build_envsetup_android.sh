@@ -26,7 +26,6 @@
 #ANDROID_STL:指定 CMake 应使用的 STL。默认情况下，CMake 使用 c++_static。
 
 # ANDROID_NDK_HOST:
-# ANDROID_NATIVE_API_LEVEL: API版本
 # QT_ROOT:
 # BUILD_ARCH:
 # RABBIT_CLEAN:
@@ -68,7 +67,6 @@ fi
 #RABBIT_BUILD_STATIC="static" #设置编译静态库，注释掉，则为编译动态库
 #RABBIT_USE_REPOSITORIES="TRUE" #下载指定的压缩包。省略，则下载开发库。  
 #RABBIT_TOOLCHAIN_VERSION=4.8   #工具链版本号,默认 4.9  
-#ANDROID_NATIVE_API_LEVEL=24   #android ndk api (平台)版本号,默认 24
 if [ -z "${BUILD_JOB_PARA}" ]; then
     BUILD_JOB_PARA="-j`cat /proc/cpuinfo |grep 'cpu cores' |wc -l`"  #make 同时工作进程参数
     if [ "$BUILD_JOB_PARA" = "-j1" ];then
@@ -102,12 +100,11 @@ fi
 if [ -z "${RABBIT_TOOLCHAIN_VERSION}" ]; then
     RABBIT_TOOLCHAIN_VERSION=4.9  #工具链版本号
 fi
-if [ -z "${ANDROID_NATIVE_API_LEVEL}" ]; then
-    ANDROID_NATIVE_API_LEVEL=24    #android ndk api (平台)版本号, Qt5.9 支持最小平台版本
-fi
+
 if [ -z "${ANDROID_API}" ]; then
-    ANDROID_API=android-$ANDROID_NATIVE_API_LEVEL
+    ANDROID_API=android-24
 fi
+ANDROID_NATIVE_API_LEVEL=`echo "$ANDROID_API"|awk -F '-' '{print $2}'` #android ndk api (平台)版本号, Qt5.9 支持最小平台版本
 if [ -z "${RABBIT_BUILD_PREFIX}" ]; then
     RABBIT_BUILD_PREFIX=`pwd`/../${BUILD_TARGERT}    #修改这里为安装前缀  
     RABBIT_BUILD_PREFIX=${RABBIT_BUILD_PREFIX}${ANDROID_NATIVE_API_LEVEL}_${BUILD_ARCH}_qt${QT_VERSION}_${RABBIT_CONFIG}

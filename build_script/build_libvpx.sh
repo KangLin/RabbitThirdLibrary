@@ -75,6 +75,7 @@ case ${BUILD_TARGERT} in
                 ;;
             arm64|x86*|arm64*)
                 CONFIG_PARA="${CONFIG_PARA} --target=${BUILD_ARCH}-android-gcc"
+                export AS=$YASM
                 ;;
             *)
                 echo "Don't support target ${BUILD_ARCH}"
@@ -85,8 +86,7 @@ case ${BUILD_TARGERT} in
         export CPPFLAGS="${RABBIT_CPPFLAGS}"
         export LDFLAGS="${RABBIT_LDFLAGS}"
         export ANDROID_ABI="${ANDROID_ABI}"
-        export AS=$YASM
-        
+
         #编译 cpufeatures
         echo "${CC} ${RABBIT_CFLAGS} -c ${ANDROID_NDK_ROOT}/sources/android/cpufeatures/cpu-features.c"
         ${CC} ${RABBIT_CFLAGS} -c ${ANDROID_NDK_ROOT}/sources/android/cpufeatures/cpu-features.c
