@@ -120,6 +120,7 @@ case ${BUILD_TARGERT} in
                 ;;
             x86*)
                 CONFIG_PARA="${CONFIG_PARA} --cpu=i586"
+                CONFIG_PARA="${CONFIG_PARA} --x86asmexe=$YASM"
             ;;
         esac
         
