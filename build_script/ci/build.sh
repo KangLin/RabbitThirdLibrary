@@ -1,61 +1,14 @@
 #!/bin/bash
-set -e
+set -ev
 
-#TODO:修改数组，修改完后，再修改appveyor.yml中的 RABBIT_QT_NUMBER 为QT开始的数组索引  
-RABBIT_LIBRARYS[0]="change_prefix zlib expat libgpx openssl libsodium libcurl libqrencode"
-RABBIT_LIBRARYS[1]="boost"
-RABBIT_LIBRARYS[2]="libpng jpeg libgif libtiff freetype libyuv libvpx libopus x264 speex ffmpeg"
-RABBIT_LIBRARYS[3]="opencv dlib" # geos gdal"
-#RABBIT_LIBRARYS[3]="osg"
-#RABBIT_LIBRARYS[4]="OsgQt osgearth "
-RABBIT_LIBRARYS[4]="qxmpp qzxing"
-
-PROJECT_DIR=`pwd`
+SOURCE_DIR=../..
 if [ -n "$1" ]; then
-    PROJECT_DIR=$1
+    SOURCE_DIR=$1
 fi
-echo "PROJECT_DIR:${PROJECT_DIR}"
-SCRIPT_DIR=${PROJECT_DIR}/build_script
-if [ -d ${PROJECT_DIR}/ThirdLibrary/build_script ]; then
-    SCRIPT_DIR=${PROJECT_DIR}/ThirdLibrary/build_script
-fi
-cd ${SCRIPT_DIR}
-SOURCE_DIR=${SCRIPT_DIR}/../src
+TOOLS_DIR=${SOURCE_DIR}/Tools
 
-if [ -z "${LIBRARY_NUMBER}" ]; then
-    LIBRARY_NUMBER=0
-fi
+cd ${SOURCE_DIR}
 
-#下载预编译库
-if [ -n "$DOWNLOAD_URL" ]; then
-    wget -c -q -O ${SCRIPT_DIR}/../${BUILD_TARGERT}.zip ${DOWNLOAD_URL}
-fi
-
-export RABBIT_BUILD_PREFIX=${SCRIPT_DIR}/../build #${BUILD_TARGERT}${RABBIT_TOOLCHAIN_VERSION}_${BUILD_ARCH}_qt${QT_VERSION}_${RABBIT_CONFIG}
-if [ ! -d ${RABBIT_BUILD_PREFIX} ]; then
-    mkdir -p ${RABBIT_BUILD_PREFIX}
-fi
-cd ${RABBIT_BUILD_PREFIX}
-export RABBIT_BUILD_PREFIX=`pwd`
-cd ${SCRIPT_DIR}
-if [ -f ${SCRIPT_DIR}/../${BUILD_TARGERT}.zip ]; then
-    echo "unzip -q -d ${RABBIT_BUILD_PREFIX} ${SCRIPT_DIR}/../${BUILD_TARGERT}.zip"
-    unzip -q -d ${RABBIT_BUILD_PREFIX} ${SCRIPT_DIR}/../${BUILD_TARGERT}.zip
-    if [ "$PROJECT_NAME" != "RabbitThirdLibrary" \
-        -a "$BUILD_TARGERT" != "windows_msvc" \
-        -a -f "${RABBIT_BUILD_PREFIX}/change_prefix.sh" ]; then
-
-        cd ${RABBIT_BUILD_PREFIX}
-        cat lib/pkgconfig/zlib.pc
-        cat change_prefix.sh
-        echo "bash change_prefix.sh"
-        bash change_prefix.sh
-        cat lib/pkgconfig/zlib.pc
-        cd ${SCRIPT_DIR}
-    fi
-fi
-
-TOOLS_DIR=${SCRIPT_DIR}/../Tools
 if [ "$BUILD_TARGERT" = "android" ]; then
     export ANDROID_SDK_ROOT=${TOOLS_DIR}/android-sdk
     export ANDROID_NDK_ROOT=${TOOLS_DIR}/android-ndk
@@ -72,8 +25,8 @@ if [ "$BUILD_TARGERT" = "android" ]; then
             export QT_ROOT=${TOOLS_DIR}/Qt/${QT_VERSION}/${QT_VERSION}/android_armv7
             ;;
         x86)
-        export QT_ROOT=${TOOLS_DIR}/Qt/${QT_VERSION}/${QT_VERSION}/android_x86
-        ;;
+            export QT_ROOT=${TOOLS_DIR}/Qt/${QT_VERSION}/${QT_VERSION}/android_x86
+            ;;
     esac
     export PATH=${TOOLS_DIR}/apache-ant/bin:$JAVA_HOME:$PATH
     export ANDROID_SDK=${ANDROID_SDK_ROOT}
@@ -93,65 +46,36 @@ if [ "${BUILD_TARGERT}" = "unix" ]; then
     export PKG_CONFIG_PATH=$QT_ROOT/lib/pkgconfig:$PKG_CONFIG_PATH
 fi
 
-if [ "$BUILD_TARGERT" != "windows_msvc" ]; then
-    BUILD_JOB_PARA="-j`cat /proc/cpuinfo |grep 'cpu cores' |wc -l`"  #make 同时工作进程参数
-    if [ "$BUILD_JOB_PARA" = "-j1" ];then
-        BUILD_JOB_PARA="-j2"
-    fi
-fi
-
-export PATH=/usr/bin:$PATH
 if [ "$BUILD_TARGERT" = "windows_mingw" \
     -a -n "$APPVEYOR" ]; then
-    export RABBIT_TOOLCHAIN_ROOT=/C/Qt/Tools/mingw${RABBIT_TOOLCHAIN_VERSION}
-    export PATH="${RABBIT_TOOLCHAIN_ROOT}/bin:/usr/bin:/c/Tools/curl/bin:/c/Program Files (x86)/CMake/bin"
+    export PATH=/C/Qt/Tools/mingw${TOOLCHAIN_VERSION}/bin:$PATH
 fi
 
-TARGET_OS=`uname -s`
-case $TARGET_OS in
-    MINGW* | CYGWIN* | MSYS*)
-        export PKG_CONFIG=/c/msys64/mingw32/bin/pkg-config.exe
-        ;;
-    Linux* | Unix*)
-    ;;
-    *)
-    ;;
-esac
-if [ "$BUILD_TARGERT" = "windows_msvc" ]; then
-    export PATH=/C/Perl/bin:$PATH
-    rm -fr /usr/include
-fi
-
-echo "---------------------------------------------------------------------------"
-echo "RABBIT_BUILD_PREFIX:$RABBIT_BUILD_PREFIX"
-echo "QT_BIN:$QT_BIN"
-echo "QT_ROOT:$QT_ROOT"
+export PATH=${QT_ROOT}/bin:$PATH
+echo "PATH:$PATH"
 echo "PKG_CONFIG:$PKG_CONFIG"
-echo "PKG_CONFIG_PATH:$PKG_CONFIG_PATH"
-echo "PKG_CONFIG_SYSROOT_DIR:$PKG_CONFIG_SYSROOT_DIR"
-echo "PATH=$PATH"
-echo "RABBIT_BUILD_THIRDLIBRARY:$RABBIT_BUILD_THIRDLIBRARY"
-echo "SCRIPT_DIR:$SCRIPT_DIR"
-echo "---------------------------------------------------------------------------"
+cd ${SOURCE_DIR}/build_script
 
-cd ${SCRIPT_DIR}
+./build_openssl.sh ${BUILD_TARGERT} > /dev/null
+./build_libpng.sh ${BUILD_TARGERT} > /dev/null
+./build_jpeg.sh ${BUILD_TARGERT} > /dev/null
+./build_libgif.sh ${BUILD_TARGERT} > /dev/null
+./build_libtiff.sh ${BUILD_TARGERT} > /dev/null
+./build_libyuv.sh ${BUILD_TARGERT} > /dev/null
+./build_libvpx.sh ${BUILD_TARGERT} > /dev/null
+./build_libopus.sh ${BUILD_TARGERT} > /dev/null
+./build_ffmpeg.sh ${BUILD_TARGERT} > /dev/null
+./build_opencv.sh ${BUILD_TARGERT} #> /dev/null
+./build_dlib.sh ${BUILD_TARGERT}
+#./build_qxmpp.sh ${BUILD_TARGERT}
+#./build_qzxing.sh ${BUILD_TARGERT}
 
-if [ "$PROJECT_NAME" = "rabbitim" ]; then
-    echo "bash ./build_rabbitim.sh ${BUILD_TARGERT} $PROJECT_DIR $CMAKE"
-    bash ./build_rabbitim.sh ${BUILD_TARGERT} $CMAKE $PROJECT_DIR
-    exit 0
+if [ "$TRAVIS_TAG" != "" ]; then
+    . build_envsetup_${BUILD_TARGERT}.sh
+    TAR_FILE=$(basename ${RABBIT_BUILD_PREFIX}).tar.gz
+    cd $(dirname ${RABBIT_BUILD_PREFIX})
+    tar czf ${TAR_FILE} $(basename ${RABBIT_BUILD_PREFIX})
+    wget -c https://github.com/probonopd/uploadtool/raw/master/upload.sh
+    chmod u+x upload.sh
+    ./upload.sh ${TAR_FILE}
 fi
-
-for v in ${RABBIT_LIBRARYS[$RABBIT_NUMBER]}
-do
-    if [ "$v" = "rabbitim" ]; then
-        bash ./build_$v.sh ${BUILD_TARGERT} # > /dev/null
-    else 
-            if [ "$APPVEYOR" = "True" ]; then
-                bash ./build_$v.sh ${BUILD_TARGERT} ${SOURCE_DIR}/$v
-            else
-                bash ./build_$v.sh ${BUILD_TARGERT} ${SOURCE_DIR}/$v > /dev/null
-            fi
-        
-    fi
-done
