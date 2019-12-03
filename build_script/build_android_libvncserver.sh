@@ -66,15 +66,15 @@ rm -fr *
 
 case `uname -s` in
     MINGW* | CYGWIN*)
-        RABBITIM_GENERATORS="MinGW Makefiles"
+        GENERATORS="MinGW Makefiles"
         ;;
     Linux* | Unix* | *)
-        RABBITIM_GENERATORS="Unix Makefiles" 
+        GENERATORS="Unix Makefiles" 
         ;;
 esac
 
 cmake .. \
-    -G"${RABBITIM_GENERATORS}"\
+    -G"${GENERATORS}"\
     -DCMAKE_TOOLCHAIN_FILE=$PREFIX/../../platforms/android/android.toolchain.cmake \
     -DANDROID_ABI="armeabi-v7a with NEON" \
     -DANDROID_TOOLCHAIN_NAME=arm-linux-androideabi-${TOOLCHAIN_VERSION} \

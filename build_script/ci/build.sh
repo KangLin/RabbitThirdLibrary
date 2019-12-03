@@ -51,11 +51,16 @@ if [ "$BUILD_TARGERT" = "windows_mingw" \
     export PATH=/C/Qt/Tools/mingw${TOOLCHAIN_VERSION}/bin:$PATH
 fi
 
+if [ "$BUILD_TARGERT" = "windows_msvc" ]; then
+    export PATH=/C/Perl/bin:$PATH
+fi
+
 export PATH=${QT_ROOT}/bin:$PATH
 echo "PATH:$PATH"
 echo "PKG_CONFIG:$PKG_CONFIG"
 cd ${SOURCE_DIR}/build_script
 
+./build_zlib.sh ${BUILD_TARGERT} > /dev/null
 ./build_openssl.sh ${BUILD_TARGERT} > /dev/null
 ./build_libpng.sh ${BUILD_TARGERT} > /dev/null
 ./build_jpeg.sh ${BUILD_TARGERT} > /dev/null

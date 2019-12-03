@@ -128,7 +128,7 @@ case ${BUILD_TARGERT} in
             CMAKE_PARA="-DBUILD_SHARED_LIBS=NO"
         fi
         cmake .. -DCMAKE_INSTALL_PREFIX="$RABBIT_BUILD_PREFIX" \
-            -G"${RABBITIM_GENERATORS}" \
+            -G"${GENERATORS}" \
             -DWITH_TOOLS=NO \
             -DWITH_TESTS=NO \
             ${CMAKE_PARA}

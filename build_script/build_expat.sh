@@ -126,10 +126,10 @@ case ${BUILD_TARGERT} in
     windows_msvc)
         #sed -i "s/add_custom_command.*//g" ../CMakeLists.txt
         CMAKE_PARA="-DBUILD_tests=OFF -DBUILD_examples=OFF -DBUILD_tools=OFF"
-        echo "cmake .. -DCMAKE_INSTALL_PREFIX=$RABBIT_BUILD_PREFIX -DCMAKE_BUILD_TYPE=${RABBIT_CONFIG} -G\"${RABBITIM_GENERATORS}\" ${CMAKE_PARA}"
+        echo "cmake .. -DCMAKE_INSTALL_PREFIX=$RABBIT_BUILD_PREFIX -DCMAKE_BUILD_TYPE=${RABBIT_CONFIG} -G\"${GENERATORS}\" ${CMAKE_PARA}"
         cmake .. \
             -DCMAKE_INSTALL_PREFIX="$RABBIT_BUILD_PREFIX" \
-            -G"${RABBITIM_GENERATORS}" -DCMAKE_BUILD_TYPE=${RABBIT_CONFIG} ${CMAKE_PARA} 
+            -G"${GENERATORS}" -DCMAKE_BUILD_TYPE=${RABBIT_CONFIG} ${CMAKE_PARA} 
         
         cmake --build . --target install --config ${RABBIT_CONFIG} #{MAKE_PARA}
         if [ "${RABBIT_CONFIG}" = "Debug" ]; then

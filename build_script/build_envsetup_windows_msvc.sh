@@ -108,23 +108,23 @@ TARGET_OS=`uname -s`
 
 if [ "$RABBIT_TOOLCHAIN_VERSION" = "15" ]; then
     if [ "${BUILD_ARCH}" = "x64" ]; then
-        RABBITIM_GENERATORS="Visual Studio 15 2017 Win64"
+        GENERATORS="Visual Studio 15 2017 Win64"
     else
-        RABBITIM_GENERATORS="Visual Studio 15 2017"
+        GENERATORS="Visual Studio 15 2017"
     fi
 fi
 if [ "$RABBIT_TOOLCHAIN_VERSION" = "14" ]; then
     if [ "${BUILD_ARCH}" = "x64" ]; then
-        RABBITIM_GENERATORS="Visual Studio 14 2015 Win64"
+        GENERATORS="Visual Studio 14 2015 Win64"
     else
-        RABBITIM_GENERATORS="Visual Studio 14 2015"
+        GENERATORS="Visual Studio 14 2015"
     fi
 fi
 if [ "$RABBIT_TOOLCHAIN_VERSION" = "12" ]; then
     if [ "${BUILD_ARCH}" = "x64" ]; then
-        RABBITIM_GENERATORS="Visual Studio 12 2013 Win64"
+        GENERATORS="Visual Studio 12 2013 Win64"
     else
-        RABBITIM_GENERATORS="Visual Studio 12 2013"
+        GENERATORS="Visual Studio 12 2013"
     fi
 fi
 
@@ -160,6 +160,6 @@ echo "PKG_CONFIG_PATH:$PKG_CONFIG_PATH"
 echo "PKG_CONFIG_SYSROOT_DIR:$PKG_CONFIG_SYSROOT_DIR"
 echo "BUILD_ARCH:$BUILD_ARCH"
 echo "RABBIT_TOOLCHAIN_VERSION:$RABBIT_TOOLCHAIN_VERSION"
-echo "RABBITIM_GENERATORS:$RABBITIM_GENERATORS"
+echo "GENERATORS:$GENERATORS"
 echo "PATH=$PATH"
 echo "---------------------------------------------------------------------------"

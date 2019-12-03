@@ -22,7 +22,7 @@
 # RABBIT_CLEAN:
 # BUILD_JOB_PARA:
 # RABBIT_USE_REPOSITORIES:
-# RABBITIM_GENERATORS:
+# GENERATORS:
 # RABBIT_BUILD_STATIC:
 
 #需要设置下面变量：
@@ -94,14 +94,14 @@ echo "QT_BIN:$QT_BIN"
 TARGET_OS=`uname -s`
 case $TARGET_OS in
     MINGW*)
-        RABBITIM_GENERATORS="MinGW Makefiles"
+        GENERATORS="MinGW Makefiles"
         MAKE="mingw-make.exe ${BUILD_JOB_PARA}"
         ;;
     CYGWIN* | MSYS*)
-        RABBITIM_GENERATORS="MSYS Makefiles"
+        GENERATORS="MSYS Makefiles"
         ;;
     Linux* | Unix*)
-        RABBITIM_GENERATORS="Unix Makefiles"
+        GENERATORS="Unix Makefiles"
         ;;
     *)
     echo "Please set RABBIT_BUILD_HOST. see build_envsetup_unix.sh"

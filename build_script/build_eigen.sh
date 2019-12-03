@@ -91,7 +91,7 @@ case ${BUILD_TARGERT} in
     unix)
         ;;
     windows_msvc)
-        #RABBITIM_GENERATORS="Visual Studio 12 2013"
+        #GENERATORS="Visual Studio 12 2013"
         MAKE_PARA=""
         ;;
     windows_mingw)
@@ -104,17 +104,17 @@ case ${BUILD_TARGERT} in
     ;;
 esac
 
-echo "cmake .. -DCMAKE_INSTALL_PREFIX=$RABBIT_BUILD_PREFIX -DCMAKE_BUILD_TYPE=${RABBIT_CONFIG} -G\"${RABBITIM_GENERATORS}\" ${CMAKE_PARA}"
+echo "cmake .. -DCMAKE_INSTALL_PREFIX=$RABBIT_BUILD_PREFIX -DCMAKE_BUILD_TYPE=${RABBIT_CONFIG} -G\"${GENERATORS}\" ${CMAKE_PARA}"
 if [ "${BUILD_TARGERT}" = "android" ]; then
     cmake .. \
         -DCMAKE_INSTALL_PREFIX="$RABBIT_BUILD_PREFIX" \
         -DCMAKE_VERBOSE_MAKEFILE=ON -DCMAKE_BUILD_TYPE=${RABBIT_CONFIG} \
-        -G"${RABBITIM_GENERATORS}" ${CMAKE_PARA} -DANDROID_ABI="${ANDROID_ABI}"
+        -G"${GENERATORS}" ${CMAKE_PARA} -DANDROID_ABI="${ANDROID_ABI}"
 else
     cmake .. \
         -DCMAKE_INSTALL_PREFIX="$RABBIT_BUILD_PREFIX" \
         -DCMAKE_VERBOSE_MAKEFILE=ON -DCMAKE_BUILD_TYPE=${RABBIT_CONFIG} \
-        -G"${RABBITIM_GENERATORS}" ${CMAKE_PARA} 
+        -G"${GENERATORS}" ${CMAKE_PARA} 
 fi
 cmake --build . --target install --config ${RABBIT_CONFIG} ${MAKE_PARA}
 

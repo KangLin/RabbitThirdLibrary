@@ -108,7 +108,7 @@ if [ "$2" = "cmake" ]; then
     cmake .. \
         -DCMAKE_INSTALL_PREFIX="`PWD`/install" \
         -DCMAKE_BUILD_TYPE=${RABBIT_CONFIG} \
-        -G"${RABBITIM_GENERATORS}" ${CMAKE_PARA} -DCMAKE_VERBOSE_MAKEFILE=TRUE 
+        -G"${GENERATORS}" ${CMAKE_PARA} -DCMAKE_VERBOSE_MAKEFILE=TRUE 
 
     echo "cmake --build . --target install --config ${RABBIT_CONFIG} ${MAKE_PARA}"
     cmake --build . --target install --config ${RABBIT_CONFIG} ${MAKE_PARA}

@@ -143,11 +143,11 @@ case $TARGET_OS in
         fi
         #RABBIT_CMAKE_MAKE_PROGRAM=$ANDROID_NDK/prebuilt/${ANDROID_NDK_HOST}/bin/make #这个用不着，只有在windows命令行下才有用 
         YASM=$ANDROID_NDK/prebuilt/${ANDROID_NDK_HOST}/bin/yasm.exe
-        RABBITIM_GENERATORS="MSYS Makefiles"
+        GENERATORS="MSYS Makefiles"
         ;;
     Linux* | Unix*)
         ANDROID_NDK_HOST="linux-`uname -m`"    #windows、linux-x86_64
-        RABBITIM_GENERATORS="Unix Makefiles" 
+        GENERATORS="Unix Makefiles" 
         YASM=$ANDROID_NDK/prebuilt/${ANDROID_NDK_HOST}/bin/yasm
         ;;
     *)
