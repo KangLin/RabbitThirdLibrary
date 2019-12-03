@@ -1,7 +1,7 @@
 #!/bin/bash
 set -ev
 
-SOURCE_DIR=../..
+SOURCE_DIR=$(cd `dirname $0`; pwd)/../..
 if [ -n "$1" ]; then
     SOURCE_DIR=$1
 fi

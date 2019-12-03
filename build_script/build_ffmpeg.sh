@@ -119,8 +119,8 @@ case ${BUILD_TARGERT} in
                 CONFIG_PARA="${CONFIG_PARA} --cpu=armv7-a --enable-neon"
                 ;;
             x86*)
-                CONFIG_PARA="${CONFIG_PARA} --cpu=i586"
-                CONFIG_PARA="${CONFIG_PARA} --x86asmexe=$YASM"
+                #CONFIG_PARA="${CONFIG_PARA} --cpu=i586"
+                CONFIG_PARA="${CONFIG_PARA} --x86asmexe==$YASM"
             ;;
         esac
         

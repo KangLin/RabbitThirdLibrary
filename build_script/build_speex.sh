@@ -99,14 +99,6 @@ else
 fi
 case ${BUILD_TARGERT} in
     android)
-        export CC=${RABBIT_BUILD_CROSS_PREFIX}gcc 
-        export CXX=${RABBIT_BUILD_CROSS_PREFIX}g++
-        export AR=${RABBIT_BUILD_CROSS_PREFIX}gcc-ar
-        export LD=${RABBIT_BUILD_CROSS_PREFIX}ld
-        export AS=${RABBIT_BUILD_CROSS_PREFIX}as
-        export STRIP=${RABBIT_BUILD_CROSS_PREFIX}strip
-        export NM=${RABBIT_BUILD_CROSS_PREFIX}nm
-        CONFIG_PARA="${CONFIG_PARA} CC=${RABBIT_BUILD_CROSS_PREFIX}gcc LD=${RABBIT_BUILD_CROSS_PREFIX}ld"
         CONFIG_PARA="${CONFIG_PARA} --host=$RABBIT_BUILD_CROSS_HOST"
         #CONFIG_PARA="${CONFIG_PARA} --with-sysroot=${RABBIT_BUILD_CROSS_SYSROOT}"
         CFLAGS="${RABBIT_CFLAGS}"
