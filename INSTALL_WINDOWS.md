@@ -265,7 +265,7 @@ msys2下的安装命令：
 5. RABBIT_CLEAN=TRUE               #编译前清理
 6. BUILD_ARCH                     #平台架构
 7. RABBIT_CONFIG                   #配置
-8. RABBIT_TOOLCHAIN_VERSION        #编译器版本
+8. TOOLCHAIN_VERSION        #编译器版本
 
 windows下用mingw交叉编译
 ----------------------
@@ -544,7 +544,7 @@ qt5.10.0
 5. RABBIT_CLEAN=TRUE               #编译前清理
 6. BUILD_ARCH                     #平台架构
 7. RABBIT_CONFIG                   #配置
-8. RABBIT_TOOLCHAIN_VERSION        #编译器版本
+8. TOOLCHAIN_VERSION        #编译器版本
 
 编译所有依赖的第三方库：
 

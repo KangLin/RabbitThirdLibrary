@@ -122,7 +122,7 @@ case ${BUILD_TARGERT} in
         else
             Configuration=Release
         fi
-        if [  "$RABBIT_TOOLCHAIN_VERSION" = "15" ]; then
+        if [  "$TOOLCHAIN_VERSION" = "15" ]; then
             if [ "$RABBIT_BUILD_STATIC" = "static" ]; then
                 SLN_FILE=libogg_static.sln
             else
@@ -140,7 +140,7 @@ case ${BUILD_TARGERT} in
             fi  
         fi
         
-        if [  "$RABBIT_TOOLCHAIN_VERSION" = "12" ]; then
+        if [  "$TOOLCHAIN_VERSION" = "12" ]; then
             if [ "$RABBIT_BUILD_STATIC" = "static" ]; then
                 SLN_FILE=libogg_static.sln
             else
@@ -158,7 +158,7 @@ case ${BUILD_TARGERT} in
             fi
         fi
         
-        if [  "$RABBIT_TOOLCHAIN_VERSION" = "14" ]; then
+        if [  "$TOOLCHAIN_VERSION" = "14" ]; then
             if [ "$RABBIT_BUILD_STATIC" = "static" ]; then
                 SLN_FILE=libogg_static.sln
             else

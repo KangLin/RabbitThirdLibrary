@@ -95,7 +95,7 @@ case ${BUILD_TARGERT} in
         else
             Configuration=Release
         fi
-        if [  "$RABBIT_TOOLCHAIN_VERSION" = "15" ]; then
+        if [  "$TOOLCHAIN_VERSION" = "15" ]; then
             if [ "$BUILD_ARCH" = "x64" ]; then
                 msbuild.exe -m -v:n -p:Configuration=${Configuration} -p:Platform=x64 Berkeley_DB_vs2012.sln
                 cp bin/x64/$RABBIT_CONFIG/v141/dynamic/*.dll $RABBIT_BUILD_PREFIX/bin
@@ -106,7 +106,7 @@ case ${BUILD_TARGERT} in
                 cp bin/Win32/$RABBIT_CONFIG/v141/dynamic/*.lib $RABBIT_BUILD_PREFIX/lib
             fi
         fi
-        if [  "$RABBIT_TOOLCHAIN_VERSION" = "12" ]; then
+        if [  "$TOOLCHAIN_VERSION" = "12" ]; then
             if [ "$BUILD_ARCH" = "x64" ]; then
                 msbuild.exe -m -v:n -p:Configuration=${Configuration} -p:Platform=x64 Berkeley_DB_vs2012.sln
                 cp bin/x64/$RABBIT_CONFIG/v120/dynamic/*.dll $RABBIT_BUILD_PREFIX/bin
@@ -117,7 +117,7 @@ case ${BUILD_TARGERT} in
                 cp bin/Win32/$RABBIT_CONFIG/v120/dynamic/*.lib $RABBIT_BUILD_PREFIX/lib
             fi
         fi
-        if [  "$RABBIT_TOOLCHAIN_VERSION" = "14" ]; then
+        if [  "$TOOLCHAIN_VERSION" = "14" ]; then
             if [ "$BUILD_ARCH" = "x64" ]; then
                 msbuild.exe -m -v:n -p:Configuration=${Configuration} -p:Platform=x64 Berkeley_DB_vs2012.sln
                 cp bin/x64/$RABBIT_CONFIG/v140/dynamic/*.dll $RABBIT_BUILD_PREFIX/bin

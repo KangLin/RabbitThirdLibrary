@@ -31,7 +31,7 @@ if [ -n "$DOWNLOAD_URL" ]; then
     wget -c -q -O ${SCRIPT_DIR}/../${BUILD_TARGERT}.zip ${DOWNLOAD_URL}
 fi
 
-export RABBIT_BUILD_PREFIX=${SCRIPT_DIR}/../build #${BUILD_TARGERT}${RABBIT_TOOLCHAIN_VERSION}_${BUILD_ARCH}_qt${QT_VERSION}_${RABBIT_CONFIG}
+export RABBIT_BUILD_PREFIX=${SCRIPT_DIR}/../build #${BUILD_TARGERT}${TOOLCHAIN_VERSION}_${BUILD_ARCH}_qt${QT_VERSION}_${RABBIT_CONFIG}
 if [ ! -d ${RABBIT_BUILD_PREFIX} ]; then
     mkdir -p ${RABBIT_BUILD_PREFIX}
 fi
@@ -103,7 +103,7 @@ fi
 export PATH=/usr/bin:$PATH
 if [ "$BUILD_TARGERT" = "windows_mingw" \
     -a -n "$APPVEYOR" ]; then
-    export RABBIT_TOOLCHAIN_ROOT=/C/Qt/Tools/mingw${RABBIT_TOOLCHAIN_VERSION}
+    export RABBIT_TOOLCHAIN_ROOT=/C/Qt/Tools/mingw${TOOLCHAIN_VERSION}
     export PATH="${RABBIT_TOOLCHAIN_ROOT}/bin:/usr/bin:/c/Tools/curl/bin:/c/Program Files (x86)/CMake/bin"
 fi
 

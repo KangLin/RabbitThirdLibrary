@@ -38,22 +38,22 @@ if [ -z "${BUILD_JOB_PARA}" ]; then
     fi
 fi
 
-if [ -z "${RABBIT_TOOLCHAIN_VERSION}" ]; then
+if [ -z "${TOOLCHAIN_VERSION}" ]; then
     case "${VisualStudioVersion}" in
         15*)
-            RABBIT_TOOLCHAIN_VERSION=15
+            TOOLCHAIN_VERSION=15
             MSVC_NAME=msvc2017
             ;;
         14*)
-            RABBIT_TOOLCHAIN_VERSION=14
+            TOOLCHAIN_VERSION=14
             MSVC_NAME=msvc2015
             ;;
         12*)
-            RABBIT_TOOLCHAIN_VERSION=12
+            TOOLCHAIN_VERSION=12
             MSVC_NAME=msvc2013
             ;;
           *)
-            echo "Please set RABBIT_TOOLCHAIN_VERSION"
+            echo "Please set TOOLCHAIN_VERSION"
             MSVC_NAME=msvc2015
             ;;
     esac
@@ -81,7 +81,7 @@ fi
 #安装前缀  
 if [ -z "${RABBIT_BUILD_PREFIX}" ]; then
     RABBIT_BUILD_PREFIX=`pwd`/../${BUILD_TARGERT}    #修改这里为安装前缀  
-    RABBIT_BUILD_PREFIX=${RABBIT_BUILD_PREFIX}${RABBIT_TOOLCHAIN_VERSION}_${BUILD_ARCH}_qt${QT_VERSION}_${RABBIT_CONFIG}
+    RABBIT_BUILD_PREFIX=${RABBIT_BUILD_PREFIX}${TOOLCHAIN_VERSION}_${BUILD_ARCH}_qt${QT_VERSION}_${RABBIT_CONFIG}
     if [ "$RABBIT_BUILD_STATIC" = "static" ]; then
         RABBIT_BUILD_PREFIX=${RABBIT_BUILD_PREFIX}_static
     fi
@@ -106,21 +106,21 @@ fi
 
 TARGET_OS=`uname -s`
 
-if [ "$RABBIT_TOOLCHAIN_VERSION" = "15" ]; then
+if [ "$TOOLCHAIN_VERSION" = "15" ]; then
     if [ "${BUILD_ARCH}" = "x64" ]; then
         GENERATORS="Visual Studio 15 2017 Win64"
     else
         GENERATORS="Visual Studio 15 2017"
     fi
 fi
-if [ "$RABBIT_TOOLCHAIN_VERSION" = "14" ]; then
+if [ "$TOOLCHAIN_VERSION" = "14" ]; then
     if [ "${BUILD_ARCH}" = "x64" ]; then
         GENERATORS="Visual Studio 14 2015 Win64"
     else
         GENERATORS="Visual Studio 14 2015"
     fi
 fi
-if [ "$RABBIT_TOOLCHAIN_VERSION" = "12" ]; then
+if [ "$TOOLCHAIN_VERSION" = "12" ]; then
     if [ "${BUILD_ARCH}" = "x64" ]; then
         GENERATORS="Visual Studio 12 2013 Win64"
     else
@@ -128,15 +128,15 @@ if [ "$RABBIT_TOOLCHAIN_VERSION" = "12" ]; then
     fi
 fi
 
-if [ "$RABBIT_TOOLCHAIN_VERSION" = "12" ]; then
+if [ "$TOOLCHAIN_VERSION" = "12" ]; then
    VC_TOOLCHAIN=12
    MSVC_VER=1800
 fi
-if [ "$RABBIT_TOOLCHAIN_VERSION" = "14" ]; then
+if [ "$TOOLCHAIN_VERSION" = "14" ]; then
    VC_TOOLCHAIN=14
    MSVC_VER=1900
 fi
-if [ "$RABBIT_TOOLCHAIN_VERSION" = "15" ]; then
+if [ "$TOOLCHAIN_VERSION" = "15" ]; then
    VC_TOOLCHAIN=15
    MSVC_VER=2000
 fi
@@ -159,7 +159,7 @@ echo "QMAKE:$QMAKE"
 echo "PKG_CONFIG_PATH:$PKG_CONFIG_PATH"
 echo "PKG_CONFIG_SYSROOT_DIR:$PKG_CONFIG_SYSROOT_DIR"
 echo "BUILD_ARCH:$BUILD_ARCH"
-echo "RABBIT_TOOLCHAIN_VERSION:$RABBIT_TOOLCHAIN_VERSION"
+echo "TOOLCHAIN_VERSION:$TOOLCHAIN_VERSION"
 echo "GENERATORS:$GENERATORS"
 echo "PATH=$PATH"
 echo "---------------------------------------------------------------------------"

@@ -100,15 +100,15 @@ case ${BUILD_TARGERT} in
         MAKE_PARA="${MAKE_PARA} CFLAGS=-fPIC"
         ;;
     windows_msvc)      
-        if [  "$RABBIT_TOOLCHAIN_VERSION" = "15" ]; then
+        if [  "$TOOLCHAIN_VERSION" = "15" ]; then
             toolset=msvc-14.1
         fi
 
-        if [  "$RABBIT_TOOLCHAIN_VERSION" = "14" ]; then
+        if [  "$TOOLCHAIN_VERSION" = "14" ]; then
             toolset=msvc-14.0
         fi
         
-        if [  "$RABBIT_TOOLCHAIN_VERSION" = "12" ]; then
+        if [  "$TOOLCHAIN_VERSION" = "12" ]; then
             toolset=msvc-12.0
         fi
         ./bootstrap.bat --with-toolset=${toolset}

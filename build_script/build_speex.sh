@@ -119,7 +119,7 @@ case ${BUILD_TARGERT} in
         else
             Configuration=Release
         fi
-        if [  "$RABBIT_TOOLCHAIN_VERSION" = "15" ]; then
+        if [  "$TOOLCHAIN_VERSION" = "15" ]; then
 
             if [ "$BUILD_ARCH" = "x64" ]; then
                 msbuild.exe -m -v:n -p:Configuration=${Configuration} -p:Platform=x64 win32/VS2008/libspeex.sln
@@ -128,7 +128,7 @@ case ${BUILD_TARGERT} in
             fi
         fi
         
-        if [  "$RABBIT_TOOLCHAIN_VERSION" = "12" ]; then
+        if [  "$TOOLCHAIN_VERSION" = "12" ]; then
             if [ "$BUILD_ARCH" = "x64" ]; then
                 msbuild.exe -m -v:n -p:Configuration=${Configuration} -p:Platform=x64 win32/VS2008/libspeex.sln
             else
@@ -136,7 +136,7 @@ case ${BUILD_TARGERT} in
             fi
         fi
         
-        if [  "$RABBIT_TOOLCHAIN_VERSION" = "14" ]; then
+        if [  "$TOOLCHAIN_VERSION" = "14" ]; then
             if [ "$BUILD_ARCH" = "x64" ]; then
                 msbuild.exe -m -v:n -p:Configuration=${Configuration} -p:Platform=x64 win32/VS2008/libspeex.sln
             else
