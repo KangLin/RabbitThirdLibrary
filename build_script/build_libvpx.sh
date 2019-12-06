@@ -149,8 +149,8 @@ echo "../configure ${CONFIG_PARA} --extra-cflags=\"${CFLAGS=}\""
 ../configure ${CONFIG_PARA} --extra-cflags="${CFLAGS}" --extra-cxxflags="${CPPFLAGS}"
 
 echo "make install"
-$MAKE
-$MAKE install
+make
+make install
 
 if [ "${BUILD_TARGERT}" = "windows_msvc" ]; then
     if [ "$BUILD_ARCH" = "x64" ]; then
