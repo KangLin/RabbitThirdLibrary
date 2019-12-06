@@ -69,6 +69,7 @@ cd ${SOURCE_DIR}/build_script
 ./build_libyuv.sh ${BUILD_TARGERT} > /dev/null
 ./build_libvpx.sh ${BUILD_TARGERT} > /dev/null
 ./build_libopus.sh ${BUILD_TARGERT} > /dev/null
+./build_speexdsp.sh ${BUILD_TARGERT} > /dev/null
 ./build_speex.sh ${BUILD_TARGERT} > /dev/null
 ./build_ffmpeg.sh ${BUILD_TARGERT} > /dev/null
 ./build_opencv.sh ${BUILD_TARGERT} #> /dev/null

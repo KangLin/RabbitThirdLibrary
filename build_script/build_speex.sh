@@ -177,7 +177,7 @@ echo "../configure ${CONFIG_PARA} CFLAGS=\"${CFLAGS=}\" CPPFLAGS=\"${CPPFLAGS}\"
     LDFLAGS="${LDFLAGS}"
     
 echo "make install"
-make ${BUILD_JOB_PARA} V=1
-make install
+$MAKE ${BUILD_JOB_PARA} V=1
+$MAKE install
 
 cd $CUR_DIR

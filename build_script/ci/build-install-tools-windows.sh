@@ -3,7 +3,7 @@
 
 set -ev
 
-SOURCE_DIR=../..
+SOURCE_DIR=$(cd `dirname $0`; pwd)/../..
 if [ -n "$1" ]; then
     SOURCE_DIR=$1
 fi
@@ -30,7 +30,7 @@ if [ -n "${QT_VERSION}" ]; then
     QT_DIR=C:/projects/${APPVEYOR_PROJECT_NAME}/Tools/Qt/${QT_VERSION}
     if [ ! -d "${QT_DIR}" ]; then
         wget -c --no-check-certificate -nv http://download.qt.io/official_releases/qt/${QT_VERSION_DIR}/${QT_VERSION}/qt-opensource-windows-x86-${QT_VERSION}.exe
-        bash ${SOURCE_DIR}/ci/qt-installer.sh qt-opensource-windows-x86-${QT_VERSION}.exe ${QT_DIR}
+        bash ${SOURCE_DIR}/build_script/ci/qt-installer.sh qt-opensource-windows-x86-${QT_VERSION}.exe ${QT_DIR}
         rm qt-opensource-windows-x86-${QT_VERSION}.exe
     fi
 fi
