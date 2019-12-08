@@ -135,7 +135,7 @@ case ${BUILD_TARGERT} in
         ;;
     windows_msvc)
         if [ "$BUILD_ARCH" = "x64" ]; then
-            CONFIG_PARA="${CONFIG_PARA} --target-os=win64 --arch=x86-64 --cpu=i686"
+            CONFIG_PARA="${CONFIG_PARA} --target-os=win64 --arch=x86_64 --cpu=i686"
         else
             CONFIG_PARA="${CONFIG_PARA} --target-os=win32 --arch=i686 --cpu=i686"
         fi
