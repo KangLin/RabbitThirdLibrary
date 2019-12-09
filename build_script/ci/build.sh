@@ -61,6 +61,7 @@ echo "PKG_CONFIG:$PKG_CONFIG"
 cd ${SOURCE_DIR}/build_script
 
 ./build_zlib.sh ${BUILD_TARGERT} > /dev/null
+#./build_openblas.sh ${BUILD_TARGERT} > /dev/null
 ./build_openssl.sh ${BUILD_TARGERT} > /dev/null
 ./build_libpng.sh ${BUILD_TARGERT} > /dev/null
 ./build_jpeg.sh ${BUILD_TARGERT} > /dev/null
