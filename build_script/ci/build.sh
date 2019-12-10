@@ -61,6 +61,7 @@ echo "PKG_CONFIG:$PKG_CONFIG"
 cd ${SOURCE_DIR}/build_script
 
 ./build_zlib.sh ${BUILD_TARGERT} > /dev/null
+#./build_openblas.sh ${BUILD_TARGERT} > /dev/null
 ./build_openssl.sh ${BUILD_TARGERT} > /dev/null
 ./build_libpng.sh ${BUILD_TARGERT} > /dev/null
 ./build_jpeg.sh ${BUILD_TARGERT} > /dev/null
@@ -71,7 +72,7 @@ cd ${SOURCE_DIR}/build_script
 ./build_libopus.sh ${BUILD_TARGERT} > /dev/null
 ./build_speexdsp.sh ${BUILD_TARGERT} > /dev/null
 ./build_speex.sh ${BUILD_TARGERT} > /dev/null
-./build_ffmpeg.sh ${BUILD_TARGERT} > /dev/null
+./build_ffmpeg.sh ${BUILD_TARGERT} #> /dev/null
 ./build_opencv.sh ${BUILD_TARGERT} #> /dev/null
 ./build_dlib.sh ${BUILD_TARGERT}
 #./build_qxmpp.sh ${BUILD_TARGERT}

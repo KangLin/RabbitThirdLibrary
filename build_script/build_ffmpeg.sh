@@ -48,7 +48,7 @@ CUR_DIR=`pwd`
 
 #下载源码:
 if [ ! -d ${RABBIT_BUILD_SOURCE_CODE} ]; then
-    FFMPEG_VERSION=n4.2
+    FFMPEG_VERSION=n4.2.1
     if [ "TRUE" = "${RABBIT_USE_REPOSITORIES}" ]; then
         echo "git clone git://source.ffmpeg.org/ffmpeg.git ${RABBIT_BUILD_SOURCE_CODE}"
         #git clone -q -b ${FFMPEG_VERSION} git://source.ffmpeg.org/ffmpeg.git ${RABBIT_BUILD_SOURCE_CODE}
@@ -140,7 +140,7 @@ case ${BUILD_TARGERT} in
             CONFIG_PARA="${CONFIG_PARA} --target-os=win32 --arch=i686 --cpu=i686"
         fi
         
-        CONFIG_PARA="${CONFIG_PARA} --enable-cross-compile --toolchain=msvc"
+        CONFIG_PARA="${CONFIG_PARA} --toolchain=msvc --enable-cross-compile"
         ;;
     windows_mingw)
         CONFIG_PARA="${CONFIG_PARA} --enable-cross-compile --target-os=mingw32 --arch=i686 --cpu=i686"
