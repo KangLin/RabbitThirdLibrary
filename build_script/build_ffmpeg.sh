@@ -199,7 +199,7 @@ case ${BUILD_TARGERT} in
 esac
 
 echo "make install"
-make ${BUILD_JOB_PARA} 
+make ${BUILD_JOB_PARA} V=1
 make install
 if [ "${BUILD_TARGERT}" = "windows_msvc" ]; then
     if [ "${RABBIT_BUILD_STATIC}" = "static" ]; then

@@ -95,46 +95,11 @@ case ${BUILD_TARGERT} in
         CMAKE_PARA="${CMAKE_PARA} -DANDROID_PLATFORM=${ANDROID_PLATFORM}"
     ;;
     unix)
-        #CONFIG_PARA="${CONFIG_PARA} --with-gnu-ld --enable-sse "
         ;;
     windows_msvc)
-        #cd ${RABBIT_BUILD_SOURCE_CODE}
-        #nmake -f win32/Makefile.msc clean
-        #nmake -f win32/Makefile.msc LOC="-DASMV -DASMINF" \
-        #    OBJA="inffas32.obj match686.obj"  
-        #if [ ! -d "${RABBIT_BUILD_PREFIX}/include" ]; then
-        #    mkdir -p "${RABBIT_BUILD_PREFIX}/include"
-        #fi
-        #if [ ! -d "${RABBIT_BUILD_PREFIX}/lib" ]; then
-        #    mkdir -p "${RABBIT_BUILD_PREFIX}/lib"
-        #fi
-        #if [ ! -d "${RABBIT_BUILD_PREFIX}/bin" ]; then
-        #    mkdir -p "${RABBIT_BUILD_PREFIX}/bin"
-        #fi
-        #cp zlib.h zconf.h ${RABBIT_BUILD_PREFIX}/include
-        #cp *.lib ${RABBIT_BUILD_PREFIX}/lib
-        #cp *.dll ${RABBIT_BUILD_PREFIX}/bin
-        #cd $CUR_DIR
-        #exit 0
-        
         MAKE_PARA=""
-        #CMAKE_PARA="${CMAKE_PARA}"  -DASM686=ON"
         ;;
     windows_mingw)
-        #cd ${RABBIT_BUILD_SOURCE_CODE}
-        #make -f win32/Makefile.gcc clean
-        #cp contrib/asm686/match.S ./match.S
-        #make LOC=-DASMV OBJA=match.o -fwin32/Makefile.gcc
-        #make install -fwin32/Makefile.gcc SHARED_MODE=1 DESTDIR=${RABBIT_BUILD_PREFIX}/ \
-        #     LIBRARY_PATH=lib \
-        #     INCLUDE_PATH=include \
-        #     BINARY_PATH=bin \
-        #     prefix=${RABBIT_BUILD_PREFIX}
-        #cd $CUR_DIR
-        #exit 0
-        
-        #CMAKE_PARA="${CMAKE_PARA} -DASM686=ON"
-
         CMAKE_PARA="${CMAKE_PARA} -DCMAKE_TOOLCHAIN_FILE=$RABBIT_BUILD_PREFIX/../build_script/cmake/platforms/toolchain-mingw.cmake"
         ;;
     *)
