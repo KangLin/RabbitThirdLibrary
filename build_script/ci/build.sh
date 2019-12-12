@@ -51,9 +51,9 @@ if [ "$BUILD_TARGERT" = "windows_mingw" \
     export PATH=/C/Qt/Tools/mingw${TOOLCHAIN_VERSION}/bin:$PATH
 fi
 
-if [ "$BUILD_TARGERT" = "windows_msvc" ]; then
-    export PATH=/C/Perl/bin:$PATH
-fi
+#if [ "$BUILD_TARGERT" = "windows_msvc" ]; then
+#    export PATH=/C/Perl/bin:$PATH
+#fi
 
 export PATH=${QT_ROOT}/bin:$PATH
 echo "PATH:$PATH"
