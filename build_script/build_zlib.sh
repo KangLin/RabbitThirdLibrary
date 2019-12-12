@@ -122,7 +122,7 @@ else
         -G"${GENERATORS}" ${CMAKE_PARA}
 fi
 cmake --build . --config ${RABBIT_CONFIG} ${MAKE_PARA}
-cmake --build . --config ${RABBIT_CONFIG}  --target install ${MAKE_PARA}
+cmake --build . --config ${RABBIT_CONFIG} --target install ${MAKE_PARA}
 
 mkdir -p $RABBIT_BUILD_PREFIX/lib/pkgconfig
 cp $RABBIT_BUILD_PREFIX/share/pkgconfig/* $RABBIT_BUILD_PREFIX/lib/pkgconfig/.
