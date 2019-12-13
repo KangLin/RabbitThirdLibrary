@@ -17,7 +17,7 @@ HELP_STRING="Usage $0 PLATFORM(android|windows_msvc|windows_mingw|unix) [SOURCE_
 
 case $1 in
     android|windows_msvc|windows_mingw|unix)
-    BUILD_TARGERT=$1
+        BUILD_TARGERT=$1
     ;;
     *)
     echo "${HELP_STRING}"
@@ -106,7 +106,9 @@ case ${BUILD_TARGERT} in
     ;;
 esac
 
-CMAKE_PARA="${CMAKE_PARA} -DJPEG_ROOT=$RABBIT_BUILD_PREFIX -DPNG_ROOT=$RABBIT_BUILD_PREFIX"
+CMAKE_PARA="${CMAKE_PARA} -DCMAKE_PREFIX_PATH=$RABBIT_BUILD_PREFIX"
+#CMAKE_PARA="${CMAKE_PARA} -DJPEG_ROOT=$RABBIT_BUILD_PREFIX"
+CMAKE_PARA="${CMAKE_PARA} -DPNG_ROOT=$RABBIT_BUILD_PREFIX"
 echo "cmake .. -DCMAKE_INSTALL_PREFIX=$RABBIT_BUILD_PREFIX -DCMAKE_BUILD_TYPE=${RABBIT_CONFIG} -G\"${GENERATORS}\" ${CMAKE_PARA}"
 if [ "${BUILD_TARGERT}" = "android" ]; then
     cmake .. \
