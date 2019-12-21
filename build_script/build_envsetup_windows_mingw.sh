@@ -14,7 +14,7 @@
 
 #需要设置下面变量：
 if [ -z "$QT_ROOT" -a -z "$APPVEYOR" ]; then
-    QT_VERSION=5.13.2
+    QT_VERSION=5.12.6
     QT_ROOT=/c/Qt/Qt${QT_VERSION}/${QT_VERSION}/mingw73_32 #QT 安装根目录,默认为:${RABBITRoot}/ThirdLibrary/windows_mingw/qt
     TOOLCHAIN_VERSION=730    
     set MSYSTEM=MINGW32
@@ -33,6 +33,11 @@ if [ -z "${BUILD_JOB_PARA}" ]; then
         BUILD_JOB_PARA=
     fi
 fi
+
+function version_gt() { test "$(echo "$@" | tr " " "\n" | sort -V | head -n 1)" != "$1"; }
+function version_le() { test "$(echo "$@" | tr " " "\n" | sort -V | head -n 1)" == "$1"; }
+function version_lt() { test "$(echo "$@" | tr " " "\n" | sort -rV | head -n 1)" != "$1"; }
+function version_ge() { test "$(echo "$@" | tr " " "\n" | sort -rV | head -n 1)" == "$1"; }
 
 #   RABBIT_BUILD_PREFIX=`pwd`/../${BUILD_TARGERT}  #修改这里为安装前缀
 #   RABBIT_BUILD_CROSS_PREFIX     #交叉编译前缀
