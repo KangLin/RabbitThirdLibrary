@@ -79,13 +79,15 @@ notifications:
   on_success: never  # [always|never|change]
   on_failure: always
 
-#deploy:
-#  provider: releases
-#  api_key: 177ce637a8ec54e66ea8693092caf35059cf95d7
-#  file: 
-#    - ./build_android/${BUILD_TARGERT}_${BUILD_ARCH}_qt${QT_VERSION}_${RABBIT_CONFIG}.tar.gz
-#  skip_cleanup: true
-#  on:
-    #condition: $TRAVIS_OS_NAME = android
-#    repo: KangLin/RabbitThirdLibrary
-    #tags: true
+deploy:
+  provider: releases
+  api_key: 
+    secure: "${GITHUB_TOKEN}"
+  file_glob: true
+  file: 
+    - ${BUILD_TARGERT}*
+  skip_cleanup: true
+  on:
+   #condition: $TRAVIS_OS_NAME = android
+   # repo: KangLin/RabbitThirdLibrary
+    tags: true
