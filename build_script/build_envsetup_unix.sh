@@ -27,9 +27,14 @@
 
 #需要设置下面变量：
 if [ -z "$QT_ROOT" ]; then
-    QT_VERSION=5.13.2
+    QT_VERSION=5.12.6
     QT_ROOT=/opt/Qt${QT_VERSION}/${QT_VERSION}/gcc_64  #QT 安装根目录,默认为:${RABBITRoot}/ThirdLibrary/unix/qt
 fi
+
+function version_gt() { test "$(echo "$@" | tr " " "\n" | sort -V | head -n 1)" != "$1"; }
+function version_le() { test "$(echo "$@" | tr " " "\n" | sort -V | head -n 1)" == "$1"; }
+function version_lt() { test "$(echo "$@" | tr " " "\n" | sort -rV | head -n 1)" != "$1"; }
+function version_ge() { test "$(echo "$@" | tr " " "\n" | sort -rV | head -n 1)" == "$1"; }
 
 if [ -z "$RABBIT_CLEAN" ]; then
     RABBIT_CLEAN=TRUE #编译前清理

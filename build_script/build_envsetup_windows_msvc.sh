@@ -38,6 +38,11 @@ if [ -z "${BUILD_JOB_PARA}" ]; then
     fi
 fi
 
+function version_gt() { test "$(echo "$@" | tr " " "\n" | sort -V | head -n 1)" != "$1"; }
+function version_le() { test "$(echo "$@" | tr " " "\n" | sort -V | head -n 1)" == "$1"; }
+function version_lt() { test "$(echo "$@" | tr " " "\n" | sort -rV | head -n 1)" != "$1"; }
+function version_ge() { test "$(echo "$@" | tr " " "\n" | sort -rV | head -n 1)" == "$1"; }
+
 if [ -z "${TOOLCHAIN_VERSION}" ]; then
     case "${VisualStudioVersion}" in
         15*)
@@ -70,7 +75,7 @@ fi
 
 #需要设置下面变量：
 if [ -z "$QT_ROOT" -a -z "$APPVEYOR" ]; then
-    QT_VERSION=5.13.2
+    QT_VERSION=5.12.6
     QT_ROOT=/c/Qt/Qt${QT_VERSION}/${QT_VERSION}/${MSVC_NAME} #QT 安装根目录,默认为:${RABBITRoot}/ThirdLibrary/windows_msvc/qt
 fi
 

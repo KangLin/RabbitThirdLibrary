@@ -81,11 +81,13 @@ notifications:
 
 deploy:
   provider: releases
-  api_key: ${GITHUB_TOKEN}
+  api_key: 
+    secure: "${GITHUB_TOKEN}"
+  file_glob: true
   file: 
-    - ./build_android/${BUILD_TARGERT}_*.tar.gz
+    - ${BUILD_TARGERT}*
   skip_cleanup: true
   on:
-    #condition: $TRAVIS_OS_NAME = android
-#    repo: KangLin/RabbitThirdLibrary
-    #tags: true
+   #condition: $TRAVIS_OS_NAME = android
+   # repo: KangLin/RabbitThirdLibrary
+    tags: true

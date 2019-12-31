@@ -36,6 +36,12 @@
 #export JAVA_HOME="/C/Program Files/Java/jdk1.7.0_51"        #指定 jdk 根目录  
 #export ANDROID_SDK_ROOT=/D/software/android-sdk-windows     #指定 android sdk 根目录,在msys2下需要注意路径符号："/"  
 #export ANDROID_NDK_ROOT=/D/software/android-ndk-r10e        #指定 android ndk 根目录  
+
+function version_gt() { test "$(echo "$@" | tr " " "\n" | sort -V | head -n 1)" != "$1"; }
+function version_le() { test "$(echo "$@" | tr " " "\n" | sort -V | head -n 1)" == "$1"; }
+function version_lt() { test "$(echo "$@" | tr " " "\n" | sort -rV | head -n 1)" != "$1"; }
+function version_ge() { test "$(echo "$@" | tr " " "\n" | sort -rV | head -n 1)" == "$1"; }
+
 if [ -z "$ANDROID_NDK_ROOT" -a -z "$ANDROID_NDK" ]; then
     export ANDROID_NDK_ROOT=/d/software/android-sdk/ndk-bundle
 fi
@@ -85,7 +91,7 @@ fi
 
 #需要设置下面变量：
 if [ -z "$QT_ROOT" -a -z "$APPVEYOR" ]; then
-    QT_VERSION=5.13.2
+    QT_VERSION=5.12.6
     if [ "${BUILD_ARCH}" = "arm" ]; then
         QT_ROOT=/c/Qt/Qt${QT_VERSION}/${QT_VERSION}/android_armv7 #QT 安装根目录,默认为:${RABBITRoot}/ThirdLibrary/android/qt
     else
@@ -141,9 +147,9 @@ case $TARGET_OS in
         if [ ! -d $ANDROID_NDK/prebuilt/${ANDROID_NDK_HOST} ]; then
             ANDROID_NDK_HOST=windows
         fi
-        #RABBIT_CMAKE_MAKE_PROGRAM=$ANDROID_NDK/prebuilt/${ANDROID_NDK_HOST}/bin/make #这个用不着，只有在windows命令行下才有用 
+        RABBIT_CMAKE_MAKE_PROGRAM=$ANDROID_NDK/prebuilt/${ANDROID_NDK_HOST}/bin/make #这个用不着，只有在windows命令行下才有用 
         YASM=$ANDROID_NDK/prebuilt/${ANDROID_NDK_HOST}/bin/yasm.exe
-        GENERATORS="MSYS Makefiles"
+        GENERATORS="Unix Makefiles"
         ;;
     Linux* | Unix*)
         ANDROID_NDK_HOST="linux-`uname -m`"    #windows、linux-x86_64

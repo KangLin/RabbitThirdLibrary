@@ -127,7 +127,11 @@ case ${BUILD_TARGERT} in
             *)
             ;;
         esac
-        CONFIG_PARA=" --target=x86-win32-gcc"
+        if [ "$BUILD_ARCH" = "x64" ]; then
+            CONFIG_PARA=" --target=x86_64-win64-gcc"
+        else
+            CONFIG_PARA=" --target=x86-win32-gcc"
+        fi
         ;;
     *)
         echo "${HELP_STRING}"
