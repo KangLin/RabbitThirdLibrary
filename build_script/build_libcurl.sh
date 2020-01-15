@@ -38,7 +38,7 @@ CUR_DIR=`pwd`
 
 #下载源码:
 if [ ! -d ${RABBIT_BUILD_SOURCE_CODE} ]; then
-	CURL_FILE=curl-7_67_0
+	CURL_FILE=curl-7_68_0
     if [ "TRUE" = "${RABBIT_USE_REPOSITORIES}" ]; then
         echo "git clone -q https://github.com/curl/curl.git ${RABBIT_BUILD_SOURCE_CODE}"
         git clone -q --branch=$CURL_FILE https://github.com/curl/curl.git ${RABBIT_BUILD_SOURCE_CODE}
@@ -100,7 +100,6 @@ case ${BUILD_TARGERT} in
         ;;
     windows_msvc)
         MAKE_PARA=""
-        CMAKE_PARA="${CMAKE_PARA} OPENSSL_MSVC_STATIC_RT=TRUE"
         ;;
     windows_mingw)
         CMAKE_PARA="${CMAKE_PARA} -DCMAKE_TOOLCHAIN_FILE=$RABBIT_BUILD_PREFIX/../build_script/cmake/platforms/toolchain-mingw.cmake"
