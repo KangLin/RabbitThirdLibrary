@@ -85,7 +85,7 @@ deploy:
     secure: "${GITHUB_TOKEN}"
   file_glob: true
   file: 
-    - ${BUILD_TARGERT}*
+    - ${BUILD_TARGERT}*.tar.gz
   skip_cleanup: true
   on:
    #condition: $TRAVIS_OS_NAME = android
