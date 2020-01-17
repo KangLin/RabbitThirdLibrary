@@ -37,8 +37,8 @@ fi
 if [ ! -d ${RABBIT_BUILD_SOURCE_CODE} ]; then
     VERSION=master
     if [ "TRUE" = "${RABBIT_USE_REPOSITORIES}" ]; then
-        echo "git clone -q https://github.com//KangLin/FaceRecongnizer.git ${RABBIT_BUILD_SOURCE_CODE}"
-        git clone -q https://github.com//KangLin/FaceRecongnizer.git ${RABBIT_BUILD_SOURCE_CODE}
+        echo "git clone -q https://github.com/KangLin/FaceRecongnizer.git ${RABBIT_BUILD_SOURCE_CODE}"
+        git clone -q https://github.com/KangLin/FaceRecognizer.git ${RABBIT_BUILD_SOURCE_CODE}
         if [ "$VERSION" != "master" ]; then
             git checkout -b $VERSION $VERSION
         fi
