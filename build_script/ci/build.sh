@@ -74,6 +74,7 @@ cd ${SOURCE_DIR}/build_script
 ./build_speex.sh ${BUILD_TARGERT} > /dev/null
 ./build_ffmpeg.sh ${BUILD_TARGERT} > /dev/null
 ./build_opencv.sh ${BUILD_TARGERT} > /dev/null
+./build_seeta.sh ${BUILD_TARGERT} > /dev/null
 #./build_dlib.sh ${BUILD_TARGERT} > /dev/null
 #./build_qxmpp.sh ${BUILD_TARGERT}
 #./build_qzxing.sh ${BUILD_TARGERT}
