@@ -36,8 +36,8 @@ fi
 #下载源码:
 VERSION=2e9f3e5cf5f3c71a4a34893ceb20c5d69689390f
 if [ ! -d ${RABBIT_BUILD_SOURCE_CODE} ]; then
-    #echo "git clone -q -b $VERSION https://chromium.googlesource.com/external/libyuv ${RABBIT_BUILD_SOURCE_CODE}"
-    #git clone -q https://chromium.googlesource.com/external/libyuv ${RABBIT_BUILD_SOURCE_CODE}
+    #echo "git clone -q -b $VERSION https://chromium.googlesource.com/libyuv/libyuv ${RABBIT_BUILD_SOURCE_CODE}"
+    #git clone -q https://chromium.googlesource.com/libyuv/libyuv ${RABBIT_BUILD_SOURCE_CODE}
     echo "git clone -q https://github.com/KangLin/libyuv.git ${RABBIT_BUILD_SOURCE_CODE}"
     git clone -q https://github.com/KangLin/libyuv.git ${RABBIT_BUILD_SOURCE_CODE}
 fi
