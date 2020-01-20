@@ -85,6 +85,14 @@ environment:
     QT_VERSION: 5.12.6
     ANDROID_API: android-24
     TOOLCHAIN_VERSION: 4.9
+    
+  - BUILD_TARGERT: android
+    GENERATORS: "MSYS Makefiles"
+    BUILD_ARCH: "x86"
+    QT_VERSION_DIR: 5.12
+    QT_VERSION: 5.12.6
+    ANDROID_API: android-24
+    TOOLCHAIN_VERSION: 4.9
 
 matrix:
   fast_finish: false
