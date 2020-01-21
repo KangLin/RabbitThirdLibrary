@@ -1,4 +1,4 @@
-version: 'v0.1.1.{build}'
+version: 'v0.1.2.{build}'
 
 environment:
   BUILD_VERSION: v0.3.1
@@ -134,7 +134,7 @@ test: off
 deploy:
   - provider: GitHub
     #release: RabbitThirdLibrary_$(BUILD_VERSION)
-    description: 'Release Tasks $(APPVEYOR_REPO_TAG_NAME) on windows'
+    #description: 'Release Tasks $(APPVEYOR_REPO_TAG_NAME) on windows'
     #token : https://github.com/settings/tokens
     #password encrypt: https://ci.appveyor.com/tools/encrypt
     auth_token:
@@ -143,8 +143,4 @@ deploy:
     #draft: true
     #prerelease: true
     on:
-      #BUILD_TARGERT: windows_msvc
-      #TOOLCHAIN_VERSION: 14
-      #QT_VERSION: 5.6.3
-      #BUILD_ARCH: x86
       appveyor_repo_tag: true        # deploy on tag push only
