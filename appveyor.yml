@@ -1,4 +1,4 @@
-version: 'v0.1.4.{build}'
+version: 'v0.1.5.{build}'
 
 environment:
   BUILD_VERSION: v0.3.1
@@ -124,9 +124,9 @@ build_script:
   - C:\msys64\usr\bin\bash.exe %APPVEYOR_BUILD_FOLDER%\build_script\ci\build.sh
 
 artifacts:
-  - path: $(BUILD_TARGERT)*
-    name: RabbitThirdLibrary_$(BUILD_TARGERT)$(TOOLCHAIN_VERSION)_$(BUILD_ARCH)_$(QT_VERSION)_$(BUILD_VERSION)
-    type: zip
+  - path: '$(BUILD_TARGERT)*.tar.gz'
+    #name: RabbitThirdLibrary_$(BUILD_TARGERT)$(TOOLCHAIN_VERSION)_$(BUILD_ARCH)_$(QT_VERSION)_$(BUILD_VERSION)
+    #type: zip
 
 test: off
 

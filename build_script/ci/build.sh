@@ -99,7 +99,10 @@ echo "PATH:$PATH"
 echo "PKG_CONFIG:$PKG_CONFIG"
 cd ${SOURCE_DIR}/build_script
 
-./build_zlib.sh ${BUILD_TARGERT} > /dev/null
+
+bash ci/backgroud_echo.sh &
+
+./build_zlib.sh ${BUILD_TARGERT} #> /dev/null
 #./build_openblas.sh ${BUILD_TARGERT} > /dev/null
 ./build_openssl.sh ${BUILD_TARGERT} > /dev/null
 #./build_libpng.sh ${BUILD_TARGERT} > /dev/null
@@ -112,19 +115,20 @@ cd ${SOURCE_DIR}/build_script
 #./build_speexdsp.sh ${BUILD_TARGERT} > /dev/null
 #./build_speex.sh ${BUILD_TARGERT} > /dev/null
 #./build_ffmpeg.sh ${BUILD_TARGERT} > /dev/null
-./build_opencv.sh ${BUILD_TARGERT} #> /dev/null
+./build_opencv.sh ${BUILD_TARGERT} > /dev/null
 #./build_seeta.sh ${BUILD_TARGERT} > /dev/null
 #./build_dlib.sh ${BUILD_TARGERT} > /dev/null
 #./build_qxmpp.sh ${BUILD_TARGERT}
 #./build_qzxing.sh ${BUILD_TARGERT}
 
-if [ "$TRAVIS_TAG" != "" ]; then
+#if [ "$TRAVIS_TAG" != "" ]; then
     . build_envsetup_${BUILD_TARGERT}.sh
     TAR_NAME=$(basename ${RABBIT_BUILD_PREFIX})
     TAR_FILE=${TAR_NAME}.tar.gz
-    cd $(dirname ${RABBIT_BUILD_PREFIX})
-    tar czfv ${TAR_FILE} ${TAR_NAME}
+    #cd $(dirname ${RABBIT_BUILD_PREFIX})
+    cd ${RABBIT_BUILD_PREFIX}
+    tar czfv ../${TAR_FILE} .
 #    wget -c https://github.com/probonopd/uploadtool/raw/master/upload.sh
 #    chmod u+x upload.sh
 #    ./upload.sh ${TAR_FILE}
-fi
+#fi
