@@ -83,11 +83,9 @@ function function_android()
     cd ${TOOLS_DIR}
     
     sudo apt-get update -y -qq
+    sudo apt-get install ant -qq -y
 
     install_android
-    
-    sudo apt-get install ant -qq -y
-    
     function_common
     cd ${SOURCE_DIR}
 }

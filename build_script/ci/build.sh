@@ -6,7 +6,7 @@ if [ -n "$1" ]; then
     SOURCE_DIR=$1
 fi
 TOOLS_DIR=${SOURCE_DIR}/Tools
-export RabbitCommon_DIR="${SOURCE_DIR}/RabbitCommon"
+export RABBIT_BUILD_PREFIX=${SOURCE_DIR}/${BUILD_TARGERT}
 
 function version_gt() { test "$(echo "$@" | tr " " "\n" | sort -V | head -n 1)" != "$1"; }
 function version_le() { test "$(echo "$@" | tr " " "\n" | sort -V | head -n 1)" == "$1"; }
