@@ -7,6 +7,9 @@ if [ -n "$1" ]; then
 fi
 TOOLS_DIR=${SOURCE_DIR}/Tools
 export RABBIT_BUILD_PREFIX=${SOURCE_DIR}/${BUILD_TARGERT}
+if [ -n "$BUILD_ARCH" ]; then
+    export RABBIT_BUILD_PREFIX=${SOURCE_DIR}/${BUILD_TARGERT}_${BUILD_ARCH}
+fi
 
 function version_gt() { test "$(echo "$@" | tr " " "\n" | sort -V | head -n 1)" != "$1"; }
 function version_le() { test "$(echo "$@" | tr " " "\n" | sort -V | head -n 1)" == "$1"; }
@@ -102,7 +105,7 @@ cd ${SOURCE_DIR}/build_script
 
 bash ci/backgroud_echo.sh &
 
-./build_zlib.sh ${BUILD_TARGERT} #> /dev/null
+./build_zlib.sh ${BUILD_TARGERT} > /dev/null
 #./build_openblas.sh ${BUILD_TARGERT} > /dev/null
 ./build_openssl.sh ${BUILD_TARGERT} > /dev/null
 #./build_libpng.sh ${BUILD_TARGERT} > /dev/null
