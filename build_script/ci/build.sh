@@ -6,9 +6,9 @@ if [ -n "$1" ]; then
     SOURCE_DIR=$1
 fi
 TOOLS_DIR=${SOURCE_DIR}/Tools
-export RABBIT_BUILD_PREFIX=${SOURCE_DIR}/${BUILD_TARGERT}
+export RABBIT_BUILD_PREFIX=${SOURCE_DIR}/${BUILD_TARGERT}${TOOLCHAIN_VERSION}
 if [ -n "$BUILD_ARCH" ]; then
-    export RABBIT_BUILD_PREFIX=${SOURCE_DIR}/${BUILD_TARGERT}_${BUILD_ARCH}
+    export RABBIT_BUILD_PREFIX=${RABBIT_BUILD_PREFIX}_${BUILD_ARCH}
 fi
 
 function version_gt() { test "$(echo "$@" | tr " " "\n" | sort -V | head -n 1)" != "$1"; }
