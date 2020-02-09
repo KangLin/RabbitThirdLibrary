@@ -78,7 +78,7 @@ environment:
   ##### android ########
   - BUILD_TARGERT: android
     GENERATORS: "MSYS Makefiles"
-    BUILD_ARCH: "armeabi-v7a"
+    BUILD_ARCH: "arm"
     ANDROID_ARM_NEON: ON
     QT_VERSION_DIR: 5.12
     QT_VERSION: 5.12.6
