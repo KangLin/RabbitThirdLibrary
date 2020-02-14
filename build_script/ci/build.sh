@@ -107,14 +107,14 @@ bash ci/backgroud_echo.sh &
 
 ./build_zlib.sh ${BUILD_TARGERT} > /dev/null
 #./build_openblas.sh ${BUILD_TARGERT} > /dev/null
-./build_openssl.sh ${BUILD_TARGERT} > /dev/null
+./build_openssl.sh ${BUILD_TARGERT} > /dev/null &
 #./build_libpng.sh ${BUILD_TARGERT} > /dev/null
 #./build_jpeg.sh ${BUILD_TARGERT} > /dev/null
 #./build_libgif.sh ${BUILD_TARGERT} > /dev/null
 #./build_libtiff.sh ${BUILD_TARGERT} > /dev/null
-./build_libyuv.sh ${BUILD_TARGERT} > /dev/null
-./build_libvpx.sh ${BUILD_TARGERT} > /dev/null
-./build_libopus.sh ${BUILD_TARGERT} > /dev/null
+./build_libyuv.sh ${BUILD_TARGERT} > /dev/null &
+./build_libvpx.sh ${BUILD_TARGERT} > /dev/null &
+./build_libopus.sh ${BUILD_TARGERT} > /dev/null &
 #./build_speexdsp.sh ${BUILD_TARGERT} > /dev/null
 #./build_speex.sh ${BUILD_TARGERT} > /dev/null
 #./build_ffmpeg.sh ${BUILD_TARGERT} > /dev/null
