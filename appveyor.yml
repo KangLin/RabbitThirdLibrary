@@ -127,6 +127,8 @@ artifacts:
     #name: RabbitThirdLibrary_$(BUILD_TARGERT)$(TOOLCHAIN_VERSION)_$(BUILD_ARCH)_$(QT_VERSION)_$(BUILD_VERSION)
     #type: zip
 
+  #- path: log.txt
+
 test: off
 
 #See:https://www.appveyor.com/docs/deployment/github/

@@ -105,29 +105,33 @@ cd ${SOURCE_DIR}/build_script
 
 bash ci/backgroud_echo.sh &
 
-./build_zlib.sh ${BUILD_TARGERT} > /dev/null
-#./build_openblas.sh ${BUILD_TARGERT} > /dev/null
-./build_openssl.sh ${BUILD_TARGERT} > /dev/null &
-#./build_libpng.sh ${BUILD_TARGERT} > /dev/null
-#./build_jpeg.sh ${BUILD_TARGERT} > /dev/null
-#./build_libgif.sh ${BUILD_TARGERT} > /dev/null
-#./build_libtiff.sh ${BUILD_TARGERT} > /dev/null
-./build_libyuv.sh ${BUILD_TARGERT} > /dev/null &
-./build_libvpx.sh ${BUILD_TARGERT} > /dev/null &
-./build_libopus.sh ${BUILD_TARGERT} > /dev/null &
-#./build_speexdsp.sh ${BUILD_TARGERT} > /dev/null
-#./build_speex.sh ${BUILD_TARGERT} > /dev/null
-#./build_ffmpeg.sh ${BUILD_TARGERT} > /dev/null
-./build_opencv.sh ${BUILD_TARGERT} > /dev/null
-#./build_seeta.sh ${BUILD_TARGERT} > /dev/null
-./build_dlib.sh ${BUILD_TARGERT} > /dev/null
+./build_zlib.sh ${BUILD_TARGERT} >> ${SOURCE_DIR}/log.txt
+#./build_openblas.sh ${BUILD_TARGERT}  >> ${SOURCE_DIR}/log.txt
+./build_openssl.sh ${BUILD_TARGERT} >> ${SOURCE_DIR}/log.txt &
+#./build_libpng.sh ${BUILD_TARGERT} >> ${SOURCE_DIR}/log.txt
+#./build_jpeg.sh ${BUILD_TARGERT} >> ${SOURCE_DIR}/log.txt
+#./build_libgif.sh ${BUILD_TARGERT} >> ${SOURCE_DIR}/log.txt
+#./build_libtiff.sh ${BUILD_TARGERT} >> ${SOURCE_DIR}/log.txt
+./build_libyuv.sh ${BUILD_TARGERT} >> ${SOURCE_DIR}/log.txt &
+./build_libvpx.sh ${BUILD_TARGERT} >> ${SOURCE_DIR}/log.txt &
+./build_libopus.sh ${BUILD_TARGERT} >> ${SOURCE_DIR}/log.txt &
+#./build_speexdsp.sh ${BUILD_TARGERT} >> ${SOURCE_DIR}/log.txt
+#./build_speex.sh ${BUILD_TARGERT} >> ${SOURCE_DIR}/log.txt
+#./build_ffmpeg.sh ${BUILD_TARGERT} >> ${SOURCE_DIR}/log.txt
+./build_opencv.sh ${BUILD_TARGERT} >> ${SOURCE_DIR}/log.txt
+#./build_seeta.sh ${BUILD_TARGERT} >> ${SOURCE_DIR}/log.txt
+./build_dlib.sh ${BUILD_TARGERT} >> ${SOURCE_DIR}/log.txt
 #./build_qxmpp.sh ${BUILD_TARGERT}
 #./build_qzxing.sh ${BUILD_TARGERT}
 
 #if [ "$TRAVIS_TAG" != "" ]; then
     . build_envsetup_${BUILD_TARGERT}.sh
     TAR_NAME=$(basename ${RABBIT_BUILD_PREFIX})
-    TAR_FILE=${TAR_NAME}.tar.gz
+    if [ "$TRAVIS_TAG" = "" ]; then
+        TAR_FILE=${TAR_NAME}_in_windows.tar.gz
+    else
+        TAR_FILE=${TAR_NAME}.tar.gz
+    fi
     #cd $(dirname ${RABBIT_BUILD_PREFIX})
     cd ${RABBIT_BUILD_PREFIX}
     tar czfv ../${TAR_FILE} .
