@@ -127,7 +127,7 @@ bash ci/backgroud_echo.sh &
 #if [ "$TRAVIS_TAG" != "" ]; then
     . build_envsetup_${BUILD_TARGERT}.sh
     TAR_NAME=$(basename ${RABBIT_BUILD_PREFIX})
-    if [ "$TRAVIS_TAG" = "" ]; then
+    if [ "$APPVEYOR_REPO_TAG" = "true" -a "$BUILD_TARGERT" = "android" ]; then
         TAR_FILE=${TAR_NAME}_in_windows.tar.gz
     else
         TAR_FILE=${TAR_NAME}.tar.gz
