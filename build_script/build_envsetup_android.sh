@@ -201,9 +201,14 @@ case ${BUILD_ARCH} in
         ;;
     arm*)
         if [ -z "$ANDROID_ABI" ]; then
-            export ANDROID_ABI="armeabi-v7a with NEON"
-            export RABBIT_CFLAGS="-march=armv7-a -mfloat-abi=softfp -mfpu=neon"
-            export ANDROID_NDK_ABI_NAME="armeabi-v7a"
+            if [ "${BUILD_ARCH}" = "arm64" ]; then
+                export ANDROID_ABI="arm64-v8a"
+            else
+                export ANDROID_ABI="armeabi-v7a with NEON"
+                export RABBIT_CFLAGS="-march=armv7-a -mfloat-abi=softfp -mfpu=neon"
+                export ANDROID_NDK_ABI_NAME="armeabi-v7a"
+            fi
+
             export ANDROID_ARM_NEON=ON
         fi
         if [ -z "${RABBIT_BUILD_CROSS_HOST}" ]; then
