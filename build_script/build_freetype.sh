@@ -137,6 +137,10 @@ else
         -G"${GENERATORS}" ${CMAKE_PARA} 
 fi
 cmake --build . --config ${RABBIT_CONFIG} ${MAKE_PARA}
-cmake --build . --config ${RABBIT_CONFIG}  --target install ${MAKE_PARA}
+if [ "windows_msvc" = "${BUILD_TARGERT}" ]; then
+    cmake --build . --config ${RABBIT_CONFIG}  --target install ${MAKE_PARA}
+else
+    cmake --build . --config ${RABBIT_CONFIG}  --target install/strip ${MAKE_PARA}
+fi
 
 cd $CUR_DIR

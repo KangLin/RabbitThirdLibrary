@@ -143,7 +143,7 @@ if [ "${BUILD_TARGERT}" = "android" ]; then
         -G"${GENERATORS}" ${CMAKE_PARA} -DANDROID_ABI="${ANDROID_ABI}"
         
     cmake --build . --config ${RABBIT_CONFIG} ${MAKE_PARA}
-    cmake --build . --config ${RABBIT_CONFIG} --target install ${MAKE_PARA}
+    cmake --build . --config ${RABBIT_CONFIG} --target install/strip ${MAKE_PARA}
     cmake --build . --config ${RABBIT_CONFIG} --target APK
 else
     cmake .. \

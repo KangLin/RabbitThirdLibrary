@@ -116,6 +116,11 @@ else
         -DCMAKE_VERBOSE_MAKEFILE=ON -DCMAKE_BUILD_TYPE=${RABBIT_CONFIG} \
         -G"${GENERATORS}" ${CMAKE_PARA} 
 fi
-cmake --build . --target install --config ${RABBIT_CONFIG} ${MAKE_PARA}
+cmake --build . --config ${RABBIT_CONFIG} ${MAKE_PARA}
+if [ "windows_msvc" = "${BUILD_TARGERT}" ]; then
+    cmake --build . --config ${RABBIT_CONFIG}  --target install ${MAKE_PARA}
+else
+    cmake --build . --config ${RABBIT_CONFIG}  --target install/strip ${MAKE_PARA}
+fi
 
 cd $CUR_DIR

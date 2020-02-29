@@ -111,8 +111,12 @@ if [ "$2" = "cmake" ]; then
         -G"${GENERATORS}" ${CMAKE_PARA} -DCMAKE_VERBOSE_MAKEFILE=TRUE 
 
     echo "cmake --build . --target install --config ${RABBIT_CONFIG} ${MAKE_PARA}"
-    cmake --build . --target install --config ${RABBIT_CONFIG} ${MAKE_PARA}
-
+    cmake --build . --config ${RABBIT_CONFIG} ${MAKE_PARA}
+    if [ "windows_msvc" = "${BUILD_TARGERT}" ]; then
+        cmake --build . --config ${RABBIT_CONFIG}  --target install ${MAKE_PARA}
+    else
+        cmake --build . --config ${RABBIT_CONFIG}  --target install/strip ${MAKE_PARA}
+    fi
 else #qmake编译
 
     case $BUILD_TARGET in
