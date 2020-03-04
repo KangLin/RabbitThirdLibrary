@@ -1,7 +1,12 @@
-version: 'v0.2.4.{build}'
+version: 'v0.2..{build}'
 
 environment:
   BUILD_VERSION: v0.3.1
+  #QT_USER:
+  #  secure: EoBPaPuJ6u9UDYpQWjKhUg==
+  #QT_PASSWORD:
+  #  secure: ejAYGgB+3sBispRxUSr0xw==
+  
   matrix: 
   ##### mingw ########
   #- BUILD_TARGERT: windows_mingw
@@ -74,7 +79,7 @@ environment:
   #  TOOLCHAIN_VERSION: 15
   #  QT_ROOT: C:\Qt\5.9\msvc2017_64
   #  BUILD_ARCH: x64
-
+      
   ##### android ########
   - BUILD_TARGERT: android
     GENERATORS: "MSYS Makefiles"
@@ -144,7 +149,7 @@ artifacts:
     #name: RabbitThirdLibrary_$(BUILD_TARGERT)$(TOOLCHAIN_VERSION)_$(BUILD_ARCH)_$(QT_VERSION)_$(BUILD_VERSION)
     #type: zip
 
-  - path: log.txt
+  #- path: log.txt
 
 test: off
 
