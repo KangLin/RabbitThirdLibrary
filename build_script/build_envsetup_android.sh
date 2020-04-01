@@ -113,7 +113,13 @@ fi
 ANDROID_NATIVE_API_LEVEL=`echo "$ANDROID_API"|awk -F '-' '{print $2}'` #android ndk api (平台)版本号, Qt5.9 支持最小平台版本
 if [ -z "${RABBIT_BUILD_PREFIX}" ]; then
     RABBIT_BUILD_PREFIX=`pwd`/../${BUILD_TARGERT}    #修改这里为安装前缀  
-    RABBIT_BUILD_PREFIX=${RABBIT_BUILD_PREFIX}${ANDROID_NATIVE_API_LEVEL}_${BUILD_ARCH}_qt${QT_VERSION}_${RABBIT_CONFIG}
+    RABBIT_BUILD_PREFIX=${RABBIT_BUILD_PREFIX}${ANDROID_NATIVE_API_LEVEL}_${BUILD_ARCH}_${RABBIT_CONFIG}
+    if [ -n "${QT_VERSION}" ]; then
+        RABBIT_BUILD_PREFIX=${RABBIT_BUILD_PREFIX}_qt${QT_VERSION}
+    fi
+    if [ "$RABBIT_BUILD_STATIC" = "static" ]; then
+        RABBIT_BUILD_PREFIX=${RABBIT_BUILD_PREFIX}_static
+    fi
 fi
 if [ ! -d ${RABBIT_BUILD_PREFIX} ]; then
     mkdir -p ${RABBIT_BUILD_PREFIX}

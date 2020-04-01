@@ -1,5 +1,5 @@
-if($env:BUILD_TARGERT -eq "android") {return 0}
-if($env:BUILD_EXIT -eq "TRUE") {return 0}
+#if($env:BUILD_TARGERT -eq "android") {return 0}
+#if($env:BUILD_EXIT -eq "TRUE") {return 0}
 if($env:RABBIT_NUMBER -eq 0) {return 0}
  
 $JOB_QT_VERSION = "NO"
@@ -11,30 +11,24 @@ if ($env:APPVEYOR_BUILD_WORKER_IMAGE -eq "Visual Studio 2017")
     $RABBIT_JOB_NAME = $RABBIT_JOB_NAME + ", APPVEYOR_BUILD_WORKER_IMAGE=$env:APPVEYOR_BUILD_WORKER_IMAGE"
 }
 
-$RABBIT_JOB_NAME = $RABBIT_JOB_NAME + ", BUILD_TARGERT=${env:BUILD_TARGERT}, TOOLCHAIN_VERSION=${env:TOOLCHAIN_VERSION}"
+$RABBIT_JOB_NAME = $RABBIT_JOB_NAME + ", BUILD_TARGERT=${env:BUILD_TARGERT}"
+$RABBIT_JOB_NAME = $RABBIT_JOB_NAME + ", TOOLCHAIN_VERSION=${env:TOOLCHAIN_VERSION}"
+$RABBIT_JOB_NAME = $RABBIT_JOB_NAME + ", BUILD_ARCH=${env:BUILD_ARCH}"
 
-if (${env:BUILD_ARCH})
+if (${env:ANDROID_API})
 {
-    $RABBIT_JOB_NAME = $RABBIT_JOB_NAME + ", BUILD_ARCH=${env:BUILD_ARCH}"
+    $RABBIT_JOB_NAME = $RABBIT_JOB_NAME + ", ANDROID_API=${env:ANDROID_API}"
 }
-else
+if (${env:ANDROID_ARM_NEON})
 {
-    ${env:BUILD_ARCH} = "x64"
-}
-if (${env:RABBIT_CONFIG})
-{
-    $RABBIT_JOB_NAME = $RABBIT_JOB_NAME + ", RABBIT_CONFIG=${env:RABBIT_CONFIG}"
-}
-else
-{
-   ${env:RABBIT_CONFIG} = "Release"
+    $RABBIT_JOB_NAME = $RABBIT_JOB_NAME + ", ANDROID_ARM_NEON=${env:ANDROID_ARM_NEON}"
 }
 
-if($env:RABBIT_NUMBER -gt $env:RABBIT_QT_NUMBER)
-{
-    $RABBIT_JOB_NAME = $RABBIT_JOB_NAME + ", QT_ROOT=${env:QT_ROOT}" 
-    $JOB_QT_VERSION = ${env:QT_VERSION}
-}
+#if($env:RABBIT_NUMBER -gt $env:RABBIT_QT_NUMBER)
+#{
+#    $RABBIT_JOB_NAME = $RABBIT_JOB_NAME + ", QT_ROOT=${env:QT_ROOT}" 
+#    $JOB_QT_VERSION = ${env:QT_VERSION}
+#}
       
  write-host "Waiting for job `"$RABBIT_JOB_NAME`" to complete"
     
@@ -57,7 +51,7 @@ if($env:RABBIT_NUMBER -gt $env:RABBIT_QT_NUMBER)
 if (!$success) {throw "Job `"$RABBIT_JOB_NAME`" was not finished in $env:TimeOutMins minutes"}
 if (!$jobToWaitId) {throw "Unable t get JobId for the job `"$RABBIT_JOB_NAME`""}
   
-$url = "https://ci.appveyor.com/api/buildjobs/$jobToWaitId/artifacts/RABBIT_${env:BUILD_TARGERT}${env:TOOLCHAIN_VERSION}_${env:BUILD_ARCH}_qt${JOB_QT_VERSION}_${env:RABBIT_CONFIG}_${env:BUILD_VERSION}.zip"
+$url = "https://ci.appveyor.com/api/buildjobs/$jobToWaitId/artifacts/${env:BUILD_TARGERT}.zip"
 echo $url
 Start-FileDownload $url -FileName ${env:APPVEYOR_BUILD_FOLDER}/${env:BUILD_TARGERT}.zip
 if(!$?){return -1}
