@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-RABBIT_LIBRARYS[0]="zlib openssl libsodium libpng jpeg libgif tiff libyuv libvpx libopus speexdsp speex ffmpeg"
+RABBIT_LIBRARYS[0]="zlib openssl libsodium libpng jpeg tiff libyuv libvpx libopus speexdsp speex ffmpeg"
 RABBIT_LIBRARYS[1]="protobuf opencv seeta libfacedetection dlib"
 
 SOURCE_DIR=$(cd `dirname $0`; pwd)/../..
