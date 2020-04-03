@@ -38,15 +38,16 @@ CUR_DIR=`pwd`
 
 #下载源码:
 if [ ! -d ${RABBIT_BUILD_SOURCE_CODE} ]; then
+    VERSION=9d
     mkdir -p ${RABBIT_BUILD_SOURCE_CODE}
     cd ${RABBIT_BUILD_SOURCE_CODE}
-    echo "wget -nv -c http://www.ijg.org/files/jpegsrc.v9c.tar.gz"
-    wget -nv -c http://www.ijg.org/files/jpegsrc.v9b.tar.gz 
-    tar xzf jpegsrc.v9b.tar.gz 
-    mv jpeg-9b ..
-    rm -fr jpegsr9b.zip ${RABBIT_BUILD_SOURCE_CODE}
+    echo "wget -nv -c http://www.ijg.org/files/jpegsrc.v${VERSION}.tar.gz"
+    wget -nv -c http://www.ijg.org/files/jpegsrc.v${VERSION}.tar.gz 
+    tar xzf jpegsrc.v${VERSION}.tar.gz 
+    mv jpeg-${VERSION} ..
+    rm -fr jpegsr${VERSION}.zip ${RABBIT_BUILD_SOURCE_CODE}
     cd ..
-    mv jpeg-9b ${RABBIT_BUILD_SOURCE_CODE}
+    mv jpeg-${VERSION} ${RABBIT_BUILD_SOURCE_CODE}
 fi
 
 cd ${RABBIT_BUILD_SOURCE_CODE}
