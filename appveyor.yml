@@ -168,7 +168,7 @@ build_script:
 artifacts:
   - path: $(BUILD_TARGERT)
   - path: $(BUILD_TARGERT)$(TOOLCHAIN_VERSION)_$(BUILD_ARCH)
-  - path: $(BUILD_TARGERT)$(TOOLCHAIN_VERSION)_$(BUILD_ARCH)_$(ANDROID_API)
+  - path: $(BUILD_TARGERT)$(TOOLCHAIN_VERSION)_$(BUILD_ARCH)_$(ANDROID_API)_in_windows
 
 test: off
 
