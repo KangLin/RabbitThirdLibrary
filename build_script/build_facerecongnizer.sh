@@ -91,11 +91,15 @@ case ${BUILD_TARGERT} in
         fi
         CMAKE_PARA="${CMAKE_PARA} -DCMAKE_TOOLCHAIN_FILE=${ANDROID_NDK}/build/cmake/android.toolchain.cmake"
         CMAKE_PARA="${CMAKE_PARA} -DANDROID_PLATFORM=${ANDROID_PLATFORM}"
+        
+        CMAKE_PARA="${CMAKE_PARA} -DOPENCV_DIR=${RABBIT_BUILD_PREFIX}/sdk/native/jni"
+
         ;;
     unix)
     ;;
     windows_msvc)
         MAKE_PARA=""
+        CMAKE_PARA="${CMAKE_PARA} -DOPENCV_DIR=${RABBIT_BUILD_PREFIX}"        
         ;;
     windows_mingw)
         case `uname -s` in
@@ -132,8 +136,10 @@ CMAKE_PARA="${CMAKE_PARA} -DSeetaFace_DIR=${RABBIT_BUILD_PREFIX}/lib/cmake
         -DSeetaFaceTracker_DIR=${RABBIT_BUILD_PREFIX}/lib/cmake 
         -DSeetaQualityAssessor_DIR=${RABBIT_BUILD_PREFIX}/lib/cmake "
         
-CMAKE_PARA="${CMAKE_PARA} -DYUV_DIR=${RABBIT_BUILD_PREFIX}/lib/cmake"
-CMAKE_PARA="${CMAKE_PARA} -DOPENCV_DIR=${RABBIT_BUILD_PREFIX}"
+#CMAKE_PARA="${CMAKE_PARA} -DYUV_DIR=${RABBIT_BUILD_PREFIX}/lib/cmake"
+CMAKE_PARA="${CMAKE_PARA} -DUSE_FFMPEG=OFF"
+CMAKE_PARA="${CMAKE_PARA} -Dfacedetection_DIR=${RABBIT_BUILD_PREFIX}/lib/cmake"
+CMAKE_PARA="${CMAKE_PARA} -Ddlib_DIR=${RABBIT_BUILD_PREFIX}/lib/cmake"
 
 echo "cmake .. -DCMAKE_INSTALL_PREFIX=$RABBIT_BUILD_PREFIX -DCMAKE_BUILD_TYPE=${RABBIT_CONFIG} -G\"${GENERATORS}\" ${CMAKE_PARA} -DANDROID_ABI=\"${ANDROID_ABI}\""
 if [ "${BUILD_TARGERT}" = "android" ]; then
@@ -153,6 +159,5 @@ else
     cmake --build . --config ${RABBIT_CONFIG} ${MAKE_PARA}
     cmake --build . --config ${RABBIT_CONFIG} --target install ${MAKE_PARA}
 fi
-
 
 cd $CUR_DIR

@@ -1,5 +1,8 @@
 version: 'v0.2.5.{build}'
 
+cache:
+  - Package
+  
 environment:
   BUILD_VERSION: v0.3.1
   TimeOutMins: 2
@@ -160,7 +163,7 @@ before_build:
 
 build_script:
   - cd %APPVEYOR_BUILD_FOLDER%
-  - C:\msys64\usr\bin\bash.exe %APPVEYOR_BUILD_FOLDER%\build_script\ci\build.sh
+  - C:\msys64\usr\bin\bash.exe %APPVEYOR_BUILD_FOLDER%\build_script\ci\build_windows.sh
 
 artifacts:
   - path: $(BUILD_TARGERT)

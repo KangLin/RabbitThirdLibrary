@@ -1,15 +1,15 @@
 #!/bin/bash
-set -e
-
-RABBIT_LIBRARYS[0]="zlib openssl libsodium libpng jpeg dlib libyuv libvpx libopus speexdsp speex ffmpeg "
-RABBIT_LIBRARYS[1]="opencv seeta libfacedetection"
+set -ev
 
 SOURCE_DIR=$(cd `dirname $0`; pwd)/../..
 if [ -n "$1" ]; then
     SOURCE_DIR=$1
 fi
 TOOLS_DIR=${SOURCE_DIR}/Tools
-export RABBIT_BUILD_PREFIX=${SOURCE_DIR}/${BUILD_TARGERT}
+export RABBIT_BUILD_PREFIX=${SOURCE_DIR}/${BUILD_TARGERT}${TOOLCHAIN_VERSION}
+if [ -n "$BUILD_ARCH" ]; then
+    export RABBIT_BUILD_PREFIX=${RABBIT_BUILD_PREFIX}_${BUILD_ARCH}
+fi
 
 function version_gt() { test "$(echo "$@" | tr " " "\n" | sort -V | head -n 1)" != "$1"; }
 function version_le() { test "$(echo "$@" | tr " " "\n" | sort -V | head -n 1)" == "$1"; }
@@ -17,9 +17,6 @@ function version_lt() { test "$(echo "$@" | tr " " "\n" | sort -rV | head -n 1)"
 function version_ge() { test "$(echo "$@" | tr " " "\n" | sort -rV | head -n 1)" == "$1"; }
 
 cd ${SOURCE_DIR}
-if [ -f "${BUILD_TARGERT}.zip" ]; then
-    unzip "${BUILD_TARGERT}.zip" -d ${RABBIT_BUILD_PREFIX}
-fi
 
 if [ "$BUILD_TARGERT" = "android" ]; then
     export ANDROID_SDK_ROOT=${TOOLS_DIR}/android-sdk
@@ -100,30 +97,46 @@ case $TARGET_OS in
     ;;
 esac
 
-if [ -n "${QT_ROOT}" ]; then
-    export PATH=${QT_ROOT}/bin:$PATH
-fi
+export PATH=${QT_ROOT}/bin:$PATH
 echo "PATH:$PATH"
 echo "PKG_CONFIG:$PKG_CONFIG"
 cd ${SOURCE_DIR}/build_script
 
-for v in ${RABBIT_LIBRARYS[$RABBIT_NUMBER]}
-do
 
-    if [ "$APPVEYOR" = "True" ]; then
-        bash ./build_$v.sh ${BUILD_TARGERT} ${SOURCE_DIR}/$v
+bash ci/backgroud_echo.sh &
+
+./build_zlib.sh ${BUILD_TARGERT} >> ${SOURCE_DIR}/log.txt
+#./build_openblas.sh ${BUILD_TARGERT}  >> ${SOURCE_DIR}/log.txt
+./build_openssl.sh ${BUILD_TARGERT} >> ${SOURCE_DIR}/log.txt &
+#./build_libpng.sh ${BUILD_TARGERT} >> ${SOURCE_DIR}/log.txt
+#./build_jpeg.sh ${BUILD_TARGERT} >> ${SOURCE_DIR}/log.txt
+#./build_libgif.sh ${BUILD_TARGERT} >> ${SOURCE_DIR}/log.txt
+#./build_libtiff.sh ${BUILD_TARGERT} >> ${SOURCE_DIR}/log.txt
+./build_libyuv.sh ${BUILD_TARGERT} >> ${SOURCE_DIR}/log.txt &
+./build_libvpx.sh ${BUILD_TARGERT} >> ${SOURCE_DIR}/log.txt &
+./build_libopus.sh ${BUILD_TARGERT} >> ${SOURCE_DIR}/log.txt &
+#./build_speexdsp.sh ${BUILD_TARGERT} >> ${SOURCE_DIR}/log.txt
+#./build_speex.sh ${BUILD_TARGERT} >> ${SOURCE_DIR}/log.txt
+#./build_ffmpeg.sh ${BUILD_TARGERT} >> ${SOURCE_DIR}/log.txt
+./build_opencv.sh ${BUILD_TARGERT} >> ${SOURCE_DIR}/log.txt
+./build_libfacedetection.sh ${BUILD_TARGERT} >> ${SOURCE_DIR}/log.txt &
+./build_seeta.sh ${BUILD_TARGERT} >> ${SOURCE_DIR}/log.txt &
+./build_dlib.sh ${BUILD_TARGERT} >> ${SOURCE_DIR}/log.txt
+#./build_qxmpp.sh ${BUILD_TARGERT}
+#./build_qzxing.sh ${BUILD_TARGERT}
+
+#if [ "$TRAVIS_TAG" != "" ]; then
+    . build_envsetup_${BUILD_TARGERT}.sh
+    TAR_NAME=$(basename ${RABBIT_BUILD_PREFIX})
+    if [ "$APPVEYOR_REPO_TAG" = "true" -a "$BUILD_TARGERT" = "android" ]; then
+        TAR_FILE=${TAR_NAME}_in_windows.tar.gz
     else
-        bash ./build_$v.sh ${BUILD_TARGERT} ${SOURCE_DIR}/$v > /dev/null
+        TAR_FILE=${TAR_NAME}.tar.gz
     fi
-
-done
-
-echo "RABBIT_LIBRARYS size:${#RABBIT_LIBRARYS[@]}"
-if [ ${#RABBIT_LIBRARYS[@]} -eq `expr $RABBIT_NUMBER + 1` ]; then
-    echo "mv ${RABBIT_BUILD_PREFIX} ${SOURCE_DIR}/${BUILD_TARGERT}${TOOLCHAIN_VERSION}_${BUILD_ARCH}"
-    if [ "$BUILD_TARGERT" = "android" ]; then
-            mv ${RABBIT_BUILD_PREFIX} ${SOURCE_DIR}/${BUILD_TARGERT}${TOOLCHAIN_VERSION}_${BUILD_ARCH}_${ANDROID_API}
-    else
-        mv ${RABBIT_BUILD_PREFIX} ${SOURCE_DIR}/${BUILD_TARGERT}${TOOLCHAIN_VERSION}_${BUILD_ARCH}
-    fi
-fi
+    #cd $(dirname ${RABBIT_BUILD_PREFIX})
+    cd ${RABBIT_BUILD_PREFIX}
+    tar czfv ../${TAR_FILE} .
+#    wget -c https://github.com/probonopd/uploadtool/raw/master/upload.sh
+#    chmod u+x upload.sh
+#    ./upload.sh ${TAR_FILE}
+#fi
