@@ -5,7 +5,7 @@ cache:
   
 environment:
   BUILD_VERSION: v0.3.1
-  TimeOutMins: 5
+  TimeOutMins: 2
   #ApiKey:
   #  secure: qex0da587ygmywf4315g
   

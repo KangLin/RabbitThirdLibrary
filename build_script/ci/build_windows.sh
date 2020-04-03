@@ -1,8 +1,10 @@
 #!/bin/bash
 set -e
 
-RABBIT_LIBRARYS[0]="zlib openssl libsodium libpng jpeg dlib libyuv libvpx libopus speexdsp speex ffmpeg "
-RABBIT_LIBRARYS[1]="opencv seeta libfacedetection"
+RABBIT_LIBRARYS_backgroud[0]="zlib libsodium libpng jpeg libyuv libvpx libopus speexdsp speex dlib"
+RABBIT_LIBRARYS[0]="openssl ffmpeg"
+RABBIT_LIBRARYS_backgroud[1]="seeta libfacedetection"
+RABBIT_LIBRARYS[1]="opencv"
 
 SOURCE_DIR=$(cd `dirname $0`; pwd)/../..
 if [ -n "$1" ]; then
@@ -107,9 +109,14 @@ echo "PATH:$PATH"
 echo "PKG_CONFIG:$PKG_CONFIG"
 cd ${SOURCE_DIR}/build_script
 
+for b in ${RABBIT_LIBRARYS_backgroud[$RABBIT_NUMBER]}
+do
+    bash ./build_$v.sh ${BUILD_TARGERT} &
+done
+
 for v in ${RABBIT_LIBRARYS[$RABBIT_NUMBER]}
 do
-    bash ./build_$v.sh ${BUILD_TARGERT} ${SOURCE_DIR}/$v
+    bash ./build_$v.sh ${BUILD_TARGERT} 
 done
 
 echo "RABBIT_LIBRARYS size:${#RABBIT_LIBRARYS[@]}"
