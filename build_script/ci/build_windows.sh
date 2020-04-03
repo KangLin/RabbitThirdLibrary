@@ -109,13 +109,7 @@ cd ${SOURCE_DIR}/build_script
 
 for v in ${RABBIT_LIBRARYS[$RABBIT_NUMBER]}
 do
-
-    if [ "$APPVEYOR" = "True" ]; then
-        bash ./build_$v.sh ${BUILD_TARGERT} ${SOURCE_DIR}/$v
-    else
-        bash ./build_$v.sh ${BUILD_TARGERT} ${SOURCE_DIR}/$v > /dev/null
-    fi
-
+    bash ./build_$v.sh ${BUILD_TARGERT} ${SOURCE_DIR}/$v
 done
 
 echo "RABBIT_LIBRARYS size:${#RABBIT_LIBRARYS[@]}"
