@@ -14,7 +14,71 @@ environment:
   #QT_PASSWORD:
   #  secure: ejAYGgB+3sBispRxUSr0xw==
   
-  matrix:  
+  matrix:
+  ##### mingw ########
+  - RABBIT_NUMBER: 0
+    BUILD_TARGERT: windows_mingw
+    TOOLCHAIN_VERSION: 530_32
+    BUILD_ARCH: x86
+
+  - RABBIT_NUMBER: 1
+    BUILD_TARGERT: windows_mingw
+    TOOLCHAIN_VERSION: 530_32
+    BUILD_ARCH: x86
+    
+#  - RABBIT_NUMBER: 0
+#    BUILD_TARGERT: windows_mingw
+#    TOOLCHAIN_VERSION: 730_64
+#    BUILD_ARCH: x64
+
+#  - RABBIT_NUMBER: 0
+#    BUILD_TARGERT: windows_mingw
+#    TOOLCHAIN_VERSION: 730_64
+#    BUILD_ARCH: x64
+
+#QT_ROOT: C:\Qt\5.12\mingw73_64
+
+  ##### android ########
+  - RABBIT_NUMBER: 0
+    BUILD_TARGERT: android
+    TOOLCHAIN_VERSION: 4.9
+    BUILD_ARCH: arm
+    ANDROID_API: android-24
+    ANDROID_ARM_NEON: ON
+
+  - RABBIT_NUMBER: 1
+    BUILD_TARGERT: android
+    TOOLCHAIN_VERSION: 4.9
+    BUILD_ARCH: arm
+    ANDROID_API: android-24
+    ANDROID_ARM_NEON: ON
+  
+  - RABBIT_NUMBER: 0
+    BUILD_TARGERT: android
+    TOOLCHAIN_VERSION: 4.9
+    BUILD_ARCH: arm64
+    ANDROID_API: android-24
+    ANDROID_ARM_NEON: ON
+
+  - RABBIT_NUMBER: 1
+    BUILD_TARGERT: android
+    TOOLCHAIN_VERSION: 4.9
+    BUILD_ARCH: arm64
+    ANDROID_API: android-24
+    ANDROID_ARM_NEON: ON
+    
+  - RABBIT_NUMBER: 0
+    BUILD_TARGERT: android
+    TOOLCHAIN_VERSION: 4.9
+    BUILD_ARCH: x86
+    ANDROID_API: android-24
+    
+  - RABBIT_NUMBER: 1
+    BUILD_TARGERT: android
+    TOOLCHAIN_VERSION: 4.9
+    BUILD_ARCH: x86
+    ANDROID_API: android-24
+    
   ##### msvc 2017 ########
   - RABBIT_NUMBER: 0
     APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
@@ -68,70 +132,6 @@ environment:
     BUILD_ARCH: x64
     
 #QT_ROOT: C:\Qt\5.10\msvc2015_64
-
-  ##### mingw ########
-  - RABBIT_NUMBER: 0
-    BUILD_TARGERT: windows_mingw
-    TOOLCHAIN_VERSION: 530_32
-    BUILD_ARCH: x86
-
-  - RABBIT_NUMBER: 1
-    BUILD_TARGERT: windows_mingw
-    TOOLCHAIN_VERSION: 530_32
-    BUILD_ARCH: x86
-    
-  - RABBIT_NUMBER: 0
-    BUILD_TARGERT: windows_mingw
-    TOOLCHAIN_VERSION: 730_64
-    BUILD_ARCH: x64
-
-  - RABBIT_NUMBER: 0
-    BUILD_TARGERT: windows_mingw
-    TOOLCHAIN_VERSION: 730_64
-    BUILD_ARCH: x64
-
-#QT_ROOT: C:\Qt\5.12\mingw73_64
-
-  ##### android ########
-  - RABBIT_NUMBER: 0
-    BUILD_TARGERT: android
-    TOOLCHAIN_VERSION: 4.9
-    BUILD_ARCH: arm
-    ANDROID_API: android-24
-    ANDROID_ARM_NEON: ON
-
-  - RABBIT_NUMBER: 1
-    BUILD_TARGERT: android
-    TOOLCHAIN_VERSION: 4.9
-    BUILD_ARCH: arm
-    ANDROID_API: android-24
-    ANDROID_ARM_NEON: ON
-  
-  - RABBIT_NUMBER: 0
-    BUILD_TARGERT: android
-    TOOLCHAIN_VERSION: 4.9
-    BUILD_ARCH: arm64
-    ANDROID_API: android-24
-    ANDROID_ARM_NEON: ON
-
-  - RABBIT_NUMBER: 1
-    BUILD_TARGERT: android
-    TOOLCHAIN_VERSION: 4.9
-    BUILD_ARCH: arm64
-    ANDROID_API: android-24
-    ANDROID_ARM_NEON: ON
-    
-  - RABBIT_NUMBER: 0
-    BUILD_TARGERT: android
-    TOOLCHAIN_VERSION: 4.9
-    BUILD_ARCH: x86
-    ANDROID_API: android-24
-    
-  - RABBIT_NUMBER: 1
-    BUILD_TARGERT: android
-    TOOLCHAIN_VERSION: 4.9
-    BUILD_ARCH: x86
-    ANDROID_API: android-24
 
 matrix:
   fast_finish: false

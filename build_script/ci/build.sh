@@ -115,8 +115,8 @@ bash ci/backgroud_echo.sh &
 ./build_libyuv.sh ${BUILD_TARGERT} >> ${SOURCE_DIR}/log.txt &
 ./build_libvpx.sh ${BUILD_TARGERT} >> ${SOURCE_DIR}/log.txt &
 ./build_libopus.sh ${BUILD_TARGERT} >> ${SOURCE_DIR}/log.txt &
-#./build_speexdsp.sh ${BUILD_TARGERT} >> ${SOURCE_DIR}/log.txt
-#./build_speex.sh ${BUILD_TARGERT} >> ${SOURCE_DIR}/log.txt
+./build_speexdsp.sh ${BUILD_TARGERT} >> ${SOURCE_DIR}/log.txt &
+./build_speex.sh ${BUILD_TARGERT} >> ${SOURCE_DIR}/log.txt &
 ./build_ffmpeg.sh ${BUILD_TARGERT} >> ${SOURCE_DIR}/log.txt
 ./build_opencv.sh ${BUILD_TARGERT} >> ${SOURCE_DIR}/log.txt
 ./build_libfacedetection.sh ${BUILD_TARGERT} >> ${SOURCE_DIR}/log.txt &

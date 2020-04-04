@@ -59,15 +59,16 @@ fi
 cd ${RABBIT_BUILD_SOURCE_CODE}
 
 echo ""
-echo "BUILD_TARGERT:${BUILD_TARGERT}"
-echo "RABBIT_BUILD_SOURCE_CODE:$RABBIT_BUILD_SOURCE_CODE"
-echo "CUR_DIR:`pwd`"
-echo "RABBIT_BUILD_PREFIX:$RABBIT_BUILD_PREFIX"
-echo "RABBIT_BUILD_HOST:$RABBIT_BUILD_HOST"
-echo "RABBIT_BUILD_CROSS_HOST:$RABBIT_BUILD_CROSS_HOST"
-echo "ANDROID_NATIVE_API_LEVEL:$ANDROID_NATIVE_API_LEVEL"
-echo "RABBIT_BUILD_STATIC:$RABBIT_BUILD_STATIC"
-echo "PATH:$PATH"
+echo "==== BUILD_TARGERT:${BUILD_TARGERT}"
+echo "==== RABBIT_BUILD_SOURCE_CODE:$RABBIT_BUILD_SOURCE_CODE"
+echo "==== CUR_DIR:`pwd`"
+echo "==== RABBIT_BUILD_PREFIX:$RABBIT_BUILD_PREFIX"
+echo "==== RABBIT_BUILD_HOST:$RABBIT_BUILD_HOST"
+echo "==== RABBIT_BUILD_CROSS_HOST:$RABBIT_BUILD_CROSS_HOST"
+echo "==== ANDROID_NATIVE_API_LEVEL:$ANDROID_NATIVE_API_LEVEL"
+echo "==== RABBIT_BUILD_STATIC:$RABBIT_BUILD_STATIC"
+echo "==== ANDROID_NDK_HOME:${ANDROID_NDK_HOME}"
+echo "==== PATH:$PATH"
 echo ""
 
 if [ "$RABBIT_CLEAN" = "TRUE" ]; then
@@ -117,7 +118,7 @@ case ${BUILD_TARGERT} in
         esac
         echo "COMPILE:$COMPILE"
         echo "./Configure --prefix=${RABBIT_BUILD_PREFIX} --openssldir=${RABBIT_BUILD_PREFIX} no-threads $MODE ${COMPILE} -D__ANDROID_API__=${ANDROID_NATIVE_API_LEVEL}"
-        ./Configure \
+        perl Configure \
             --prefix=${RABBIT_BUILD_PREFIX} \
             --openssldir=${RABBIT_BUILD_PREFIX} \
             no-threads \
@@ -173,11 +174,7 @@ case ${BUILD_TARGERT} in
 esac
 
 echo "make install"
-if [ "${BUILD_TARGERT}" = "windows_msvc" ]; then
-    ${MAKE}
-else
-    ${MAKE} ${BUILD_JOB_PARA}
-fi
+${MAKE}
 ${MAKE} install
 
 cd $CUR_DIR
