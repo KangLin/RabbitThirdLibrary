@@ -2,7 +2,7 @@
 set -e
 
 RABBIT_LIBRARYS_backgroud[0]=
-RABBIT_LIBRARYS[0]="zlib openssl libpng jpeg libyuv libvpx libopus speexdsp speex ffmpeg"
+RABBIT_LIBRARYS[0]="zlib openssl protobuf libpng jpeg libyuv libvpx libopus speexdsp speex ffmpeg"
 RABBIT_LIBRARYS_backgroud[1]="libsodium dlib seeta libfacedetection"
 RABBIT_LIBRARYS[1]="opencv"
 
@@ -113,8 +113,8 @@ fi
 if [ -n "${QT_ROOT}" ]; then
     export PATH=${QT_ROOT}/bin:$PATH
 fi
-echo "PATH:$PATH"
-echo "PKG_CONFIG:$PKG_CONFIG"
+echo "=== PATH:$PATH"
+echo "=== PKG_CONFIG:$PKG_CONFIG"
 cd ${SOURCE_DIR}/build_script
 
 for b in ${RABBIT_LIBRARYS_backgroud[$RABBIT_NUMBER]}

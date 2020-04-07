@@ -26,15 +26,15 @@ environment:
     TOOLCHAIN_VERSION: 530_32
     BUILD_ARCH: x86
     
-  - RABBIT_NUMBER: 0
-    BUILD_TARGERT: windows_mingw
-    TOOLCHAIN_VERSION: 730_64
-    BUILD_ARCH: x64
+  #- RABBIT_NUMBER: 0
+  #  BUILD_TARGERT: windows_mingw
+  #  TOOLCHAIN_VERSION: 730_64
+  #  BUILD_ARCH: x64
 
-  - RABBIT_NUMBER: 0
-    BUILD_TARGERT: windows_mingw
-    TOOLCHAIN_VERSION: 730_64
-    BUILD_ARCH: x64
+  #- RABBIT_NUMBER: 0
+  #  BUILD_TARGERT: windows_mingw
+  #  TOOLCHAIN_VERSION: 730_64
+  #  BUILD_ARCH: x64
 
 #QT_ROOT: C:\Qt\5.12\mingw73_64
 
