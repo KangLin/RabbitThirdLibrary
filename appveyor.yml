@@ -2,18 +2,18 @@ version: 'v0.2.5.{build}'
 
 cache:
   - Package
-  
+
 environment:
   BUILD_VERSION: v0.3.1
   TimeOutMins: 2
   #ApiKey:
   #  secure: qex0da587ygmywf4315g
-  
+
   #QT_USER:
   #  secure: EoBPaPuJ6u9UDYpQWjKhUg==
   #QT_PASSWORD:
   #  secure: ejAYGgB+3sBispRxUSr0xw==
-  
+
   matrix:
   ##### mingw ########
   - RABBIT_NUMBER: 0
@@ -26,15 +26,15 @@ environment:
     TOOLCHAIN_VERSION: 530_32
     BUILD_ARCH: x86
     
-#  - RABBIT_NUMBER: 0
-#    BUILD_TARGERT: windows_mingw
-#    TOOLCHAIN_VERSION: 730_64
-#    BUILD_ARCH: x64
+  - RABBIT_NUMBER: 0
+    BUILD_TARGERT: windows_mingw
+    TOOLCHAIN_VERSION: 730_64
+    BUILD_ARCH: x64
 
-#  - RABBIT_NUMBER: 0
-#    BUILD_TARGERT: windows_mingw
-#    TOOLCHAIN_VERSION: 730_64
-#    BUILD_ARCH: x64
+  - RABBIT_NUMBER: 0
+    BUILD_TARGERT: windows_mingw
+    TOOLCHAIN_VERSION: 730_64
+    BUILD_ARCH: x64
 
 #QT_ROOT: C:\Qt\5.12\mingw73_64
 
@@ -78,7 +78,7 @@ environment:
     TOOLCHAIN_VERSION: 4.9
     BUILD_ARCH: x86
     ANDROID_API: android-24
-    
+
   ##### msvc 2017 ########
   - RABBIT_NUMBER: 0
     APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017

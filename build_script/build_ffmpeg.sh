@@ -112,13 +112,18 @@ case ${BUILD_TARGERT} in
         #CONFIG_PARA="${CONFIG_PARA} ${THIRD_LIB}"
 
         CONFIG_PARA="${CONFIG_PARA} --target-os=android"
-        CONFIG_PARA="${CONFIG_PARA} --arch=$BUILD_ARCH"
-        
+
         case $BUILD_ARCH in
+            arm64)
+                CONFIG_PARA="${CONFIG_PARA} --cpu=armv7-a --enable-neon"
+                CONFIG_PARA="${CONFIG_PARA} --arch=arm"
+                ;;
             arm*)
                 CONFIG_PARA="${CONFIG_PARA} --cpu=armv7-a --enable-neon"
+                CONFIG_PARA="${CONFIG_PARA} --arch=arm"
                 ;;
             x86*)
+                CONFIG_PARA="${CONFIG_PARA} --arch=$BUILD_ARCH"
                 #CONFIG_PARA="${CONFIG_PARA} --cpu=i586"
                 CONFIG_PARA="${CONFIG_PARA} --x86asmexe==$YASM"
             ;;
@@ -137,13 +142,18 @@ case ${BUILD_TARGERT} in
         if [ "$BUILD_ARCH" = "x64" ]; then
             CONFIG_PARA="${CONFIG_PARA} --target-os=win64 --arch=x86_64 --cpu=i686"
         else
-            CONFIG_PARA="${CONFIG_PARA} --target-os=win32 --arch=i686 --cpu=i686"
+            CONFIG_PARA="${CONFIG_PARA} --target-os=win32 --arch=x86_32 --cpu=i686"
         fi
         
         CONFIG_PARA="${CONFIG_PARA} --toolchain=msvc --enable-cross-compile"
         ;;
     windows_mingw)
-        CONFIG_PARA="${CONFIG_PARA} --enable-cross-compile --target-os=mingw32 --arch=i686 --cpu=i686"
+        CONFIG_PARA="${CONFIG_PARA} --enable-cross-compile --target-os=mingw32"
+        if [ "$BUILD_ARCH" = "x64" ]; then
+            CONFIG_PARA="${CONFIG_PARA} --target-os=mingw64 --arch=x86_64 --cpu=i686"
+        else
+            CONFIG_PARA="${CONFIG_PARA} --target-os=mingw32 --arch=x86_32 --cpu=i686"
+        fi
         CONFIG_PARA="${CONFIG_PARA} ${THIRD_LIB}"
         case `uname -s` in
             MINGW*|MSYS*)
