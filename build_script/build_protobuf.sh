@@ -57,11 +57,11 @@ fi
 CUR_DIR=`pwd`
 cd ${RABBIT_BUILD_SOURCE_CODE}/cmake
 
+if [ "$RABBIT_CLEAN" = "TRUE" ]; then
+    rm -fr build_${BUILD_TARGERT}
+fi
 mkdir -p build_${BUILD_TARGERT}
 cd build_${BUILD_TARGERT}
-if [ "$RABBIT_CLEAN" = "TRUE" ]; then
-    rm -fr *
-fi
 
 echo ""
 echo "==== BUILD_TARGERT:${BUILD_TARGERT}"
@@ -76,7 +76,9 @@ echo ""
 
 if [ "$RABBIT_BUILD_STATIC" = "static" ]; then
     CMAKE_PARA="-Dprotobuf_BUILD_SHARED_LIBS=OFF"
+    CMAKE_PARA="-Dprotobuf_BUILD_STATIC_LIBS=ON"
 else
+    CMAKE_PARA="-Dprotobuf_BUILD_STATIC_LIBS=OFF" 
     CMAKE_PARA="-Dprotobuf_BUILD_SHARED_LIBS=ON"
 fi
 
@@ -115,6 +117,9 @@ case ${BUILD_TARGERT} in
 esac
 
 CMAKE_PARA="${CMAKE_PARA} -Dprotobuf_BUILD_TESTS=OFF"
+CMAKE_PARA="${CMAKE_PARA} -Dprotobuf_BUILD_EXAMPLES=OFF"
+CMAKE_PARA="${CMAKE_PARA} -Dprotobuf_BUILD_PROTOC_BINARIES=OFF"
+CMAKE_PARA="${CMAKE_PARA} -DCMAKE_VERBOSE_MAKEFILE=ON"
 echo "cmake .. -DCMAKE_INSTALL_PREFIX=$RABBIT_BUILD_PREFIX -DCMAKE_BUILD_TYPE=Release -G\"${GENERATORS}\" ${CMAKE_PARA}"
 if [ "${BUILD_TARGERT}" = "android" ]; then
     cmake .. \
