@@ -42,14 +42,14 @@ if [ ! -d ${RABBIT_BUILD_SOURCE_CODE} ]; then
         if [ "$VERSION" = "master" ]; then
             git clone -q https://github.com/Tencent/ncnn.git ${RABBIT_BUILD_SOURCE_CODE}
         else
-            git clone -b v${VERSION} https://github.com/Tencent/ncnn.git ${RABBIT_BUILD_SOURCE_CODE}
+            git clone -b ${VERSION} https://github.com/Tencent/ncnn.git ${RABBIT_BUILD_SOURCE_CODE}
         fi
     else
-        echo "wget -q -c https://github.com/Tencent/ncnn/archive/v${VERSION}.zip"
+        echo "wget -q -c https://github.com/Tencent/ncnn/archive/${VERSION}.zip"
         mkdir -p ${RABBIT_BUILD_SOURCE_CODE}
         cd ${RABBIT_BUILD_SOURCE_CODE}
-        wget -q -c https://github.com/Tencent/ncnn/archive/v${VERSION}.zip
-        unzip -q v${VERSION}.zip
+        wget -q -c https://github.com/Tencent/ncnn/archive/${VERSION}.zip
+        unzip -q ${VERSION}.zip
         mv ncnn-${VERSION} ..
         rm -fr *
         cd ..
@@ -59,11 +59,11 @@ if [ ! -d ${RABBIT_BUILD_SOURCE_CODE} ]; then
 fi
 
 cd ${RABBIT_BUILD_SOURCE_CODE}
+if [ "$RABBIT_CLEAN" = "TRUE" ]; then
+    rm -fr build_${BUILD_TARGERT}
+fi
 mkdir -p build_${BUILD_TARGERT}
 cd build_${BUILD_TARGERT}
-if [ "$RABBIT_CLEAN" = "TRUE" ]; then
-    rm -fr *
-fi
 
 echo ""
 echo "==== BUILD_TARGERT:${BUILD_TARGERT}"
@@ -76,6 +76,12 @@ echo "==== RABBIT_BUILD_CROSS_PREFIX:$RABBIT_BUILD_CROSS_PREFIX"
 echo "==== RABBIT_BUILD_CROSS_SYSROOT:$RABBIT_BUILD_CROSS_SYSROOT"
 echo "==== RABBIT_BUILD_STATIC:$RABBIT_BUILD_STATIC"
 echo ""
+
+if [ "$RABBIT_BUILD_STATIC" = "static" ]; then
+    CMAKE_PARA="-DBUILD_SHARED_LIBS=OFF"
+else
+    CMAKE_PARA="-DBUILD_SHARED_LIBS=ON"
+fi
 
 #需要设置 CMAKE_MAKE_PROGRAM 为 make 程序路径。
 
