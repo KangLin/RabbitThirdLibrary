@@ -18,50 +18,52 @@ HELP_STRING="Usage $0 PLATFORM(android|windows_msvc|windows_mingw|unix) [SOURCE_
 case $1 in
     android|windows_msvc|windows_mingw|unix)
         BUILD_TARGERT=$1
-        ;;
+    ;;
     *)
-        echo "${HELP_STRING}"
-        exit 1
-        ;;
+    echo "${HELP_STRING}"
+    exit 1
+    ;;
 esac
 
 RABBIT_BUILD_SOURCE_CODE=$2
-
 echo ". `pwd`/build_envsetup_${BUILD_TARGERT}.sh"
 . `pwd`/build_envsetup_${BUILD_TARGERT}.sh
 
 if [ -z "$RABBIT_BUILD_SOURCE_CODE" ]; then
-    RABBIT_BUILD_SOURCE_CODE=${RABBIT_BUILD_PREFIX}/../src/protobuf
-fi
-
-#下载源码:
-if [ ! -d ${RABBIT_BUILD_SOURCE_CODE} ]; then
-    VERSION=3.11.4
-    if [ "TRUE" = "${RABBIT_USE_REPOSITORIES}" ]; then
-        echo "git clone -q --branch=v${VERSION} https://github.com/google/protobuf.git ${RABBIT_BUILD_SOURCE_CODE}"
-        git clone -q --branch=v${VERSION} https://github.com/google/protobuf.git ${RABBIT_BUILD_SOURCE_CODE}
-    else
-        echo "wget -q -c https://github.com/google/protobuf/archive/v${VERSION}.zip"
-        mkdir -p ${RABBIT_BUILD_SOURCE_CODE}
-        cd ${RABBIT_BUILD_SOURCE_CODE}
-        wget -q -c https://github.com/google/protobuf/archive/v${VERSION}.zip
-        unzip -q v${VERSION}.zip
-        mv protobuf-${VERSION} ..
-        rm -fr *
-        cd ..
-        rm -fr ${RABBIT_BUILD_SOURCE_CODE}
-        mv -f protobuf-${VERSION} ${RABBIT_BUILD_SOURCE_CODE}
-    fi
+    RABBIT_BUILD_SOURCE_CODE=${RABBIT_BUILD_PREFIX}/../src/ncnn
 fi
 
 CUR_DIR=`pwd`
-cd ${RABBIT_BUILD_SOURCE_CODE}/cmake
-
-if [ "$RABBIT_CLEAN" = "TRUE" ]; then
-    rm -fr build_${BUILD_TARGERT}
+#下载源码:
+if [ ! -d ${RABBIT_BUILD_SOURCE_CODE} ]; then
+    VERSION=20200226
+    if [ "TRUE" = "${RABBIT_USE_REPOSITORIES}" ]; then
+        echo "git clone -q https://github.com/Tencent/ncnn.git ${RABBIT_BUILD_SOURCE_CODE}"
+        if [ "$VERSION" = "master" ]; then
+            git clone -q https://github.com/Tencent/ncnn.git ${RABBIT_BUILD_SOURCE_CODE}
+        else
+            git clone -b v${VERSION} https://github.com/Tencent/ncnn.git ${RABBIT_BUILD_SOURCE_CODE}
+        fi
+    else
+        echo "wget -q -c https://github.com/Tencent/ncnn/archive/v${VERSION}.zip"
+        mkdir -p ${RABBIT_BUILD_SOURCE_CODE}
+        cd ${RABBIT_BUILD_SOURCE_CODE}
+        wget -q -c https://github.com/Tencent/ncnn/archive/v${VERSION}.zip
+        unzip -q v${VERSION}.zip
+        mv ncnn-${VERSION} ..
+        rm -fr *
+        cd ..
+        rm -fr ${RABBIT_BUILD_SOURCE_CODE}
+        mv -f ncnn-${VERSION} ${RABBIT_BUILD_SOURCE_CODE}
+    fi
 fi
+
+cd ${RABBIT_BUILD_SOURCE_CODE}
 mkdir -p build_${BUILD_TARGERT}
 cd build_${BUILD_TARGERT}
+if [ "$RABBIT_CLEAN" = "TRUE" ]; then
+    rm -fr *
+fi
 
 echo ""
 echo "==== BUILD_TARGERT:${BUILD_TARGERT}"
@@ -72,21 +74,16 @@ echo "==== RABBIT_BUILD_HOST:$RABBIT_BUILD_HOST"
 echo "==== RABBIT_BUILD_CROSS_HOST:$RABBIT_BUILD_CROSS_HOST"
 echo "==== RABBIT_BUILD_CROSS_PREFIX:$RABBIT_BUILD_CROSS_PREFIX"
 echo "==== RABBIT_BUILD_CROSS_SYSROOT:$RABBIT_BUILD_CROSS_SYSROOT"
+echo "==== RABBIT_BUILD_STATIC:$RABBIT_BUILD_STATIC"
 echo ""
 
-if [ "$RABBIT_BUILD_STATIC" = "static" ]; then
-    CMAKE_PARA="-Dprotobuf_BUILD_SHARED_LIBS=OFF"
-    CMAKE_PARA="-Dprotobuf_BUILD_STATIC_LIBS=ON"
-else
-    CMAKE_PARA="-Dprotobuf_BUILD_STATIC_LIBS=OFF" 
-    CMAKE_PARA="-Dprotobuf_BUILD_SHARED_LIBS=ON"
-fi
+#需要设置 CMAKE_MAKE_PROGRAM 为 make 程序路径。
 
 MAKE_PARA="-- ${BUILD_JOB_PARA}"
 case ${BUILD_TARGERT} in
     android)
         if [ -n "$RABBIT_CMAKE_MAKE_PROGRAM" ]; then
-            CMAKE_PARA="${CMAKE_PARA} -DCMAKE_MAKE_PROGRAM=$RABBIT_CMAKE_MAKE_PROGRAM" 
+            CMAKE_PARA="${CMAKE_PARA} -DCMAKE_MAKE_PROGRAM=$RABBIT_CMAKE_MAKE_PROGRAM"
         fi
         if [ -n "$ANDROID_ARM_NEON" ]; then
             CMAKE_PARA="${CMAKE_PARA} -DANDROID_ARM_NEON=$ANDROID_ARM_NEON"
@@ -95,32 +92,25 @@ case ${BUILD_TARGERT} in
         CMAKE_PARA="${CMAKE_PARA} -DANDROID_PLATFORM=${ANDROID_PLATFORM}"
         ;;
     unix)
-    ;;
+        ;;
     windows_msvc)
-        #GENERATORS="Visual Studio 12 2013"
         MAKE_PARA=""
         ;;
     windows_mingw)
-        case `uname -s` in
-            Linux*|Unix*|CYGWIN*)
-                CMAKE_PARA="${CMAKE_PARA} -DCMAKE_TOOLCHAIN_FILE=$RABBIT_BUILD_PREFIX/../build_script/cmake/platforms/toolchain-mingw.cmake"
-                ;;
-            *)
-            ;;
-        esac
+        CMAKE_PARA="${CMAKE_PARA} -DCMAKE_TOOLCHAIN_FILE=$RABBIT_BUILD_PREFIX/../build_script/cmake/platforms/toolchain-mingw.cmake"
         ;;
     *)
     echo "${HELP_STRING}"
     cd $CUR_DIR
-    return 2
+    exit 2
     ;;
 esac
 
-CMAKE_PARA="${CMAKE_PARA} -Dprotobuf_BUILD_TESTS=OFF"
-CMAKE_PARA="${CMAKE_PARA} -Dprotobuf_BUILD_EXAMPLES=OFF"
-CMAKE_PARA="${CMAKE_PARA} -Dprotobuf_BUILD_PROTOC_BINARIES=OFF"
-CMAKE_PARA="${CMAKE_PARA} -DCMAKE_VERBOSE_MAKEFILE=ON"
-echo "cmake .. -DCMAKE_INSTALL_PREFIX=$RABBIT_BUILD_PREFIX -DCMAKE_BUILD_TYPE=Release -G\"${GENERATORS}\" ${CMAKE_PARA}"
+CMAKE_PARA="${CMAKE_PARA} -DCMAKE_PREFIX_PATH=$RABBIT_BUILD_PREFIX"
+CMAKE_PARA="${CMAKE_PARA} -DNCNN_BUILD_TESTS=OFF"
+CMAKE_PARA="${CMAKE_PARA} -DNCNN_BUILD_EXAMPLES=OFF"
+CMAKE_PARA="${CMAKE_PARA} -DNCNN_BUILD_TOOLS=OFF"
+echo "cmake .. -DCMAKE_INSTALL_PREFIX=$RABBIT_BUILD_PREFIX -DCMAKE_BUILD_TYPE=${RABBIT_CONFIG} -G\"${GENERATORS}\" ${CMAKE_PARA}"
 if [ "${BUILD_TARGERT}" = "android" ]; then
     cmake .. \
         -DCMAKE_INSTALL_PREFIX="$RABBIT_BUILD_PREFIX" \
@@ -129,7 +119,7 @@ if [ "${BUILD_TARGERT}" = "android" ]; then
 else
     cmake .. \
         -DCMAKE_INSTALL_PREFIX="$RABBIT_BUILD_PREFIX" \
-        -DCMAKE_VERBOSE_MAKEFILE=ON -DCMAKE_BUILD_TYPE=${RABBIT_CONFIG} \
+        -DCMAKE_VERBOSE_MAKEFILE=OFF -DCMAKE_BUILD_TYPE=${RABBIT_CONFIG} \
         -G"${GENERATORS}" ${CMAKE_PARA}
 fi
 cmake --build . --config ${RABBIT_CONFIG} ${MAKE_PARA}
