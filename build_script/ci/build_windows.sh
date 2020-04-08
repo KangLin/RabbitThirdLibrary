@@ -2,9 +2,9 @@
 set -e
 
 RABBIT_LIBRARYS_backgroud[0]=
-RABBIT_LIBRARYS[0]="zlib openssl protobuf libpng jpeg libyuv libvpx libopus speexdsp speex ffmpeg"
-RABBIT_LIBRARYS_backgroud[1]="libsodium dlib seeta libfacedetection"
-RABBIT_LIBRARYS[1]="opencv ncnn"
+RABBIT_LIBRARYS[0]="zlib openssl libsodium protobuf libpng jpeg libyuv libvpx libopus speexdsp speex ffmpeg dlib seeta libfacedetection"
+RABBIT_LIBRARYS_backgroud[1]="ncnn"
+RABBIT_LIBRARYS[1]="opencv "
 
 SOURCE_DIR=$(cd `dirname $0`; pwd)/../..
 if [ -n "$1" ]; then

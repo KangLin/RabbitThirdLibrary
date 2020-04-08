@@ -116,7 +116,7 @@ case ${BUILD_TARGERT} in
         case $BUILD_ARCH in
             arm64)
                 CONFIG_PARA="${CONFIG_PARA} --cpu=armv7-a --enable-neon"
-                CONFIG_PARA="${CONFIG_PARA} --arch=arm"
+                CONFIG_PARA="${CONFIG_PARA} --arch=armv8"
                 ;;
             arm*)
                 CONFIG_PARA="${CONFIG_PARA} --cpu=armv7-a --enable-neon"
