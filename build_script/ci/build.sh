@@ -107,7 +107,7 @@ bash ci/backgroud_echo.sh &
 
 ./build_zlib.sh ${BUILD_TARGERT} >> ${SOURCE_DIR}/log.txt
 #./build_openblas.sh ${BUILD_TARGERT}  >> ${SOURCE_DIR}/log.txt
-./build_openssl.sh ${BUILD_TARGERT} >> ${SOURCE_DIR}/log.txt &
+./build_protobuf.sh ${BUILD_TARGERT} >> ${SOURCE_DIR}/log.txt &
 ./build_libpng.sh ${BUILD_TARGERT} >> ${SOURCE_DIR}/log.txt &
 ./build_jpeg.sh ${BUILD_TARGERT} >> ${SOURCE_DIR}/log.txt &
 #./build_libgif.sh ${BUILD_TARGERT} >> ${SOURCE_DIR}/log.txt
@@ -117,6 +117,7 @@ bash ci/backgroud_echo.sh &
 ./build_libopus.sh ${BUILD_TARGERT} >> ${SOURCE_DIR}/log.txt &
 ./build_speexdsp.sh ${BUILD_TARGERT} >> ${SOURCE_DIR}/log.txt &
 ./build_speex.sh ${BUILD_TARGERT} >> ${SOURCE_DIR}/log.txt &
+./build_openssl.sh ${BUILD_TARGERT} >> ${SOURCE_DIR}/log.txt
 ./build_ffmpeg.sh ${BUILD_TARGERT} >> ${SOURCE_DIR}/log.txt
 ./build_opencv.sh ${BUILD_TARGERT} >> ${SOURCE_DIR}/log.txt
 ./build_libfacedetection.sh ${BUILD_TARGERT} >> ${SOURCE_DIR}/log.txt &

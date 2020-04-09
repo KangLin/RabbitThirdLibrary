@@ -2,8 +2,8 @@
 set -e
 
 RABBIT_LIBRARYS_backgroud[0]=
-RABBIT_LIBRARYS[0]="zlib openssl libsodium protobuf libpng jpeg libyuv libvpx libopus speexdsp speex ffmpeg dlib seeta libfacedetection"
-RABBIT_LIBRARYS_backgroud[1]="ncnn"
+RABBIT_LIBRARYS[0]="zlib openssl libsodium protobuf libpng jpeg libyuv libvpx libopus speexdsp speex ffmpeg seeta libfacedetection"
+RABBIT_LIBRARYS_backgroud[1]="dlib ncnn"
 RABBIT_LIBRARYS[1]="opencv "
 
 SOURCE_DIR=$(cd `dirname $0`; pwd)/../..
@@ -129,10 +129,10 @@ done
 
 echo "RABBIT_LIBRARYS size:${#RABBIT_LIBRARYS[@]}"
 if [ ${#RABBIT_LIBRARYS[@]} -eq `expr $RABBIT_NUMBER + 1` ]; then
-    echo "mv ${RABBIT_BUILD_PREFIX} ${SOURCE_DIR}/${BUILD_TARGERT}${TOOLCHAIN_VERSION}_${BUILD_ARCH}"
+    echo "mv ${RABBIT_BUILD_PREFIX} ${SOURCE_DIR}/${BUILD_TARGERT}${TOOLCHAIN_VERSION}_${BUILD_ARCH}_${APPVEYOR_REPO_TAG_NAME}"
     if [ "$BUILD_TARGERT" = "android" ]; then
-            mv ${RABBIT_BUILD_PREFIX} ${SOURCE_DIR}/${BUILD_TARGERT}${TOOLCHAIN_VERSION}_${BUILD_ARCH}_${ANDROID_API}_in_windows
+            mv ${RABBIT_BUILD_PREFIX} ${SOURCE_DIR}/${BUILD_TARGERT}${TOOLCHAIN_VERSION}_${BUILD_ARCH}_${ANDROID_API}_${APPVEYOR_REPO_TAG_NAME}_in_windows
     else
-        mv ${RABBIT_BUILD_PREFIX} ${SOURCE_DIR}/${BUILD_TARGERT}${TOOLCHAIN_VERSION}_${BUILD_ARCH}
+        mv ${RABBIT_BUILD_PREFIX} ${SOURCE_DIR}/${BUILD_TARGERT}${TOOLCHAIN_VERSION}_${BUILD_ARCH}_${APPVEYOR_REPO_TAG_NAME}
     fi
 fi

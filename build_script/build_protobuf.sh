@@ -36,16 +36,20 @@ fi
 
 #下载源码:
 if [ ! -d ${RABBIT_BUILD_SOURCE_CODE} ]; then
-    VERSION=3.11.4
+    VERSION=master #3.11.4
     if [ "TRUE" = "${RABBIT_USE_REPOSITORIES}" ]; then
-        echo "git clone -q --branch=v${VERSION} https://github.com/google/protobuf.git ${RABBIT_BUILD_SOURCE_CODE}"
-        git clone -q --branch=v${VERSION} https://github.com/google/protobuf.git ${RABBIT_BUILD_SOURCE_CODE}
+        #echo "git clone -q --branch=v${VERSION} https://github.com/google/protobuf.git ${RABBIT_BUILD_SOURCE_CODE}"
+        #git clone -q --branch=v${VERSION} https://github.com/google/protobuf.git ${RABBIT_BUILD_SOURCE_CODE}
+        echo "git clone https://github.com/KangLin/protobuf.git ${RABBIT_BUILD_SOURCE_CODE}"
+        git clone https://github.com/KangLin/protobuf.git ${RABBIT_BUILD_SOURCE_CODE}
     else
-        echo "wget -q -c https://github.com/google/protobuf/archive/v${VERSION}.zip"
         mkdir -p ${RABBIT_BUILD_SOURCE_CODE}
         cd ${RABBIT_BUILD_SOURCE_CODE}
-        wget -q -c https://github.com/google/protobuf/archive/v${VERSION}.zip
-        unzip -q v${VERSION}.zip
+        #echo "wget -q -c https://github.com/google/protobuf/archive/v${VERSION}.zip"
+        #wget -q -c https://github.com/google/protobuf/archive/v${VERSION}.zip
+        echo "wget -q -c https://github.com/KangLin/protobuf/archive/v${VERSION}.zip"
+        wget -q -c https://github.com/KangLin/protobuf/archive/${VERSION}.zip
+        unzip -q ${VERSION}.zip
         mv protobuf-${VERSION} ..
         rm -fr *
         cd ..
@@ -118,7 +122,7 @@ esac
 
 CMAKE_PARA="${CMAKE_PARA} -Dprotobuf_BUILD_TESTS=OFF"
 CMAKE_PARA="${CMAKE_PARA} -Dprotobuf_BUILD_EXAMPLES=OFF"
-CMAKE_PARA="${CMAKE_PARA} -Dprotobuf_BUILD_PROTOC_BINARIES=OFF"
+#CMAKE_PARA="${CMAKE_PARA} -Dprotobuf_BUILD_PROTOC_BINARIES=OFF"
 CMAKE_PARA="${CMAKE_PARA} -DCMAKE_VERBOSE_MAKEFILE=ON"
 echo "cmake .. -DCMAKE_INSTALL_PREFIX=$RABBIT_BUILD_PREFIX -DCMAKE_BUILD_TYPE=Release -G\"${GENERATORS}\" ${CMAKE_PARA}"
 if [ "${BUILD_TARGERT}" = "android" ]; then
