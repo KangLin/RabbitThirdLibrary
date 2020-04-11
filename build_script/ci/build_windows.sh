@@ -55,7 +55,8 @@ if [ "$BUILD_TARGERT" = "android" ]; then
             ;;
         esac
     fi
-    export PATH=${TOOLS_DIR}/apache-ant/bin:$JAVA_HOME/bin:$PATH
+    #export PATH=${TOOLS_DIR}/apache-ant/bin
+    export PATH=$JAVA_HOME/bin:$PATH
     export ANDROID_SDK=${ANDROID_SDK_ROOT}
     export ANDROID_NDK=${ANDROID_NDK_ROOT}
 fi

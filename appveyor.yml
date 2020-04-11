@@ -15,29 +15,6 @@ environment:
   #  secure: ejAYGgB+3sBispRxUSr0xw==
 
   matrix:
-  ##### mingw ########
-  - RABBIT_NUMBER: 0
-    BUILD_TARGERT: windows_mingw
-    TOOLCHAIN_VERSION: 530_32
-    BUILD_ARCH: x86
-
-  - RABBIT_NUMBER: 1
-    BUILD_TARGERT: windows_mingw
-    TOOLCHAIN_VERSION: 530_32
-    BUILD_ARCH: x86
-    
-  #- RABBIT_NUMBER: 0
-  #  BUILD_TARGERT: windows_mingw
-  #  TOOLCHAIN_VERSION: 730_64
-  #  BUILD_ARCH: x64
-
-  #- RABBIT_NUMBER: 0
-  #  BUILD_TARGERT: windows_mingw
-  #  TOOLCHAIN_VERSION: 730_64
-  #  BUILD_ARCH: x64
-
-#QT_ROOT: C:\Qt\5.12\mingw73_64
-
   ##### android ########
   - RABBIT_NUMBER: 0
     BUILD_TARGERT: android
@@ -132,6 +109,29 @@ environment:
     BUILD_ARCH: x64
     
 #QT_ROOT: C:\Qt\5.10\msvc2015_64
+
+  ##### mingw ########
+  - RABBIT_NUMBER: 0
+    BUILD_TARGERT: windows_mingw
+    TOOLCHAIN_VERSION: 530_32
+    BUILD_ARCH: x86
+
+  - RABBIT_NUMBER: 1
+    BUILD_TARGERT: windows_mingw
+    TOOLCHAIN_VERSION: 530_32
+    BUILD_ARCH: x86
+    
+  #- RABBIT_NUMBER: 0
+  #  BUILD_TARGERT: windows_mingw
+  #  TOOLCHAIN_VERSION: 730_64
+  #  BUILD_ARCH: x64
+
+  #- RABBIT_NUMBER: 0
+  #  BUILD_TARGERT: windows_mingw
+  #  TOOLCHAIN_VERSION: 730_64
+  #  BUILD_ARCH: x64
+
+#QT_ROOT: C:\Qt\5.12\mingw73_64
 
 matrix:
   fast_finish: false
