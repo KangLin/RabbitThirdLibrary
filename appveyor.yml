@@ -15,47 +15,7 @@ environment:
   #  secure: ejAYGgB+3sBispRxUSr0xw==
 
   matrix:
-  ##### android ########
-  - RABBIT_NUMBER: 0
-    BUILD_TARGERT: android
-    TOOLCHAIN_VERSION: 4.9
-    BUILD_ARCH: arm
-    ANDROID_API: android-24
-    ANDROID_ARM_NEON: ON
-
-  - RABBIT_NUMBER: 1
-    BUILD_TARGERT: android
-    TOOLCHAIN_VERSION: 4.9
-    BUILD_ARCH: arm
-    ANDROID_API: android-24
-    ANDROID_ARM_NEON: ON
   
-  - RABBIT_NUMBER: 0
-    BUILD_TARGERT: android
-    TOOLCHAIN_VERSION: 4.9
-    BUILD_ARCH: arm64
-    ANDROID_API: android-24
-    ANDROID_ARM_NEON: ON
-
-  - RABBIT_NUMBER: 1
-    BUILD_TARGERT: android
-    TOOLCHAIN_VERSION: 4.9
-    BUILD_ARCH: arm64
-    ANDROID_API: android-24
-    ANDROID_ARM_NEON: ON
-    
-  - RABBIT_NUMBER: 0
-    BUILD_TARGERT: android
-    TOOLCHAIN_VERSION: 4.9
-    BUILD_ARCH: x86
-    ANDROID_API: android-24
-    
-  - RABBIT_NUMBER: 1
-    BUILD_TARGERT: android
-    TOOLCHAIN_VERSION: 4.9
-    BUILD_ARCH: x86
-    ANDROID_API: android-24
-    
   ##### msvc 2017 ########
   - RABBIT_NUMBER: 0
     APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
@@ -133,6 +93,47 @@ environment:
 
 #QT_ROOT: C:\Qt\5.12\mingw73_64
 
+  ##### android ########
+  - RABBIT_NUMBER: 0
+    BUILD_TARGERT: android
+    TOOLCHAIN_VERSION: 4.9
+    BUILD_ARCH: arm
+    ANDROID_API: android-24
+    ANDROID_ARM_NEON: ON
+
+  - RABBIT_NUMBER: 1
+    BUILD_TARGERT: android
+    TOOLCHAIN_VERSION: 4.9
+    BUILD_ARCH: arm
+    ANDROID_API: android-24
+    ANDROID_ARM_NEON: ON
+  
+  - RABBIT_NUMBER: 0
+    BUILD_TARGERT: android
+    TOOLCHAIN_VERSION: 4.9
+    BUILD_ARCH: arm64
+    ANDROID_API: android-24
+    ANDROID_ARM_NEON: ON
+
+  - RABBIT_NUMBER: 1
+    BUILD_TARGERT: android
+    TOOLCHAIN_VERSION: 4.9
+    BUILD_ARCH: arm64
+    ANDROID_API: android-24
+    ANDROID_ARM_NEON: ON
+    
+  - RABBIT_NUMBER: 0
+    BUILD_TARGERT: android
+    TOOLCHAIN_VERSION: 4.9
+    BUILD_ARCH: x86
+    ANDROID_API: android-24
+    
+  - RABBIT_NUMBER: 1
+    BUILD_TARGERT: android
+    TOOLCHAIN_VERSION: 4.9
+    BUILD_ARCH: x86
+    ANDROID_API: android-24
+  
 matrix:
   fast_finish: false
 
@@ -166,7 +167,6 @@ build_script:
   - C:\msys64\usr\bin\bash.exe %APPVEYOR_BUILD_FOLDER%\build_script\ci\build_windows.sh
 
 artifacts:
-  #- path: $(BUILD_TARGERT)
   - path: $(BUILD_TARGERT)$(TOOLCHAIN_VERSION)_$(BUILD_ARCH)_$(APPVEYOR_REPO_TAG_NAME)
   - path: $(BUILD_TARGERT)$(TOOLCHAIN_VERSION)_$(BUILD_ARCH)_$(ANDROID_API)_$(APPVEYOR_REPO_TAG_NAME)_in_windows
 
@@ -180,7 +180,7 @@ deploy:
     #token : https://github.com/settings/tokens
     #password encrypt: https://ci.appveyor.com/tools/encrypt
     auth_token:
-      secure: I/iPgcw0IPuy66OiIjBSK33ZTrLDAlnnmfEpNo8q2DT6X3z1XJvYECnXGvef0C9y
+      secure: NPGYJzqYbViyGy0og49nCXxnj98vKqjxsgAd45rMhB9L1Vp1hCYp+Ku4C9qhe+vC
     #artifact: RabbitThirdLibrary_$(BUILD_TARGERT)$(TOOLCHAIN_VERSION)_$(BUILD_ARCH)_$(QT_VERSION)_$(BUILD_VERSION)
     #draft: true
     #prerelease: true

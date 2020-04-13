@@ -38,16 +38,16 @@ CUR_DIR=`pwd`
 if [ ! -d ${RABBIT_BUILD_SOURCE_CODE} ]; then
     VERSION=master
     if [ "TRUE" = "${RABBIT_USE_REPOSITORIES}" ]; then
-        echo "git clone -q https://github.com/ShiqiYu/libfacedetection.git ${RABBIT_BUILD_SOURCE_CODE}"
-        git clone -q https://github.com/ShiqiYu/libfacedetection.git ${RABBIT_BUILD_SOURCE_CODE}
+        echo "git clone -q https://github.com/KangLin/libfacedetection.git ${RABBIT_BUILD_SOURCE_CODE}"
+        git clone -q https://github.com/KangLin/libfacedetection.git ${RABBIT_BUILD_SOURCE_CODE}
         if [ "$VERSION" != "master" ]; then
             git checkout -b v$VERSION v$VERSION
         fi
     else
-        echo "wget -q -c https://github.com/ShiqiYu/libfacedetection/archive/${VERSION}.zip"
+        echo "wget -q -c https://github.com/KangLin/libfacedetection/archive/${VERSION}.zip"
         mkdir -p ${RABBIT_BUILD_SOURCE_CODE}
         cd ${RABBIT_BUILD_SOURCE_CODE}
-        wget -q -c https://github.com/ShiqiYu/libfacedetection/archive/${VERSION}.zip
+        wget -q -c https://github.com/KangLin/libfacedetection/archive/${VERSION}.zip
         unzip -q ${VERSION}.zip
         mv libfacedetection-${VERSION} ..
         rm -fr *

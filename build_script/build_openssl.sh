@@ -37,7 +37,7 @@ CUR_DIR=`pwd`
 
 #下载源码:
 if [ ! -d ${RABBIT_BUILD_SOURCE_CODE} ]; then
-    OPENSLL_BRANCH=OpenSSL_1_1_1d
+    OPENSLL_BRANCH=OpenSSL_1_1_1f
     if [ "TRUE" = "${RABBIT_USE_REPOSITORIES}" ]; then
         echo "git clone -q --branch=${OPENSLL_BRANCH} https://github.com/openssl/openssl ${RABBIT_BUILD_SOURCE_CODE}"
         git clone -q -b ${OPENSLL_BRANCH} https://github.com/openssl/openssl ${RABBIT_BUILD_SOURCE_CODE}
@@ -96,7 +96,7 @@ fi
 if [ "$RABBIT_BUILD_STATIC" != "static" ]; then
     MODE=shared
 else
-    MODE="no-shared no-pic"
+    MODE="no-shared no-pic no-threads -static"
 fi
 
 echo "configure ..."
@@ -174,7 +174,13 @@ case ${BUILD_TARGERT} in
 esac
 
 echo "make install"
-${MAKE}
+${MAKE} V=1
 ${MAKE} install
+
+if [ "${BUILD_ARCH}" = "android" ]; then
+    cd ${RABBIT_BUILD_PREFIX}/lib/
+    mv libssl.so.1.1 libssl.so
+    mv libcrypto.so.1.1 libcrypto.so
+fi
 
 cd $CUR_DIR
