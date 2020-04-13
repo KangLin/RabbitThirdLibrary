@@ -174,7 +174,7 @@ case ${BUILD_TARGERT} in
 esac
 
 echo "make install"
-${MAKE}
+${MAKE} V=1
 ${MAKE} install
 
 cd $CUR_DIR
