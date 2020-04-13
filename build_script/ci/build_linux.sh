@@ -142,7 +142,7 @@ bash ci/backgroud_echo.sh &
     #cd $(dirname ${RABBIT_BUILD_PREFIX})
     cd ${RABBIT_BUILD_PREFIX}
     tar czfv ${SOURCE_DIR}/${TAR_FILE} .
-    export UPLOADTOOL_BODY="Release RabbitThirdLibrary ${TRAVIS_TAG}"
+    export UPLOADTOOL_BODY="Release ${TRAVIS_TAG}"
     wget -c https://github.com/probonopd/uploadtool/raw/master/upload.sh
     chmod u+x upload.sh
     ./upload.sh ${SOURCE_DIR}/${TAR_FILE}
