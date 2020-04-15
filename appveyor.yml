@@ -15,6 +15,46 @@ environment:
   #  secure: ejAYGgB+3sBispRxUSr0xw==
 
   matrix:
+  ##### android ########
+  - RABBIT_NUMBER: 0
+    BUILD_TARGERT: android
+    TOOLCHAIN_VERSION: 4.9
+    BUILD_ARCH: arm
+    ANDROID_API: android-24
+    ANDROID_ARM_NEON: ON
+
+  - RABBIT_NUMBER: 1
+    BUILD_TARGERT: android
+    TOOLCHAIN_VERSION: 4.9
+    BUILD_ARCH: arm
+    ANDROID_API: android-24
+    ANDROID_ARM_NEON: ON
+  
+  - RABBIT_NUMBER: 0
+    BUILD_TARGERT: android
+    TOOLCHAIN_VERSION: 4.9
+    BUILD_ARCH: arm64
+    ANDROID_API: android-24
+    ANDROID_ARM_NEON: ON
+
+  - RABBIT_NUMBER: 1
+    BUILD_TARGERT: android
+    TOOLCHAIN_VERSION: 4.9
+    BUILD_ARCH: arm64
+    ANDROID_API: android-24
+    ANDROID_ARM_NEON: ON
+    
+  - RABBIT_NUMBER: 0
+    BUILD_TARGERT: android
+    TOOLCHAIN_VERSION: 4.9
+    BUILD_ARCH: x86
+    ANDROID_API: android-24
+    
+  - RABBIT_NUMBER: 1
+    BUILD_TARGERT: android
+    TOOLCHAIN_VERSION: 4.9
+    BUILD_ARCH: x86
+    ANDROID_API: android-24
   
   ##### msvc 2017 ########
   - RABBIT_NUMBER: 0
@@ -93,47 +133,6 @@ environment:
 
 #QT_ROOT: C:\Qt\5.12\mingw73_64
 
-  ##### android ########
-  - RABBIT_NUMBER: 0
-    BUILD_TARGERT: android
-    TOOLCHAIN_VERSION: 4.9
-    BUILD_ARCH: arm
-    ANDROID_API: android-24
-    ANDROID_ARM_NEON: ON
-
-  - RABBIT_NUMBER: 1
-    BUILD_TARGERT: android
-    TOOLCHAIN_VERSION: 4.9
-    BUILD_ARCH: arm
-    ANDROID_API: android-24
-    ANDROID_ARM_NEON: ON
-  
-  - RABBIT_NUMBER: 0
-    BUILD_TARGERT: android
-    TOOLCHAIN_VERSION: 4.9
-    BUILD_ARCH: arm64
-    ANDROID_API: android-24
-    ANDROID_ARM_NEON: ON
-
-  - RABBIT_NUMBER: 1
-    BUILD_TARGERT: android
-    TOOLCHAIN_VERSION: 4.9
-    BUILD_ARCH: arm64
-    ANDROID_API: android-24
-    ANDROID_ARM_NEON: ON
-    
-  - RABBIT_NUMBER: 0
-    BUILD_TARGERT: android
-    TOOLCHAIN_VERSION: 4.9
-    BUILD_ARCH: x86
-    ANDROID_API: android-24
-    
-  - RABBIT_NUMBER: 1
-    BUILD_TARGERT: android
-    TOOLCHAIN_VERSION: 4.9
-    BUILD_ARCH: x86
-    ANDROID_API: android-24
-  
 matrix:
   fast_finish: false
 

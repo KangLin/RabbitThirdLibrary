@@ -1,15 +1,17 @@
 #!/bin/bash
 set -ev
 
+RABBIT_LIBRARYS_backgroud[0]=
+RABBIT_LIBRARYS[0]="zlib openssl protobuf libpng jpeg libyuv libvpx libopus speexdsp speex ffmpeg seeta libfacedetection"
+RABBIT_LIBRARYS_backgroud[1]="dlib ncnn"
+RABBIT_LIBRARYS[1]="opencv "
+
 SOURCE_DIR=$(cd `dirname $0`; pwd)/../..
 if [ -n "$1" ]; then
     SOURCE_DIR=$1
 fi
 TOOLS_DIR=${SOURCE_DIR}/Tools
-export RABBIT_BUILD_PREFIX=${SOURCE_DIR}/${BUILD_TARGERT}${TOOLCHAIN_VERSION}
-if [ -n "$BUILD_ARCH" ]; then
-    export RABBIT_BUILD_PREFIX=${RABBIT_BUILD_PREFIX}_${BUILD_ARCH}
-fi
+export RABBIT_BUILD_PREFIX=${SOURCE_DIR}/build_${BUILD_TARGERT}
 
 function version_gt() { test "$(echo "$@" | tr " " "\n" | sort -V | head -n 1)" != "$1"; }
 function version_le() { test "$(echo "$@" | tr " " "\n" | sort -V | head -n 1)" == "$1"; }
@@ -19,7 +21,11 @@ function version_ge() { test "$(echo "$@" | tr " " "\n" | sort -rV | head -n 1)"
 cd ${SOURCE_DIR}
 
 if [ "$BUILD_TARGERT" = "android" ]; then
-    export ANDROID_SDK_ROOT=${TOOLS_DIR}/android-sdk
+    if [ -n "${ANDROID_HOME}" ]; then
+        export ANDROID_SDK_ROOT=${ANDROID_HOME}
+    else
+        export ANDROID_SDK_ROOT=${TOOLS_DIR}/android-sdk
+    fi
     export ANDROID_NDK_ROOT=${TOOLS_DIR}/android-ndk
     if [ -n "$APPVEYOR" ]; then
         #export JAVA_HOME="/C/Program Files (x86)/Java/jdk1.8.0"
@@ -28,7 +34,9 @@ if [ "$BUILD_TARGERT" = "android" ]; then
     #if [ "$TRAVIS" = "true" ]; then
         #export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
     #fi
-    export JAVA_HOME=${TOOLS_DIR}/android-studio/jre
+    if [ -z "${JAVA_HOME}" -a -d ${TOOLS_DIR}/android-studio/jre ]; then
+        export JAVA_HOME=${TOOLS_DIR}/android-studio/jre
+    fi
     
     if version_ge $QT_VERSION_DIR 5.14 ; then
         export QT_ROOT=${TOOLS_DIR}/Qt/${QT_VERSION}/${QT_VERSION}/android
@@ -38,8 +46,8 @@ if [ "$BUILD_TARGERT" = "android" ]; then
                 export QT_ROOT=${TOOLS_DIR}/Qt/${QT_VERSION}/${QT_VERSION}/android_armv7
                 ;;
             x86)
-            export QT_ROOT=${TOOLS_DIR}/Qt/${QT_VERSION}/${QT_VERSION}/android_x86
-            ;;
+                export QT_ROOT=${TOOLS_DIR}/Qt/${QT_VERSION}/${QT_VERSION}/android_x86
+                ;;
         esac
     fi
     export PATH=${TOOLS_DIR}/apache-ant/bin:$JAVA_HOME/bin:$PATH
@@ -98,52 +106,40 @@ case $TARGET_OS in
 esac
 
 export PATH=${QT_ROOT}/bin:$PATH
-echo "PATH:$PATH"
-echo "PKG_CONFIG:$PKG_CONFIG"
+echo "=== PATH:$PATH"
+echo "=== PKG_CONFIG:$PKG_CONFIG"
 cd ${SOURCE_DIR}/build_script
-
 
 bash ci/backgroud_echo.sh &
 
-./build_zlib.sh ${BUILD_TARGERT} >> ${SOURCE_DIR}/log.txt
-#./build_openblas.sh ${BUILD_TARGERT}  >> ${SOURCE_DIR}/log.txt
-./build_protobuf.sh ${BUILD_TARGERT} >> ${SOURCE_DIR}/log.txt &
-./build_libpng.sh ${BUILD_TARGERT} >> ${SOURCE_DIR}/log.txt &
-./build_jpeg.sh ${BUILD_TARGERT} >> ${SOURCE_DIR}/log.txt &
-./build_libgif.sh ${BUILD_TARGERT} >> ${SOURCE_DIR}/log.txt
-./build_libtiff.sh ${BUILD_TARGERT} >> ${SOURCE_DIR}/log.txt
-./build_libyuv.sh ${BUILD_TARGERT} >> ${SOURCE_DIR}/log.txt &
-./build_libvpx.sh ${BUILD_TARGERT} >> ${SOURCE_DIR}/log.txt &
-./build_libopus.sh ${BUILD_TARGERT} >> ${SOURCE_DIR}/log.txt &
-./build_speexdsp.sh ${BUILD_TARGERT} >> ${SOURCE_DIR}/log.txt &
-./build_speex.sh ${BUILD_TARGERT} >> ${SOURCE_DIR}/log.txt &
-./build_openssl.sh ${BUILD_TARGERT} >> ${SOURCE_DIR}/log.txt
-./build_ffmpeg.sh ${BUILD_TARGERT} >> ${SOURCE_DIR}/log.txt
-./build_opencv.sh ${BUILD_TARGERT} >> ${SOURCE_DIR}/log.txt
-./build_libfacedetection.sh ${BUILD_TARGERT} >> ${SOURCE_DIR}/log.txt &
-./build_seeta.sh ${BUILD_TARGERT} >> ${SOURCE_DIR}/log.txt &
-./build_ncnn.sh ${BUILD_TARGERT} >> ${SOURCE_DIR}/log.txt
-./build_dlib.sh ${BUILD_TARGERT} >> ${SOURCE_DIR}/log.txt
+for b in ${RABBIT_LIBRARYS_backgroud[$RABBIT_NUMBER]}
+do
+    bash ./build_$b.sh ${BUILD_TARGERT} > /dev/null &
+done
 
-#./build_qxmpp.sh ${BUILD_TARGERT}
-#./build_qzxing.sh ${BUILD_TARGERT}
+for v in ${RABBIT_LIBRARYS[$RABBIT_NUMBER]}
+do
+    bash ./build_$v.sh ${BUILD_TARGERT} > /dev/null
+done
 
-if [ "$TRAVIS_TAG" != "" ]; then
-    . build_envsetup_${BUILD_TARGERT}.sh
-    TAR_NAME=$(basename ${RABBIT_BUILD_PREFIX})
-    if [ -n "${TRAVIS_TAG}" ]; then
-        TAR_NAME=${TAR_NAME}_${TRAVIS_TAG}
+echo "RABBIT_LIBRARYS size:${#RABBIT_LIBRARYS[@]}"
+if [ ${#RABBIT_LIBRARYS[@]} -eq `expr $RABBIT_NUMBER + 1` ]; then
+    if [ "$TRAVIS_TAG" != "" ]; then
+        TAR_NAME=${BUILD_TARGERT}_${BUILD_ARCH}
+        if [ -n "${TRAVIS_TAG}" ]; then
+            TAR_NAME=${TAR_NAME}_${TRAVIS_TAG}
+        fi
+        if [ "$BUILD_TARGERT" = "android" ]; then
+            TAR_FILE=${TAR_NAME}_in_linux.tar.gz
+        else
+            TAR_FILE=${TAR_NAME}.tar.gz
+        fi
+        #cd $(dirname ${RABBIT_BUILD_PREFIX})
+        cd ${RABBIT_BUILD_PREFIX}
+        tar czfv ${SOURCE_DIR}/${TAR_FILE} .
+        export UPLOADTOOL_BODY="Release ${TRAVIS_TAG}"
+        wget -c https://github.com/probonopd/uploadtool/raw/master/upload.sh
+        chmod u+x upload.sh
+        ./upload.sh ${SOURCE_DIR}/${TAR_FILE}
     fi
-    if [ "$BUILD_TARGERT" = "android" ]; then
-        TAR_FILE=${TAR_NAME}_in_linux.tar.gz
-    else
-        TAR_FILE=${TAR_NAME}.tar.gz
-    fi
-    #cd $(dirname ${RABBIT_BUILD_PREFIX})
-    cd ${RABBIT_BUILD_PREFIX}
-    tar czfv ${SOURCE_DIR}/${TAR_FILE} .
-    export UPLOADTOOL_BODY="Release ${TRAVIS_TAG}"
-    wget -c https://github.com/probonopd/uploadtool/raw/master/upload.sh
-    chmod u+x upload.sh
-    ./upload.sh ${SOURCE_DIR}/${TAR_FILE}
 fi

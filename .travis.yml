@@ -1,39 +1,6 @@
 sudo: required
 dist: xenial
-language: cpp
-
-addons:
-  apt:
-    sources:
-      github-git-lfs-bionic
-    packages:
-      git-lfs
-      
-cache:
-  - apt
-  - directories:
-    - Tools
-
-compiler:
-  - g++
-
-os:
-  - unix
-
-jdk:
-  #- oraclejdk8
-  #- oraclejdk9
-  - openjdk8
-
-#android:
-#  components:
-#    - build-tools-28.0.3
-#    - android-24
-    
-addons:
-  ssh_known_hosts:
-    - github.com
-    - frs.sourceforge.net
+#language: cpp
 
 env:
   global:
@@ -42,25 +9,159 @@ env:
     - BUILD_VERSION=$TRAVIS_BUILD_NUMBER
     #- RABBIT_USE_REPOSITORIES="TRUE"
     - QMAKE=qmake
-    - RABBIT_BUILD_THIRDLIBRARY="TRUE" 
+    - RABBIT_BUILD_THIRDLIBRARY="TRUE"
+
+jobs:
+  include:
+    ############################# android arm #########################
+    - stage: stage1
+      language: android
+      android:
+        components:
+          - build-tools-28.0.2
+          - android-24
+      cache:
+        directories: build_android
+      env:
+        - BUILD_TARGERT="android"
+        - BUILD_ARCH="arm"
+        - ANDROID_API=android-24
+      before_script:
+        - export RABBIT_NUMBER=0
+        - rm -fr build_${BUILD_TARGERT}
+        
+    - stage: stage2
+      language: android
+      android:
+        components:
+          - build-tools-28.0.2
+          - android-24
+      cache:
+        directories: build_android
+      env:
+        - BUILD_TARGERT="android"
+        - BUILD_ARCH="arm"
+        - ANDROID_API=android-24
+      before_script:
+        - export RABBIT_NUMBER=1
+        
+    ############################# android arm64 #########################
+    - stage: stage1
+      language: android
+      android:
+        components:
+          - build-tools-28.0.2
+          - android-24
+      cache:
+        directories: build_android
+      env:
+        - BUILD_TARGERT="android"
+        - BUILD_ARCH="arm64"
+        - ANDROID_API=android-24
+      before_script:
+        - export RABBIT_NUMBER=0
+        - rm -fr build_${BUILD_TARGERT}
+        
+    - stage: stage2
+      language: android
+      android:
+        components:
+          - build-tools-28.0.2
+          - android-24
+      cache:
+        directories: build_android
+      env:
+        - BUILD_TARGERT="android"
+        - BUILD_ARCH="arm64"
+        - ANDROID_API=android-24
+      before_script:
+        - export RABBIT_NUMBER=1
     
-  matrix:
-    - BUILD_TARGERT="unix"
-    - BUILD_TARGERT="android" BUILD_ARCH="arm" ANDROID_API=android-24
-    - BUILD_TARGERT="android" BUILD_ARCH="arm64" ANDROID_API=android-24
-    - BUILD_TARGERT="android" BUILD_ARCH="x86" ANDROID_API=android-24
-    - BUILD_TARGERT="android" BUILD_ARCH="x86_64" ANDROID_API=android-24
+    ############################# android x86 #########################
+    - stage: stage1
+      language: android
+      android:
+        components:
+          - build-tools-28.0.2
+          - android-24
+      cache:
+        directories: build_android
+      env:
+        - BUILD_TARGERT="android"
+        - BUILD_ARCH="x86"
+        - ANDROID_API=android-24
+      before_script:
+        - export RABBIT_NUMBER=0
+        - rm -fr build_${BUILD_TARGERT}
+    
+    - stage: stage2
+      language: android
+      android:
+        components:
+          - build-tools-28.0.2
+          - android-24
+      cache:
+        directories: build_android
+      env:
+        - BUILD_TARGERT="android"
+        - BUILD_ARCH="x86"
+        - ANDROID_API=android-24
+      before_script:
+        - export RABBIT_NUMBER=1
+        
+    ############################# android x86_64 #########################
+    - stage: stage1
+      language: android
+      android:
+        components:
+          - build-tools-28.0.2
+          - android-24
+      cache:
+        directories: build_android
+      env:
+        - BUILD_TARGERT="android"
+        - BUILD_ARCH="x86_64"
+        - ANDROID_API=android-24
+      before_script:
+        - export RABBIT_NUMBER=0
+        - rm -fr build_${BUILD_TARGERT}
+    
+    - stage: stage2
+      language: android
+      android:
+        components:
+          - build-tools-28.0.2
+          - android-24
+      cache:
+        directories: build_android
+      env:
+        - BUILD_TARGERT="android"
+        - BUILD_ARCH="x86_64"
+        - ANDROID_API=android-24
+      before_script:
+        - export RABBIT_NUMBER=1
+        
+    ############################# unix #########################
+    - stage: stage1
+      language: cpp
+      env:
+        - BUILD_TARGERT="unix"
+        - BUILD_ARCH="x86_64"
+      cache:
+        directories: build_unix
+      before_script:
+        - export RABBIT_NUMBER=0
+        - rm -fr build_${BUILD_TARGERT}
 
-    #- BUILD_TARGERT="unix" QT_VERSION_DIR=512 QT_VERSION=5.12.3 DOWNLOAD_QT=FALSE
-    #- BUILD_TARGERT="unix" QT_VERSION_DIR=511 QT_VERSION=5.11.3 DOWNLOAD_QT=FALSE
-
-    #- BUILD_TARGERT="unix" QT_VERSION_DIR=5.12 QT_VERSION=5.12.6 DOWNLOAD_QT=FALSE
-    #- BUILD_TARGERT="unix" QT_VERSION_DIR=5.13 QT_VERSION=5.13.2 DOWNLOAD_QT=FALSE
-
-    #- BUILD_TARGERT="android" BUILD_ARCH="arm" ANDROID_API=android-24 QT_VERSION_DIR=5.13 QT_VERSION=5.13.2 DOWNLOAD_QT=FALSE
-    #- BUILD_TARGERT="android" BUILD_ARCH="arm" ANDROID_API=android-24 QT_VERSION_DIR=5.12 QT_VERSION=5.12.6 DOWNLOAD_QT=FALSE
-    #- BUILD_TARGERT="android" BUILD_ARCH="x86" ANDROID_API=android-24 QT_VERSION_DIR=5.12 QT_VERSION=5.12.6 DOWNLOAD_QT=FALSE
-    #- BUILD_TARGERT="android" BUILD_ARCH="x86" ANDROID_API=android-24 QT_VERSION_DIR=5.13 QT_VERSION=5.13.2 DOWNLOAD_QT=FALSE
+    - stage: stage2
+      language: cpp
+      env:
+        - BUILD_TARGERT="unix"
+        - BUILD_ARCH="x86_64"
+      cache:
+        directories: build_unix
+      before_script:
+        - export RABBIT_NUMBER=1
 
 before_install:
   - echo "TRAVIS_OS_NAME=${TRAVIS_OS_NAME}"
@@ -68,33 +169,21 @@ before_install:
   - sudo apt-get install -y -qq xvfb xpra
   - sudo Xvfb :99 -ac &
   - export DISPLAY=:99.0
-  - mkdir -p ${SOURCE_DIR}/Tools
   - export VERSION="v0.0.2"
   
-install:
-  - ./build_script/ci/build-install-tools.sh ${TRAVIS_BUILD_DIR} > /dev/null
-
-before_script:
-
-script: 
+script:
+  - ./build_script/ci/build-install-tools.sh ${TRAVIS_BUILD_DIR} #> /dev/null
   - ./build_script/ci/build_linux.sh ${TRAVIS_BUILD_DIR} #> /dev/null
 
-after_script:
-
-notifications:
-  email: kl222@126.com
-  on_success: never  # [always|never|change]
-  on_failure: always
-
-#deploy:
-#  provider: releases
-#  api_key: 
-#    secure: ${GITHUB_TOKEN}
-#  file_glob: true
-#  file: 
-#    - ${BUILD_TARGERT}*.tar.gz
-#  skip_cleanup: true
-#  on:
-#   #condition: $TRAVIS_OS_NAME = android
-#   # repo: KangLin/RabbitThirdLibrary
-#    tags: true
+deploy:
+  provider: releases
+  api_key: 
+    secure: ${GITHUB_TOKEN}
+  file_glob: true
+  file: 
+    - packages
+  skip_cleanup: true
+  on:
+   #condition: $TRAVIS_OS_NAME = android
+   # repo: KangLin/RabbitThirdLibrary
+    tags: true

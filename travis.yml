@@ -1,0 +1,100 @@
+sudo: required
+dist: xenial
+language: cpp
+
+addons:
+  apt:
+    sources:
+      github-git-lfs-bionic
+    packages:
+      git-lfs
+      
+cache:
+  - apt
+  - directories:
+    - Tools
+
+compiler:
+  - g++
+
+os:
+  - unix
+
+jdk:
+  #- oraclejdk8
+  #- oraclejdk9
+  - openjdk8
+
+#android:
+#  components:
+#    - build-tools-28.0.3
+#    - android-24
+    
+addons:
+  ssh_known_hosts:
+    - github.com
+    - frs.sourceforge.net
+
+env:
+  global:
+    - SOURCE_DIR=$TRAVIS_BUILD_DIR
+    - PROJECT_NAME="RabbitThirdLIbrary"
+    - BUILD_VERSION=$TRAVIS_BUILD_NUMBER
+    #- RABBIT_USE_REPOSITORIES="TRUE"
+    - QMAKE=qmake
+    - RABBIT_BUILD_THIRDLIBRARY="TRUE" 
+    
+  matrix:
+    - BUILD_TARGERT="unix"
+    - BUILD_TARGERT="android" BUILD_ARCH="arm" ANDROID_API=android-24
+    - BUILD_TARGERT="android" BUILD_ARCH="arm64" ANDROID_API=android-24
+    - BUILD_TARGERT="android" BUILD_ARCH="x86" ANDROID_API=android-24
+    - BUILD_TARGERT="android" BUILD_ARCH="x86_64" ANDROID_API=android-24
+
+    #- BUILD_TARGERT="unix" QT_VERSION_DIR=512 QT_VERSION=5.12.3 DOWNLOAD_QT=FALSE
+    #- BUILD_TARGERT="unix" QT_VERSION_DIR=511 QT_VERSION=5.11.3 DOWNLOAD_QT=FALSE
+
+    #- BUILD_TARGERT="unix" QT_VERSION_DIR=5.12 QT_VERSION=5.12.6 DOWNLOAD_QT=FALSE
+    #- BUILD_TARGERT="unix" QT_VERSION_DIR=5.13 QT_VERSION=5.13.2 DOWNLOAD_QT=FALSE
+
+    #- BUILD_TARGERT="android" BUILD_ARCH="arm" ANDROID_API=android-24 QT_VERSION_DIR=5.13 QT_VERSION=5.13.2 DOWNLOAD_QT=FALSE
+    #- BUILD_TARGERT="android" BUILD_ARCH="arm" ANDROID_API=android-24 QT_VERSION_DIR=5.12 QT_VERSION=5.12.6 DOWNLOAD_QT=FALSE
+    #- BUILD_TARGERT="android" BUILD_ARCH="x86" ANDROID_API=android-24 QT_VERSION_DIR=5.12 QT_VERSION=5.12.6 DOWNLOAD_QT=FALSE
+    #- BUILD_TARGERT="android" BUILD_ARCH="x86" ANDROID_API=android-24 QT_VERSION_DIR=5.13 QT_VERSION=5.13.2 DOWNLOAD_QT=FALSE
+
+before_install:
+  - echo "TRAVIS_OS_NAME=${TRAVIS_OS_NAME}"
+  - echo "JAVA_HOME=${JAVA_HOME}"
+  - sudo apt-get install -y -qq xvfb xpra
+  - sudo Xvfb :99 -ac &
+  - export DISPLAY=:99.0
+  - mkdir -p ${SOURCE_DIR}/Tools
+  - export VERSION="v0.0.2"
+  
+install:
+  - ./build_script/ci/build-install-tools.sh ${TRAVIS_BUILD_DIR} > /dev/null
+
+before_script:
+
+script: 
+  - ./build_script/ci/build_linux.sh ${TRAVIS_BUILD_DIR} #> /dev/null
+
+after_script:
+
+notifications:
+  email: kl222@126.com
+  on_success: never  # [always|never|change]
+  on_failure: always
+
+#deploy:
+#  provider: releases
+#  api_key: 
+#    secure: ${GITHUB_TOKEN}
+#  file_glob: true
+#  file: 
+#    - ${BUILD_TARGERT}*.tar.gz
+#  skip_cleanup: true
+#  on:
+#   #condition: $TRAVIS_OS_NAME = android
+#   # repo: KangLin/RabbitThirdLibrary
+#    tags: true

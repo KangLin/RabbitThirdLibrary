@@ -9,9 +9,12 @@ if [ -n "$1" ]; then
 fi
 echo $SOURCE_DIR
 TOOLS_DIR=${SOURCE_DIR}/Tools
-
+PACKAGE_DIR=${SOURCE_DIR}/Package
 if [ ! -f "${TOOLS_DIR}" ]; then
     mkdir -p ${TOOLS_DIR}
+fi
+if [ ! -d ${PACKAGE_DIR} ]; then
+    mkdir -p ${PACKAGE_DIR}
 fi
 
 function function_install_yasm()
@@ -49,18 +52,32 @@ function function_common()
 
 function install_android()
 {
+    if [ -n "$1" ]; then
+        NDK="ndk-bundle"
+    fi
     cd ${TOOLS_DIR}
     if [ ! -d "`pwd`/android-sdk" ]; then
+        cd ${PACKAGE_DIR}
         ANDROID_STUDIO_VERSION=191.5900203
-        wget -c -nv https://dl.google.com/dl/android/studio/ide-zips/3.5.1.0/android-studio-ide-${ANDROID_STUDIO_VERSION}-linux.tar.gz
-        tar xzf android-studio-ide-${ANDROID_STUDIO_VERSION}-linux.tar.gz
+        ANDROID_STUDIO_PACKAGE=android-studio-ide-${ANDROID_STUDIO_VERSION}-linux.tar.gz
+        if [ ! -f ${ANDROID_STUDIO_PACKAGE} ]; then
+            wget -c -nv https://dl.google.com/dl/android/studio/ide-zips/3.5.1.0/${ANDROID_STUDIO_PACKAGE}
+        fi
+        tar xzf android-studio-ide-${ANDROID_STUDIO_VERSION}-linux.tar.gz -C ${TOOLS_DIR}
+        cd ${TOOLS_DIR}
+        ls
         export JAVA_HOME=`pwd`/android-studio/jre
         export PATH=${JAVA_HOME}/bin:$PATH
-        wget -c -nv https://dl.google.com/android/repository/sdk-tools-linux-4333796.zip
+        cd ${PACKAGE_DIR}
+        SDK_PACKAGE=sdk-tools-linux-4333796.zip
+        if [ ! -f ${SDK_PACKAGE} ]; then
+            wget -c -nv https://dl.google.com/android/repository/${SDK_PACKAGE}
+        fi
+        cd ${TOOLS_DIR}
         mkdir android-sdk
         cd android-sdk
-        cp ../sdk-tools-linux-4333796.zip .
-        unzip -q sdk-tools-linux-4333796.zip
+        unzip -q ${PACKAGE_DIR}/${SDK_PACKAGE} -d `pwd`
+        
         echo "Install sdk and ndk ......"
         if [ -n "${ANDROID_API}" ]; then
             PLATFORMS="platforms;${ANDROID_API}"
@@ -70,12 +87,28 @@ function install_android()
         if [ -z "${BUILD_TOOS_VERSION}" ]; then
             BUILD_TOOS_VERSION="28.0.3"
         fi
+        
         (sleep 5 ; num=0 ; while [ $num -le 5 ] ; do sleep 1 ; num=$(($num+1)) ; printf 'y\r\n' ; done ) \
-        | ./tools/bin/sdkmanager "platform-tools" "build-tools;${BUILD_TOOS_VERSION}" "${PLATFORMS}" "ndk-bundle"
-        if [ ! -d ${TOOLS_DIR}/android-ndk ]; then
-            ln -s ${TOOLS_DIR}/android-sdk/ndk-bundle ${TOOLS_DIR}/android-ndk
+        | ./tools/bin/sdkmanager "platform-tools" "build-tools;${BUILD_TOOS_VERSION}" "${PLATFORMS}" ${NDK} > /dev/null
+        if [ -n "${NDK}" ]; then
+            if [ ! -d ${TOOLS_DIR}/android-ndk ]; then
+                ln -s ${TOOLS_DIR}/android-sdk/ndk-bundle ${TOOLS_DIR}/android-ndk
+            fi
         fi
     fi
+}
+
+function install_android_sdk_and_ndk()
+{
+    #install_android
+    NDK_PACKAGE=android-ndk-r21-linux-x86_64.zip
+    cd ${PACKAGE_DIR}
+    if [ ! -f ${NDK_PACKAGE} ]; then
+        wget -c -nv https://dl.google.com/android/repository/${NDK_PACKAGE}
+    fi
+    unzip -q ${NDK_PACKAGE} -d ${TOOLS_DIR}
+    cd ${TOOLS_DIR}
+    mv android-ndk-r21 android-ndk
 }
 
 function function_android()
@@ -85,7 +118,7 @@ function function_android()
     sudo apt-get update -y -qq
     sudo apt-get install ant -qq -y
 
-    install_android
+    install_android_sdk_and_ndk
     function_common
     cd ${SOURCE_DIR}
 }
