@@ -114,7 +114,7 @@ function function_android()
 {
     cd ${TOOLS_DIR}
     
-    sudo apt-get update -y -qq
+    #sudo apt-get update -y -qq
     sudo apt-get install ant -qq -y
 
     install_android_sdk_and_ndk
@@ -128,7 +128,7 @@ function function_unix()
     #function_install_yasm
     sudo apt-get install -qq -y yasm
 
-    sudo apt-get update -y -qq
+    #sudo apt-get update -y -qq
     sudo apt-get install debhelper fakeroot -y -qq
     sudo apt-get install -y -qq libglu1-mesa-dev \
         libxkbcommon-x11-dev \

@@ -35,7 +35,7 @@ if [ "$BUILD_TARGERT" = "android" ]; then
     #if [ "$TRAVIS" = "true" ]; then
         #export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
     #fi
-    if [ -z "${JAVA_HOME}" -a -d ${TOOLS_DIR}/android-studio/jre ]; then
+    if [ -d ${TOOLS_DIR}/android-studio/jre ]; then
         export JAVA_HOME=${TOOLS_DIR}/android-studio/jre
     fi
     

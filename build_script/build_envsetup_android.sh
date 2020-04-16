@@ -168,7 +168,7 @@ case $TARGET_OS in
     ;;
 esac
 
-export PATH=$ANDROID_NDK/prebuilt/${ANDROID_NDK_HOST}/bin:$PATH
+#export PATH=$ANDROID_NDK/prebuilt/${ANDROID_NDK_HOST}/bin:$PATH
 #if [ -z "$RABBIT_TOOL_CHAIN_ROOT" ]; then
 #    RABBIT_TOOL_CHAIN_ROOT=${RABBIT_BUILD_PREFIX}/../android-toolchains-${BUILD_ARCH}-api${ANDROID_NATIVE_API_LEVEL}
 #fi
