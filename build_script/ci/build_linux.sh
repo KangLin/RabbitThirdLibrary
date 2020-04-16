@@ -2,9 +2,9 @@
 set -ev
 
 RABBIT_LIBRARYS_backgroud[0]=
-RABBIT_LIBRARYS[0]="zlib openssl protobuf libpng jpeg libyuv libvpx libopus speexdsp speex ffmpeg seeta libfacedetection"
-RABBIT_LIBRARYS_backgroud[1]="dlib ncnn"
-RABBIT_LIBRARYS[1]="opencv "
+RABBIT_LIBRARYS[0]="zlib openssl protobuf libpng jpeg libyuv libvpx libopus speexdsp speex ffmpeg seeta libfacedetection dlib ncnn opencv"
+RABBIT_LIBRARYS_backgroud[1]=""
+RABBIT_LIBRARYS[1]="libqrencode qxmpp"
 
 SOURCE_DIR=$(cd `dirname $0`; pwd)/../..
 if [ -n "$1" ]; then
@@ -42,13 +42,24 @@ if [ "$BUILD_TARGERT" = "android" ]; then
         export QT_ROOT=${TOOLS_DIR}/Qt/${QT_VERSION}/${QT_VERSION}/android
     else
         case $BUILD_ARCH in
-            arm*)
-                export QT_ROOT=${TOOLS_DIR}/Qt/${QT_VERSION}/${QT_VERSION}/android_armv7
+            arm)
+                QT_ROOT=${TOOLS_DIR}/Qt/${QT_VERSION}/${QT_VERSION}/android_armv7
+                ;;
+            arm64)
+                QT_ROOT=${TOOLS_DIR}/Qt/${QT_VERSION}/${QT_VERSION}/android_arm64_v8a/
                 ;;
             x86)
-                export QT_ROOT=${TOOLS_DIR}/Qt/${QT_VERSION}/${QT_VERSION}/android_x86
+                QT_ROOT=${TOOLS_DIR}/Qt/${QT_VERSION}/${QT_VERSION}/android_x86
+                ;;
+            x86_64)
+                QT_ROOT=${TOOLS_DIR}/Qt/${QT_VERSION}/${QT_VERSION}/android_x86_64
                 ;;
         esac
+        if [ -d ${QT_ROOT} ]; then
+            export QT_ROOT=${QT_ROOT}
+        else
+            export QT_ROOT=
+        fi
     fi
     export PATH=${TOOLS_DIR}/apache-ant/bin:$JAVA_HOME/bin:$PATH
     export ANDROID_SDK=${ANDROID_SDK_ROOT}
@@ -58,6 +69,7 @@ fi
 if [ "${BUILD_TARGERT}" = "unix" ]; then
     if [ "$DOWNLOAD_QT" = "APT" ]; then
         export QT_ROOT=/usr/lib/`uname -m`-linux-gnu/qt5
+        export QT_VERSION=`${QT_ROOT}/bin/qmake -query QT_VERSION`
     elif [ "$DOWNLOAD_QT" = "TRUE" ]; then
         QT_DIR=${TOOLS_DIR}/Qt/${QT_VERSION}
         export QT_ROOT=${QT_DIR}/${QT_VERSION}/gcc_64
@@ -119,6 +131,7 @@ done
 
 for v in ${RABBIT_LIBRARYS[$RABBIT_NUMBER]}
 do
+    echo "bash ./build_$v.sh ${BUILD_TARGERT}"
     bash ./build_$v.sh ${BUILD_TARGERT} > /dev/null
 done
 
@@ -126,6 +139,9 @@ echo "RABBIT_LIBRARYS size:${#RABBIT_LIBRARYS[@]}"
 if [ ${#RABBIT_LIBRARYS[@]} -eq `expr $RABBIT_NUMBER + 1` ]; then
     if [ "$TRAVIS_TAG" != "" ]; then
         TAR_NAME=${BUILD_TARGERT}_${BUILD_ARCH}
+        if [ -n "$QT_VERSION" ]; then
+            TAR_NAME=${TAR_NAME}_Qt${QT_VERSION}
+        fi
         if [ -n "${TRAVIS_TAG}" ]; then
             TAR_NAME=${TAR_NAME}_${TRAVIS_TAG}
         fi

@@ -65,7 +65,6 @@ function install_android()
         fi
         tar xzf android-studio-ide-${ANDROID_STUDIO_VERSION}-linux.tar.gz -C ${TOOLS_DIR}
         cd ${TOOLS_DIR}
-        ls
         export JAVA_HOME=`pwd`/android-studio/jre
         export PATH=${JAVA_HOME}/bin:$PATH
         cd ${PACKAGE_DIR}
@@ -128,14 +127,23 @@ function function_unix()
     #汇编工具yasm
     #function_install_yasm
     sudo apt-get install -qq -y yasm
-    
-#    if [ "$DOWNLOAD_QT" != "TRUE" ]; then
-#        #See: https://launchpad.net/~beineri
-#        sudo add-apt-repository ppa:beineri/opt-qt-${QT_VERSION}-`lsb_release -c|awk '{print $2}'` -y
-#        sudo apt-get install -y -qq qt${QT_VERSION_DIR}base \
-#            qt${QT_VERSION_DIR}tools \
-#            qt${QT_VERSION_DIR}multimedia
-#    fi
+
+    sudo apt-get update -y -qq
+    sudo apt-get install debhelper fakeroot -y -qq
+    sudo apt-get install -y -qq libglu1-mesa-dev \
+        libxkbcommon-x11-dev \
+        libpulse-mainloop-glib0 \
+        libgstreamer1.0-dev \
+        libgstreamer-plugins-base1.0-dev \
+        gstreamer1.0-pulseaudio
+
+    if [ "$DOWNLOAD_QT" = "APT" ]; then
+        sudo apt-get install -y -qq qttools5-dev qttools5-dev-tools \
+            qtbase5-dev qtbase5-dev-tools \
+            qtmultimedia5-dev
+        sudo ln -s /usr/lib/`uname -m`-linux-gnu/cmake /usr/lib/`uname -m`-linux-gnu/qt5/cmake
+    fi
+
     function_common
 
     cd ${SOURCE_DIR}

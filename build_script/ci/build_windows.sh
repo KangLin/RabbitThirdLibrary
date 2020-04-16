@@ -45,17 +45,24 @@ if [ "$BUILD_TARGERT" = "android" ]; then
         fi
     else
         case $BUILD_ARCH in
-            arm*)
-                if [ -d ${TOOLS_DIR}/Qt/${QT_VERSION}/${QT_VERSION}/android_armv7 ]; then
-                    export QT_ROOT=${TOOLS_DIR}/Qt/${QT_VERSION}/${QT_VERSION}/android_armv7
-                fi
+            arm)
+                QT_ROOT=${TOOLS_DIR}/Qt/${QT_VERSION}/${QT_VERSION}/android_armv7
+                ;;
+            arm64)
+                QT_ROOT=${TOOLS_DIR}/Qt/${QT_VERSION}/${QT_VERSION}/android_arm64_v8a/
                 ;;
             x86)
-                if [ -d ${TOOLS_DIR}/Qt/${QT_VERSION}/${QT_VERSION}/android_x86 ]; then
-                    export QT_ROOT=${TOOLS_DIR}/Qt/${QT_VERSION}/${QT_VERSION}/android_x86
-                fi
-            ;;
+                QT_ROOT=${TOOLS_DIR}/Qt/${QT_VERSION}/${QT_VERSION}/android_x86
+                ;;
+            x86_64)
+                QT_ROOT=${TOOLS_DIR}/Qt/${QT_VERSION}/${QT_VERSION}/android_x86_64
+                ;;
         esac
+        if [ -d ${QT_ROOT} ]; then
+            export QT_ROOT=${QT_ROOT}
+        else
+            export QT_ROOT=
+        fi
     fi
     #export PATH=${TOOLS_DIR}/apache-ant/bin
     export PATH=$JAVA_HOME/bin:$PATH
