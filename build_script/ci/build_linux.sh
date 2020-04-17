@@ -1,8 +1,9 @@
 #!/bin/bash
 set -ev
 
-RABBIT_LIBRARYS_backgroud[0]=
-RABBIT_LIBRARYS[0]="zlib openssl protobuf libpng jpeg libyuv libvpx libopus speexdsp speex ffmpeg seeta libfacedetection dlib ncnn opencv"
+RABBIT_LIBRARYS_before[0]="zlib"
+RABBIT_LIBRARYS_backgroud[0]="protobuf libpng jpeg libyuv libvpx libopus speexdsp speex seeta libfacedetection ncnn"
+RABBIT_LIBRARYS[0]="openssl ffmpeg dlib opencv"
 RABBIT_LIBRARYS_backgroud[1]=""
 RABBIT_LIBRARYS[1]="libqrencode qxmpp"
 
@@ -123,6 +124,11 @@ echo "=== PKG_CONFIG:$PKG_CONFIG"
 cd ${SOURCE_DIR}/build_script
 
 bash ci/backgroud_echo.sh &
+
+for b in ${RABBIT_LIBRARYS_before[$RABBIT_NUMBER]}
+do
+    bash ./build_$b.sh ${BUILD_TARGERT} > /dev/null
+done
 
 for b in ${RABBIT_LIBRARYS_backgroud[$RABBIT_NUMBER]}
 do
