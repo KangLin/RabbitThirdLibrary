@@ -4,15 +4,15 @@ set -e
 RABBIT_LIBRARYS_before[0]="zlib"
 RABBIT_LIBRARYS_backgroud[0]="protobuf libpng jpeg libyuv libvpx libopus speexdsp speex seeta libfacedetection ncnn"
 RABBIT_LIBRARYS[0]="openssl ffmpeg dlib opencv"
-RABBIT_LIBRARYS_backgroud[1]=""
-RABBIT_LIBRARYS[1]="qxmpp"
+#RABBIT_LIBRARYS_backgroud[1]=""
+#RABBIT_LIBRARYS[1]="qxmpp"
 
 SOURCE_DIR=$(cd `dirname $0`; pwd)/../..
 if [ -n "$1" ]; then
     SOURCE_DIR=$1
 fi
 TOOLS_DIR=${SOURCE_DIR}/Tools
-export RABBIT_BUILD_PREFIX=${SOURCE_DIR}/build_${BUILD_TARGERT}
+export RABBIT_BUILD_PREFIX=${SOURCE_DIR}/build
 
 function version_gt() { test "$(echo "$@" | tr " " "\n" | sort -V | head -n 1)" != "$1"; }
 function version_le() { test "$(echo "$@" | tr " " "\n" | sort -V | head -n 1)" == "$1"; }

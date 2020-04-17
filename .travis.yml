@@ -2,6 +2,9 @@ sudo: required
 dist: xenial
 #language: cpp
 
+cache:
+  directories: build
+
 env:
   global:
     - SOURCE_DIR=$TRAVIS_BUILD_DIR
@@ -20,33 +23,29 @@ jobs:
         components:
           - build-tools-28.0.2
           - android-24
-      cache:
-        directories: build_android
       env:
         - BUILD_TARGERT="android"
         - BUILD_ARCH="arm"
         - ANDROID_API=android-24
       before_script:
         - export RABBIT_NUMBER=0
-        - rm -fr build_${BUILD_TARGERT}
+        - rm -fr build
         
-    - stage: stage2
-      language: android
-      android:
-        components:
-          - build-tools-28.0.2
-          - android-24
-      cache:
-        directories: build_android
-      env:
-        - BUILD_TARGERT="android"
-        - BUILD_ARCH="arm"
-        - ANDROID_API=android-24
-      before_script:
-        - export RABBIT_NUMBER=1
-        - export DOWNLOAD_QT=TRUE
-        - export QT_VERSION_DIR=512
-        - export QT_VERSION=5.12.6
+#    - stage: stage2
+#      language: android
+#      android:
+#        components:
+#          - build-tools-28.0.2
+#          - android-24
+#      env:
+#        - BUILD_TARGERT="android"
+#        - BUILD_ARCH="arm"
+#        - ANDROID_API=android-24
+#      before_script:
+#        - export RABBIT_NUMBER=1
+#        - export DOWNLOAD_QT=TRUE
+#        - export QT_VERSION_DIR=512
+#        - export QT_VERSION=5.12.6
         
     ############################# android arm64 #########################
     - stage: stage1
@@ -55,33 +54,29 @@ jobs:
         components:
           - build-tools-28.0.2
           - android-24
-      cache:
-        directories: build_android
       env:
         - BUILD_TARGERT="android"
         - BUILD_ARCH="arm64"
         - ANDROID_API=android-24
       before_script:
         - export RABBIT_NUMBER=0
-        - rm -fr build_${BUILD_TARGERT}
+        - rm -fr build
         
-    - stage: stage2
-      language: android
-      android:
-        components:
-          - build-tools-28.0.2
-          - android-24
-      cache:
-        directories: build_android
-      env:
-        - BUILD_TARGERT="android"
-        - BUILD_ARCH="arm64"
-        - ANDROID_API=android-24
-      before_script:
-        - export RABBIT_NUMBER=1
-        - export DOWNLOAD_QT=TRUE
-        - export QT_VERSION_DIR=512
-        - export QT_VERSION=5.12.6
+#    - stage: stage2
+#      language: android
+#      android:
+#        components:
+#          - build-tools-28.0.2
+#          - android-24
+#      env:
+#        - BUILD_TARGERT="android"
+#        - BUILD_ARCH="arm64"
+#        - ANDROID_API=android-24
+#      before_script:
+#        - export RABBIT_NUMBER=1
+#        - export DOWNLOAD_QT=TRUE
+#        - export QT_VERSION_DIR=512
+#        - export QT_VERSION=5.12.6
     
     ############################# android x86 #########################
     - stage: stage1
@@ -90,33 +85,29 @@ jobs:
         components:
           - build-tools-28.0.2
           - android-24
-      cache:
-        directories: build_android
       env:
         - BUILD_TARGERT="android"
         - BUILD_ARCH="x86"
         - ANDROID_API=android-24
       before_script:
         - export RABBIT_NUMBER=0
-        - rm -fr build_${BUILD_TARGERT}
+        - rm -fr build
     
-    - stage: stage2
-      language: android
-      android:
-        components:
-          - build-tools-28.0.2
-          - android-24
-      cache:
-        directories: build_android
-      env:
-        - BUILD_TARGERT="android"
-        - BUILD_ARCH="x86"
-        - ANDROID_API=android-24
-      before_script:
-        - export RABBIT_NUMBER=1
-        - export DOWNLOAD_QT=TRUE
-        - export QT_VERSION_DIR=512
-        - export QT_VERSION=5.12.6
+#    - stage: stage2
+#      language: android
+#      android:
+#        components:
+#          - build-tools-28.0.2
+#          - android-24
+#      env:
+#        - BUILD_TARGERT="android"
+#        - BUILD_ARCH="x86"
+#        - ANDROID_API=android-24
+#      before_script:
+#        - export RABBIT_NUMBER=1
+#        - export DOWNLOAD_QT=TRUE
+#        - export QT_VERSION_DIR=512
+#        - export QT_VERSION=5.12.6
         
     ############################# android x86_64 #########################
     - stage: stage1
@@ -125,33 +116,29 @@ jobs:
         components:
           - build-tools-28.0.2
           - android-24
-      cache:
-        directories: build_android
       env:
         - BUILD_TARGERT="android"
         - BUILD_ARCH="x86_64"
         - ANDROID_API=android-24
       before_script:
         - export RABBIT_NUMBER=0
-        - rm -fr build_${BUILD_TARGERT}
+        - rm -fr build
     
-    - stage: stage2
-      language: android
-      android:
-        components:
-          - build-tools-28.0.2
-          - android-24
-      cache:
-        directories: build_android
-      env:
-        - BUILD_TARGERT="android"
-        - BUILD_ARCH="x86_64"
-        - ANDROID_API=android-24
-      before_script:
-        - export RABBIT_NUMBER=1
-        - export DOWNLOAD_QT=TRUE
-        - export QT_VERSION_DIR=512
-        - export QT_VERSION=5.12.6
+#    - stage: stage2
+#      language: android
+#      android:
+#        components:
+#          - build-tools-28.0.2
+#          - android-24
+#      env:
+#        - BUILD_TARGERT="android"
+#        - BUILD_ARCH="x86_64"
+#        - ANDROID_API=android-24
+#      before_script:
+#        - export RABBIT_NUMBER=1
+#        - export DOWNLOAD_QT=TRUE
+#        - export QT_VERSION_DIR=512
+#        - export QT_VERSION=5.12.6
         
     ############################# unix #########################
     - stage: stage1
@@ -159,22 +146,18 @@ jobs:
       env:
         - BUILD_TARGERT="unix"
         - BUILD_ARCH="x86_64"
-      cache:
-        directories: build_unix
       before_script:
         - export RABBIT_NUMBER=0
-        - rm -fr build_${BUILD_TARGERT}
+        - rm -fr build
 
-    - stage: stage2
-      language: cpp
-      env:
-        - BUILD_TARGERT="unix"
-        - BUILD_ARCH="x86_64"
-      cache:
-        directories: build_unix
-      before_script:
-        - export RABBIT_NUMBER=1
-        - export DOWNLOAD_QT=APT
+#    - stage: stage2
+#      language: cpp
+#      env:
+#        - BUILD_TARGERT="unix"
+#        - BUILD_ARCH="x86_64"
+#      before_script:
+#        - export RABBIT_NUMBER=1
+#        - export DOWNLOAD_QT=APT
 
 before_install:
   - echo "TRAVIS_OS_NAME=${TRAVIS_OS_NAME}"
