@@ -21,8 +21,8 @@ function version_ge() { test "$(echo "$@" | tr " " "\n" | sort -rV | head -n 1)"
 cd ${SOURCE_DIR}
 
 # 解压上一步编译的库
-if [ -f "${BUILD_TARGERT}.zip" ]; then
-    unzip "${BUILD_TARGERT}.zip" -d ${RABBIT_BUILD_PREFIX}
+if [ -f "build_${BUILD_TARGERT}.zip" ]; then
+    unzip "build_${BUILD_TARGERT}.zip" -d ${RABBIT_BUILD_PREFIX}
 fi
 
 if [ "$BUILD_TARGERT" = "android" ]; then

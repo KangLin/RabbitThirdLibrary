@@ -51,7 +51,7 @@ if (${env:ANDROID_ARM_NEON})
 if (!$success) {throw "Job `"$RABBIT_JOB_NAME`" was not finished in $env:TimeOutMins minutes"}
 if (!$jobToWaitId) {throw "Unable t get JobId for the job `"$RABBIT_JOB_NAME`""}
   
-$url = "https://ci.appveyor.com/api/buildjobs/$jobToWaitId/artifacts/${env:BUILD_TARGERT}.zip"
+$url = "https://ci.appveyor.com/api/buildjobs/$jobToWaitId/artifacts/build_${env:BUILD_TARGERT}.zip"
 echo $url
-Start-FileDownload $url -FileName ${env:APPVEYOR_BUILD_FOLDER}/${env:BUILD_TARGERT}.zip
+Start-FileDownload $url -FileName ${env:APPVEYOR_BUILD_FOLDER}/build_${env:BUILD_TARGERT}.zip
 if(!$?){return -1}
