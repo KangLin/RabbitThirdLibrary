@@ -41,7 +41,7 @@ CUR_DIR=`pwd`
 
 #下载源码:
 if [ ! -d ${RABBIT_BUILD_SOURCE_CODE} ]; then
-    VERSION=d61f2ac9821a1f52655092c588c498ca8db1f2c9 
+    VERSION=29d7e2e6b2b6997db5d419c3c06ec1f01e6e40f6 
     if [ "TRUE" = "${RABBIT_USE_REPOSITORIES}" ]; then
         echo "git clone -q https://github.com/ftylitak/qzxing.git ${RABBIT_BUILD_SOURCE_CODE}"
         git clone -q https://github.com/ftylitak/qzxing.git ${RABBIT_BUILD_SOURCE_CODE}
@@ -94,7 +94,6 @@ echo ""
 
 case $BUILD_TARGERT in
     android)
-        PARA="-r -spec android-g++"
         case $TARGET_OS in
             MINGW* | CYGWIN* | MSYS*)
                 MAKE="$ANDROID_NDK/prebuilt/${RABBIT_BUILD_HOST}/bin/make ${BUILD_JOB_PARA} VERBOSE=1" #在windows下编译
@@ -118,7 +117,7 @@ case $BUILD_TARGERT in
         ;;
 esac
 
-PARA="${PARA} -o Makefile INCLUDEPATH+=${RABBIT_BUILD_PREFIX}/include"
+PARA="${PARA} INCLUDEPATH+=${RABBIT_BUILD_PREFIX}/include"
 PARA="${PARA} LIBS+=-L${RABBIT_BUILD_PREFIX}/lib"
 PARA="${PARA} PREFIX=${RABBIT_BUILD_PREFIX}"
 

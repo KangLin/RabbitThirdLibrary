@@ -2,7 +2,7 @@
 set -e
 
 RABBIT_LIBRARYS_before[0]="zlib"
-RABBIT_LIBRARYS_backgroud[0]="libsodium protobuf libpng jpeg libyuv libvpx libopus speexdsp speex"
+RABBIT_LIBRARYS_backgroud[0]=" protobuf libpng jpeg libyuv libvpx libopus speexdsp speex"
 RABBIT_LIBRARYS[0]="openssl ffmpeg"
 RABBIT_LIBRARYS_backgroud[1]="dlib ncnn seeta libfacedetection"
 RABBIT_LIBRARYS[1]="opencv"
@@ -130,7 +130,7 @@ cd ${SOURCE_DIR}/build_script
 
 for b in ${RABBIT_LIBRARYS_before[$RABBIT_NUMBER]}
 do
-    bash ./build_$b.sh ${BUILD_TARGERT} > /dev/null
+    bash ./build_$b.sh ${BUILD_TARGERT}
 done
 
 for b in ${RABBIT_LIBRARYS_backgroud[$RABBIT_NUMBER]}
@@ -147,7 +147,7 @@ echo "RABBIT_LIBRARYS size:${#RABBIT_LIBRARYS[@]}"
 if [ ${#RABBIT_LIBRARYS[@]} -eq `expr $RABBIT_NUMBER + 1` ]; then
     echo "mv ${RABBIT_BUILD_PREFIX} ${SOURCE_DIR}/${BUILD_TARGERT}${TOOLCHAIN_VERSION}_${BUILD_ARCH}_${APPVEYOR_REPO_TAG_NAME}"
     if [ "$BUILD_TARGERT" = "android" ]; then
-        mv ${RABBIT_BUILD_PREFIX} ${SOURCE_DIR}/${BUILD_TARGERT}${TOOLCHAIN_VERSION}_${BUILD_ARCH}_${ANDROID_API}_${APPVEYOR_REPO_TAG_NAME}_in_windows
+        mv ${RABBIT_BUILD_PREFIX} ${SOURCE_DIR}/${BUILD_TARGERT}${TOOLCHAIN_VERSION}_${BUILD_ARCH}_${APPVEYOR_REPO_TAG_NAME}_in_windows
     else
         mv ${RABBIT_BUILD_PREFIX} ${SOURCE_DIR}/${BUILD_TARGERT}${TOOLCHAIN_VERSION}_${BUILD_ARCH}_${APPVEYOR_REPO_TAG_NAME}
     fi
