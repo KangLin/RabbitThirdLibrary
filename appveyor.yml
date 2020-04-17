@@ -1,10 +1,10 @@
-version: 'v0.2.7.{build}'
+version: 'v0.2..{build}'
 
 cache:
   - Package
 
 environment:
-  BUILD_VERSION: v0.3.1
+  BUILD_VERSION: $(APPVEYOR_REPO_TAG_NAME)
   TimeOutMins: 5
   #ApiKey:
   #  secure: qex0da587ygmywf4315g
@@ -145,6 +145,7 @@ init:
   - if NOT "%QT_ROOT%" == "NO" for /f "delims=" %%i in ('%QT_ROOT%/bin/qmake -query QT_VERSION') do (set QT_VERSION=%%i) 
   - echo QT_ROOT=%QT_ROOT%
   - echo QT_VERSION=%QT_VERSION%
+  - echo BUILD_VERSION=%BUILD_VERSION%
   - del C:\msys64\usr\bin\link.exe
 
 install:
@@ -168,7 +169,7 @@ build_script:
 artifacts:
   - path: build_$(BUILD_TARGERT)
   - path: $(BUILD_TARGERT)$(TOOLCHAIN_VERSION)_$(BUILD_ARCH)_$(APPVEYOR_REPO_TAG_NAME)
-  - path: $(BUILD_TARGERT)$(TOOLCHAIN_VERSION)_$(BUILD_ARCH)_$(ANDROID_API)_$(APPVEYOR_REPO_TAG_NAME)_in_windows
+  - path: $(BUILD_TARGERT)$(TOOLCHAIN_VERSION)_$(BUILD_ARCH)_$(APPVEYOR_REPO_TAG_NAME)_in_windows
 
 test: off
 
