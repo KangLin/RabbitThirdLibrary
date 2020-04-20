@@ -60,6 +60,7 @@ process() {
 process bin/ "*" check
 process lib/ "*.la"
 process lib/pkgconfig/ "*.pc"
+process share/pkgconfig/ "*.pc"
 old_prefix=$old_prefix/qt
 new_prefix=$new_prefix/qt
 #process qt/lib/pkgconfig/ "*.pc"

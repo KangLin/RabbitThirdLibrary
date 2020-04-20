@@ -22,10 +22,9 @@ if [ -z "$VERSION" ]; then
     VERSION=` git rev-parse HEAD`
 fi
 
-#sed -i "s/^\!define PRODUCT_VERSION.*/\!define PRODUCT_VERSION \"${VERSION}\"/g" ${SOURCE_DIR}/Install/Install.nsi
-
 APPVERYOR_VERSION="version: '${VERSION}.{build}'"
 sed -i "s/^version: '.*{build}'/${APPVERYOR_VERSION}/g" ${SOURCE_DIR}/appveyor.yml
+sed -i "s/v[0-9]\+\.[0-9]\+\.[0-9]\+/${VERSION}/g" ${SOURCE_DIR}/README*.md
 
 #git tag -a v${VERSION} -m "Release v${VERSION}"
 #git push origin :refs/tags/v${VERSION}
