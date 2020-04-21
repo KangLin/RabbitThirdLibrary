@@ -1,5 +1,5 @@
 sudo: required
-dist: xenial
+dist: bionic
 #language: cpp
 
 cache:
@@ -19,10 +19,10 @@ jobs:
     ############################# android arm #########################
     - stage: stage1
       language: android
-      android:
-        components:
-          - build-tools-28.0.2
-          - android-24
+#      android:
+#        components:
+#          - build-tools-28.0.2
+#          - android-24
       env:
         - BUILD_TARGERT="android"
         - BUILD_ARCH="arm"
@@ -50,10 +50,10 @@ jobs:
     ############################# android arm64 #########################
     - stage: stage1
       language: android
-      android:
-        components:
-          - build-tools-28.0.2
-          - android-24
+#      android:
+#        components:
+#          - build-tools-28.0.2
+#          - android-24
       env:
         - BUILD_TARGERT="android"
         - BUILD_ARCH="arm64"
@@ -81,10 +81,10 @@ jobs:
     ############################# android x86 #########################
     - stage: stage1
       language: android
-      android:
-        components:
-          - build-tools-28.0.2
-          - android-24
+#      android:
+#        components:
+#          - build-tools-28.0.2
+#          - android-24
       env:
         - BUILD_TARGERT="android"
         - BUILD_ARCH="x86"
@@ -112,10 +112,10 @@ jobs:
     ############################# android x86_64 #########################
     - stage: stage1
       language: android
-      android:
-        components:
-          - build-tools-28.0.2
-          - android-24
+#      android:
+#        components:
+#          - build-tools-28.0.2
+#          - android-24
       env:
         - BUILD_TARGERT="android"
         - BUILD_ARCH="x86_64"

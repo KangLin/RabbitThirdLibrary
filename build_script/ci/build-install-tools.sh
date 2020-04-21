@@ -99,7 +99,7 @@ function install_android()
 
 function install_android_sdk_and_ndk()
 {
-    #install_android
+    install_android
     NDK_PACKAGE=android-ndk-r21-linux-x86_64.zip
     cd ${PACKAGE_DIR}
     if [ ! -f ${NDK_PACKAGE} ]; then
