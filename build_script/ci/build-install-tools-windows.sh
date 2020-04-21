@@ -52,7 +52,7 @@ function function_windows_msvc()
 function install_android()
 {
     cd ${TOOLS_DIR}
-    
+
     if [ -n "$1" ]; then
         NDK="ndk-bundle"
     fi
@@ -123,7 +123,6 @@ function install_android_sdk_and_ndk()
 
 function function_android()
 {
-    #install_android NDK
     install_android_sdk_and_ndk
     function_common
     
