@@ -36,7 +36,7 @@ fi
 CUR_DIR=`pwd`
 #下载源码:
 if [ ! -d ${RABBIT_BUILD_SOURCE_CODE} ]; then
-    VERSION=20200226
+    VERSION=20200413
     if [ "TRUE" = "${RABBIT_USE_REPOSITORIES}" ]; then
         echo "git clone -q https://github.com/Tencent/ncnn.git ${RABBIT_BUILD_SOURCE_CODE}"
         if [ "$VERSION" = "master" ]; then
