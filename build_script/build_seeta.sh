@@ -98,9 +98,11 @@ case ${BUILD_TARGERT} in
         ;;
     windows_msvc)
         MAKE_PARA=""
+	CMAKE_PARA="${CMAKE_PARA} -DSEETA_USE_FMA=OFF -DSEETA_USE_SSE2=ON"
         ;;
     windows_mingw)
         CMAKE_PARA="${CMAKE_PARA} -DCMAKE_TOOLCHAIN_FILE=$RABBIT_BUILD_PREFIX/../build_script/cmake/platforms/toolchain-mingw.cmake"
+	CMAKE_PARA="${CMAKE_PARA} -DSEETA_USE_FMA=OFF -DSEETA_USE_SSE2=ON"
         ;;
     *)
     echo "${HELP_STRING}"
@@ -110,7 +112,6 @@ case ${BUILD_TARGERT} in
 esac
 
 CMAKE_PARA="${CMAKE_PARA} -DBUILD_EXAMPLE=OFF"
-CMAKE_PARA="${CMAKE_PARA} -DSEETA_USE_FMA=ON -DSEETA_USE_SSE2=ON"
 echo "cmake .. -DCMAKE_INSTALL_PREFIX=$RABBIT_BUILD_PREFIX -DCMAKE_BUILD_TYPE=${RABBIT_CONFIG} -G\"${GENERATORS}\" ${CMAKE_PARA}"
 if [ "${BUILD_TARGERT}" = "android" ]; then
     cmake .. \
@@ -125,8 +126,8 @@ else
 fi
 cmake --build . --config ${RABBIT_CONFIG} ${MAKE_PARA}
 if [ "android" != "${BUILD_TARGERT}" ]; then
-    cmake --build . --config ${RABBIT_CONFIG}  --target install ${MAKE_PARA}
+    cmake --build . --config ${RABBIT_CONFIG} --target install ${MAKE_PARA}
 else
-    cmake --build . --config ${RABBIT_CONFIG}  --target install/strip ${MAKE_PARA}
+    cmake --build . --config ${RABBIT_CONFIG} --target install/strip ${MAKE_PARA}
 fi
 cd $CUR_DIR
