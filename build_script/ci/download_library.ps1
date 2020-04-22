@@ -29,9 +29,9 @@ if (${env:ANDROID_ARM_NEON})
 #    $RABBIT_JOB_NAME = $RABBIT_JOB_NAME + ", QT_ROOT=${env:QT_ROOT}" 
 #    $JOB_QT_VERSION = ${env:QT_VERSION}
 #}
-      
- write-host "Waiting for job `"$RABBIT_JOB_NAME`" to complete"
-    
+
+write-host "Waiting for job `"$RABBIT_JOB_NAME`" to complete"
+
  $headers = @{
     "Authorization" = "Bearer $ApiKey"
     "Content-type" = "application/json"

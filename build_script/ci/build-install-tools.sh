@@ -116,7 +116,8 @@ function function_android()
     
     #sudo apt-get update -y -qq
     sudo apt-get install ant -qq -y
-
+    sudo apt-get install -y -qq libglu1-mesa-dev \
+        libxkbcommon-x11-dev
     install_android_sdk_and_ndk
     function_common
     cd ${SOURCE_DIR}

@@ -5,7 +5,7 @@ RABBIT_LIBRARYS_before[0]="zlib"
 RABBIT_LIBRARYS_backgroud[0]="change_prefix protobuf libpng jpeg libyuv libvpx libopus speexdsp speex seeta libfacedetection ncnn"
 RABBIT_LIBRARYS[0]="openssl ffmpeg dlib opencv"
 #RABBIT_LIBRARYS_backgroud[1]=""
-#RABBIT_LIBRARYS[1]="qxmpp"
+RABBIT_LIBRARYS[1]="qxmpp qzxing"
 
 SOURCE_DIR=$(cd `dirname $0`; pwd)/../..
 if [ -n "$1" ]; then

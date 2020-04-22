@@ -30,15 +30,21 @@ case $BUILD_ARCH in
         SELECTEDPACKAGES=gcc_64
         ;;
     arm*|x86*)
-        if version_ge $QT_VERSION_DIR 5.14 ; then
+        if version_ge $QT_VERSION 5.14 ; then
             SELECTEDPACKAGES=android
         else
             case $BUILD_ARCH in
-                arm*)
+                arm)
                     SELECTEDPACKAGES=android_armv7
                     ;;
-                x86*)
+                arm64)
+                    SELECTEDPACKAGES=android_arm64_v8a
+                    ;;
+                x86)
                     SELECTEDPACKAGES=android_x86
+                    ;;
+                x86_64)
+                    SELECTEDPACKAGES=android_x86_64
                     ;;
             esac
         fi

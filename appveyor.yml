@@ -1,11 +1,11 @@
-version: 'v0.2.9.{build}'
+version: 'v0.3.0.{build}'
 
 cache:
   - Package
 
 environment:
   BUILD_VERSION: $(APPVEYOR_REPO_TAG_NAME)
-  TimeOutMins: 5
+  TimeOutMins: 2
   #ApiKey:
   #  secure: qex0da587ygmywf4315g
 
@@ -28,7 +28,12 @@ environment:
     TOOLCHAIN_VERSION: 15
     BUILD_ARCH: x86
 
-    #QT_ROOT: C:\Qt\5.12\msvc2017
+  - RABBIT_NUMBER: 2
+    APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
+    BUILD_TARGERT: windows_msvc
+    TOOLCHAIN_VERSION: 15
+    BUILD_ARCH: x86
+    QT_ROOT: C:\Qt\5.12\msvc2017
 
   - RABBIT_NUMBER: 0
     APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
@@ -41,8 +46,13 @@ environment:
     BUILD_TARGERT: windows_msvc
     TOOLCHAIN_VERSION: 15
     BUILD_ARCH: x64
-   
-    #QT_ROOT: C:\Qt\5.12\msvc2017_64
+
+  - RABBIT_NUMBER: 2
+    APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
+    BUILD_TARGERT: windows_msvc
+    TOOLCHAIN_VERSION: 15
+    BUILD_ARCH: x64
+    QT_ROOT: C:\Qt\5.12\msvc2017_64
   
   ##### msvc 2015 ########
   - RABBIT_NUMBER: 0
@@ -55,7 +65,11 @@ environment:
     TOOLCHAIN_VERSION: 14
     BUILD_ARCH: x86
     
-#QT_ROOT: C:\Qt\5.10\msvc2015
+  - RABBIT_NUMBER: 2
+    BUILD_TARGERT: windows_msvc
+    TOOLCHAIN_VERSION: 14
+    BUILD_ARCH: x86
+    QT_ROOT: C:\Qt\5.6\msvc2015
 
   - RABBIT_NUMBER: 0
     BUILD_TARGERT: windows_msvc
@@ -66,8 +80,12 @@ environment:
     BUILD_TARGERT: windows_msvc
     TOOLCHAIN_VERSION: 14
     BUILD_ARCH: x64
-    
-#QT_ROOT: C:\Qt\5.10\msvc2015_64
+
+  - RABBIT_NUMBER: 2
+    BUILD_TARGERT: windows_msvc
+    TOOLCHAIN_VERSION: 14
+    BUILD_ARCH: x64
+    QT_ROOT: C:\Qt\5.12\msvc2015_64
 
   ##### mingw ########
   - RABBIT_NUMBER: 0
@@ -79,6 +97,12 @@ environment:
     BUILD_TARGERT: windows_mingw
     TOOLCHAIN_VERSION: 530_32
     BUILD_ARCH: x86
+
+  - RABBIT_NUMBER: 2
+    BUILD_TARGERT: windows_mingw
+    TOOLCHAIN_VERSION: 530_32
+    BUILD_ARCH: x86
+    QT_ROOT: C:\Qt\5.9\mingw53_32
     
   #- RABBIT_NUMBER: 0
   #  BUILD_TARGERT: windows_mingw
@@ -106,7 +130,17 @@ environment:
     BUILD_ARCH: arm
     ANDROID_API: android-24
     ANDROID_ARM_NEON: ON
-  
+
+  - RABBIT_NUMBER: 2
+    BUILD_TARGERT: android
+    TOOLCHAIN_VERSION: 4.9
+    BUILD_ARCH: arm
+    ANDROID_API: android-24
+    ANDROID_ARM_NEON: ON
+    QT_VERSION_DIR: 5.12
+    QT_VERSION: 5.12.8
+    DOWNLOAD_QT: TRUE
+
   - RABBIT_NUMBER: 0
     BUILD_TARGERT: android
     TOOLCHAIN_VERSION: 4.9
@@ -120,19 +154,38 @@ environment:
     BUILD_ARCH: arm64
     ANDROID_API: android-24
     ANDROID_ARM_NEON: ON
+
+  - RABBIT_NUMBER: 2
+    BUILD_TARGERT: android
+    TOOLCHAIN_VERSION: 4.9
+    BUILD_ARCH: arm64
+    ANDROID_API: android-24
+    ANDROID_ARM_NEON: ON
+    QT_VERSION_DIR: 5.12
+    QT_VERSION: 5.12.8
+    DOWNLOAD_QT: TRUE
     
   - RABBIT_NUMBER: 0
     BUILD_TARGERT: android
     TOOLCHAIN_VERSION: 4.9
     BUILD_ARCH: x86
     ANDROID_API: android-24
-    
+
   - RABBIT_NUMBER: 1
     BUILD_TARGERT: android
     TOOLCHAIN_VERSION: 4.9
     BUILD_ARCH: x86
     ANDROID_API: android-24
-    
+
+  - RABBIT_NUMBER: 2
+    BUILD_TARGERT: android
+    TOOLCHAIN_VERSION: 4.9
+    BUILD_ARCH: x86
+    ANDROID_API: android-24
+    QT_VERSION_DIR: 5.12
+    QT_VERSION: 5.12.8
+    DOWNLOAD_QT: TRUE
+
 matrix:
   fast_finish: false
 
@@ -142,7 +195,7 @@ init:
   - if "%BUILD_TARGERT%" == "windows_msvc" if %TOOLCHAIN_VERSION% LSS 15 (call "C:\Program Files (x86)\Microsoft Visual Studio %TOOLCHAIN_VERSION%.0\VC\vcvarsall.bat" %varch%) else (call "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Auxiliary\Build\vcvarsall.bat" %varch%)  
   - echo NUMBER_OF_PROCESSORS=%NUMBER_OF_PROCESSORS%
   - echo PROCESSOR_IDENTIFIER=%PROCESSOR_IDENTIFIER%
-  - if NOT "%QT_ROOT%" == "NO" for /f "delims=" %%i in ('%QT_ROOT%/bin/qmake -query QT_VERSION') do (set QT_VERSION=%%i) 
+  - if NOT "%QT_ROOT%" == "" for /f "delims=" %%i in ('%QT_ROOT%/bin/qmake -query QT_VERSION') do (set QT_VERSION=%%i) 
   - echo QT_ROOT=%QT_ROOT%
   - echo QT_VERSION=%QT_VERSION%
   - echo BUILD_VERSION=%BUILD_VERSION%
@@ -170,7 +223,9 @@ artifacts:
   - path: build_$(BUILD_TARGERT)
   - path: $(BUILD_TARGERT)$(TOOLCHAIN_VERSION)_$(BUILD_ARCH)_$(APPVEYOR_REPO_TAG_NAME)
   - path: $(BUILD_TARGERT)$(TOOLCHAIN_VERSION)_$(BUILD_ARCH)_$(APPVEYOR_REPO_TAG_NAME)_in_windows
-
+  - path: $(BUILD_TARGERT)$(TOOLCHAIN_VERSION)_$(BUILD_ARCH)_Qt$(QT_VERSION)_$(APPVEYOR_REPO_TAG_NAME)
+  - path: $(BUILD_TARGERT)$(TOOLCHAIN_VERSION)_$(BUILD_ARCH)_Qt$(QT_VERSION)_$(APPVEYOR_REPO_TAG_NAME)_in_windows
+  
 test: off
 
 #See:https://www.appveyor.com/docs/deployment/github/
@@ -187,4 +242,4 @@ deploy:
     #prerelease: true
     on:
       appveyor_repo_tag: true        # deploy on tag push only
-      RABBIT_NUMBER: 1
+      RABBIT_NUMBER: 2

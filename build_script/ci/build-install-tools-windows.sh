@@ -30,7 +30,7 @@ function function_common()
 
     # Qt qt安装参见：https://github.com/benlau/qtci
     cd ${TOOLS_DIR}
-    if [ "${QT_ROOT}" = "NO" ]; then
+     if [ "$DOWNLOAD_QT" = "TRUE" ]; then
         QT_DIR=C:/projects/${APPVEYOR_PROJECT_NAME}/Tools/Qt/${QT_VERSION}
         if [ ! -d "${QT_DIR}" ]; then
             #cd ${PACKAGE_DIR}

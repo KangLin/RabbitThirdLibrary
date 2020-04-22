@@ -2,10 +2,11 @@
 set -e
 
 RABBIT_LIBRARYS_before[0]="zlib"
-RABBIT_LIBRARYS_backgroud[0]="change_prefix protobuf libpng jpeg libyuv libvpx libopus speexdsp speex"
-RABBIT_LIBRARYS[0]="openssl ffmpeg"
+RABBIT_LIBRARYS_backgroud[0]="protobuf libpng jpeg libyuv libvpx libopus speexdsp speex"
+RABBIT_LIBRARYS[0]="change_prefix openssl ffmpeg"
 RABBIT_LIBRARYS_backgroud[1]="dlib ncnn seeta libfacedetection"
 RABBIT_LIBRARYS[1]="opencv"
+RABBIT_LIBRARYS[2]="qxmpp qzxing"
 
 SOURCE_DIR=$(cd `dirname $0`; pwd)/../..
 if [ -n "$1" ]; then
@@ -50,7 +51,7 @@ if [ "$BUILD_TARGERT" = "android" ]; then
                 QT_ROOT=${TOOLS_DIR}/Qt/${QT_VERSION}/${QT_VERSION}/android_armv7
                 ;;
             arm64)
-                QT_ROOT=${TOOLS_DIR}/Qt/${QT_VERSION}/${QT_VERSION}/android_arm64_v8a/
+                QT_ROOT=${TOOLS_DIR}/Qt/${QT_VERSION}/${QT_VERSION}/android_arm64_v8a
                 ;;
             x86)
                 QT_ROOT=${TOOLS_DIR}/Qt/${QT_VERSION}/${QT_VERSION}/android_x86
@@ -61,8 +62,6 @@ if [ "$BUILD_TARGERT" = "android" ]; then
         esac
         if [ -d ${QT_ROOT} ]; then
             export QT_ROOT=${QT_ROOT}
-        else
-            export QT_ROOT=
         fi
     fi
     #export PATH=${TOOLS_DIR}/apache-ant/bin
@@ -93,6 +92,7 @@ esac
 if [ "${BUILD_TARGERT}" = "unix" ]; then
     if [ "$DOWNLOAD_QT" = "APT" ]; then
         export QT_ROOT=/usr/lib/`uname -m`-linux-gnu/qt5
+        export QT_VERSION=`${QT_ROOT}/bin/qmake -query QT_VERSION`
     elif [ "$DOWNLOAD_QT" = "TRUE" ]; then
         QT_DIR=${TOOLS_DIR}/Qt/${QT_VERSION}
         export QT_ROOT=${QT_DIR}/${QT_VERSION}/gcc_64
@@ -123,6 +123,9 @@ fi
 
 if [ -n "${QT_ROOT}" ]; then
     export PATH=${QT_ROOT}/bin:$PATH
+    if [ -z "$QT_VERSION" ]; then
+        export QT_VERSION=`${QT_ROOT}/bin/qmake -query QT_VERSION`
+    fi
 fi
 echo "=== PATH:$PATH"
 echo "=== PKG_CONFIG:$PKG_CONFIG"
@@ -145,10 +148,14 @@ done
 
 echo "RABBIT_LIBRARYS size:${#RABBIT_LIBRARYS[@]}"
 if [ ${#RABBIT_LIBRARYS[@]} -eq `expr $RABBIT_NUMBER + 1` ]; then
-    echo "mv ${RABBIT_BUILD_PREFIX} ${SOURCE_DIR}/${BUILD_TARGERT}${TOOLCHAIN_VERSION}_${BUILD_ARCH}_${BUILD_VERSION}"
-    if [ "$BUILD_TARGERT" = "android" ]; then
-        mv ${RABBIT_BUILD_PREFIX} ${SOURCE_DIR}/${BUILD_TARGERT}${TOOLCHAIN_VERSION}_${BUILD_ARCH}_${BUILD_VERSION}_in_windows
-    else
-        mv ${RABBIT_BUILD_PREFIX} ${SOURCE_DIR}/${BUILD_TARGERT}${TOOLCHAIN_VERSION}_${BUILD_ARCH}_${BUILD_VERSION}
+    PACKAGE_NAME=${SOURCE_DIR}/${BUILD_TARGERT}${TOOLCHAIN_VERSION}_${BUILD_ARCH}
+    if [ -n "${QT_VERSION}" ]; then
+        PACKAGE_NAME=${PACKAGE_NAME}_Qt${QT_VERSION}
     fi
+    PACKAGE_NAME=${PACKAGE_NAME}_${BUILD_VERSION}
+    if [ "$BUILD_TARGERT" = "android" ]; then
+        PACKAGE_NAME=${PACKAGE_NAME}_in_windows
+    fi
+    echo "mv ${RABBIT_BUILD_PREFIX} ${PACKAGE_NAME}"
+    mv ${RABBIT_BUILD_PREFIX} ${PACKAGE_NAME}
 fi
