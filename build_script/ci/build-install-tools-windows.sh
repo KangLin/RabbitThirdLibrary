@@ -1,7 +1,7 @@
 #!/bin/bash 
 #下载工具  
 
-# QT_ROOT： 如果设置为NO，则从 http://download.qt.io/official_releases/qt 下载QT
+# DOWNLOAD_QT: TRUE 从 http://download.qt.io/official_releases/qt 下载QT
 # QT_VERSION：Qt 版本号
 # QT_VERSION_DIR：
 
@@ -35,7 +35,7 @@ function function_common()
         if [ ! -d "${QT_DIR}" ]; then
             #cd ${PACKAGE_DIR}
             wget -c --no-check-certificate -nv http://download.qt.io/official_releases/qt/${QT_VERSION_DIR}/${QT_VERSION}/qt-opensource-windows-x86-${QT_VERSION}.exe
-            bash ${SOURCE_DIR}/ci/qt-installer.sh qt-opensource-windows-x86-${QT_VERSION}.exe ${QT_DIR}
+            bash ${SOURCE_DIR}/build_script/ci/qt-installer.sh qt-opensource-windows-x86-${QT_VERSION}.exe ${QT_DIR}
             rm qt-opensource-windows-x86-${QT_VERSION}.exe
         fi
     fi

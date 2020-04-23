@@ -46,6 +46,9 @@ case $BUILD_ARCH in
                 x86_64)
                     SELECTEDPACKAGES=android_x86_64
                     ;;
+                *)
+                    echo "Aach[$BUILD_ARCH] don't suppoert"
+                    ;;
             esac
         fi
         ;;

@@ -1,4 +1,4 @@
-version: 'v0.3.0.{build}'
+version: 'v0..0.{build}'
 
 cache:
   - Package
@@ -15,6 +15,97 @@ environment:
   #  secure: ejAYGgB+3sBispRxUSr0xw==
 
   matrix:
+  ##### android ########
+  - RABBIT_NUMBER: 0
+    BUILD_TARGERT: android
+    TOOLCHAIN_VERSION: 4.9
+    BUILD_ARCH: arm
+    ANDROID_API: android-24
+    ANDROID_ARM_NEON: ON
+
+  - RABBIT_NUMBER: 1
+    BUILD_TARGERT: android
+    TOOLCHAIN_VERSION: 4.9
+    BUILD_ARCH: arm
+    ANDROID_API: android-24
+    ANDROID_ARM_NEON: ON
+
+  - RABBIT_NUMBER: 2
+    BUILD_TARGERT: android
+    TOOLCHAIN_VERSION: 4.9
+    BUILD_ARCH: arm
+    ANDROID_API: android-24
+    ANDROID_ARM_NEON: ON
+    QT_VERSION_DIR: 5.12
+    QT_VERSION: 5.12.6
+    DOWNLOAD_QT: TRUE
+
+  - RABBIT_NUMBER: 0
+    BUILD_TARGERT: android
+    TOOLCHAIN_VERSION: 4.9
+    BUILD_ARCH: arm64
+    ANDROID_API: android-24
+    ANDROID_ARM_NEON: ON
+
+  - RABBIT_NUMBER: 1
+    BUILD_TARGERT: android
+    TOOLCHAIN_VERSION: 4.9
+    BUILD_ARCH: arm64
+    ANDROID_API: android-24
+    ANDROID_ARM_NEON: ON
+
+  - RABBIT_NUMBER: 2
+    BUILD_TARGERT: android
+    TOOLCHAIN_VERSION: 4.9
+    BUILD_ARCH: arm64
+    ANDROID_API: android-24
+    ANDROID_ARM_NEON: ON
+    QT_VERSION_DIR: 5.12
+    QT_VERSION: 5.12.6
+    DOWNLOAD_QT: TRUE
+    
+  - RABBIT_NUMBER: 0
+    BUILD_TARGERT: android
+    TOOLCHAIN_VERSION: 4.9
+    BUILD_ARCH: x86
+    ANDROID_API: android-24
+
+  - RABBIT_NUMBER: 1
+    BUILD_TARGERT: android
+    TOOLCHAIN_VERSION: 4.9
+    BUILD_ARCH: x86
+    ANDROID_API: android-24
+
+  - RABBIT_NUMBER: 2
+    BUILD_TARGERT: android
+    TOOLCHAIN_VERSION: 4.9
+    BUILD_ARCH: x86
+    ANDROID_API: android-24
+    QT_VERSION_DIR: 5.12
+    QT_VERSION: 5.12.6
+    DOWNLOAD_QT: TRUE
+
+  - RABBIT_NUMBER: 0
+    BUILD_TARGERT: android
+    TOOLCHAIN_VERSION: 4.9
+    BUILD_ARCH: x86_64
+    ANDROID_API: android-24
+
+  - RABBIT_NUMBER: 1
+    BUILD_TARGERT: android
+    TOOLCHAIN_VERSION: 4.9
+    BUILD_ARCH: x86_64
+    ANDROID_API: android-24
+
+  - RABBIT_NUMBER: 2
+    BUILD_TARGERT: android
+    TOOLCHAIN_VERSION: 4.9
+    BUILD_ARCH: x86_64
+    ANDROID_API: android-24
+    QT_VERSION_DIR: 5.12
+    QT_VERSION: 5.12.6
+    DOWNLOAD_QT: TRUE
+    
   ##### msvc 2017 ########
   - RABBIT_NUMBER: 0
     APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
@@ -116,75 +207,7 @@ environment:
 
 #QT_ROOT: C:\Qt\5.12\mingw73_64
 
-  ##### android ########
-  - RABBIT_NUMBER: 0
-    BUILD_TARGERT: android
-    TOOLCHAIN_VERSION: 4.9
-    BUILD_ARCH: arm
-    ANDROID_API: android-24
-    ANDROID_ARM_NEON: ON
-
-  - RABBIT_NUMBER: 1
-    BUILD_TARGERT: android
-    TOOLCHAIN_VERSION: 4.9
-    BUILD_ARCH: arm
-    ANDROID_API: android-24
-    ANDROID_ARM_NEON: ON
-
-  - RABBIT_NUMBER: 2
-    BUILD_TARGERT: android
-    TOOLCHAIN_VERSION: 4.9
-    BUILD_ARCH: arm
-    ANDROID_API: android-24
-    ANDROID_ARM_NEON: ON
-    QT_VERSION_DIR: 5.12
-    QT_VERSION: 5.12.8
-    DOWNLOAD_QT: TRUE
-
-  - RABBIT_NUMBER: 0
-    BUILD_TARGERT: android
-    TOOLCHAIN_VERSION: 4.9
-    BUILD_ARCH: arm64
-    ANDROID_API: android-24
-    ANDROID_ARM_NEON: ON
-
-  - RABBIT_NUMBER: 1
-    BUILD_TARGERT: android
-    TOOLCHAIN_VERSION: 4.9
-    BUILD_ARCH: arm64
-    ANDROID_API: android-24
-    ANDROID_ARM_NEON: ON
-
-  - RABBIT_NUMBER: 2
-    BUILD_TARGERT: android
-    TOOLCHAIN_VERSION: 4.9
-    BUILD_ARCH: arm64
-    ANDROID_API: android-24
-    ANDROID_ARM_NEON: ON
-    QT_VERSION_DIR: 5.12
-    QT_VERSION: 5.12.8
-    DOWNLOAD_QT: TRUE
-    
-  - RABBIT_NUMBER: 0
-    BUILD_TARGERT: android
-    TOOLCHAIN_VERSION: 4.9
-    BUILD_ARCH: x86
-    ANDROID_API: android-24
-
-  - RABBIT_NUMBER: 1
-    BUILD_TARGERT: android
-    TOOLCHAIN_VERSION: 4.9
-    BUILD_ARCH: x86
-    ANDROID_API: android-24
-
-  - RABBIT_NUMBER: 2
-    BUILD_TARGERT: android
-    TOOLCHAIN_VERSION: 4.9
-    BUILD_ARCH: x86
-    ANDROID_API: android-24
-    QT_VERSION_DIR: 5.12
-    QT_VERSION: 5.12.8
-    DOWNLOAD_QT: TRUE
+  
 
 matrix:
   fast_finish: false

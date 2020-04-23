@@ -95,13 +95,15 @@ echo ""
 case $BUILD_TARGERT in
     android)
         case $TARGET_OS in
-            MINGW* | CYGWIN* | MSYS*)
-                MAKE="$ANDROID_NDK/prebuilt/${RABBIT_BUILD_HOST}/bin/make ${BUILD_JOB_PARA} VERBOSE=1" #在windows下编译
-                ;;
-            *)
-            ;;
-         esac
-         ;;
+           MINGW* | CYGWIN* | MSYS*)
+               MAKE="$ANDROID_NDK/prebuilt/${RABBIT_BUILD_HOST}/bin/make ${BUILD_JOB_PARA} VERBOSE=1" #在windows下编译
+           ;;
+        *)
+           ;;
+        esac
+         
+        MAKE_PARA=" INSTALL_ROOT=\"${RABBIT_BUILD_PREFIX}\""
+        ;;
     unix)
         ;;
     windows_msvc)
@@ -133,7 +135,7 @@ fi
 
 echo "$QMAKE ${RELEASE_PARA}"
 $QMAKE ${RELEASE_PARA} ..
-${MAKE} -f Makefile install ${BUILD_JOB_PARA}
+${MAKE} -f Makefile install ${MAKE_PARA} ${BUILD_JOB_PARA}
 
 if [ "$BUILD_TARGERT" = "windows_mingw" ]; then
     cp ${RABBIT_CONFIG}/pkgconfig/QZXing.pc ${RABBIT_BUILD_PREFIX}/lib/pkgconfig/.
