@@ -96,7 +96,7 @@ case $BUILD_TARGERT in
     android)
         case $TARGET_OS in
            MINGW* | CYGWIN* | MSYS*)
-               MAKE="$ANDROID_NDK/prebuilt/${RABBIT_BUILD_HOST}/bin/make ${BUILD_JOB_PARA} VERBOSE=1" #在windows下编译
+               MAKE="$ANDROID_NDK/prebuilt/${ANDROID_NDK_HOST}/bin/make ${BUILD_JOB_PARA} VERBOSE=1" #在windows下编译
            ;;
         *)
            ;;
