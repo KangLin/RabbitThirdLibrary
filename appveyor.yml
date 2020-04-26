@@ -30,7 +30,7 @@ environment:
     BUILD_TARGERT: windows_msvc
     TOOLCHAIN_VERSION: 14
     BUILD_ARCH: x86
-    QT_ROOT: C:\Qt\5.6\msvc2015
+    QT_ROOT: C:\Qt\5.7\msvc2015
 
   - RABBIT_NUMBER: 0
     BUILD_TARGERT: windows_msvc
