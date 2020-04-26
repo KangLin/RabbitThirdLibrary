@@ -40,22 +40,22 @@ if [ ! -d ${RABBIT_BUILD_SOURCE_CODE} ]; then
     VERSION=1.3.0
     if [ "TRUE" = "${RABBIT_USE_REPOSITORIES}" ]; then
         echo "git clone -q https://github.com/qxmpp-project/qxmpp.git ${RABBIT_BUILD_SOURCE_CODE}"
-        #git clone -q -b v${VERSION} https://github.com/qxmpp-project/qxmpp.git ${RABBIT_BUILD_SOURCE_CODE}
-        git clone -q https://github.com/KangLin/qxmpp.git ${RABBIT_BUILD_SOURCE_CODE}
+        git clone -q -b v${VERSION} https://github.com/qxmpp-project/qxmpp.git ${RABBIT_BUILD_SOURCE_CODE}
+        #git clone -q https://github.com/KangLin/qxmpp.git ${RABBIT_BUILD_SOURCE_CODE}
     else
         mkdir -p ${RABBIT_BUILD_SOURCE_CODE}
         cd ${RABBIT_BUILD_SOURCE_CODE}
-        wget -q -c -nv https://github.com/KangLin/qxmpp/archive/master.tar.gz
-        tar xvf master.tar.gz
-        mv qxmpp-master ..
-        #wget -q -c -nv https://github.com/qxmpp-project/qxmpp/archive/v${VERSION}.tar.gz
-        #tar xvf v${VERSION}.tar.gz
-        #mv qxmpp-${VERSION} ..
+        #wget -q -c -nv https://github.com/KangLin/qxmpp/archive/master.tar.gz
+        #tar xvf master.tar.gz
+        #mv qxmpp-master ..
+        wget -q -c -nv https://github.com/qxmpp-project/qxmpp/archive/v${VERSION}.tar.gz
+        tar xvf v${VERSION}.tar.gz
+        mv qxmpp-${VERSION} ..
         rm -fr *
         cd ..
         rm -fr ${RABBIT_BUILD_SOURCE_CODE}
-        #mv -f qxmpp-${VERSION} ${RABBIT_BUILD_SOURCE_CODE}
-        mv -f qxmpp-master ${RABBIT_BUILD_SOURCE_CODE}
+        mv -f qxmpp-${VERSION} ${RABBIT_BUILD_SOURCE_CODE}
+        #mv -f qxmpp-master ${RABBIT_BUILD_SOURCE_CODE}
     fi
 fi
 
