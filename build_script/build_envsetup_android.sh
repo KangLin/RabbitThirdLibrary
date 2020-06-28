@@ -157,7 +157,8 @@ case $TARGET_OS in
             export PKG_CONFIG=/c/msys64/mingw32/bin/pkg-config.exe
         fi
         #ANDROID_NDK_HOST="windows-`uname -m`"
-        ANDROID_NDK_HOST=windows-x86_64 
+        ANDROID_NDK_HOST=windows-x86_64
+        RABBIT_BUILD_HOST=$ANDROID_NDK_HOST
         if [ ! -d $ANDROID_NDK/prebuilt/${ANDROID_NDK_HOST} ]; then
             ANDROID_NDK_HOST=windows
         fi
@@ -167,6 +168,7 @@ case $TARGET_OS in
         ;;
     Linux* | Unix*)
         ANDROID_NDK_HOST="linux-`uname -m`"    #windows、linux-x86_64
+        RABBIT_BUILD_HOST=$ANDROID_NDK_HOST
         GENERATORS="Unix Makefiles" 
         YASM=$ANDROID_NDK/prebuilt/${ANDROID_NDK_HOST}/bin/yasm
         ;;
