@@ -20,32 +20,38 @@ environment:
     BUILD_TARGERT: windows_msvc
     TOOLCHAIN_VERSION: 14
     BUILD_ARCH: x86
+    RABBIT_CONFIG: Release
 
   - RABBIT_NUMBER: 1
     BUILD_TARGERT: windows_msvc
     TOOLCHAIN_VERSION: 14
     BUILD_ARCH: x86
+    RABBIT_CONFIG: Release
     
   - RABBIT_NUMBER: 2
     BUILD_TARGERT: windows_msvc
     TOOLCHAIN_VERSION: 14
     BUILD_ARCH: x86
+    RABBIT_CONFIG: Release
     QT_ROOT: C:\Qt\5.7\msvc2015
 
   - RABBIT_NUMBER: 0
     BUILD_TARGERT: windows_msvc
     TOOLCHAIN_VERSION: 14
     BUILD_ARCH: x64
+    RABBIT_CONFIG: Release
   
   - RABBIT_NUMBER: 1
     BUILD_TARGERT: windows_msvc
     TOOLCHAIN_VERSION: 14
     BUILD_ARCH: x64
+    RABBIT_CONFIG: Release
 
   - RABBIT_NUMBER: 2
     BUILD_TARGERT: windows_msvc
     TOOLCHAIN_VERSION: 14
     BUILD_ARCH: x64
+    RABBIT_CONFIG: Release
     QT_ROOT: C:\Qt\5.12\msvc2015_64
   
   ##### msvc 2017 ########
@@ -54,18 +60,21 @@ environment:
     BUILD_TARGERT: windows_msvc
     TOOLCHAIN_VERSION: 15
     BUILD_ARCH: x86
+    RABBIT_CONFIG: Release
 
   - RABBIT_NUMBER: 1
     APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
     BUILD_TARGERT: windows_msvc
     TOOLCHAIN_VERSION: 15
     BUILD_ARCH: x86
+    RABBIT_CONFIG: Release
 
   - RABBIT_NUMBER: 2
     APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
     BUILD_TARGERT: windows_msvc
     TOOLCHAIN_VERSION: 15
     BUILD_ARCH: x86
+    RABBIT_CONFIG: Release
     QT_ROOT: C:\Qt\5.12\msvc2017
 
   - RABBIT_NUMBER: 0
@@ -73,46 +82,77 @@ environment:
     BUILD_TARGERT: windows_msvc
     TOOLCHAIN_VERSION: 15
     BUILD_ARCH: x64
+    RABBIT_CONFIG: Release
     
   - RABBIT_NUMBER: 1
     APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
     BUILD_TARGERT: windows_msvc
     TOOLCHAIN_VERSION: 15
     BUILD_ARCH: x64
+    RABBIT_CONFIG: Release
 
   - RABBIT_NUMBER: 2
     APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
     BUILD_TARGERT: windows_msvc
     TOOLCHAIN_VERSION: 15
     BUILD_ARCH: x64
+    RABBIT_CONFIG: Release
     QT_ROOT: C:\Qt\5.12\msvc2017_64
   
+  ##### msvc 2017 debug ########
+  - RABBIT_NUMBER: 0
+    APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
+    BUILD_TARGERT: windows_msvc
+    TOOLCHAIN_VERSION: 15
+    BUILD_ARCH: x86
+    RABBIT_CONFIG: Debug
+
+  - RABBIT_NUMBER: 1
+    APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
+    BUILD_TARGERT: windows_msvc
+    TOOLCHAIN_VERSION: 15
+    BUILD_ARCH: x86
+    RABBIT_CONFIG: Debug
+
+  - RABBIT_NUMBER: 2
+    APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
+    BUILD_TARGERT: windows_msvc
+    TOOLCHAIN_VERSION: 15
+    BUILD_ARCH: x86
+    RABBIT_CONFIG: Debug
+    QT_ROOT: C:\Qt\5.12\msvc2017
+    
   ##### mingw ########
   - RABBIT_NUMBER: 0
     BUILD_TARGERT: windows_mingw
     TOOLCHAIN_VERSION: 530_32
     BUILD_ARCH: x86
-
+    RABBIT_CONFIG: Release
+    
   - RABBIT_NUMBER: 1
     BUILD_TARGERT: windows_mingw
     TOOLCHAIN_VERSION: 530_32
     BUILD_ARCH: x86
+    RABBIT_CONFIG: Release
 
   - RABBIT_NUMBER: 2
     BUILD_TARGERT: windows_mingw
     TOOLCHAIN_VERSION: 530_32
     BUILD_ARCH: x86
+    RABBIT_CONFIG: Release
     QT_ROOT: C:\Qt\5.9\mingw53_32
     
   #- RABBIT_NUMBER: 0
   #  BUILD_TARGERT: windows_mingw
   #  TOOLCHAIN_VERSION: 730_64
   #  BUILD_ARCH: x64
+  #  RABBIT_CONFIG: Release
 
   #- RABBIT_NUMBER: 0
   #  BUILD_TARGERT: windows_mingw
   #  TOOLCHAIN_VERSION: 730_64
   #  BUILD_ARCH: x64
+  #  RABBIT_CONFIG: Release
 
 #QT_ROOT: C:\Qt\5.12\mingw73_64
 
@@ -121,6 +161,7 @@ environment:
     BUILD_TARGERT: android
     TOOLCHAIN_VERSION: 4.9
     BUILD_ARCH: arm
+    RABBIT_CONFIG: Release
     ANDROID_API: android-24
     ANDROID_ARM_NEON: ON
 
@@ -128,6 +169,7 @@ environment:
     BUILD_TARGERT: android
     TOOLCHAIN_VERSION: 4.9
     BUILD_ARCH: arm
+    RABBIT_CONFIG: Release
     ANDROID_API: android-24
     ANDROID_ARM_NEON: ON
 
@@ -135,6 +177,7 @@ environment:
     BUILD_TARGERT: android
     TOOLCHAIN_VERSION: 4.9
     BUILD_ARCH: arm
+    RABBIT_CONFIG: Release
     ANDROID_API: android-24
     ANDROID_ARM_NEON: ON
     QT_VERSION_DIR: 5.12
@@ -145,6 +188,7 @@ environment:
     BUILD_TARGERT: android
     TOOLCHAIN_VERSION: 4.9
     BUILD_ARCH: arm64
+    RABBIT_CONFIG: Release
     ANDROID_API: android-24
     ANDROID_ARM_NEON: ON
 
@@ -152,6 +196,7 @@ environment:
     BUILD_TARGERT: android
     TOOLCHAIN_VERSION: 4.9
     BUILD_ARCH: arm64
+    RABBIT_CONFIG: Release
     ANDROID_API: android-24
     ANDROID_ARM_NEON: ON
 
@@ -159,6 +204,7 @@ environment:
     BUILD_TARGERT: android
     TOOLCHAIN_VERSION: 4.9
     BUILD_ARCH: arm64
+    RABBIT_CONFIG: Release
     ANDROID_API: android-24
     ANDROID_ARM_NEON: ON
     QT_VERSION_DIR: 5.12
@@ -169,18 +215,21 @@ environment:
     BUILD_TARGERT: android
     TOOLCHAIN_VERSION: 4.9
     BUILD_ARCH: x86
+    RABBIT_CONFIG: Release
     ANDROID_API: android-24
 
   - RABBIT_NUMBER: 1
     BUILD_TARGERT: android
     TOOLCHAIN_VERSION: 4.9
     BUILD_ARCH: x86
+    RABBIT_CONFIG: Release
     ANDROID_API: android-24
 
   - RABBIT_NUMBER: 2
     BUILD_TARGERT: android
     TOOLCHAIN_VERSION: 4.9
     BUILD_ARCH: x86
+    RABBIT_CONFIG: Release
     ANDROID_API: android-24
     QT_VERSION_DIR: 5.12
     QT_VERSION: 5.12.6
@@ -190,18 +239,21 @@ environment:
     BUILD_TARGERT: android
     TOOLCHAIN_VERSION: 4.9
     BUILD_ARCH: x86_64
+    RABBIT_CONFIG: Release
     ANDROID_API: android-24
 
   - RABBIT_NUMBER: 1
     BUILD_TARGERT: android
     TOOLCHAIN_VERSION: 4.9
     BUILD_ARCH: x86_64
+    RABBIT_CONFIG: Release
     ANDROID_API: android-24
 
   - RABBIT_NUMBER: 2
     BUILD_TARGERT: android
     TOOLCHAIN_VERSION: 4.9
     BUILD_ARCH: x86_64
+    RABBIT_CONFIG: Release
     ANDROID_API: android-24
     QT_VERSION_DIR: 5.12
     QT_VERSION: 5.12.6
@@ -242,10 +294,10 @@ build_script:
 
 artifacts:
   - path: build_$(BUILD_TARGERT)
-  - path: $(BUILD_TARGERT)$(TOOLCHAIN_VERSION)_$(BUILD_ARCH)_$(BUILD_VERSION)
-  - path: $(BUILD_TARGERT)$(TOOLCHAIN_VERSION)_$(BUILD_ARCH)_$(BUILD_VERSION)_in_windows
-  - path: $(BUILD_TARGERT)$(TOOLCHAIN_VERSION)_$(BUILD_ARCH)_Qt$(QT_VERSION)_$(BUILD_VERSION)
-  - path: $(BUILD_TARGERT)$(TOOLCHAIN_VERSION)_$(BUILD_ARCH)_Qt$(QT_VERSION)_$(BUILD_VERSION)_in_windows
+  - path: $(BUILD_TARGERT)$(TOOLCHAIN_VERSION)_$(BUILD_ARCH)_$(RABBIT_CONFIG)_$(BUILD_VERSION)
+  - path: $(BUILD_TARGERT)$(TOOLCHAIN_VERSION)_$(BUILD_ARCH)_$(RABBIT_CONFIG)_$(BUILD_VERSION)_in_windows
+  - path: $(BUILD_TARGERT)$(TOOLCHAIN_VERSION)_$(BUILD_ARCH)_$(RABBIT_CONFIG)_Qt$(QT_VERSION)_$(BUILD_VERSION)
+  - path: $(BUILD_TARGERT)$(TOOLCHAIN_VERSION)_$(BUILD_ARCH)_$(RABBIT_CONFIG)_Qt$(QT_VERSION)_$(BUILD_VERSION)_in_windows
   
 test: off
 
