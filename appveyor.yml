@@ -33,7 +33,7 @@ environment:
     TOOLCHAIN_VERSION: 14
     BUILD_ARCH: x86
     RABBIT_CONFIG: Release
-    QT_ROOT: C:\Qt\5.7\msvc2015
+    QT_ROOT: C:\Qt\5.8\msvc2015
 
   - RABBIT_NUMBER: 0
     BUILD_TARGERT: windows_msvc
