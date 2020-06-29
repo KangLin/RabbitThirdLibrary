@@ -146,6 +146,7 @@ do
     bash ./build_$v.sh ${BUILD_TARGERT}
 done
 
+# 最后一个时，改变其目录名字
 echo "RABBIT_LIBRARYS size:${#RABBIT_LIBRARYS[@]}"
 if [ ${#RABBIT_LIBRARYS[@]} -eq `expr $RABBIT_NUMBER + 1` ]; then
     PACKAGE_NAME=${SOURCE_DIR}/${BUILD_TARGERT}${TOOLCHAIN_VERSION}_${BUILD_ARCH}_${RABBIT_CONFIG}
