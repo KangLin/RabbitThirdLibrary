@@ -137,8 +137,8 @@ jobs:
       before_script:
         - export RABBIT_NUMBER=1
         - export DOWNLOAD_QT=TRUE
-        - export QT_VERSION_DIR=5.12
-        - export QT_VERSION=5.12.6
+        - export QT_VERSION_DIR=5.13
+        - export QT_VERSION=5.13.2
         
     ############################# unix #########################
     - stage: stage1
