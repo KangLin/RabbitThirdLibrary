@@ -36,7 +36,7 @@ fi
 #下载源码:
 if [ ! -d ${RABBIT_BUILD_SOURCE_CODE} ]; then
     #https://github.com/webmproject/libvpx
-    VERSION=v1.8.1
+    VERSION=v1.8.2
     echo "git clone -q --branch=$VERSION https://chromium.googlesource.com/webm/libvpx ${RABBIT_BUILD_SOURCE_CODE}"
     #git clone -q --branch=$VERSION https://chromium.googlesource.com/webm/libvpx ${RABBIT_BUILD_SOURCE_CODE}
     git clone -q https://chromium.googlesource.com/webm/libvpx ${RABBIT_BUILD_SOURCE_CODE}
