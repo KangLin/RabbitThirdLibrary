@@ -144,7 +144,7 @@ done
 echo "RABBIT_LIBRARYS size:${#RABBIT_LIBRARYS[@]}"
 if [ ${#RABBIT_LIBRARYS[@]} -eq `expr $RABBIT_NUMBER + 1` ]; then
     if [ "$TRAVIS_TAG" != "" ]; then
-        TAR_NAME=${BUILD_TARGERT}_${BUILD_ARCH}
+        TAR_NAME=${BUILD_TARGERT}_${BUILD_ARCH}_${RABBIT_CONFIG}
         if [ -n "$QT_VERSION" ]; then
             TAR_NAME=${TAR_NAME}_Qt${QT_VERSION}
         fi
