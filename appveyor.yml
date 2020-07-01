@@ -36,7 +36,7 @@ environment:
     TOOLCHAIN_VERSION: 15
     BUILD_ARCH: x86
     RABBIT_CONFIG: Debug
-    QT_ROOT: C:\Qt\5.14\msvc2017
+    QT_ROOT: C:\Qt\5.13\msvc2017
 
   ##### msvc 2017 ########
   - RABBIT_NUMBER: 0
