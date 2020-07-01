@@ -65,12 +65,6 @@ if [ "$RABBIT_CLEAN" = "TRUE" ]; then
     fi
 fi
 
-if [ ! -f configure -a "windows_msvc" != "${BUILD_TARGERT}" ]; then
-    mkdir -p m4
-    echo "sh autogen.sh"
-    sh autogen.sh
-fi
-
 mkdir -p build_${BUILD_TARGERT}
 cd build_${BUILD_TARGERT}
 if [ -n "$RABBIT_CLEAN" ]; then
@@ -92,83 +86,55 @@ echo "==== PKG_CONFIG_LIBDIR:${PKG_CONFIG_LIBDIR}"
 echo "==== PATH:${PATH}"
 echo ""
 
-echo "configure ..."
-MAKE=make
-
 if [ "$RABBIT_BUILD_STATIC" = "static" ]; then
-    CONFIG_PARA="--enable-static --disable-shared"
+    CMAKE_PARA="-DBUILD_SHARED_LIBS=OFF" 
 else
-    CONFIG_PARA="--disable-static --enable-shared"
+    CMAKE_PARA="-DBUILD_SHARED_LIBS=ON"
 fi
-MAKE_PARA=" ${BUILD_JOB_PARA} "
 case ${BUILD_TARGERT} in
     android)
-        export CC=${RABBIT_BUILD_CROSS_PREFIX}gcc 
-        export CPP=${RABBIT_BUILD_CROSS_PREFIX}cpp
-        export CXX=${RABBIT_BUILD_CROSS_PREFIX}g++
-        export AR=${RABBIT_BUILD_CROSS_PREFIX}gcc-ar
-        export LD=${RABBIT_BUILD_CROSS_PREFIX}ld
-        export AS=${RABBIT_BUILD_CROSS_PREFIX}as
-        export STRIP=${RABBIT_BUILD_CROSS_PREFIX}strip
-        export NM=${RABBIT_BUILD_CROSS_PREFIX}nm
-        CONFIG_PARA="${CONFIG_PARA} CC=${RABBIT_BUILD_CROSS_PREFIX}gcc LD=${RABBIT_BUILD_CROSS_PREFIX}ld"
-        CONFIG_PARA="${CONFIG_PARA} --host=$RABBIT_BUILD_CROSS_HOST"
-        #CONFIG_PARA="${CONFIG_PARA} --with-sysroot=${RABBIT_BUILD_CROSS_SYSROOT}"
-        #CONFIG_PARA="${CONFIG_PARA} --enable-static --disable-shared"
-        CFLAGS="${RABBIT_CFLAGS}"
-        CPPFLAGS="${RABBIT_CPPFLAGS}"
-        LDFLAGS="${RABBIT_LDFLAGS}"
+        if [ -n "$RABBIT_CMAKE_MAKE_PROGRAM" ]; then
+            CMAKE_PARA="${CMAKE_PARA} -DCMAKE_MAKE_PROGRAM=$RABBIT_CMAKE_MAKE_PROGRAM" 
+        fi
+        if [ -n "$ANDROID_ARM_NEON" ]; then
+            CMAKE_PARA="${CMAKE_PARA} -DANDROID_ARM_NEON=$ANDROID_ARM_NEON"
+        fi
+        CMAKE_PARA="${CMAKE_PARA} -DCMAKE_TOOLCHAIN_FILE=${ANDROID_NDK}/build/cmake/android.toolchain.cmake"
+        CMAKE_PARA="${CMAKE_PARA} -DANDROID_PLATFORM=${ANDROID_PLATFORM}"
         ;;
     unix)
         ;;
-    windows_msvc)
-        if [ "$RABBIT_BUILD_STATIC" = "static" ]; then
-            CMAKE_PARA="-DBUILD_SHARED_LIBS=YES"
-        else
-            CMAKE_PARA="-DBUILD_SHARED_LIBS=NO"
-        fi
-        cmake .. -DCMAKE_INSTALL_PREFIX="$RABBIT_BUILD_PREFIX" \
-            -G"${GENERATORS}" \
-            -DWITH_TOOLS=NO \
-            -DWITH_TESTS=NO \
-            ${CMAKE_PARA}
-        cmake --build . --target install --config ${RABBIT_CONFIG}
-        cd $CUR_DIR
-        exit 0
+    windows_msvc)        
+        MAKE_PARA=""
         ;;
     windows_mingw)
-        CONFIG_PARA="${CONFIG_PARA} --host=$RABBIT_BUILD_CROSS_HOST"
-        #CONFIG_PARA="${CONFIG_PARA} --with-sysroot=${RABBIT_BUILD_CROSS_SYSROOT}"
-        CFLAGS="${RABBIT_CFLAGS}"
-        CPPFLAGS="${RABBIT_CPPFLAGS}"
-        LDFLAGS="${RABBIT_LDFLAGS}"
-        CONFIG_PARA="${CONFIG_PARA} --with-gnu-ld"
+        CMAKE_PARA="${CMAKE_PARA} -DOPENTHREADS_ATOMIC_USE_MUTEX=ON -DCMAKE_TOOLCHAIN_FILE=$RABBIT_BUILD_PREFIX/../build_script/cmake/platforms/toolchain-mingw.cmake"
         ;;
     *)
-        echo "${HELP_STRING}"
-        cd $CUR_DIR
-        exit 3
-        ;;
+    echo "${HELP_STRING}"
+    cd $CUR_DIR
+    exit 2
+    ;;
 esac
 
-echo "make install"
-echo "pwd:`pwd`"
-
-CONFIG_PARA="${CONFIG_PARA} --without-tools" # --without-png --without-sdl"
-CONFIG_PARA="${CONFIG_PARA} --prefix=$RABBIT_BUILD_PREFIX"
-echo "../configure ${CONFIG_PARA} CFLAGS=\"${CFLAGS=}\" CPPFLAGS=\"${CPPFLAGS}\" CXXFLAGS=\"${CPPFLAGS}\" LDFLAGS=\"${LDFLAGS}\""
-../configure ${CONFIG_PARA} \
-    CFLAGS="${CFLAGS}" \
-    CPPFLAGS="${CPPFLAGS}" \
-    CXXFLAGS="${CPPFLAGS}" \
-    LDFLAGS="${LDFLAGS}"
-    
-${MAKE} ${MAKE_PARA}
-${MAKE} install
-
-if [ "${BUILD_TARGERT}" = "windows_msvc" ]; then
-    cd ${RABBIT_BUILD_PREFIX}/lib
-    mv libqrencode.a qrencode.lib
+CMAKE_PARA="${CMAKE_PARA} -DWITH_TESTS=OFF -DWITH_TOOLS=OFF"
+echo "cmake .. -DCMAKE_INSTALL_PREFIX=$RABBIT_BUILD_PREFIX -DCMAKE_BUILD_TYPE=${RABBIT_CONFIG} -G\"${GENERATORS}\" ${CMAKE_PARA}"
+if [ "${BUILD_TARGERT}" = "android" ]; then
+    cmake .. \
+        -DCMAKE_INSTALL_PREFIX="$RABBIT_BUILD_PREFIX" \
+        -DCMAKE_VERBOSE_MAKEFILE=ON -DCMAKE_BUILD_TYPE=${RABBIT_CONFIG} \
+        -G"${GENERATORS}" ${CMAKE_PARA} -DANDROID_ABI="${ANDROID_ABI}" 
+else
+    cmake .. \
+        -DCMAKE_INSTALL_PREFIX="$RABBIT_BUILD_PREFIX" \
+        -DCMAKE_VERBOSE_MAKEFILE=ON -DCMAKE_BUILD_TYPE=${RABBIT_CONFIG} \
+        -G"${GENERATORS}" ${CMAKE_PARA} 
+fi
+cmake --build . --config ${RABBIT_CONFIG} ${MAKE_PARA}
+if [ "android" != "${BUILD_TARGERT}" ]; then
+    cmake --build . --config ${RABBIT_CONFIG}  --target install ${MAKE_PARA}
+else
+    cmake --build . --config ${RABBIT_CONFIG}  --target install/strip ${MAKE_PARA}
 fi
 
 cd $CUR_DIR
