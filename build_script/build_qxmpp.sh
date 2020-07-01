@@ -39,23 +39,21 @@ CUR_DIR=`pwd`
 if [ ! -d ${RABBIT_BUILD_SOURCE_CODE} ]; then
     VERSION=1.2.1
     if [ "TRUE" = "${RABBIT_USE_REPOSITORIES}" ]; then
-        echo "git clone -q https://github.com/qxmpp-project/qxmpp.git ${RABBIT_BUILD_SOURCE_CODE}"
-        git clone -q -b v${VERSION} https://github.com/qxmpp-project/qxmpp.git ${RABBIT_BUILD_SOURCE_CODE}
-        #git clone -q https://github.com/KangLin/qxmpp.git ${RABBIT_BUILD_SOURCE_CODE}
+        #echo "git clone -q https://github.com/qxmpp-project/qxmpp.git ${RABBIT_BUILD_SOURCE_CODE}"
+        #git clone -q -b v${VERSION} https://github.com/qxmpp-project/qxmpp.git ${RABBIT_BUILD_SOURCE_CODE}
+        echo "git clone -q -b v${VERSION} https://github.com/KangLin/qxmpp.git ${RABBIT_BUILD_SOURCE_CODE}"
+        git clone -q -b v${VERSION} https://github.com/KangLin/qxmpp.git ${RABBIT_BUILD_SOURCE_CODE}
     else
         mkdir -p ${RABBIT_BUILD_SOURCE_CODE}
         cd ${RABBIT_BUILD_SOURCE_CODE}
-        #wget -q -c -nv https://github.com/KangLin/qxmpp/archive/master.tar.gz
-        #tar xvf master.tar.gz
-        #mv qxmpp-master ..
-        wget -q -c -nv https://github.com/qxmpp-project/qxmpp/archive/v${VERSION}.tar.gz
-        tar xvf v${VERSION}.tar.gz
+        wget -q -c -nv https://github.com/KangLin/qxmpp/archive/v${VERSION}.tar.gz
+        #wget -q -c -nv https://github.com/qxmpp-project/qxmpp/archive/v${VERSION}.tar.gz
+        tar xzf v${VERSION}.tar.gz
         mv qxmpp-${VERSION} ..
         rm -fr *
         cd ..
         rm -fr ${RABBIT_BUILD_SOURCE_CODE}
         mv -f qxmpp-${VERSION} ${RABBIT_BUILD_SOURCE_CODE}
-        #mv -f qxmpp-master ${RABBIT_BUILD_SOURCE_CODE}
     fi
 fi
 
@@ -121,10 +119,8 @@ CMAKE_PARA="${CMAKE_PARA} -DQt5Core_DIR=${QT_ROOT}/lib/cmake/Qt5Core"
 CMAKE_PARA="${CMAKE_PARA} -DQt5Widgets_DIR=${QT_ROOT}/lib/cmake/Qt5Widgets"
 CMAKE_PARA="${CMAKE_PARA} -DQt5Network_DIR=${QT_ROOT}/lib/cmake/Qt5Network"
 CMAKE_PARA="${CMAKE_PARA} -DQt5Xml_DIR=${QT_ROOT}/lib/cmake/Qt5Xml"
-#CMAKE_PARA="${CMAKE_PARA} -DOpus_DIR=${RABBIT_BUILD_PREFIX}/lib/cmake/Opus"
-#CMAKE_PARA="${CMAKE_PARA} -DCMAKE_FIND_ROOT_PATH=${RABBIT_BUILD_PREFIX}"
-#CMAKE_PARA="${CMAKE_PARA} -DCMAKE_PREFIX_PATH=${RABBIT_BUILD_PREFIX}"
 CMAKE_PARA="${CMAKE_PARA} -DWITH_OPUS=ON -DWITH_VPX=ON"
+#CMAKE_PARA="${CMAKE_PARA} -DCMAKE_PREFIX_PATH=${RABBIT_BUILD_PREFIX}"
 echo "cmake .. -DCMAKE_INSTALL_PREFIX=$RABBIT_BUILD_PREFIX -DCMAKE_BUILD_TYPE=${RABBIT_CONFIG} -G\"${GENERATORS}\" ${CMAKE_PARA}"
 if [ "${BUILD_TARGERT}" = "android" ]; then
     cmake .. \

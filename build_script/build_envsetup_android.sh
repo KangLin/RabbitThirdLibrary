@@ -292,7 +292,7 @@ if [ "$RABBIT_BUILD_STATIC" = "static" ]; then
 fi
 export PKG_CONFIG_PATH=${RABBIT_BUILD_PREFIX}/lib/pkgconfig
 export PKG_CONFIG_LIBDIR=${PKG_CONFIG_PATH}
-export PKG_CONFIG_SYSROOT_DIR=${RABBIT_BUILD_PREFIX}
+#export PKG_CONFIG_SYSROOT_DIR=${RABBIT_BUILD_PREFIX}
 
 echo "---------------------------------------------------------------------------"
 echo "==== ANDROID_SDK:$ANDROID_SDK"
@@ -316,6 +316,6 @@ echo "==== RABBIT_CPPFLAGS:$RABBIT_CPPFLAGS"
 echo "==== RABBIT_LDFLAGS:$RABBIT_LDFLAGS"
 echo "==== QT_ROOT:$QT_ROOT"
 echo "==== PKG_CONFIG_PATH:$PKG_CONFIG_PATH"
-echo "==== PKG_CONFIG_SYSROOT_DIR:$PKG_CONFIG_SYSROOT_DIR"
+#echo "==== PKG_CONFIG_SYSROOT_DIR:$PKG_CONFIG_SYSROOT_DIR"
 echo "==== PATH:$PATH"
 echo "---------------------------------------------------------------------------"
