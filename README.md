@@ -13,8 +13,8 @@
   
   文件格式： $(平台)$(版本号)_$(架构)_$(QT 版本)_版本.zip
 
-    wget https://github.com/KangLin/RabbitThirdLibrary/releases/download/v0.3.0/windows_msvc15_x86_Qt5.12.8_v0.3.0.zip
+    wget https://github.com/KangLin/RabbitThirdLibrary/releases/download/v0.3.1/windows_msvc15_x86_Qt5.12.8_v0.3.1.zip
     mkdir third_windows
-    unzip windows_msvc15_x86_Qt5.12.8_v0.3.0.zip -O third_windows
+    unzip windows_msvc15_x86_Qt5.12.8_v0.3.1.zip -O third_windows
     cd third_windows
     ./change_prefix.sh    #修改前缀为正确的目录
