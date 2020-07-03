@@ -1,10 +1,10 @@
-version: 'v.{build}'
+version: 'v0.2.9-27-g8e4e86d.{build}'
 
 cache:
   - Package
 
 environment:
-  BUILD_VERSION: v0.3.1
+  BUILD_VERSION: v0.2.9-27-g8e4e86d-27-g8e4e86d
   TimeOutMins: 2
   #ApiKey:
   #  secure: qex0da587ygmywf4315g
