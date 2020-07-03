@@ -41,12 +41,12 @@ CUR_DIR=`pwd`
 
 #下载源码:
 if [ ! -d ${RABBIT_BUILD_SOURCE_CODE} ]; then
-    VERSION=29d7e2e6b2b6997db5d419c3c06ec1f01e6e40f6 
+    VERSION=master #29d7e2e6b2b6997db5d419c3c06ec1f01e6e40f6 
     if [ "TRUE" = "${RABBIT_USE_REPOSITORIES}" ]; then
-        echo "git clone -q https://github.com/ftylitak/qzxing.git ${RABBIT_BUILD_SOURCE_CODE}"
-        git clone -q https://github.com/ftylitak/qzxing.git ${RABBIT_BUILD_SOURCE_CODE}
-        #echo "git clone -q https://github.com/KangLin/qzxing.git ${RABBIT_BUILD_SOURCE_CODE}"
-        #git clone -q https://github.com/KangLin/qzxing.git ${RABBIT_BUILD_SOURCE_CODE}
+        #echo "git clone -q https://github.com/ftylitak/qzxing.git ${RABBIT_BUILD_SOURCE_CODE}"
+        #git clone -q https://github.com/ftylitak/qzxing.git ${RABBIT_BUILD_SOURCE_CODE}
+        echo "git clone -q https://github.com/KangLin/qzxing.git ${RABBIT_BUILD_SOURCE_CODE}"
+        git clone -q https://github.com/KangLin/qzxing.git ${RABBIT_BUILD_SOURCE_CODE}
         cd ${RABBIT_BUILD_SOURCE_CODE}
         if [ "$VERSION" != "master" ]; then
             git checkout -b ${VERSION} ${VERSION}
@@ -54,10 +54,10 @@ if [ ! -d ${RABBIT_BUILD_SOURCE_CODE} ]; then
     else
         mkdir -p ${RABBIT_BUILD_SOURCE_CODE}
         cd ${RABBIT_BUILD_SOURCE_CODE}
-        echo "wget -q -c -nv -O qzxing.zip https://github.com/ftylitak/qzxing/archive/${VERSION}.zip"
-        wget -q -c -nv -O qzxing.zip https://github.com/ftylitak/qzxing/archive/${VERSION}.zip
-        #echo "wget -q -c -nv -O qzxing.zip https://github.com/KangLin/qzxing/archive/${VERSION}.zip"
-        #wget -q -c -nv -O qzxing.zip https://github.com/KangLin/qzxing/archive/${VERSION}.zip
+        #echo "wget -q -c -nv -O qzxing.zip https://github.com/ftylitak/qzxing/archive/${VERSION}.zip"
+        #wget -q -c -nv -O qzxing.zip https://github.com/ftylitak/qzxing/archive/${VERSION}.zip
+        echo "wget -q -c -nv -O qzxing.zip https://github.com/KangLin/qzxing/archive/${VERSION}.zip"
+        wget -q -c -nv -O qzxing.zip https://github.com/KangLin/qzxing/archive/${VERSION}.zip
         unzip -q qzxing.zip
         mv qzxing-${VERSION} ..
         rm -fr *

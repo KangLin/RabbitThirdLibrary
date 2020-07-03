@@ -122,6 +122,7 @@ jobs:
         - ANDROID_API=android-24
       before_script:
         - export RABBIT_NUMBER=0
+        - export RABBIT_CONFIG=Debug
         - rm -fr build
     
     - stage: stage2
@@ -139,6 +140,7 @@ jobs:
         - export DOWNLOAD_QT=TRUE
         - export QT_VERSION_DIR=5.13
         - export QT_VERSION=5.13.2
+        - export RABBIT_CONFIG=Debug
         
     ############################# unix #########################
     - stage: stage1

@@ -141,12 +141,15 @@ do
     bash ./build_$v.sh ${BUILD_TARGERT} > /dev/null
 done
 
+if [ -z "$RABBIT_CONFIG" ]; then
+    RABBIT_CONFIG=Release
+fi
 echo "RABBIT_LIBRARYS size:${#RABBIT_LIBRARYS[@]}"
 if [ ${#RABBIT_LIBRARYS[@]} -eq `expr $RABBIT_NUMBER + 1` ]; then
     if [ "$TRAVIS_TAG" != "" ]; then
         TAR_NAME=${BUILD_TARGERT}_${BUILD_ARCH}_${RABBIT_CONFIG}
         if [ -n "$QT_VERSION" ]; then
-            TAR_NAME=${TAR_NAME}_Qt${QT_VERSION}
+            TAR_NAME=${TAR_NAME}_qt${QT_VERSION}
         fi
         if [ -n "${TRAVIS_TAG}" ]; then
             TAR_NAME=${TAR_NAME}_${TRAVIS_TAG}
