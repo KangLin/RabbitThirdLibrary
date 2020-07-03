@@ -24,7 +24,7 @@ fi
 
 APPVERYOR_VERSION="version: '${VERSION}.{build}'"
 sed -i "s/^version: '.*{build}'/${APPVERYOR_VERSION}/g" ${SOURCE_DIR}/appveyor.yml
-sed -i "s/BUILD_VERSION: v[0-9]\+\.[0-9]\+\.[0-9]\+/BUILD_VERSION: ${VERSION}/g" ${SOURCE_DIR}/appveyor.yml
+sed -i "s/BUILD_VERSION:.*/BUILD_VERSION: ${VERSION}/g" ${SOURCE_DIR}/appveyor.yml
 sed -i "s/v[0-9]\+\.[0-9]\+\.[0-9]\+/${VERSION}/g" ${SOURCE_DIR}/README*.md
 
 #git tag -a v${VERSION} -m "Release v${VERSION}"
