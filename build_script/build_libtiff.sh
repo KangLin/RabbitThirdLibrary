@@ -75,9 +75,9 @@ echo ""
 echo "configure ..."
 MAKE_PARA="-- ${BUILD_JOB_PARA}"
 if [ "$RABBIT_BUILD_STATIC" = "static" ]; then
-    CMAKE_PARA="-DBUILD_SHARED_LIBS=OFF"
+    CMAKE_PARA="${CMAKE_PARA} -DBUILD_SHARED_LIBS=OFF"
 else
-    CMAKE_PARA="-DBUILD_SHARED_LIBS=ON"
+    CMAKE_PARA="${CMAKE_PARA} -DBUILD_SHARED_LIBS=ON"
 fi
 case ${BUILD_TARGERT} in
     android)

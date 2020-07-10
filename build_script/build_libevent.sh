@@ -83,10 +83,10 @@ echo "PATH:${PATH}"
 echo ""
 
 if [ "$RABBIT_BUILD_STATIC" = "static" ]; then
-    CMAKE_PARA="-DEVENT__BUILD_SHARED_LIBRARIES=OFF"
+    CMAKE_PARA="${CMAKE_PARA} -DEVENT__BUILD_SHARED_LIBRARIES=OFF"
     CONFIG_PARA="--enable-static --disable-shared"
 else
-    CMAKE_PARA="-DEVENT__BUILD_SHARED_LIBRARIES=ON"
+    CMAKE_PARA="${CMAKE_PARA} -DEVENT__BUILD_SHARED_LIBRARIES=ON"
     CONFIG_PARA="--disable-static --enable-shared"
 fi
 

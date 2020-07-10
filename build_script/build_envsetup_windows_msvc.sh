@@ -45,6 +45,10 @@ function version_ge() { test "$(echo "$@" | tr " " "\n" | sort -rV | head -n 1)"
 
 if [ -z "${TOOLCHAIN_VERSION}" ]; then
     case "${VisualStudioVersion}" in
+        16*)
+            TOOLCHAIN_VERSION=16
+            MSVC_NAME=msvc2019
+            ;;
         15*)
             TOOLCHAIN_VERSION=15
             MSVC_NAME=msvc2017
@@ -114,6 +118,14 @@ fi
 
 TARGET_OS=`uname -s`
 
+if [ "$TOOLCHAIN_VERSION" = "16" ]; then
+    GENERATORS="Visual Studio 16 2019"
+    if [ "${BUILD_ARCH}" = "x64" ]; then
+        CMAKE_PARA="-A x64"
+    else
+        CMAKE_PARA="-A Win32"
+    fi
+fi
 if [ "$TOOLCHAIN_VERSION" = "15" ]; then
     if [ "${BUILD_ARCH}" = "x64" ]; then
         GENERATORS="Visual Studio 15 2017 Win64"
@@ -168,6 +180,6 @@ echo "==== PKG_CONFIG_PATH:$PKG_CONFIG_PATH"
 echo "==== PKG_CONFIG_SYSROOT_DIR:$PKG_CONFIG_SYSROOT_DIR"
 echo "==== BUILD_ARCH:$BUILD_ARCH"
 echo "==== TOOLCHAIN_VERSION:$TOOLCHAIN_VERSION"
-echo "==== GENERATORS:$GENERATORS"
+echo "==== GENERATORS:$GENERATORS $CMAKE_PARA"
 echo "==== PATH=$PATH"
 echo "---------------------------------------------------------------------------"

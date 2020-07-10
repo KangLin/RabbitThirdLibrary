@@ -15,6 +15,21 @@ environment:
   #  secure: ejAYGgB+3sBispRxUSr0xw==
 
   matrix:
+  ##### msvc 2019 ########
+  - RABBIT_NUMBER: 0
+    APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2019
+    BUILD_TARGERT: windows_msvc
+    TOOLCHAIN_VERSION: 16
+    BUILD_ARCH: x86
+    RABBIT_CONFIG: Release
+
+  - RABBIT_NUMBER: 1
+    APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2019
+    BUILD_TARGERT: windows_msvc
+    TOOLCHAIN_VERSION: 16
+    BUILD_ARCH: x86
+    RABBIT_CONFIG: Release
+    
   ##### msvc 2017 debug ########
   - RABBIT_NUMBER: 0
     APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
@@ -273,7 +288,7 @@ matrix:
 init:
   - set varch=%BUILD_ARCH%
   - if "%BUILD_ARCH%" == "x64" set varch=amd64
-  - if "%BUILD_TARGERT%" == "windows_msvc" if %TOOLCHAIN_VERSION% LSS 15 (call "C:\Program Files (x86)\Microsoft Visual Studio %TOOLCHAIN_VERSION%.0\VC\vcvarsall.bat" %varch%) else (call "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Auxiliary\Build\vcvarsall.bat" %varch%)  
+  - if "%BUILD_TARGERT%" == "windows_msvc" if %TOOLCHAIN_VERSION% LSS 15 (call "C:\Program Files (x86)\Microsoft Visual Studio %TOOLCHAIN_VERSION%.0\VC\vcvarsall.bat" %varch%)  else (if %TOOLCHAIN_VERSION% == 15 (call "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Auxiliary\Build\vcvarsall.bat" %varch%) else (call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvarsall.bat" %varch%))
   - echo NUMBER_OF_PROCESSORS=%NUMBER_OF_PROCESSORS%
   - echo PROCESSOR_IDENTIFIER=%PROCESSOR_IDENTIFIER%
   - if NOT "%QT_ROOT%" == "" for /f "delims=" %%i in ('%QT_ROOT%/bin/qmake -query QT_VERSION') do (set QT_VERSION=%%i) 
