@@ -31,7 +31,9 @@ echo ". `pwd`/build_envsetup_${BUILD_TARGERT}.sh"
 
 #产生修改前缀脚本
 if [ ! -f ${RABBIT_BUILD_PREFIX}/change_prefix.sh ]; then
+    RABBIT_BUILD_PREFIX_ABS=$(cd ${RABBIT_BUILD_PREFIX};pwd)
     cp -f change_prefix.sh ${RABBIT_BUILD_PREFIX}/change_prefix.sh
     sed -i.orig -e "s,@@CONTRIB_PREFIX@@,${RABBIT_BUILD_PREFIX},g" ${RABBIT_BUILD_PREFIX}/change_prefix.sh
+    sed -i.orig -e "s,@@CONTRIB_PREFIX_ABS@@,${RABBIT_BUILD_PREFIX_ABS},g" ${RABBIT_BUILD_PREFIX}/change_prefix.sh
     rm -f ${RABBIT_BUILD_PREFIX}/change_prefix.sh.orig
 fi

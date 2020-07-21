@@ -37,6 +37,7 @@ fi
 if [ $# != 2 ]
 then
     old_prefix=@@CONTRIB_PREFIX@@
+    old_prefix_abs=@@CONTRIB_PREFIX_ABS@@
     new_prefix=`pwd`
 else
     old_prefix=$1
