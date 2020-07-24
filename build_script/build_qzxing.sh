@@ -92,53 +92,67 @@ echo "RABBIT_BUILD_CROSS_SYSROOT:$RABBIT_BUILD_CROSS_SYSROOT"
 echo "RABBIT_BUILD_STATIC:$RABBIT_BUILD_STATIC"
 echo ""
 
-case $BUILD_TARGERT in
+if [ "$RABBIT_BUILD_STATIC" = "static" ]; then
+    CMAKE_PARA="${CMAKE_PARA} -DBUILD_SHARED_LIBS=OFF"
+else
+    CMAKE_PARA="${CMAKE_PARA} -DBUILD_SHARED_LIBS=ON"
+fi
+MAKE_PARA="-- ${BUILD_JOB_PARA} VERBOSE=1"
+case ${BUILD_TARGERT} in
     android)
-        case $TARGET_OS in
-           MINGW* | CYGWIN* | MSYS*)
-               MAKE="$ANDROID_NDK/prebuilt/${RABBIT_BUILD_HOST}/bin/make ${BUILD_JOB_PARA} VERBOSE=1" #在windows下编译
-           ;;
-        *)
-           ;;
-        esac
-         
-        MAKE_PARA=" INSTALL_ROOT=\"${RABBIT_BUILD_PREFIX}\""
+        if [ -n "$RABBIT_CMAKE_MAKE_PROGRAM" ]; then
+            CMAKE_PARA="${CMAKE_PARA} -DCMAKE_MAKE_PROGRAM=$RABBIT_CMAKE_MAKE_PROGRAM"
+        fi
+        if [ -n "$ANDROID_ARM_NEON" ]; then
+            CMAKE_PARA="${CMAKE_PARA} -DANDROID_ARM_NEON=$ANDROID_ARM_NEON"
+        fi
+        CMAKE_PARA="${CMAKE_PARA} -DCMAKE_TOOLCHAIN_FILE=${ANDROID_NDK}/build/cmake/android.toolchain.cmake"
+        CMAKE_PARA="${CMAKE_PARA} -DANDROID_PLATFORM=${ANDROID_PLATFORM}"
         ;;
     unix)
+        CMAKE_PARA="${CMAKE_PARA} -DWITH_GSTREAMER=TRUE"
         ;;
     windows_msvc)
-        BUILD_JOB_PARA=""
+        MAKE_PARA=""
+        #CMAKE_PARA="${CMAKE_PARA} -DWIN32_USE_DYNAMICBASE=ON"
         ;;
     windows_mingw)
-        #PARA="-r -spec win32-g++" # CROSS_COMPILE=${RABBIT_BUILD_CROSS_PREFIX}"
+        CMAKE_PARA="${CMAKE_PARA} -DOPENTHREADS_ATOMIC_USE_MUTEX=ON -DCMAKE_TOOLCHAIN_FILE=$RABBIT_BUILD_PREFIX/../build_script/cmake/platforms/toolchain-mingw.cmake"
         ;;
     *)
-        echo "Usage $0 PLATFORM(android/windows_msvc/windows_mingw/unix) SOURCE_CODE_ROOT"
-        cd $CUR_DIR
-        exit 2
-        ;;
+    echo "${HELP_STRING}"
+    cd $CUR_DIR
+    exit 2
+    ;;
 esac
 
-PARA="${PARA} INCLUDEPATH+=${RABBIT_BUILD_PREFIX}/include"
-PARA="${PARA} LIBS+=-L${RABBIT_BUILD_PREFIX}/lib"
-PARA="${PARA} PREFIX=${RABBIT_BUILD_PREFIX}"
+CMAKE_PARA="${CMAKE_PARA} -DQt5_DIR=${QT_ROOT}/lib/cmake/Qt5"
+CMAKE_PARA="${CMAKE_PARA} -DQt5Core_DIR=${QT_ROOT}/lib/cmake/Qt5Core"
+CMAKE_PARA="${CMAKE_PARA} -DQt5Gui_DIR=${QT_ROOT}/lib/cmake/Qt5Gui"
+CMAKE_PARA="${CMAKE_PARA} -DQt5Widgets_DIR=${QT_ROOT}/lib/cmake/Qt5Widgets"
+CMAKE_PARA="${CMAKE_PARA} -DQt5Svg_DIR=${QT_ROOT}/lib/cmake/Qt5Svg"
+CMAKE_PARA="${CMAKE_PARA} -DQt5Quick_DIR=${QT_ROOT}/lib/cmake/Qt5Quick"
+CMAKE_PARA="${CMAKE_PARA} -DQt5Qml_DIR=${QT_ROOT}/lib/cmake/Qt5Qml"
+CMAKE_PARA="${CMAKE_PARA} -DQt5Network_DIR=${QT_ROOT}/lib/cmake/Qt5Network"
+CMAKE_PARA="${CMAKE_PARA} -DQt5Multimedia_DIR=${QT_ROOT}/lib/cmake/Qt5Multimedia"
 
-if [ "${RABBIT_CONFIG}" = "Debug" -o "${RABBIT_CONFIG}" = "debug" ]; then
-    RELEASE_PARA="${PARA} CONFIG-=release CONFIG+=debug"
+echo "cmake .. -DCMAKE_INSTALL_PREFIX=$RABBIT_BUILD_PREFIX -DCMAKE_BUILD_TYPE=${RABBIT_CONFIG} -G\"${GENERATORS}\" ${CMAKE_PARA}"
+if [ "${BUILD_TARGERT}" = "android" ]; then
+    cmake .. \
+        -DCMAKE_INSTALL_PREFIX="$RABBIT_BUILD_PREFIX" \
+        -DCMAKE_VERBOSE_MAKEFILE=ON -DCMAKE_BUILD_TYPE=${RABBIT_CONFIG} \
+        -G"${GENERATORS}" ${CMAKE_PARA} -DANDROID_ABI="${ANDROID_ABI}"
 else
-    RELEASE_PARA="${PARA} CONFIG-=debug CONFIG+=release"
+    cmake .. \
+        -DCMAKE_INSTALL_PREFIX="$RABBIT_BUILD_PREFIX" \
+        -DCMAKE_VERBOSE_MAKEFILE=ON -DCMAKE_BUILD_TYPE=${RABBIT_CONFIG} \
+        -G"${GENERATORS}" ${CMAKE_PARA}
 fi
-
-if [ "$RABBIT_BUILD_STATIC" = "static" ]; then
-    RELEASE_PARA="${RELEASE_PARA} CONFIG+=staticlib"
-fi
-
-echo "$QMAKE ${RELEASE_PARA}"
-$QMAKE ${RELEASE_PARA} ..
-${MAKE} -f Makefile install ${MAKE_PARA} ${BUILD_JOB_PARA}
-
-if [ "$BUILD_TARGERT" = "windows_mingw" ]; then
-    cp ${RABBIT_CONFIG}/pkgconfig/QZXing.pc ${RABBIT_BUILD_PREFIX}/lib/pkgconfig/.
+cmake --build . --config ${RABBIT_CONFIG} ${MAKE_PARA}
+if [ "android" != "${BUILD_TARGERT}" ]; then
+    cmake --build . --config ${RABBIT_CONFIG} --target install ${MAKE_PARA}
+else
+    cmake --build . --config ${RABBIT_CONFIG} --target install/strip ${MAKE_PARA}
 fi
 
 cd $CUR_DIR

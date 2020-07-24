@@ -116,7 +116,7 @@ esac
 CMAKE_PARA="${CMAKE_PARA} -DBUILD_EXAMPLES=OFF -DBUILD_TESTS=OFF"
 CMAKE_PARA="${CMAKE_PARA} -DQt5_DIR=${QT_ROOT}/lib/cmake/Qt5"
 CMAKE_PARA="${CMAKE_PARA} -DQt5Core_DIR=${QT_ROOT}/lib/cmake/Qt5Core"
-CMAKE_PARA="${CMAKE_PARA} -DQt5Widgets_DIR=${QT_ROOT}/lib/cmake/Qt5Widgets"
+#CMAKE_PARA="${CMAKE_PARA} -DQt5Widgets_DIR=${QT_ROOT}/lib/cmake/Qt5Widgets"
 CMAKE_PARA="${CMAKE_PARA} -DQt5Network_DIR=${QT_ROOT}/lib/cmake/Qt5Network"
 CMAKE_PARA="${CMAKE_PARA} -DQt5Xml_DIR=${QT_ROOT}/lib/cmake/Qt5Xml"
 if [ "${BUILD_TARGERT}" != "android" ]; then
@@ -136,9 +136,9 @@ else
 fi
 cmake --build . --config ${RABBIT_CONFIG} ${MAKE_PARA}
 if [ "android" != "${BUILD_TARGERT}" ]; then
-    cmake --build . --config ${RABBIT_CONFIG}  --target install ${MAKE_PARA}
+    cmake --build . --config ${RABBIT_CONFIG} --target install ${MAKE_PARA}
 else
-    cmake --build . --config ${RABBIT_CONFIG}  --target install/strip ${MAKE_PARA}
+    cmake --build . --config ${RABBIT_CONFIG} --target install/strip ${MAKE_PARA}
 fi
 
 cd $CUR_DIR
