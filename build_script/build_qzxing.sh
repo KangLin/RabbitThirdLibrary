@@ -136,6 +136,8 @@ CMAKE_PARA="${CMAKE_PARA} -DQt5Qml_DIR=${QT_ROOT}/lib/cmake/Qt5Qml"
 CMAKE_PARA="${CMAKE_PARA} -DQt5Network_DIR=${QT_ROOT}/lib/cmake/Qt5Network"
 CMAKE_PARA="${CMAKE_PARA} -DQt5Multimedia_DIR=${QT_ROOT}/lib/cmake/Qt5Multimedia"
 
+CMAKE_PARA="${CMAKE_PARA} -DQZXING_MULTIMEDIA=OFF -DQZXING_QML=ON"
+
 echo "cmake .. -DCMAKE_INSTALL_PREFIX=$RABBIT_BUILD_PREFIX -DCMAKE_BUILD_TYPE=${RABBIT_CONFIG} -G\"${GENERATORS}\" ${CMAKE_PARA}"
 if [ "${BUILD_TARGERT}" = "android" ]; then
     cmake .. \
