@@ -37,7 +37,7 @@ CUR_DIR=`pwd`
 
 #下载源码:
 if [ ! -d ${RABBIT_BUILD_SOURCE_CODE} ]; then
-    OPENSLL_BRANCH=OpenSSL_1_1_1f
+    OPENSLL_BRANCH=OpenSSL_1_1_1g
     if [ "TRUE" = "${RABBIT_USE_REPOSITORIES}" ]; then
         echo "git clone -q --branch=${OPENSLL_BRANCH} https://github.com/openssl/openssl ${RABBIT_BUILD_SOURCE_CODE}"
         git clone -q -b ${OPENSLL_BRANCH} https://github.com/openssl/openssl ${RABBIT_BUILD_SOURCE_CODE}
@@ -174,13 +174,12 @@ case ${BUILD_TARGERT} in
 esac
 
 echo "make install"
-${MAKE} V=1
-${MAKE} install
-
-if [ "${BUILD_ARCH}" = "android" ]; then
-    cd ${RABBIT_BUILD_PREFIX}/lib/
-    mv libssl.so.1.1 libssl.so
-    mv libcrypto.so.1.1 libcrypto.so
+if [ "${BUILD_TARGERT}" = "android" -a "$RABBIT_BUILD_STATIC" != "static" ]; then
+    # See: https://github.com/openssl/openssl/issues/3902
+    ${MAKE} V=1 SHLIB_EXT=.so SHLIB_VERSION_NUMBER=
+else
+    ${MAKE} V=1
 fi
+${MAKE} install
 
 cd $CUR_DIR
