@@ -176,10 +176,8 @@ esac
 echo "make install"
 if [ "${BUILD_TARGERT}" = "android" -a "$RABBIT_BUILD_STATIC" != "static" ]; then
     # See: https://github.com/openssl/openssl/issues/3902
-    ${MAKE} V=1 SHLIB_EXT=.so SHLIB_VERSION_NUMBER=
+    ${MAKE} V=1 SHLIB_EXT=.so SHLIB_VERSION_NUMBER= install
 else
-    ${MAKE} V=1
+    ${MAKE} V=1 install
 fi
-${MAKE} install
-
 cd $CUR_DIR
