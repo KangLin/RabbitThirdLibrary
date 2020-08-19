@@ -278,9 +278,9 @@ environment:
     BUILD_ARCH: x86_64
     RABBIT_CONFIG: Release
     ANDROID_API: android-24
-    QT_VERSION_DIR: 5.12
-    QT_VERSION: 5.12.6
-    DOWNLOAD_QT: TRUE 
+    QT_VERSION_DIR: 5.13
+    QT_VERSION: 5.13.2
+    DOWNLOAD_QT: TRUE
 
 matrix:
   fast_finish: false
