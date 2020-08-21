@@ -12,7 +12,8 @@ function function_common()
          autoconf \
          checkinstall \
          check \
-         m4 
+         m4 \
+         meson
     sudo apt-get install -y -qq subversion git wget ant expect
     #文档产生工具
     sudo apt-get install -y -qq doxygen 

@@ -33,6 +33,8 @@ function function_common()
 {
     cd ${TOOLS_DIR}
     
+    sudo apt-get install meson -qq -y
+    
     # Qt qt安装参见：https://github.com/benlau/qtci  
     if [ "$DOWNLOAD_QT" = "TRUE" ]; then
         QT_DIR=`pwd`/Qt/${QT_VERSION}

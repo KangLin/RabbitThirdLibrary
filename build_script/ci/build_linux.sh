@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-RABBIT_LIBRARYS_before[0]="zlib"
+RABBIT_LIBRARYS_before[0]="gstreamer" #"zlib"
 RABBIT_LIBRARYS_backgroud[0]="protobuf libpng jpeg libyuv libvpx libopus speexdsp speex libqrencode seeta libfacedetection ncnn"
 RABBIT_LIBRARYS[0]="change_prefix openssl ffmpeg dlib opencv"
 #RABBIT_LIBRARYS_backgroud[1]=""
@@ -127,7 +127,7 @@ bash ci/backgroud_echo.sh &
 
 for b in ${RABBIT_LIBRARYS_before[$RABBIT_NUMBER]}
 do
-    bash ./build_$b.sh ${BUILD_TARGERT} > /dev/null
+    bash ./build_$b.sh ${BUILD_TARGERT} #> /dev/null
 done
 
 for b in ${RABBIT_LIBRARYS_backgroud[$RABBIT_NUMBER]}
