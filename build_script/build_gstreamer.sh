@@ -96,7 +96,7 @@ case ${BUILD_TARGERT} in
 esac
 
 if [ "$RABBIT_CONFIG" = "Release" ]; then
-    PARA="${PARA} --buildtype=release"
+    PARA="${PARA} --buildtype=release --strip"
 else
     PARA="${PARA} --buildtype=debug"
 fi
@@ -104,7 +104,7 @@ PARA="${PARA} -Dexamples=disabled -Dgst-examples=disabled -Dtests=disabled"
 echo "meson --prefix=${RABBIT_BUILD_PREFIX} --libdir=lib ${PARA} build_${BUILD_TARGERT}"
 meson --prefix=${RABBIT_BUILD_PREFIX} --libdir=lib ${PARA} build_${BUILD_TARGERT}
 echo "meson compile ${BUILD_JOB_PARA} -C build_${BUILD_TARGERT}"
-meson compile ${BUILD_JOB_PARA} -C build_${BUILD_TARGERT} --verbose
+meson compile -C build_${BUILD_TARGERT} --verbose
 echo "meson install -C build_${BUILD_TARGERT}"
 meson install -C build_${BUILD_TARGERT} 
 
