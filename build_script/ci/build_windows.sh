@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-RABBIT_LIBRARYS_before[0]="gstreamer" #"zlib"
+RABBIT_LIBRARYS_before[0]="zlib"
 RABBIT_LIBRARYS_backgroud[0]="protobuf libpng jpeg libyuv libvpx libopus speexdsp speex libqrencode"
 RABBIT_LIBRARYS[0]="change_prefix openssl ffmpeg"
 RABBIT_LIBRARYS_backgroud[1]="dlib ncnn seeta libfacedetection"
