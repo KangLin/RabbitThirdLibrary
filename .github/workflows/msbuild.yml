@@ -5,17 +5,24 @@ on: [push]
 env:
   # Path to the solution file relative to the root of the project.
   SOLUTION_FILE_PATH: .
-
-  # Configuration type to build.
-  # You can convert this to a build matrix if you need coverage of multiple configuration types.
-  # https://docs.github.com/actions/learn-github-actions/managing-complex-workflows#using-a-build-matrix
-  BUILD_CONFIGURATION: Release
-
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-  
+
 jobs:
   build:
     runs-on: windows-latest
+    strategy:
+          matrix:
+            # Configuration type to build.
+            # You can convert this to a build matrix if you need coverage of multiple configuration types.
+            # https://docs.github.com/actions/learn-github-actions/managing-complex-workflows#using-a-build-matrix
+            BUILD_CONFIGURATION: [Release, Debug]
+            BUILD_ARCH: [i686, x64]
+
+    env:
+      BUILD_TARGERT: windows_msvc
+      BUILD_ARCH: ${{matrix.BUILD_ARCH}}
+      BUILD_TYPE: ${{matrix.BUILD_CONFIGURATION}}
+      TOOLCHAIN_VERSION: 16
 
     steps:
     - uses: actions/checkout@v2
@@ -23,12 +30,17 @@ jobs:
     - name: Add MSBuild to PATH
       uses: microsoft/setup-msbuild@v1
 
-    - name: Restore NuGet packages
-      working-directory: ${{env.GITHUB_WORKSPACE}}
-      run: nuget restore ${{env.SOLUTION_FILE_PATH}}
-
+    - name: pacman
+      shell: cmd
+      # mingw-w64-i686-gcc mingw-w64-i686-qt5
+      run: |
+        set PATH=C:\msys64\mingw64\bin;C:\msys64\bin;C:\msys64\usr\bin;%PATH%
+        pacman -Syu
+        pacman -S --noconfirm cat git cmake 
+        
     - name: Build
-      working-directory: ${{env.GITHUB_WORKSPACE}}
+      shell: cmd
+      working-directory: ${{github.workspace}}/build_script
       # Add additional options to the MSBuild command line here (like platform or verbosity level).
       # See https://docs.microsoft.com/visualstudio/msbuild/msbuild-command-line-reference
-      run: msbuild /m /p:Configuration=${{env.BUILD_CONFIGURATION}} ${{env.SOLUTION_FILE_PATH}}
+      run: C:\msys64\usr\bin\bash.exe build_github_windows.sh ${{env.BUILD_TARGERT}}
