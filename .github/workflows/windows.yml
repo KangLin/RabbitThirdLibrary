@@ -9,7 +9,7 @@ env:
 
 jobs:
   build:
-    runs-on: windows-latest
+    runs-on: ${{matrix.RUNS_ON}}
     strategy:
           matrix:
             # Configuration type to build.
@@ -17,30 +17,23 @@ jobs:
             # https://docs.github.com/actions/learn-github-actions/managing-complex-workflows#using-a-build-matrix
             BUILD_CONFIGURATION: [Release, Debug]
             BUILD_ARCH: [i686, x64]
+            BUILD_TARGERT: [windows_msvc, windows_mingw]
+            RUNS_ON: [windows-latest]
 
     env:
-      BUILD_TARGERT: windows_msvc
+      BUILD_TARGERT: ${{matrix.BUILD_TARGERT}}
       BUILD_ARCH: ${{matrix.BUILD_ARCH}}
       BUILD_TYPE: ${{matrix.BUILD_CONFIGURATION}}
-      TOOLCHAIN_VERSION: 16
 
     steps:
     - uses: actions/checkout@v2
 
     - name: Add MSBuild to PATH
       uses: microsoft/setup-msbuild@v1
-
-    - name: pacman
-      shell: cmd
-      # mingw-w64-i686-gcc mingw-w64-i686-qt5
-      run: |
-        set PATH=C:\msys64\mingw64\bin;C:\msys64\bin;C:\msys64\usr\bin;%PATH%
-        pacman -Syu
-        pacman -S --noconfirm cat git cmake 
         
     - name: Build
-      shell: cmd
+      shell: bash
       working-directory: ${{github.workspace}}/build_script
       # Add additional options to the MSBuild command line here (like platform or verbosity level).
       # See https://docs.microsoft.com/visualstudio/msbuild/msbuild-command-line-reference
-      run: C:\msys64\usr\bin\bash.exe build_github_windows.sh ${{env.BUILD_TARGERT}}
+      run: build_github_windows.sh ${{matrix.BUILD_TARGERT}}
