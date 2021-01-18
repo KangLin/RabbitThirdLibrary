@@ -38,7 +38,7 @@ jobs:
         vcpkgGitCommitId: b60f003ccf5fe8613d029f49f835c8929a66eb61
         vcpkgDirectory: ${{ runner.workspace }}/vcpkg/
         vcpkgTriplet: '${{ matrix.triplet }}'
-        vcpkgArguments: 'openssl curl osg opencv freerdp log4cplus'
+        vcpkgArguments: 'openssl curl osg opencv freerdp log4cplus ffmpeg'
         
 #     - name: run-vcpkg
 #       # You may pin to the exact commit or the version.
