@@ -35,7 +35,7 @@ jobs:
       with:
         # Indicates whether to only setup vcpkg (i.e. installing it and setting the environment variables VCPKG_ROOT, RUNVCPK_VCPKG_ROOT), without installing any port.
         #setupOnly: # optional
-        vcpkgGitCommitId: b60f003ccf5fe8613d029f49f835c8929a66eb61
+        vcpkgGitCommitId: ec6fe06e8da05a8157dc8581fa96b36b571c1bd5
         vcpkgDirectory: ${{ runner.workspace }}/vcpkg/
         vcpkgTriplet: '${{ matrix.triplet }}'
         vcpkgArguments: 'openssl curl osg opencv freerdp log4cplus ffmpeg'
