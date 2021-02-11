@@ -14,14 +14,13 @@ jobs:
         os: [ubuntu-latest, windows-latest, macos-latest]
         include:
           - os: windows-latest
-            triplet: x64-windows
-            vcpkg: '\vcpkg.exe' 
+            triplet: x86-window
+          - os: windows-latest
+            triplet: x64-window
           - os: ubuntu-latest
             triplet: x64-linux
-            vcpkg: '/vcpkg'  
           - os: macos-latest
             triplet: x64-osx
-            vcpkg: '/vcpkg'
 
     runs-on: ${{ matrix.os }}
 
@@ -35,24 +34,9 @@ jobs:
       with:
         # Indicates whether to only setup vcpkg (i.e. installing it and setting the environment variables VCPKG_ROOT, RUNVCPK_VCPKG_ROOT), without installing any port.
         #setupOnly: # optional
-        doNotCache: true
-        vcpkgGitCommitId: ec6fe06e8da05a8157dc8581fa96b36b571c1bd5
+        vcpkgGitURL: https://github.com/KangLin/vcpkg.git
+        vcpkgGitCommitId: 37b05428f33d148ad849f5c4e4e84ac33d60299a
         vcpkgDirectory: ${{ runner.workspace }}/vcpkg/
         vcpkgTriplet: '${{ matrix.triplet }}'
-        vcpkgArguments: 'openssl curl osg opencv freerdp log4cplus ffmpeg'
-        
-#     - name: run-vcpkg
-#       # You may pin to the exact commit or the version.
-#       # uses: lukka/run-vcpkg@a1b6a0046a28c09f4bcc8caa9eecec9a8e512152
-#       uses: lukka/run-vcpkg@v6.1
-#       with:
-#         # Indicates whether to only setup vcpkg (i.e. installing it and setting the environment variables VCPKG_ROOT, RUNVCPK_VCPKG_ROOT), without installing any port.
-#         setupOnly: true # optional
-#         vcpkgGitCommitId: b60f003ccf5fe8613d029f49f835c8929a66eb61
-#         vcpkgTriplet: '${{ matrix.triplet }}'
-    
-#     - run: $VCPKG_ROOT/vcpkg install openssl curl osg opencv
-#       shell: bash
-        
-   
-      
+        vcpkgArguments: 'openssl libssh freerdp'
+  
