@@ -30,31 +30,32 @@ echo ". `pwd`/build_envsetup_${BUILD_TARGERT}.sh"
 . `pwd`/build_envsetup_${BUILD_TARGERT}.sh
 
 if [ -z "$RABBIT_BUILD_SOURCE_CODE" ]; then
-    RABBIT_BUILD_SOURCE_CODE=${RABBIT_BUILD_PREFIX}/../src/libfacedetection
+    RABBIT_BUILD_SOURCE_CODE=${RABBIT_BUILD_PREFIX}/../src/libdatachannel
 fi
 
 CUR_DIR=`pwd`
 #下载源码:
 if [ ! -d ${RABBIT_BUILD_SOURCE_CODE} ]; then
-    VERSION=master
-    if [ "TRUE" = "${RABBIT_USE_REPOSITORIES}" ]; then
-        echo "git clone -q https://github.com/KangLin/libfacedetection.git ${RABBIT_BUILD_SOURCE_CODE}"
-        git clone -q https://github.com/KangLin/libfacedetection.git ${RABBIT_BUILD_SOURCE_CODE}
+    VERSION=libdatachannel_2.2.0
+    #if [ "TRUE" = "${RABBIT_USE_REPOSITORIES}" ]; then
+        echo "git clone -q https://github.com/paullouisageneau/libdatachannel.git ${RABBIT_BUILD_SOURCE_CODE}"
+        git clone -q https://github.com/paullouisageneau/libdatachannel.git ${RABBIT_BUILD_SOURCE_CODE}
         if [ "$VERSION" != "master" ]; then
-            git checkout -b v$VERSION v$VERSION
+            git checkout -b $VERSION $VERSION
         fi
-    else
-        echo "wget -q -c https://github.com/KangLin/libfacedetection/archive/${VERSION}.zip"
-        mkdir -p ${RABBIT_BUILD_SOURCE_CODE}
-        cd ${RABBIT_BUILD_SOURCE_CODE}
-        wget -q -c https://github.com/KangLin/libfacedetection/archive/${VERSION}.zip
-        unzip -q ${VERSION}.zip
-        mv libfacedetection-${VERSION} ..
-        rm -fr *
-        cd ..
-        rm -fr ${RABBIT_BUILD_SOURCE_CODE}
-        mv -f libfacedetection-${VERSION} ${RABBIT_BUILD_SOURCE_CODE}
-    fi
+        git submodule update --init --recursive
+#    else
+#        echo "wget -q -c https://github.com/paullouisageneau/libdatachannel/archive/${VERSION}.zip"
+#        mkdir -p ${RABBIT_BUILD_SOURCE_CODE}
+#        cd ${RABBIT_BUILD_SOURCE_CODE}
+#        wget -q -c https://github.com/paullouisageneau/libdatachannel/archive/${VERSION}.zip
+#        unzip -q ${VERSION}.zip
+#        mv libdatachannel-${VERSION} ..
+#        rm -fr *
+#        cd ..
+#        rm -fr ${RABBIT_BUILD_SOURCE_CODE}
+#        mv -f libdatachannel-${VERSION} ${RABBIT_BUILD_SOURCE_CODE}
+#    fi
 fi
 
 cd ${RABBIT_BUILD_SOURCE_CODE}
@@ -93,26 +94,14 @@ case ${BUILD_TARGERT} in
         fi
         CMAKE_PARA="${CMAKE_PARA} -DCMAKE_TOOLCHAIN_FILE=${ANDROID_NDK}/build/cmake/android.toolchain.cmake"
         CMAKE_PARA="${CMAKE_PARA} -DANDROID_PLATFORM=${ANDROID_PLATFORM}"
-        CMAKE_PARA="${CMAKE_PARA} -DENABLE_AVX2=OFF"
-        case ${BUILD_ARCH} in
-        arm*)
-            CMAKE_PARA="${CMAKE_PARA} -DENABLE_NEON=ON"
-            ;;
-        *)
-            CMAKE_PARA="${CMAKE_PARA} -DENABLE_NEON=OFF"
-            ;;
-        esac
         ;;
     unix)
-        CMAKE_PARA="${CMAKE_PARA} -DENABLE_AVX2=ON"
         ;;
     windows_msvc)
-        CMAKE_PARA="${CMAKE_PARA} -DENABLE_AVX2=ON"
         MAKE_PARA=""
         ;;
     windows_mingw)
         CMAKE_PARA="${CMAKE_PARA} -DCMAKE_TOOLCHAIN_FILE=$RABBIT_BUILD_PREFIX/../build_script/cmake/platforms/toolchain-mingw.cmake"
-        CMAKE_PARA="${CMAKE_PARA} -DENABLE_AVX2=ON"
         ;;
     *)
     echo "${HELP_STRING}"
@@ -120,8 +109,7 @@ case ${BUILD_TARGERT} in
     exit 2
     ;;
 esac
-
-CMAKE_PARA="${CMAKE_PARA} -DDEMO=OFF"
+export OpenBLAS_HOME=$RABBIT_BUILD_PREFIX
 echo "cmake .. -DCMAKE_INSTALL_PREFIX=$RABBIT_BUILD_PREFIX -DCMAKE_BUILD_TYPE=${RABBIT_CONFIG} -G\"${GENERATORS}\" ${CMAKE_PARA}"
 if [ "${BUILD_TARGERT}" = "android" ]; then
     cmake .. \
@@ -140,4 +128,5 @@ if [ "android" != "${BUILD_TARGERT}" ]; then
 else
     cmake --build . --config ${RABBIT_CONFIG} --target install/strip ${MAKE_PARA}
 fi
+
 cd $CUR_DIR
