@@ -114,7 +114,7 @@ case ${BUILD_TARGERT} in
 esac
 
 CMAKE_PARA="${CMAKE_PARA} -DBUILD_EXAMPLES=OFF -DBUILD_TESTS=OFF"
-CMAKE_PARA="${CMAKE_PARA} -DQt5_DIR=${QT_ROOT}/lib/cmake/Qt5"
+CMAKE_PARA="${CMAKE_PARA} -DQt5_DIR=${QT_ROOT}/lib/cmake/Qt5 -DQT_DIR=${QT_ROOT}/lib/cmake/Qt5"
 CMAKE_PARA="${CMAKE_PARA} -DQt5Core_DIR=${QT_ROOT}/lib/cmake/Qt5Core"
 #CMAKE_PARA="${CMAKE_PARA} -DQt5Widgets_DIR=${QT_ROOT}/lib/cmake/Qt5Widgets"
 CMAKE_PARA="${CMAKE_PARA} -DQt5Network_DIR=${QT_ROOT}/lib/cmake/Qt5Network"
