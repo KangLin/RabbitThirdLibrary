@@ -297,8 +297,8 @@ init:
   - del C:\msys64\usr\bin\link.exe
 
 install:
-  - C:\msys64\usr\bin\pacman.exe -Syu --noconfirm
-  - C:\msys64\autorebase.bat
+  #- C:\msys64\usr\bin\pacman.exe -Syu --noconfirm
+  #- C:\msys64\autorebase.bat
   - C:\msys64\usr\bin\pacman.exe -S --noconfirm unzip nasm yasm
 
   # See: https://github.com/mesonbuild/meson/blob/master/docs/markdown/Continuous-Integration.md
